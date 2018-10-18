@@ -14,12 +14,6 @@ namespace EscalonamentoHospitalar.Models
 
         public string Nome { get; set; }
 
-        public string Telemovel { get; set; }
-
-        public string Email { get; set; }
-
-        public string Morada { get; set; }
-
-        public string Cod_Postal { get; set; }
+        p
     }
 }
