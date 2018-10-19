@@ -6,14 +6,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EscalonamentoHospitalar.Models
 {
-    public class Medicos 
+    public class DiretorServico
     {
-        public string MedicoID { get; set; }
+            public int DiretorServicoID { get; set; }
 
-        public string Codigo_Medico { get; set; }
-
-        public string Nome { get; set; }
-
-
+            public string Name { get; set; }
+        }
     }
-}

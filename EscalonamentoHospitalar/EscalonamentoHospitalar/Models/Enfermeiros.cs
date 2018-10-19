@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EscalonamentoHospitalar.Models
 {
-    public class Enfermeiros : Controller
+    public class Enfermeiros 
     {
         public string EnfermeiroID{ get; set; }
 
