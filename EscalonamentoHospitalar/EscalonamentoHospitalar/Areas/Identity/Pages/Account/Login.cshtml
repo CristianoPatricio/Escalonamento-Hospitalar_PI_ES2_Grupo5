@@ -2,42 +2,42 @@
 @model LoginModel
 
 @{
-    ViewData["Title"] = "Log in";
+    ViewData["Title"] = "Login";
 }
 
-<div class="col-md-6 col-md-offset-2">
+<div class="col-md-6 col-md-offset-2" style="margin-left:0px;">
     <section>
-        <img class="image" src="~/images/James& Katie.png" alt="" width="500" height="500" />
+        <img style="vertical-align:initial; float:left;" class="image" src="~/images/James& Katie.png" alt="" width="400" height="400" />
     </section>
 </div>
 
 
-<h2>@ViewData["Title"]</h2>
+<h1>@ViewData["Title"]</h1>
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-4" style="background-color:#049ACC; padding: 30px; border-radius: 25px;">
         <section>
             <form method="post">
-                <label for="sel1">Entrar como:</label>
-                <select class="form-control" id="sel1">
+                <label asp-for="Input.SignInAs">Entrar como:</label>
+                <select asp-for="Input.SignInAs" class="form-control">
                     <option value="diretorServico">Diretor de Serviço</option>
                     <option value="enfermeiro">Enfermeiro</option>
                     <option value="medico">Médico</option>
-                </select>
+                </select>      
                 <hr />
-                <div asp-validation-summary="All" class="text-danger"></div>
+                <!--<div asp-validation-summary="All" class="text-danger"></div>-->
                 <div class="form-group">
-                    <label asp-for="Input.Código"></label>
-                    <input asp-for="Input.Código" class="form-control" />
-                    <span asp-validation-for="Input.Código" class="text-danger"></span>
+                    <label asp-for="Input.Codigo">Código</label>
+                    <input asp-for="Input.Codigo" class="form-control" placeholder="Introduza o código"/>
+                    <span asp-validation-for="Input.Codigo" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="Input.Password"></label>
-                    <input asp-for="Input.Password" class="form-control" />
+                    <label asp-for="Input.Password">Password</label>
+                    <input asp-for="Input.Password" class="form-control" placeholder="Introduza a password"/>
                     <span asp-validation-for="Input.Password" class="text-danger"></span>
                 </div>
                
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Login</button>
+                    <button type="submit" class="btn btn-secondary">Login</button>
                 </div>
    
             </form>
@@ -74,7 +74,6 @@
           
         </section>
     </div>
-
 </div>
 
 @section Scripts {
