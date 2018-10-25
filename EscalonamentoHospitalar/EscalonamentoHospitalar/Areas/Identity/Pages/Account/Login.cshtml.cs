@@ -37,7 +37,7 @@ namespace EscalonamentoHospitalar.Areas.Identity.Pages.Account
         public class InputModel
         {
             [Required(ErrorMessage = "Por favor, insira o código")]
-            //TO DO adicionar validação
+            [RegularExpression(@"[MDE]\d+", ErrorMessage = "Código inválido")]
             public string Codigo { get; set; }
 
             [Required(ErrorMessage = "Por favor, insira a password")]
