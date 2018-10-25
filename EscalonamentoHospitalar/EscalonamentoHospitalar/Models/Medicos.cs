@@ -9,8 +9,7 @@ namespace EscalonamentoHospitalar.Models
 {
     public class Medicos 
     {
-        public string MedicoID { get; set; }
-
+        public int MedicoID { get; set; }
 
         [RegularExpression(@"\d{7}(\s\d{1})?", ErrorMessage = "Numero Errado")]
         //Numero da Ordem
@@ -35,6 +34,8 @@ namespace EscalonamentoHospitalar.Models
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = false)]
         public DateTime Data_Nascimento { get; set; } 
+
+        public int EspecialidadeId { get; set; }
 
     }
 }
