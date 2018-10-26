@@ -22,7 +22,7 @@ namespace EscalonamentoHospitalar.Models
 >>>>>>> master
         public string Nome { get; set; }
 
-        [RegularExpression(@"([A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ\s]+)", ErrorMessage = "Morada Inválida")]
+        
         public string Morada { get; set; }
 
 
