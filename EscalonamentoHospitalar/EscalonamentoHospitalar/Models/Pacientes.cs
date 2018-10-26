@@ -9,9 +9,11 @@ namespace EscalonamentoHospitalar.Models
 {
     public class Pacientes
     {
+        
         public int Pacientes_ID { get; set; }
 
-        [RegularExpression(@"([A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ\s]+)", ErrorMessage = "Nome Inválido")]
+        [StringLength(30, ErrorMessage = "O nome é demasiado comprido.", MinimumLength = 6)]
+        [Required(ErrorMessage = "Introduza o nome")]
         public string Nome { get; set; }
 
         [RegularExpression(@"([A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ\s]+)", ErrorMessage = "Morada Inválida")]
