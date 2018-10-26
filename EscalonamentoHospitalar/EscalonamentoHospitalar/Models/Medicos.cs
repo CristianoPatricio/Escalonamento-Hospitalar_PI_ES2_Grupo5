@@ -16,8 +16,12 @@ namespace EscalonamentoHospitalar.Models
         //Numero da Ordem
         public string NumeroMecanografico { get; set; }
 
+<<<<<<< HEAD
         [StringLength(30, ErrorMessage = "O nome é demasiado comprido.", MinimumLength = 6)]
         [Required(ErrorMessage = "Introduza o nome")]
+=======
+        [RegularExpression(@"([A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ\s]+)", ErrorMessage = "Nome Inválido")]
+>>>>>>> master
         public string Nome { get; set; }
 
         [RegularExpression(@"([A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ\s]+)", ErrorMessage = "Especialidade Invalida")]
