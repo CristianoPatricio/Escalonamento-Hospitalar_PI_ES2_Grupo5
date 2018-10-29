@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
 
 namespace EscalonamentoHospitalar.Models
 {
     public class Medicos 
     {
+        [Key]
         public int MedicoID { get; set; }
 
         [RegularExpression(@"\d{7}(\s\d{1})?", ErrorMessage = "Numero Errado")]
