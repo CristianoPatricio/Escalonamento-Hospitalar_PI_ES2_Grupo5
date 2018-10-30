@@ -12,7 +12,6 @@ using Microsoft.EntityFrameworkCore;
 using EscalonamentoHospitalar.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using EscalonamentoHospitalar.Models;
 
 namespace EscalonamentoHospitalar
 {
@@ -43,8 +42,8 @@ namespace EscalonamentoHospitalar
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            services.AddDbContext<MedicosDbContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("MedicosDbContext")));
+            services.AddDbContext<HospitalDbContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("HospitalDbContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

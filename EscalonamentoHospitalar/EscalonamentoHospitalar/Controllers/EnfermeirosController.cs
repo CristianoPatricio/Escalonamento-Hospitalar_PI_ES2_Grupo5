@@ -5,16 +5,15 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using EscalonamentoHospitalar.Data;
 using EscalonamentoHospitalar.Models;
 
 namespace EscalonamentoHospitalar.Controllers
 {
     public class EnfermeirosController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly HospitalDbContext _context;
 
-        public EnfermeirosController(ApplicationDbContext context)
+        public EnfermeirosController(HospitalDbContext context)
         {
             _context = context;
         }
