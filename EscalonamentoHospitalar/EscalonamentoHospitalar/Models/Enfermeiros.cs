@@ -39,8 +39,6 @@ namespace EscalonamentoHospitalar.Models
         public string CC { get; set; }
 
         public int EspecialidadeId { get; set; }
-
-
     }
 }
 
