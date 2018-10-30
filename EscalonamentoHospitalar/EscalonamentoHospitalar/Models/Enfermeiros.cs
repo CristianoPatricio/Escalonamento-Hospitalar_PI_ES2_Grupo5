@@ -9,7 +9,7 @@ namespace EscalonamentoHospitalar.Models
 {
     public class Enfermeiros 
     {
-        public string EnfermeiroID{ get; set; }
+        public int EnfermeiroID{ get; set; }
 
         [RegularExpression(@"\d{7}(\s\d{1})?", ErrorMessage = "Numero Errado")]
         //Numero da ordem 
