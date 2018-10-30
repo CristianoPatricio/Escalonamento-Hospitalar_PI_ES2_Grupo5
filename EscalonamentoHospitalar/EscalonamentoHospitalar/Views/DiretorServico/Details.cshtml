@@ -1,0 +1,55 @@
+﻿@model EscalonamentoHospitalar.Models.DiretorServico
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Areas/Identity/Pages/Account/_ViewImports.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>DiretorServico</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NumeroMecanografico)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NumeroMecanografico)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Contacto)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Contacto)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CC)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CC)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Morada)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Morada)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.DiretorServicoID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
