@@ -9,6 +9,7 @@ namespace EscalonamentoHospitalar.Models
 {
     public class Medicos 
     {
+        [Key]
         public int MedicoID { get; set; }
 
 
@@ -36,7 +37,8 @@ namespace EscalonamentoHospitalar.Models
         [Required(ErrorMessage = "Por indroduza a data de Nascimento")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = false)]
-        public DateTime Data_Nascimento { get; set; } 
+        public DateTime Data_Nascimento { get; set; }
 
+        public int EspecialidadeId { get; set; }
     }
 }
