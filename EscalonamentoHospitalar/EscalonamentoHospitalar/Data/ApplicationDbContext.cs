@@ -12,9 +12,6 @@ namespace EscalonamentoHospitalar.Data
             : base(options)
         {
         }
-<<<<<<< HEAD
-=======
-      
->>>>>>> CristianoPatricio
+
     }
 }

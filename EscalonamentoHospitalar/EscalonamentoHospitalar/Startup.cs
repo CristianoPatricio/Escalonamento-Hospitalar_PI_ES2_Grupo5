@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using EscalonamentoHospitalar.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using EscalonamentoHospitalar.Models;
 
 namespace EscalonamentoHospitalar
 {
