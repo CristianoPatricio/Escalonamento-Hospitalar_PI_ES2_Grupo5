@@ -33,7 +33,7 @@ namespace EscalonamentoHospitalar.Controllers
             }
 
             var enfermeiros = await _context.Enfermeiro
-                .FirstOrDefaultAsync(m => m.EnfermeiroID == id);
+                .FirstOrDefaultAsync(m => m.EnfermeiroId == id);
             if (enfermeiros == null)
             {
                 return NotFound();
@@ -87,7 +87,7 @@ namespace EscalonamentoHospitalar.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("EnfermeiroID,NumeroMecanografico,Nome,Especialidade,Contacto,Email,Data_Nascimento,CC,EspecialidadeId")] Enfermeiro enfermeiros)
         {
-            if (id != enfermeiros.EnfermeiroID)
+            if (id != enfermeiros.EnfermeiroId)
             {
                 return NotFound();
             }
@@ -101,7 +101,7 @@ namespace EscalonamentoHospitalar.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EnfermeirosExists(enfermeiros.EnfermeiroID))
+                    if (!EnfermeirosExists(enfermeiros.EnfermeiroId))
                     {
                         return NotFound();
                     }
@@ -124,7 +124,7 @@ namespace EscalonamentoHospitalar.Controllers
             }
 
             var enfermeiros = await _context.Enfermeiro
-                .FirstOrDefaultAsync(m => m.EnfermeiroID == id);
+                .FirstOrDefaultAsync(m => m.EnfermeiroId == id);
             if (enfermeiros == null)
             {
                 return NotFound();
@@ -146,7 +146,7 @@ namespace EscalonamentoHospitalar.Controllers
 
         private bool EnfermeirosExists(int id)
         {
-            return _context.Enfermeiro.Any(e => e.EnfermeiroID == id);
+            return _context.Enfermeiro.Any(e => e.EnfermeiroId == id);
         }
     }
 }

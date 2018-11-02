@@ -9,8 +9,7 @@ namespace EscalonamentoHospitalar.Models
 {
     public class Medico 
     {
-        [Key]
-        public int MedicoID { get; set; }
+        public int MedicoId { get; set; }
 
 
         [RegularExpression(@"\d{7}(\s\d{1})?", ErrorMessage = "Numero Errado")]

@@ -7,7 +7,9 @@ namespace EscalonamentoHospitalar.Models
 {
     public class MedicoEspecialidade
     {
-        public int MedicoID { get; set; }
+        public int MedicoEspecialidadeId { get; set; }
+
+        public int MedicoId { get; set; }
         public Medico Medico { get; set; }
 
         public int EspecialidadeId { get; set; }
