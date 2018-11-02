@@ -5,13 +5,14 @@ using System.Threading.Tasks;
 
 namespace EscalonamentoHospitalar.Models
 {
-    public class EnfermeirosEspecialidade
+    public class MedicoEspecialidade
     {
-        public int EnfermeiroID { get; set; }
-        public Enfermeiros Enfermeiros { get; set; }
+        public int MedicoID { get; set; }
+        public Medico Medico { get; set; }
 
-        public int EspecilidadeID { get; set; }
+        public int EspecialidadeId { get; set; }
         public Especialidade Especialidade { get; set; }
+
 
     }
 }

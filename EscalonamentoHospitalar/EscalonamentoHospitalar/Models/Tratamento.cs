@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EscalonamentoHospitalar.Models
 {
-    public class Tratamentos
+    public class Tratamento
     {
         public int Tratamento_ID { get; set; }
 

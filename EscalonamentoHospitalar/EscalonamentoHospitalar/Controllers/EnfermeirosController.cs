@@ -21,7 +21,7 @@ namespace EscalonamentoHospitalar.Controllers
         // GET: Enfermeiros
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Enfermeiros.ToListAsync());
+            return View(await _context.Enfermeiro.ToListAsync());
         }
 
         // GET: Enfermeiros/Details/5
@@ -32,7 +32,7 @@ namespace EscalonamentoHospitalar.Controllers
                 return NotFound();
             }
 
-            var enfermeiros = await _context.Enfermeiros
+            var enfermeiros = await _context.Enfermeiro
                 .FirstOrDefaultAsync(m => m.EnfermeiroID == id);
             if (enfermeiros == null)
             {
@@ -53,7 +53,7 @@ namespace EscalonamentoHospitalar.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("EnfermeiroID,NumeroMecanografico,Nome,Especialidade,Contacto,Email,Data_Nascimento,CC,EspecialidadeId")] Enfermeiros enfermeiros)
+        public async Task<IActionResult> Create([Bind("EnfermeiroID,NumeroMecanografico,Nome,Especialidade,Contacto,Email,Data_Nascimento,CC,EspecialidadeId")] Enfermeiro enfermeiros)
         {
             if (ModelState.IsValid)
             {
@@ -72,7 +72,7 @@ namespace EscalonamentoHospitalar.Controllers
                 return NotFound();
             }
 
-            var enfermeiros = await _context.Enfermeiros.FindAsync(id);
+            var enfermeiros = await _context.Enfermeiro.FindAsync(id);
             if (enfermeiros == null)
             {
                 return NotFound();
@@ -85,7 +85,7 @@ namespace EscalonamentoHospitalar.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("EnfermeiroID,NumeroMecanografico,Nome,Especialidade,Contacto,Email,Data_Nascimento,CC,EspecialidadeId")] Enfermeiros enfermeiros)
+        public async Task<IActionResult> Edit(int id, [Bind("EnfermeiroID,NumeroMecanografico,Nome,Especialidade,Contacto,Email,Data_Nascimento,CC,EspecialidadeId")] Enfermeiro enfermeiros)
         {
             if (id != enfermeiros.EnfermeiroID)
             {
@@ -123,7 +123,7 @@ namespace EscalonamentoHospitalar.Controllers
                 return NotFound();
             }
 
-            var enfermeiros = await _context.Enfermeiros
+            var enfermeiros = await _context.Enfermeiro
                 .FirstOrDefaultAsync(m => m.EnfermeiroID == id);
             if (enfermeiros == null)
             {
@@ -138,15 +138,15 @@ namespace EscalonamentoHospitalar.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var enfermeiros = await _context.Enfermeiros.FindAsync(id);
-            _context.Enfermeiros.Remove(enfermeiros);
+            var enfermeiros = await _context.Enfermeiro.FindAsync(id);
+            _context.Enfermeiro.Remove(enfermeiros);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool EnfermeirosExists(int id)
         {
-            return _context.Enfermeiros.Any(e => e.EnfermeiroID == id);
+            return _context.Enfermeiro.Any(e => e.EnfermeiroID == id);
         }
     }
 }

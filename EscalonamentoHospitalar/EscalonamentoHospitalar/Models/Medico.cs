@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EscalonamentoHospitalar.Models
 {
-    public class Medicos 
+    public class Medico 
     {
         [Key]
         public int MedicoID { get; set; }
@@ -40,6 +40,6 @@ namespace EscalonamentoHospitalar.Models
         public DateTime Data_Nascimento { get; set; }
 
      //   public int EspecialidadeId { get; set; }
-        public ICollection<MedicosEspecialidade> MedicosEspecialidades { get; set; }
+        public ICollection<MedicoEspecialidade> MedicoEspecialidade { get; set; }
     }
 }

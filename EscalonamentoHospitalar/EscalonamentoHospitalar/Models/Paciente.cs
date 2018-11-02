@@ -7,9 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EscalonamentoHospitalar.Models
 {
-    public class Pacientes
+    public class Paciente
     {
-        public int Pacientes_ID { get; set; }
+        public int Paciente_ID { get; set; }
 
         [RegularExpression(@"([A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ\s]+)", ErrorMessage = "Nome Inválido")]
         public string Nome { get; set; }

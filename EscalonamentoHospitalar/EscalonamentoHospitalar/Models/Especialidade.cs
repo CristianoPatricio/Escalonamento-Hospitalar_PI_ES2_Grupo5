@@ -8,7 +8,7 @@ namespace EscalonamentoHospitalar.Models
         public string Nome { get; set; }
 
        // public ICollection<Medicos> Medicos { get; set; }
-        public ICollection<MedicosEspecialidade> MedicosEspecialidades { get; set; }
-        public ICollection<EnfermeirosEspecialidade> EnfermeirosEspecialidades { get; set; }
+        public ICollection<MedicoEspecialidade> MedicoEspecialidade { get; set; }
+        public ICollection<EnfermeiroEspecialidade> EnfermeiroEspecialidade { get; set; }
     }
 }
