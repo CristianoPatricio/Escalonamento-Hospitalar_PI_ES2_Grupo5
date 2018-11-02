@@ -1,0 +1,60 @@
+﻿@model EscalonamentoHospitalar.Models.Medico
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Medico</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NumeroMecanografico)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NumeroMecanografico)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Nome)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Nome)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Especialidade)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Especialidade)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Contacto)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Contacto)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CC)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CC)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Data_Nascimento)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Data_Nascimento)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.MedicoId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

@@ -18,5 +18,7 @@ namespace EscalonamentoHospitalar.Models
 
         public DbSet<EscalonamentoHospitalar.Models.Enfermeiro> Enfermeiro { get; set; }
 
+        public DbSet<EscalonamentoHospitalar.Models.Medico> Medico { get; set; }
+
     }
 }
