@@ -73,6 +73,8 @@ namespace EscalonamentoHospitalar
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            SeedDataEnfermeiros.Populate(app.ApplicationServices);
         }
     }
 }

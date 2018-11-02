@@ -12,7 +12,7 @@ namespace EscalonamentoHospitalar.Models
         [Key]
         public int EnfermeiroID{ get; set; }
 
-        [RegularExpression(@"\d{7}(\s\d{1})?", ErrorMessage = "Numero Errado")]
+        [RegularExpression(@"[MDE]\d+", ErrorMessage = "Número Errado")]
         //Numero da ordem 
         public string NumeroMecanografico{ get; set; }
 
