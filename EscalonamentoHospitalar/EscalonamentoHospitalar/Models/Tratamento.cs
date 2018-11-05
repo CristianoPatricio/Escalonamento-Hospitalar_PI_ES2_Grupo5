@@ -9,13 +9,17 @@ namespace EscalonamentoHospitalar.Models
 {
     public class Tratamento
     {
-        public int Tratamento_ID { get; set; }
+        public int TratamentoId { get; set; }
 
-        [RegularExpression(@"([A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ\s]+)", ErrorMessage = "Patologia Inválida")]
-        public string Patologia { get; set; }
+        //[RegularExpression(@"([A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ\s]+)", ErrorMessage = "Patologia Inválida")]
+        public Patologia Patologia { get; set; }
+
+        public int PatologiaId { get; set; }
 
         [RegularExpression(@"([A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ\s]+)", ErrorMessage = "Grau Inválido")]
-        public string Grau { get; set; }
+        public Grau Grau { get; set; }
+
+        public int DificuldadeId { get; set; }
 
         [Required(ErrorMessage = "Por indroduza a data de Nascimento")]
         [DataType(DataType.Date)]
