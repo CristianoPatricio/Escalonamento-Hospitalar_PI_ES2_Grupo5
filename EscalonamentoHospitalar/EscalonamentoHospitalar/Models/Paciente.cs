@@ -9,7 +9,8 @@ namespace EscalonamentoHospitalar.Models
 {
     public class Paciente
     {
-        public int Paciente_ID { get; set; }
+        
+        public int PacienteId { get; set; }
 
         [RegularExpression(@"([A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ\s]+)", ErrorMessage = "Nome Inválido")]
         public string Nome { get; set; }
