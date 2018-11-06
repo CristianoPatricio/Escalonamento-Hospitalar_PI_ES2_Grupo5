@@ -9,8 +9,7 @@ namespace EscalonamentoHospitalar.Models
 {
     public class Enfermeiro
     {
-        [Key]
-        public int EnfermeiroID{ get; set; }
+        public int EnfermeiroId{ get; set; }
 
         [RegularExpression(@"[MDE]\d+", ErrorMessage = "Número Errado")]
         //Numero da ordem 

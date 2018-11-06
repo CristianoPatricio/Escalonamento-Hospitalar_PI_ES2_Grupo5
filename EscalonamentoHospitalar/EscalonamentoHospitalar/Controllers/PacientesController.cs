@@ -9,22 +9,22 @@ using EscalonamentoHospitalar.Models;
 
 namespace EscalonamentoHospitalar.Controllers
 {
-    public class EnfermeirosController : Controller
+    public class PacientesController : Controller
     {
         private readonly HospitalDbContext _context;
 
-        public EnfermeirosController(HospitalDbContext context)
+        public PacientesController(HospitalDbContext context)
         {
             _context = context;
         }
 
-        // GET: Enfermeiros
+        // GET: Pacientes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Enfermeiro.ToListAsync());
+            return View(await _context.Paciente.ToListAsync());
         }
 
-        // GET: Enfermeiros/Details/5
+        // GET: Pacientes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -32,39 +32,39 @@ namespace EscalonamentoHospitalar.Controllers
                 return NotFound();
             }
 
-            var enfermeiros = await _context.Enfermeiro
-                .FirstOrDefaultAsync(m => m.EnfermeiroId == id);
-            if (enfermeiros == null)
+            var paciente = await _context.Paciente
+                .FirstOrDefaultAsync(m => m.PacienteId == id);
+            if (paciente == null)
             {
                 return NotFound();
             }
 
-            return View(enfermeiros);
+            return View(paciente);
         }
 
-        // GET: Enfermeiros/Create
+        // GET: Pacientes/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Enfermeiros/Create
+        // POST: Pacientes/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("EnfermeiroID,NumeroMecanografico,Nome,Especialidade,Contacto,Email,Data_Nascimento,CC,EspecialidadeId")] Enfermeiro enfermeiros)
+        public async Task<IActionResult> Create([Bind("PacienteId,Nome,Morada,Cod_Postal,Email,CC,Data_Nascimento,Numero_Utente,Contacto,BoletimClinico")] Paciente paciente)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(enfermeiros);
+                _context.Add(paciente);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(enfermeiros);
+            return View(paciente);
         }
 
-        // GET: Enfermeiros/Edit/5
+        // GET: Pacientes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -72,22 +72,22 @@ namespace EscalonamentoHospitalar.Controllers
                 return NotFound();
             }
 
-            var enfermeiros = await _context.Enfermeiro.FindAsync(id);
-            if (enfermeiros == null)
+            var paciente = await _context.Paciente.FindAsync(id);
+            if (paciente == null)
             {
                 return NotFound();
             }
-            return View(enfermeiros);
+            return View(paciente);
         }
 
-        // POST: Enfermeiros/Edit/5
+        // POST: Pacientes/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("EnfermeiroID,NumeroMecanografico,Nome,Especialidade,Contacto,Email,Data_Nascimento,CC,EspecialidadeId")] Enfermeiro enfermeiros)
+        public async Task<IActionResult> Edit(int id, [Bind("PacienteId,Nome,Morada,Cod_Postal,Email,CC,Data_Nascimento,Numero_Utente,Contacto,BoletimClinico")] Paciente paciente)
         {
-            if (id != enfermeiros.EnfermeiroId)
+            if (id != paciente.PacienteId)
             {
                 return NotFound();
             }
@@ -96,12 +96,12 @@ namespace EscalonamentoHospitalar.Controllers
             {
                 try
                 {
-                    _context.Update(enfermeiros);
+                    _context.Update(paciente);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EnfermeirosExists(enfermeiros.EnfermeiroId))
+                    if (!PacienteExists(paciente.PacienteId))
                     {
                         return NotFound();
                     }
@@ -112,10 +112,10 @@ namespace EscalonamentoHospitalar.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(enfermeiros);
+            return View(paciente);
         }
 
-        // GET: Enfermeiros/Delete/5
+        // GET: Pacientes/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -123,30 +123,30 @@ namespace EscalonamentoHospitalar.Controllers
                 return NotFound();
             }
 
-            var enfermeiros = await _context.Enfermeiro
-                .FirstOrDefaultAsync(m => m.EnfermeiroId == id);
-            if (enfermeiros == null)
+            var paciente = await _context.Paciente
+                .FirstOrDefaultAsync(m => m.PacienteId == id);
+            if (paciente == null)
             {
                 return NotFound();
             }
 
-            return View(enfermeiros);
+            return View(paciente);
         }
 
-        // POST: Enfermeiros/Delete/5
+        // POST: Pacientes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var enfermeiros = await _context.Enfermeiro.FindAsync(id);
-            _context.Enfermeiro.Remove(enfermeiros);
+            var paciente = await _context.Paciente.FindAsync(id);
+            _context.Paciente.Remove(paciente);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool EnfermeirosExists(int id)
+        private bool PacienteExists(int id)
         {
-            return _context.Enfermeiro.Any(e => e.EnfermeiroId == id);
+            return _context.Paciente.Any(e => e.PacienteId == id);
         }
     }
 }

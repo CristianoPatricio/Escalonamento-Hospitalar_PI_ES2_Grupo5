@@ -9,22 +9,23 @@ using EscalonamentoHospitalar.Models;
 
 namespace EscalonamentoHospitalar.Controllers
 {
-    public class EnfermeirosController : Controller
+    public class TratamentosController : Controller
     {
         private readonly HospitalDbContext _context;
 
-        public EnfermeirosController(HospitalDbContext context)
+        public TratamentosController(HospitalDbContext context)
         {
             _context = context;
         }
 
-        // GET: Enfermeiros
+        // GET: Tratamentos
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Enfermeiro.ToListAsync());
+            var hospitalDbContext = _context.Tratamento.Include(t => t.Patologia);
+            return View(await hospitalDbContext.ToListAsync());
         }
 
-        // GET: Enfermeiros/Details/5
+        // GET: Tratamentos/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -32,39 +33,42 @@ namespace EscalonamentoHospitalar.Controllers
                 return NotFound();
             }
 
-            var enfermeiros = await _context.Enfermeiro
-                .FirstOrDefaultAsync(m => m.EnfermeiroId == id);
-            if (enfermeiros == null)
+            var tratamento = await _context.Tratamento
+                .Include(t => t.Patologia)
+                .FirstOrDefaultAsync(m => m.TratamentoId == id);
+            if (tratamento == null)
             {
                 return NotFound();
             }
 
-            return View(enfermeiros);
+            return View(tratamento);
         }
 
-        // GET: Enfermeiros/Create
+        // GET: Tratamentos/Create
         public IActionResult Create()
         {
+            ViewData["PatologiaId"] = new SelectList(_context.Set<Patologia>(), "PatologiaId", "PatologiaId");
             return View();
         }
 
-        // POST: Enfermeiros/Create
+        // POST: Tratamentos/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("EnfermeiroID,NumeroMecanografico,Nome,Especialidade,Contacto,Email,Data_Nascimento,CC,EspecialidadeId")] Enfermeiro enfermeiros)
+        public async Task<IActionResult> Create([Bind("TratamentoId,PatologiaId,DificuldadeId,DataInicio,DataFim,DuracaoCiclo,Regime,Decorrer,Concluido")] Tratamento tratamento)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(enfermeiros);
+                _context.Add(tratamento);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(enfermeiros);
+            ViewData["PatologiaId"] = new SelectList(_context.Set<Patologia>(), "PatologiaId", "PatologiaId", tratamento.PatologiaId);
+            return View(tratamento);
         }
 
-        // GET: Enfermeiros/Edit/5
+        // GET: Tratamentos/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -72,22 +76,23 @@ namespace EscalonamentoHospitalar.Controllers
                 return NotFound();
             }
 
-            var enfermeiros = await _context.Enfermeiro.FindAsync(id);
-            if (enfermeiros == null)
+            var tratamento = await _context.Tratamento.FindAsync(id);
+            if (tratamento == null)
             {
                 return NotFound();
             }
-            return View(enfermeiros);
+            ViewData["PatologiaId"] = new SelectList(_context.Set<Patologia>(), "PatologiaId", "PatologiaId", tratamento.PatologiaId);
+            return View(tratamento);
         }
 
-        // POST: Enfermeiros/Edit/5
+        // POST: Tratamentos/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("EnfermeiroID,NumeroMecanografico,Nome,Especialidade,Contacto,Email,Data_Nascimento,CC,EspecialidadeId")] Enfermeiro enfermeiros)
+        public async Task<IActionResult> Edit(int id, [Bind("TratamentoId,PatologiaId,DificuldadeId,DataInicio,DataFim,DuracaoCiclo,Regime,Decorrer,Concluido")] Tratamento tratamento)
         {
-            if (id != enfermeiros.EnfermeiroId)
+            if (id != tratamento.TratamentoId)
             {
                 return NotFound();
             }
@@ -96,12 +101,12 @@ namespace EscalonamentoHospitalar.Controllers
             {
                 try
                 {
-                    _context.Update(enfermeiros);
+                    _context.Update(tratamento);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EnfermeirosExists(enfermeiros.EnfermeiroId))
+                    if (!TratamentoExists(tratamento.TratamentoId))
                     {
                         return NotFound();
                     }
@@ -112,10 +117,11 @@ namespace EscalonamentoHospitalar.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(enfermeiros);
+            ViewData["PatologiaId"] = new SelectList(_context.Set<Patologia>(), "PatologiaId", "PatologiaId", tratamento.PatologiaId);
+            return View(tratamento);
         }
 
-        // GET: Enfermeiros/Delete/5
+        // GET: Tratamentos/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -123,30 +129,31 @@ namespace EscalonamentoHospitalar.Controllers
                 return NotFound();
             }
 
-            var enfermeiros = await _context.Enfermeiro
-                .FirstOrDefaultAsync(m => m.EnfermeiroId == id);
-            if (enfermeiros == null)
+            var tratamento = await _context.Tratamento
+                .Include(t => t.Patologia)
+                .FirstOrDefaultAsync(m => m.TratamentoId == id);
+            if (tratamento == null)
             {
                 return NotFound();
             }
 
-            return View(enfermeiros);
+            return View(tratamento);
         }
 
-        // POST: Enfermeiros/Delete/5
+        // POST: Tratamentos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var enfermeiros = await _context.Enfermeiro.FindAsync(id);
-            _context.Enfermeiro.Remove(enfermeiros);
+            var tratamento = await _context.Tratamento.FindAsync(id);
+            _context.Tratamento.Remove(tratamento);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool EnfermeirosExists(int id)
+        private bool TratamentoExists(int id)
         {
-            return _context.Enfermeiro.Any(e => e.EnfermeiroId == id);
+            return _context.Tratamento.Any(e => e.TratamentoId == id);
         }
     }
 }

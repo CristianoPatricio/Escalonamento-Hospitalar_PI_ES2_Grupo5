@@ -4,14 +4,16 @@ using EscalonamentoHospitalar.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EscalonamentoHospitalar.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    partial class HospitalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181102173325_initial")]
+    partial class initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -44,15 +46,9 @@ namespace EscalonamentoHospitalar.Migrations
                     b.ToTable("DiretorServico");
                 });
 
-<<<<<<< HEAD
-            modelBuilder.Entity("EscalonamentoHospitalar.Models.Enfermeiros", b =>
-                {
-                    b.Property<int>("EnfermeiroID")
-=======
             modelBuilder.Entity("EscalonamentoHospitalar.Models.Enfermeiro", b =>
                 {
                     b.Property<int>("EnfermeiroId")
->>>>>>> master
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -67,21 +63,11 @@ namespace EscalonamentoHospitalar.Migrations
 
                     b.Property<string>("Especialidade");
 
-<<<<<<< HEAD
-                    b.Property<int>("EspecialidadeId");
-
-=======
->>>>>>> master
                     b.Property<string>("Nome")
                         .IsRequired();
 
                     b.Property<string>("NumeroMecanografico");
 
-<<<<<<< HEAD
-                    b.HasKey("EnfermeiroID");
-
-                    b.ToTable("Enfermeiros");
-=======
                     b.HasKey("EnfermeiroId");
 
                     b.ToTable("Enfermeiro");
@@ -188,7 +174,6 @@ namespace EscalonamentoHospitalar.Migrations
                         .WithMany("MedicoEspecialidade")
                         .HasForeignKey("MedicoId")
                         .OnDelete(DeleteBehavior.Cascade);
->>>>>>> master
                 });
 #pragma warning restore 612, 618
         }
