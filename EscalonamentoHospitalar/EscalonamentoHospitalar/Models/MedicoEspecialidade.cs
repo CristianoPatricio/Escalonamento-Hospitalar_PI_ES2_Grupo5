@@ -12,9 +12,6 @@ namespace EscalonamentoHospitalar.Models
         public int MedicoId { get; set; }
         public Medico Medico { get; set; }
 
-        public int EspecialidadeId { get; set; }
-        public Especialidade Especialidade { get; set; }
-
-
+ 
     }
 }
