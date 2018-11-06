@@ -19,7 +19,7 @@ namespace EscalonamentoHospitalar.Models
         [RegularExpression(@"([A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ\s]+)", ErrorMessage = "Grau Inválido")]
         public Grau Grau { get; set; }
 
-        public int DificuldadeId { get; set; }
+        public int GrauId { get; set; }
 
         [Required(ErrorMessage = "Por indroduza a data de Nascimento")]
         [DataType(DataType.Date)]
