@@ -19,9 +19,6 @@ namespace EscalonamentoHospitalar.Models
         [RegularExpression(@"([A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ\s]+)", ErrorMessage = "Nome Inválido")]
         public string Nome { get; set; }
 
-        [RegularExpression(@"([A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ\s]+)", ErrorMessage = "Especialidade Invalida")]
-        public string Especialidade { get; set; }
-
         [RegularExpression(@"(\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,6})", ErrorMessage = "Email Inválido")]
         public string Email { get; set; }
 
@@ -38,7 +35,7 @@ namespace EscalonamentoHospitalar.Models
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = false)]
         public DateTime Data_Nascimento { get; set; }
 
-     //   public int EspecialidadeId { get; set; }
+     
         public ICollection<MedicoEspecialidade> MedicoEspecialidade { get; set; }
     }
 }
