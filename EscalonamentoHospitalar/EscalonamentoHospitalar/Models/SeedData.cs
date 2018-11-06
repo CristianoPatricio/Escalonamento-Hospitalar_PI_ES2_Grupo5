@@ -38,6 +38,69 @@ namespace EscalonamentoHospitalar.Models
                             Data_Nascimento = new DateTime(1985, 4, 2),
                         }
                     );
+                if (db.Paciente.Any()) return;
+                db.Paciente.AddRange(
+                    new Paciente
+                    {
+                       
+                        Nome = "Rita",
+                        Morada = "Rua das Tulipas",
+                        Cod_Postal = "6300-775",
+                        Email = "ritabca@mail.pt",
+                        CC = "14725870",
+                        Data_Nascimento = new DateTime(1990, 2, 1),
+                        Numero_Utente = "123456789",
+                        Contacto = "210257416",                      
+                    },
+                    new Paciente
+                    {
+                        
+                        Nome = "Rita",
+                        Morada = "Rua das Tulipas",
+                        Cod_Postal = "6300-775",
+                        Email = "ritabca@mail.pt",
+                        CC = "14725870",
+                        Data_Nascimento = new DateTime(1990, 2, 1),
+                        Numero_Utente = "123456789",
+                        Contacto = "210257416",
+                    },
+                    new Paciente
+                    {
+                        
+                        Nome = "Rita",
+                        Morada = "Rua das Tulipas",
+                        Cod_Postal = "6300-775",
+                        Email = "ritabca@mail.pt",
+                        CC = "14725870",
+                        Data_Nascimento = new DateTime(1990, 2, 1),
+                        Numero_Utente = "123456789",
+                        Contacto = "210257416",
+                    },
+                    new Paciente
+                    {
+                        
+                        Nome = "Rita",
+                        Morada = "Rua das Tulipas",
+                        Cod_Postal = "6300-775",
+                        Email = "ritabca@mail.pt",
+                        CC = "14725870",
+                        Data_Nascimento = new DateTime(1990, 2, 1),
+                        Numero_Utente = "123456789",
+                        Contacto = "210257416",
+                    },
+                    new Paciente
+                    {
+
+                        Nome = "Rita",
+                        Morada = "Rua das Tulipas",
+                        Cod_Postal = "6300-775",
+                        Email = "ritabca@mail.pt",
+                        CC = "14725870",
+                        Data_Nascimento = new DateTime(1990, 2, 1),
+                        Numero_Utente = "123456789",
+                        Contacto = "210257416",
+                    }
+                    );
                 db.SaveChanges();
             }
         }
