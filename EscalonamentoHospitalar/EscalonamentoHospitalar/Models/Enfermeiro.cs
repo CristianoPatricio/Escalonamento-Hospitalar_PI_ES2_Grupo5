@@ -19,9 +19,6 @@ namespace EscalonamentoHospitalar.Models
         [RegularExpression(@"([A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ\s]+)", ErrorMessage = "Nome Inválido")]
         public string Nome { get; set; }
 
-        [RegularExpression(@"([A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ\s]+)", ErrorMessage = "Especialidade Invalida")]
-        public string Especialidade { get; set; }
-
         [RegularExpression(@"(2\d{8})|(9[1236]\d{7})", ErrorMessage = "Contacto Inválido")]
         public string Contacto { get; set; }
 
@@ -37,8 +34,7 @@ namespace EscalonamentoHospitalar.Models
         [RegularExpression(@"\d{8}(\s\d{1})?", ErrorMessage = "Cartão de Cidadão Inválido")]
         public string CC { get; set; }
 
-      //  public int EspecialidadeId { get; set; }
-      public ICollection<EnfermeiroEspecialidade> EnfermeiroEspecialidade { get; set; }
+        public ICollection<EnfermeiroEspecialidade> EnfermeiroEspecialidade { get; set; }
 
     }
 }
