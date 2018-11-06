@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace EscalonamentoHospitalar.Models
 {
-    public class Enfermeiros 
+    public class Enfermeiro
     {
         [Key]
         public int EnfermeiroID{ get; set; }
@@ -38,7 +38,9 @@ namespace EscalonamentoHospitalar.Models
         [RegularExpression(@"\d{8}(\s\d{1})?", ErrorMessage = "Cartão de Cidadão Inválido")]
         public string CC { get; set; }
 
-        public int EspecialidadeId { get; set; }
+      //  public int EspecialidadeId { get; set; }
+      public ICollection<EnfermeiroEspecialidade> EnfermeiroEspecialidade { get; set; }
+
     }
 }
 

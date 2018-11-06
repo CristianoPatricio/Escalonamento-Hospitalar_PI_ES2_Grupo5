@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using EscalonamentoHospitalar.Models;
 
 namespace EscalonamentoHospitalar.Data
 {
@@ -13,6 +12,6 @@ namespace EscalonamentoHospitalar.Data
             : base(options)
         {
         }
-      
+
     }
 }

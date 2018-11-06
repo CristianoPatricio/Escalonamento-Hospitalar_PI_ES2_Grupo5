@@ -1,12 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 
 namespace EscalonamentoHospitalar.Models
 {
-    public class Medicos 
+    public class Medico 
     {
         [Key]
         public int MedicoID { get; set; }
+
 
         [RegularExpression(@"\d{7}(\s\d{1})?", ErrorMessage = "Numero Errado")]
         //Numero da Ordem
@@ -27,12 +32,14 @@ namespace EscalonamentoHospitalar.Models
         [RegularExpression(@"\d{8}(\s\d{1})?", ErrorMessage = "Cartão de Cidadão Inválido")]
         public string CC { get; set; }
 
+
+        //abc
         [Required(ErrorMessage = "Por indroduza a data de Nascimento")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = false)]
-        public DateTime Data_Nascimento { get; set; } 
+        public DateTime Data_Nascimento { get; set; }
 
-        public int EspecialidadeId { get; set; }
-
+     //   public int EspecialidadeId { get; set; }
+        public ICollection<MedicoEspecialidade> MedicoEspecialidade { get; set; }
     }
 }
