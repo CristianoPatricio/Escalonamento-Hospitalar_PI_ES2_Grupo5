@@ -13,7 +13,7 @@ namespace EscalonamentoHospitalar.Models
         public Enfermeiro Enfermeiro { get; set; }
 
         public int EspecilidadeId { get; set; }
-        public Especialidade Especialidade { get; set; }
+      
 
     }
 }
