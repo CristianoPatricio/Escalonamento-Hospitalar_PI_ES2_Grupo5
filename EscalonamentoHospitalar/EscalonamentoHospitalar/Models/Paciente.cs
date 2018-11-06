@@ -40,8 +40,7 @@ namespace EscalonamentoHospitalar.Models
         [Required(ErrorMessage = "Por favor indroduza o contacto")]
         public string Contacto {get; set;}
 
-        [RegularExpression(@"([A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ\s]+)", ErrorMessage = "Nome Inválido")]
-        public string BoletimClinico { get; set; }
+        
 
 
 
