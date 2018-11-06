@@ -13,6 +13,7 @@ using EscalonamentoHospitalar.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using EscalonamentoHospitalar.Models;
+using SeedData = EscalonamentoHospitalar.Data.SeedData;
 
 namespace EscalonamentoHospitalar
 {
@@ -74,7 +75,7 @@ namespace EscalonamentoHospitalar
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
 
-            SeedDataEnfermeiros.Populate(app.ApplicationServices);
+            SeedData.Populate(app.ApplicationServices);
         }
     }
 }
