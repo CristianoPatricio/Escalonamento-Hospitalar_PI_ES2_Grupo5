@@ -13,9 +13,9 @@ namespace EscalonamentoHospitalar.Models
             using (var serviceScope = applicationServices.CreateScope())
             {
                 var db = serviceScope.ServiceProvider.GetService<HospitalDbContext>();
-                if (db.Medico.Any()) return;
+                if (db.Medicos.Any()) return;
 
-                db.Medico.AddRange(
+                db.Medicos.AddRange(
                         new Medico {
                             MedicoId = 1,
                             NumeroMecanografico = "M001",
