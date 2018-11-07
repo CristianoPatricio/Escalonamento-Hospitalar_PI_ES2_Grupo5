@@ -21,7 +21,7 @@ namespace EscalonamentoHospitalar.Controllers
         // GET: Medicos
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Medico.ToListAsync());
+            return View(await _context.Medicos.ToListAsync());
         }
 
         // GET: Medicos/Details/5
@@ -32,7 +32,7 @@ namespace EscalonamentoHospitalar.Controllers
                 return NotFound();
             }
 
-            var medico = await _context.Medico
+            var medico = await _context.Medicos
                 .FirstOrDefaultAsync(m => m.MedicoId == id);
             if (medico == null)
             {
@@ -72,7 +72,7 @@ namespace EscalonamentoHospitalar.Controllers
                 return NotFound();
             }
 
-            var medico = await _context.Medico.FindAsync(id);
+            var medico = await _context.Medicos.FindAsync(id);
             if (medico == null)
             {
                 return NotFound();
@@ -123,7 +123,7 @@ namespace EscalonamentoHospitalar.Controllers
                 return NotFound();
             }
 
-            var medico = await _context.Medico
+            var medico = await _context.Medicos
                 .FirstOrDefaultAsync(m => m.MedicoId == id);
             if (medico == null)
             {
@@ -138,15 +138,15 @@ namespace EscalonamentoHospitalar.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var medico = await _context.Medico.FindAsync(id);
-            _context.Medico.Remove(medico);
+            var medico = await _context.Medicos.FindAsync(id);
+            _context.Medicos.Remove(medico);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool MedicoExists(int id)
         {
-            return _context.Medico.Any(e => e.MedicoId == id);
+            return _context.Medicos.Any(e => e.MedicoId == id);
         }
     }
 }

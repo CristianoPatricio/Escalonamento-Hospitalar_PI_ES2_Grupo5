@@ -15,7 +15,7 @@ namespace EscalonamentoHospitalar.Models
         [RegularExpression(@"([A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ\s]+)", ErrorMessage = "Nome Inválido")]
         public string Name { get; set; }
 
-        [RegularExpression(@"\d{7}(\s\d{1})?", ErrorMessage = "Numero Errado")]
+        [RegularExpression(@"[MDE]\d+", ErrorMessage = "Numero Errado")]
         //Numero da Ordem
         public string NumeroMecanografico { get; set; }
 
