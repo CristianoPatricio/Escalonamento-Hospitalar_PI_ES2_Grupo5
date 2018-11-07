@@ -21,7 +21,7 @@ namespace EscalonamentoHospitalar.Controllers
         // GET: Enfermeiros
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Enfermeiro.ToListAsync());
+            return View(await _context.Enfermeiros.ToListAsync());
         }
 
         // GET: Enfermeiros/Details/5
@@ -32,7 +32,7 @@ namespace EscalonamentoHospitalar.Controllers
                 return NotFound();
             }
 
-            var enfermeiro = await _context.Enfermeiro
+            var enfermeiro = await _context.Enfermeiros
                 .FirstOrDefaultAsync(m => m.EnfermeiroId == id);
             if (enfermeiro == null)
             {
@@ -72,7 +72,7 @@ namespace EscalonamentoHospitalar.Controllers
                 return NotFound();
             }
 
-            var enfermeiro = await _context.Enfermeiro.FindAsync(id);
+            var enfermeiro = await _context.Enfermeiros.FindAsync(id);
             if (enfermeiro == null)
             {
                 return NotFound();
@@ -123,7 +123,7 @@ namespace EscalonamentoHospitalar.Controllers
                 return NotFound();
             }
 
-            var enfermeiro = await _context.Enfermeiro
+            var enfermeiro = await _context.Enfermeiros
                 .FirstOrDefaultAsync(m => m.EnfermeiroId == id);
             if (enfermeiro == null)
             {
@@ -138,15 +138,15 @@ namespace EscalonamentoHospitalar.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var enfermeiro = await _context.Enfermeiro.FindAsync(id);
-            _context.Enfermeiro.Remove(enfermeiro);
+            var enfermeiro = await _context.Enfermeiros.FindAsync(id);
+            _context.Enfermeiros.Remove(enfermeiro);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool EnfermeiroExists(int id)
         {
-            return _context.Enfermeiro.Any(e => e.EnfermeiroId == id);
+            return _context.Enfermeiros.Any(e => e.EnfermeiroId == id);
         }
     }
 }

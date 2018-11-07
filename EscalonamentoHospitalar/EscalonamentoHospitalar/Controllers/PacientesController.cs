@@ -21,7 +21,7 @@ namespace EscalonamentoHospitalar.Controllers
         // GET: Pacientes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Paciente.ToListAsync());
+            return View(await _context.Pacientes.ToListAsync());
         }
 
         // GET: Pacientes/Details/5
@@ -32,7 +32,7 @@ namespace EscalonamentoHospitalar.Controllers
                 return NotFound();
             }
 
-            var paciente = await _context.Paciente
+            var paciente = await _context.Pacientes
                 .FirstOrDefaultAsync(m => m.PacienteId == id);
             if (paciente == null)
             {
@@ -72,7 +72,7 @@ namespace EscalonamentoHospitalar.Controllers
                 return NotFound();
             }
 
-            var paciente = await _context.Paciente.FindAsync(id);
+            var paciente = await _context.Pacientes.FindAsync(id);
             if (paciente == null)
             {
                 return NotFound();
@@ -123,7 +123,7 @@ namespace EscalonamentoHospitalar.Controllers
                 return NotFound();
             }
 
-            var paciente = await _context.Paciente
+            var paciente = await _context.Pacientes
                 .FirstOrDefaultAsync(m => m.PacienteId == id);
             if (paciente == null)
             {
@@ -138,15 +138,15 @@ namespace EscalonamentoHospitalar.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var paciente = await _context.Paciente.FindAsync(id);
-            _context.Paciente.Remove(paciente);
+            var paciente = await _context.Pacientes.FindAsync(id);
+            _context.Pacientes.Remove(paciente);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool PacienteExists(int id)
         {
-            return _context.Paciente.Any(e => e.PacienteId == id);
+            return _context.Pacientes.Any(e => e.PacienteId == id);
         }
     }
 }
