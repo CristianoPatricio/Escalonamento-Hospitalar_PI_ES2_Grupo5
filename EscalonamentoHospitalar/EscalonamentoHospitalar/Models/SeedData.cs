@@ -13,14 +13,13 @@ namespace EscalonamentoHospitalar.Models
             using (var serviceScope = applicationServices.CreateScope())
             {
                 var db = serviceScope.ServiceProvider.GetService<HospitalDbContext>();
-                if (db.Medico.Any()) return;
+                if (db.Medicos.Any()) return;
 
-                db.Medico.AddRange(
+                db.Medicos.AddRange(
                         new Medico {
                             MedicoId = 1,
                             NumeroMecanografico = "M001",
                             Nome = "Manuel Santos",
-                            Especialidade = "Patologia Clínica",
                             Email = "manuelsantos@uls.guarda.com",
                             Contacto = "936571245",
                             CC = "15851657",
@@ -31,7 +30,6 @@ namespace EscalonamentoHospitalar.Models
                             MedicoId = 2,
                             NumeroMecanografico = "M002",
                             Nome = "Elisabete Eiras",
-                            Especialidade = "Estomatologia",
                             Email = "elisabeteeiras@uls.guarda.com",
                             Contacto = "925641937",
                             CC = "16457832",
