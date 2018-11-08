@@ -15,7 +15,7 @@ namespace EscalonamentoHospitalar.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
+                .HasAnnotation("ProductVersion", "2.1.3-rtm-32065")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -100,8 +100,6 @@ namespace EscalonamentoHospitalar.Migrations
 
                     b.Property<string>("Email");
 
-                    b.Property<string>("Especialidade");
-
                     b.Property<string>("Nome");
 
                     b.Property<string>("NumeroMecanografico");
@@ -133,8 +131,6 @@ namespace EscalonamentoHospitalar.Migrations
                     b.Property<int>("PacienteId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("BoletimClinico");
 
                     b.Property<string>("CC");
 

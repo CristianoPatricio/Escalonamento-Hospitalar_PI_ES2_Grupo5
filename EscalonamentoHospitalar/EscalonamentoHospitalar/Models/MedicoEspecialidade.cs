@@ -13,9 +13,5 @@ namespace EscalonamentoHospitalar.Models
         public int MedicoId { get; set; }
         public Medico Medico { get; set; }
 
-<<<<<<< HEAD
- 
-=======
->>>>>>> CristianoPatricio
     }
 }

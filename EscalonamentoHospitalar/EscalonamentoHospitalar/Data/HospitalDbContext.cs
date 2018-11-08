@@ -20,12 +20,8 @@ namespace EscalonamentoHospitalar.Models
 
         public DbSet<EscalonamentoHospitalar.Models.Medico> Medicos { get; set; }
 
-<<<<<<< HEAD
-
-        public DbSet<EscalonamentoHospitalar.Models.Paciente> Paciente { get; set; }
-=======
         public DbSet<EscalonamentoHospitalar.Models.Paciente> Pacientes { get; set; }
->>>>>>> CristianoPatricio
+
 
         public DbSet<EscalonamentoHospitalar.Models.EnfermeiroEspecialidade> EnfermeiroEspecialidades { get; set; }
 

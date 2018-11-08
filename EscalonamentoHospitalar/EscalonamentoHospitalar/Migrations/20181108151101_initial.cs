@@ -52,7 +52,6 @@ namespace EscalonamentoHospitalar.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     NumeroMecanografico = table.Column<string>(nullable: true),
                     Nome = table.Column<string>(nullable: true),
-                    Especialidade = table.Column<string>(nullable: true),
                     Email = table.Column<string>(nullable: true),
                     Contacto = table.Column<string>(nullable: true),
                     CC = table.Column<string>(nullable: true),
@@ -76,8 +75,7 @@ namespace EscalonamentoHospitalar.Migrations
                     CC = table.Column<string>(nullable: true),
                     Data_Nascimento = table.Column<DateTime>(nullable: false),
                     Numero_Utente = table.Column<string>(nullable: true),
-                    Contacto = table.Column<string>(nullable: false),
-                    BoletimClinico = table.Column<string>(nullable: true)
+                    Contacto = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {

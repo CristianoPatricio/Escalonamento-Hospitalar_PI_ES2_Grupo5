@@ -47,7 +47,7 @@ namespace EscalonamentoHospitalar.Controllers
         // GET: MedicoEspecialidades/Create
         public IActionResult Create()
         {
-            ViewData["MedicoId"] = new SelectList(_context.Medico, "MedicoId", "MedicoId");
+            ViewData["MedicoId"] = new SelectList(_context.Medicos, "MedicoId", "MedicoId");
             return View();
         }
 
@@ -64,7 +64,7 @@ namespace EscalonamentoHospitalar.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MedicoId"] = new SelectList(_context.Medico, "MedicoId", "MedicoId", medicoEspecialidade.MedicoId);
+            ViewData["MedicoId"] = new SelectList(_context.Medicos, "MedicoId", "MedicoId", medicoEspecialidade.MedicoId);
             return View(medicoEspecialidade);
         }
 
@@ -81,7 +81,7 @@ namespace EscalonamentoHospitalar.Controllers
             {
                 return NotFound();
             }
-            ViewData["MedicoId"] = new SelectList(_context.Medico, "MedicoId", "MedicoId", medicoEspecialidade.MedicoId);
+            ViewData["MedicoId"] = new SelectList(_context.Medicos, "MedicoId", "MedicoId", medicoEspecialidade.MedicoId);
             return View(medicoEspecialidade);
         }
 
@@ -117,7 +117,7 @@ namespace EscalonamentoHospitalar.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MedicoId"] = new SelectList(_context.Medico, "MedicoId", "MedicoId", medicoEspecialidade.MedicoId);
+            ViewData["MedicoId"] = new SelectList(_context.Medicos, "MedicoId", "MedicoId", medicoEspecialidade.MedicoId);
             return View(medicoEspecialidade);
         }
 
