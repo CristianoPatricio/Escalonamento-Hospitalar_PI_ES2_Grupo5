@@ -62,8 +62,8 @@ namespace EscalonamentoHospitalar.Data
 
             db.MedicoEspecialidade.AddRange(
 
-                new MedicoEspecialidade { Nome = "Manuel Santos", MedicoId = manuel.MedicoId },
-                new MedicoEspecialidade { Nome = "Elisabete Eiras", MedicoId = elisabete.MedicoId }
+                new MedicoEspecialidade { Nome = "Patologia", MedicoId = manuel.MedicoId },
+                new MedicoEspecialidade { Nome = "Oncologia", MedicoId = elisabete.MedicoId }
                 );
 
             db.SaveChanges();
