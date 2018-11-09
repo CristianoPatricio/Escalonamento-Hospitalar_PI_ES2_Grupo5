@@ -4,31 +4,31 @@
     ViewData["Title"] = "Index";
 }
 
-<h2>Index</h2>
+<h2>Lista de Médicos</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Inserir novo médico</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.NumeroMecanografico)
+                Código
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Nome)
+                Nome
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Email)
+                Email
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Contacto)
+                Contacto
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CC)
+                Nº Cartão de Cidadão
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Data_Nascimento)
+                Data de Nascimento
             </th>
             <th></th>
         </tr>
@@ -55,9 +55,9 @@
                 @Html.DisplayFor(modelItem => item.Data_Nascimento)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.MedicoId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.MedicoId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.MedicoId">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.MedicoId">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.MedicoId">Detalhes</a> |
+                <a asp-action="Delete" asp-route-id="@item.MedicoId">Apagar</a>
             </td>
         </tr>
 }
