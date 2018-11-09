@@ -1,0 +1,75 @@
+﻿@model EscalonamentoHospitalar.Models.Tratamento
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Tratamento</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Patologia)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Patologia.PatologiaId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Paciente)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Paciente.Contacto)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Grau)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Grau.GrauId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DataInicio)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DataInicio)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DataFim)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DataFim)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DuracaoCiclo)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DuracaoCiclo)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Regime)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Regime)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Decorrer)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Decorrer)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Concluido)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Concluido)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="TratamentoId" />
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>
