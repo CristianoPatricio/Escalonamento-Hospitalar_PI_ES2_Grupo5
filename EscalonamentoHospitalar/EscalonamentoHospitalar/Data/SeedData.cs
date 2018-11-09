@@ -22,7 +22,80 @@ namespace EscalonamentoHospitalar.Data
 
                 SeedMedicos(db);
                 SeedMedicoEspecialidade(db);
+
+                SeedPacientes(db);
+                
             }
+        }
+
+        private static void SeedPacientes(HospitalDbContext db)
+        {
+            if (db.Pacientes.Any()) return;
+               db.Pacientes.AddRange(
+                
+                   new Paciente { 
+
+
+                    Nome = "Rita",
+                    Morada = "Rua das Tulipas",
+                    Cod_Postal = "6300-775",
+                    Email = "ritabca@mail.pt",
+                    CC = "147258709",
+                    Data_Nascimento = new DateTime(1990, 2, 1),
+                    Numero_Utente = "123456789",
+                    Contacto = "210257416",
+                },
+
+                    new Paciente { 
+         
+
+                    Nome = "Barbara",
+                    Morada = "Rua Francisco Sa Carneiro",
+                    Cod_Postal = "6300-225",
+                    Email = "barbara_R@sapo.pt",
+                    CC = "147187301",
+                    Data_Nascimento = new DateTime(1995, 06, 12),
+                    Numero_Utente = "135756789",
+                    Contacto = "912378563",
+               },
+           
+        new Paciente { 
+
+                    Nome = "Andre",
+                    Morada = "Rua 25 de Abril",
+                    Cod_Postal = "6000-710",
+                    Email = "andre@mail.pt",
+                    CC = "177858705",
+                    Data_Nascimento = new DateTime(1968, 08, 08),
+                    Numero_Utente = "198736789",
+                    Contacto = "912345678",
+                },
+
+             new Paciente { 
+                    Nome = "Leandro",
+                    Morada = "Rua da Boa Vista",
+                    Cod_Postal = "3000-105",
+                    Email = "leandro@mail.pt",
+                    CC = "123858703",
+                    Data_Nascimento = new DateTime(1975, 4, 25),
+                    Numero_Utente = "123475632",
+                    Contacto = "969525305",
+             },
+                
+            new Paciente { 
+
+                    Nome = "Tiago",
+                    Morada = "Rua dos Combatentes",
+                    Cod_Postal = "1000-025",
+                    Email = "tiago@mail.pt",
+                    CC = "198235870",
+                    Data_Nascimento = new DateTime(1940, 12, 25),
+                    Numero_Utente = "195304678",
+                    Contacto = "270284532",
+            }
+            );
+
+            db.SaveChanges();
         }
 
         private static void SeedMedicoEspecialidade(HospitalDbContext db)
@@ -174,5 +247,6 @@ namespace EscalonamentoHospitalar.Data
 
             db.SaveChanges();
         }
+         
     }
 }
