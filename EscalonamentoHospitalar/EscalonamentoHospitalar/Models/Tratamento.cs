@@ -24,12 +24,12 @@ namespace EscalonamentoHospitalar.Models
 
         public int GrauId { get; set; }
 
-        [Required(ErrorMessage = "Por indroduza a data de Nascimento")]
+        [Required(ErrorMessage = "Por introduza a data de Inicio")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = false)]
         public DateTime DataInicio {get;set;}
 
-        [Required(ErrorMessage = "Por indroduza a data de Nascimento")]
+        [Required(ErrorMessage = "Por introduza a data de Fim")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = false)]
         public DateTime DataFim { get; set; }

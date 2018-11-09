@@ -24,9 +24,47 @@ namespace EscalonamentoHospitalar.Data
                 SeedMedicoEspecialidade(db);
 
                 SeedPacientes(db);
+                SeedTratamentos(db);
                 
             }
         }
+
+        private static void SeedTratamentos(HospitalDbContext db)
+        {
+            if (db.Tratamento.Any()) return;
+            db.Tratamento.AddRange(
+
+
+                new Tratamento
+                {
+                    //Patologia = "Pulmao",
+                    //Grau = "",
+                    DataInicio = new DateTime(2018,11,09),
+                    DataFim = new DateTime(2018,12,31),
+                    DuracaoCiclo = "",
+                },
+                new Tratamento
+                {
+                    //Patologia = "Pulmao",
+                   // Grau = "",
+                    DataInicio = new DateTime(2018, 11, 09),
+                    DataFim = new DateTime(2018, 12, 31),
+                    DuracaoCiclo = "",
+                },
+                new Tratamento
+                {
+                    //Patologia = ""
+                   // Grau = "",
+                    DataInicio = new DateTime(2018, 11, 09),
+                    DataFim = new DateTime(2018, 12, 31),
+                    DuracaoCiclo = "",
+                }
+                 );
+
+            db.SaveChanges();
+        }
+                
+        
 
         private static void SeedPacientes(HospitalDbContext db)
         {
@@ -97,6 +135,11 @@ namespace EscalonamentoHospitalar.Data
 
             db.SaveChanges();
         }
+
+      
+
+       
+            
 
         private static void SeedMedicoEspecialidade(HospitalDbContext db)
         {

@@ -28,7 +28,8 @@ namespace EscalonamentoHospitalar.Models
         public DbSet<EscalonamentoHospitalar.Models.MedicoEspecialidade> MedicoEspecialidade { get; set; }
 
         public DbSet<EscalonamentoHospitalar.Models.Tratamento> Tratamento { get; set; }
-
-
+        public object Tratamentos { get; internal set; }
+        public DbSet<EscalonamentoHospitalar.Models.Patologia> Patologia { get; set; }
+        public DbSet<EscalonamentoHospitalar.Models.Grau> Grau { get; set; }
     }
 }
