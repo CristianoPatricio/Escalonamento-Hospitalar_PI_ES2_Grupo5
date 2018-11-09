@@ -12,7 +12,7 @@ namespace EscalonamentoHospitalar.Models
         public int MedicoId { get; set; }
 
 
-        [RegularExpression(@"\d{7}(\s\d{1})?", ErrorMessage = "Numero Errado")]
+        [RegularExpression(@"[M]\d+", ErrorMessage = "Código Inválido")]
         //Numero da Ordem
         public string NumeroMecanografico { get; set; }
 
@@ -25,7 +25,7 @@ namespace EscalonamentoHospitalar.Models
         [RegularExpression(@"(2\d{8})|(9[1236]\d{7})", ErrorMessage = "Contacto Inválido")]
         public string Contacto { get; set; }
 
-        [RegularExpression(@"\d{8}(\s\d{1})?", ErrorMessage = "Cartão de Cidadão Inválido")]
+        [RegularExpression(@"\d{8}(\s\d{1})?", ErrorMessage = "Nº Cartão de Cidadão Inválido")]
         public string CC { get; set; }
 
 
