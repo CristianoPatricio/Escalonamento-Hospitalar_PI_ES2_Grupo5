@@ -11,31 +11,42 @@ namespace EscalonamentoHospitalar.Models
     {
         public int EnfermeiroId{ get; set; }
 
-        [RegularExpression(@"[MDE]\d+", ErrorMessage = "Número Errado")]
-        //Numero da ordem 
+        [Required(ErrorMessage = "Por favor, introduza o seu número mecanográfico")]
+        [RegularExpression(@"[E]\d+", ErrorMessage = "Número errado")]
         public string NumeroMecanografico{ get; set; }
 
-        [Required(ErrorMessage = "Por favor indroduza o nome")]
-        [RegularExpression(@"([A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ\s]+)", ErrorMessage = "Nome Inválido")]
+        [Required(ErrorMessage = "Por favor, introduza o nome")]
+        [RegularExpression(@"([A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ\s]+)", ErrorMessage = "Nome inválido")]
         public string Nome { get; set; }
 
-        [RegularExpression(@"(2\d{8})|(9[1236]\d{7})", ErrorMessage = "Contacto Inválido")]
+        public EspecialidadeEnfermeiro EspecialidadeEnfermeiro { get; set; }
+        public int EspecialidadeEnfermeiroId { get; set; }
+
+        [RegularExpression(@"(2\d{8})|(9[1236]\d{7})", ErrorMessage = "Contacto inválido")]
         public string Contacto { get; set; }
 
-        [Required(ErrorMessage = "Por favor indroduza o email")]
-        [RegularExpression(@"(\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,6})", ErrorMessage = "Email Inválido")]
+        [Required(ErrorMessage = "Por favor, introduza o email")]
+        [EmailAddress(ErrorMessage = "Email inválido")]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "Por indroduza a data de Nascimento")]
-        [DataType(DataType.Date)]
+        [Required(ErrorMessage = "Por favor, introduza a data de nascimento")]
+        [DataType(DataType.Date, ErrorMessage = "Data de nascimento inválida")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = false)]
         public DateTime Data_Nascimento { get; set; }
 
-        [RegularExpression(@"\d{8}(\s\d{1})?", ErrorMessage = "Cartão de Cidadão Inválido")]
+        [Required(ErrorMessage = "Por favor, introduza o nº de CC/BI")]
+        [RegularExpression(@"\d{8}(\s\d{1})?", ErrorMessage = "Nº de CC/BI inválido")]
         public string CC { get; set; }
 
-        public ICollection<EnfermeiroEspecialidade> EnfermeiroEspecialidade { get; set; }
+        [Required]
+        public bool? Filhos { get; set; }
 
+        [Required(ErrorMessage = "Por favor, introduza a data de nascimento")]
+        [DataType(DataType.Date, ErrorMessage = "Data de nascimento inválida")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = false)]
+        public DateTime Data_Nascimento_Filho { get; set; }
+
+        public ICollection<EnfermeiroEspecialidade> EnfermeirosEspecialidade { get; set; }
     }
 }
 

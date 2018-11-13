@@ -16,17 +16,18 @@ namespace EscalonamentoHospitalar.Data
 
                 var db = serviceScope.ServiceProvider.GetService<HospitalDbContext>();
 
-                SeedEnfermeiros(db);
+                //SeedEnfermeiros(db);
                 SeedDiretorServico(db);
-                SeedEnfermeiroEspecialidade(db);
+                //SeedEnfermeiroEspecialidade(db);
             }
         }
 
+        /*
         private static void SeedEnfermeiroEspecialidade(HospitalDbContext db)
         {
             if (db.EnfermeiroEspecialidades.Any()) return;
 
-            /***/
+          
             Enfermeiro marisa = db.Enfermeiros.SingleOrDefault(e => e.Nome == "Marisa Reduto");
             Enfermeiro joao = db.Enfermeiros.SingleOrDefault(e => e.Nome == "João Silva");
             Enfermeiro armando = db.Enfermeiros.SingleOrDefault(e => e.Nome == "Armando Manso");
@@ -59,7 +60,7 @@ namespace EscalonamentoHospitalar.Data
                 db.Enfermeiros.Add(andreia);
                 db.SaveChanges();
             }           
-            /***/
+            
 
             db.EnfermeiroEspecialidades.AddRange(
                 
@@ -71,7 +72,9 @@ namespace EscalonamentoHospitalar.Data
 
             db.SaveChanges();
         }
+         */        
 
+            
         private static void SeedDiretorServico(HospitalDbContext db)
         {
             if (db.DiretorServico.Any()) return;
@@ -85,6 +88,7 @@ namespace EscalonamentoHospitalar.Data
             db.SaveChanges();
         }
 
+        /*
         private static void SeedEnfermeiros(HospitalDbContext db)
         {
             if (db.Enfermeiros.Any()) return;
@@ -100,5 +104,6 @@ namespace EscalonamentoHospitalar.Data
 
             db.SaveChanges();
         }
+        */
     }
 }

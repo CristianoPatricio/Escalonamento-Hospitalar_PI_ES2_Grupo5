@@ -21,7 +21,7 @@ namespace EscalonamentoHospitalar.Controllers
         // GET: EnfermeiroEspecialidades
         public async Task<IActionResult> Index()
         {
-            var hospitalDbContext = _context.EnfermeiroEspecialidades.Include(e => e.Enfermeiro);
+            var hospitalDbContext = _context.EnfermeirosEspecialidades.Include(e => e.Enfermeiro).Include(e => e.EspecialidadeEnfermeiro);
             return View(await hospitalDbContext.ToListAsync());
         }
 
@@ -33,9 +33,10 @@ namespace EscalonamentoHospitalar.Controllers
                 return NotFound();
             }
 
-            var enfermeiroEspecialidade = await _context.EnfermeiroEspecialidades
+            var enfermeiroEspecialidade = await _context.EnfermeirosEspecialidades
                 .Include(e => e.Enfermeiro)
-                .FirstOrDefaultAsync(m => m.EnfermeiroEspecialidadeId == id);
+                .Include(e => e.EspecialidadeEnfermeiro)
+                .FirstOrDefaultAsync(m => m.EnfermeiroId == id);
             if (enfermeiroEspecialidade == null)
             {
                 return NotFound();
@@ -47,7 +48,8 @@ namespace EscalonamentoHospitalar.Controllers
         // GET: EnfermeiroEspecialidades/Create
         public IActionResult Create()
         {
-            ViewData["EnfermeiroId"] = new SelectList(_context.Enfermeiros, "EnfermeiroId", "Email");
+            ViewData["EnfermeiroId"] = new SelectList(_context.Enfermeiros, "EnfermeiroId", "CC");
+            ViewData["EspecialidadeEnfermeiroId"] = new SelectList(_context.Set<EspecialidadeEnfermeiro>(), "EspecialidadeEnfermeiroId", "EspecialidadeEnfermeiroId");
             return View();
         }
 
@@ -56,7 +58,7 @@ namespace EscalonamentoHospitalar.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("EnfermeiroEspecialidadeId,Nome,EnfermeiroId")] EnfermeiroEspecialidade enfermeiroEspecialidade)
+        public async Task<IActionResult> Create([Bind("EnfermeiroEspecialidadeId,EspecialidadeEnfermeiroId,EnfermeiroId")] EnfermeiroEspecialidade enfermeiroEspecialidade)
         {
             if (ModelState.IsValid)
             {
@@ -64,7 +66,8 @@ namespace EscalonamentoHospitalar.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EnfermeiroId"] = new SelectList(_context.Enfermeiros, "EnfermeiroId", "Email", enfermeiroEspecialidade.EnfermeiroId);
+            ViewData["EnfermeiroId"] = new SelectList(_context.Enfermeiros, "EnfermeiroId", "CC", enfermeiroEspecialidade.EnfermeiroId);
+            ViewData["EspecialidadeEnfermeiroId"] = new SelectList(_context.Set<EspecialidadeEnfermeiro>(), "EspecialidadeEnfermeiroId", "EspecialidadeEnfermeiroId", enfermeiroEspecialidade.EspecialidadeEnfermeiroId);
             return View(enfermeiroEspecialidade);
         }
 
@@ -76,12 +79,13 @@ namespace EscalonamentoHospitalar.Controllers
                 return NotFound();
             }
 
-            var enfermeiroEspecialidade = await _context.EnfermeiroEspecialidades.FindAsync(id);
+            var enfermeiroEspecialidade = await _context.EnfermeirosEspecialidades.FindAsync(id);
             if (enfermeiroEspecialidade == null)
             {
                 return NotFound();
             }
-            ViewData["EnfermeiroId"] = new SelectList(_context.Enfermeiros, "EnfermeiroId", "Email", enfermeiroEspecialidade.EnfermeiroId);
+            ViewData["EnfermeiroId"] = new SelectList(_context.Enfermeiros, "EnfermeiroId", "CC", enfermeiroEspecialidade.EnfermeiroId);
+            ViewData["EspecialidadeEnfermeiroId"] = new SelectList(_context.Set<EspecialidadeEnfermeiro>(), "EspecialidadeEnfermeiroId", "EspecialidadeEnfermeiroId", enfermeiroEspecialidade.EspecialidadeEnfermeiroId);
             return View(enfermeiroEspecialidade);
         }
 
@@ -90,9 +94,9 @@ namespace EscalonamentoHospitalar.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("EnfermeiroEspecialidadeId,Nome,EnfermeiroId")] EnfermeiroEspecialidade enfermeiroEspecialidade)
+        public async Task<IActionResult> Edit(int id, [Bind("EnfermeiroEspecialidadeId,EspecialidadeEnfermeiroId,EnfermeiroId")] EnfermeiroEspecialidade enfermeiroEspecialidade)
         {
-            if (id != enfermeiroEspecialidade.EnfermeiroEspecialidadeId)
+            if (id != enfermeiroEspecialidade.EnfermeiroId)
             {
                 return NotFound();
             }
@@ -106,7 +110,7 @@ namespace EscalonamentoHospitalar.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EnfermeiroEspecialidadeExists(enfermeiroEspecialidade.EnfermeiroEspecialidadeId))
+                    if (!EnfermeiroEspecialidadeExists(enfermeiroEspecialidade.EnfermeiroId))
                     {
                         return NotFound();
                     }
@@ -117,7 +121,8 @@ namespace EscalonamentoHospitalar.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EnfermeiroId"] = new SelectList(_context.Enfermeiros, "EnfermeiroId", "Email", enfermeiroEspecialidade.EnfermeiroId);
+            ViewData["EnfermeiroId"] = new SelectList(_context.Enfermeiros, "EnfermeiroId", "CC", enfermeiroEspecialidade.EnfermeiroId);
+            ViewData["EspecialidadeEnfermeiroId"] = new SelectList(_context.Set<EspecialidadeEnfermeiro>(), "EspecialidadeEnfermeiroId", "EspecialidadeEnfermeiroId", enfermeiroEspecialidade.EspecialidadeEnfermeiroId);
             return View(enfermeiroEspecialidade);
         }
 
@@ -129,9 +134,10 @@ namespace EscalonamentoHospitalar.Controllers
                 return NotFound();
             }
 
-            var enfermeiroEspecialidade = await _context.EnfermeiroEspecialidades
+            var enfermeiroEspecialidade = await _context.EnfermeirosEspecialidades
                 .Include(e => e.Enfermeiro)
-                .FirstOrDefaultAsync(m => m.EnfermeiroEspecialidadeId == id);
+                .Include(e => e.EspecialidadeEnfermeiro)
+                .FirstOrDefaultAsync(m => m.EnfermeiroId == id);
             if (enfermeiroEspecialidade == null)
             {
                 return NotFound();
@@ -145,15 +151,15 @@ namespace EscalonamentoHospitalar.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var enfermeiroEspecialidade = await _context.EnfermeiroEspecialidades.FindAsync(id);
-            _context.EnfermeiroEspecialidades.Remove(enfermeiroEspecialidade);
+            var enfermeiroEspecialidade = await _context.EnfermeirosEspecialidades.FindAsync(id);
+            _context.EnfermeirosEspecialidades.Remove(enfermeiroEspecialidade);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool EnfermeiroEspecialidadeExists(int id)
         {
-            return _context.EnfermeiroEspecialidades.Any(e => e.EnfermeiroEspecialidadeId == id);
+            return _context.EnfermeirosEspecialidades.Any(e => e.EnfermeiroId == id);
         }
     }
 }

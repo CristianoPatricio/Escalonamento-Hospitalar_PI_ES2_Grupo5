@@ -21,7 +21,8 @@ namespace EscalonamentoHospitalar.Controllers
         // GET: Enfermeiros
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Enfermeiros.ToListAsync());
+            var hospitalDbContext = _context.Enfermeiros.Include(e => e.EspecialidadeEnfermeiro);
+            return View(await hospitalDbContext.ToListAsync());
         }
 
         // GET: Enfermeiros/Details/5
@@ -33,6 +34,7 @@ namespace EscalonamentoHospitalar.Controllers
             }
 
             var enfermeiro = await _context.Enfermeiros
+                .Include(e => e.EspecialidadeEnfermeiro)
                 .FirstOrDefaultAsync(m => m.EnfermeiroId == id);
             if (enfermeiro == null)
             {
@@ -45,6 +47,7 @@ namespace EscalonamentoHospitalar.Controllers
         // GET: Enfermeiros/Create
         public IActionResult Create()
         {
+            ViewData["EspecialidadeEnfermeiroId"] = new SelectList(_context.Set<EspecialidadeEnfermeiro>(), "EspecialidadeEnfermeiroId", "EspecialidadeEnfermeiroId");
             return View();
         }
 
@@ -53,7 +56,7 @@ namespace EscalonamentoHospitalar.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("EnfermeiroId,NumeroMecanografico,Nome,Contacto,Email,Data_Nascimento,CC")] Enfermeiro enfermeiro)
+        public async Task<IActionResult> Create([Bind("EnfermeiroId,NumeroMecanografico,Nome,EspecialidadeEnfermeiroId,Contacto,Email,Data_Nascimento,CC,Filhos,Data_Nascimento_Filho")] Enfermeiro enfermeiro)
         {
             if (ModelState.IsValid)
             {
@@ -61,6 +64,7 @@ namespace EscalonamentoHospitalar.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["EspecialidadeEnfermeiroId"] = new SelectList(_context.Set<EspecialidadeEnfermeiro>(), "EspecialidadeEnfermeiroId", "EspecialidadeEnfermeiroId", enfermeiro.EspecialidadeEnfermeiroId);
             return View(enfermeiro);
         }
 
@@ -77,6 +81,7 @@ namespace EscalonamentoHospitalar.Controllers
             {
                 return NotFound();
             }
+            ViewData["EspecialidadeEnfermeiroId"] = new SelectList(_context.Set<EspecialidadeEnfermeiro>(), "EspecialidadeEnfermeiroId", "EspecialidadeEnfermeiroId", enfermeiro.EspecialidadeEnfermeiroId);
             return View(enfermeiro);
         }
 
@@ -85,7 +90,7 @@ namespace EscalonamentoHospitalar.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("EnfermeiroId,NumeroMecanografico,Nome,Contacto,Email,Data_Nascimento,CC")] Enfermeiro enfermeiro)
+        public async Task<IActionResult> Edit(int id, [Bind("EnfermeiroId,NumeroMecanografico,Nome,EspecialidadeEnfermeiroId,Contacto,Email,Data_Nascimento,CC,Filhos,Data_Nascimento_Filho")] Enfermeiro enfermeiro)
         {
             if (id != enfermeiro.EnfermeiroId)
             {
@@ -112,6 +117,7 @@ namespace EscalonamentoHospitalar.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["EspecialidadeEnfermeiroId"] = new SelectList(_context.Set<EspecialidadeEnfermeiro>(), "EspecialidadeEnfermeiroId", "EspecialidadeEnfermeiroId", enfermeiro.EspecialidadeEnfermeiroId);
             return View(enfermeiro);
         }
 
@@ -124,6 +130,7 @@ namespace EscalonamentoHospitalar.Controllers
             }
 
             var enfermeiro = await _context.Enfermeiros
+                .Include(e => e.EspecialidadeEnfermeiro)
                 .FirstOrDefaultAsync(m => m.EnfermeiroId == id);
             if (enfermeiro == null)
             {

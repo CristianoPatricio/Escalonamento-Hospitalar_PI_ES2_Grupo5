@@ -1,4 +1,4 @@
-﻿@model EscalonamentoHospitalar.Models.EnfermeiroEspecialidade
+﻿@model EscalonamentoHospitalar.Models.EspecialidadeEnfermeiro
 
 @{
     ViewData["Title"] = "Edit";
@@ -6,19 +6,18 @@
 
 <h2>Edit</h2>
 
-<h4>EnfermeiroEspecialidade</h4>
+<h4>EspecialidadeEnfermeiro</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="EnfermeiroEspecialidadeId" class="control-label"></label>
-                <input asp-for="EnfermeiroEspecialidadeId" class="form-control" />
-                <span asp-validation-for="EnfermeiroEspecialidadeId" class="text-danger"></span>
-            </div>
             <input type="hidden" asp-for="EspecialidadeEnfermeiroId" />
-            <input type="hidden" asp-for="EnfermeiroId" />
+            <div class="form-group">
+                <label asp-for="Especialidade" class="control-label"></label>
+                <input asp-for="Especialidade" class="form-control" />
+                <span asp-validation-for="Especialidade" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-default" />
             </div>
