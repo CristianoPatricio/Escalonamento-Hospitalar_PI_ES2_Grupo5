@@ -19,7 +19,26 @@ namespace EscalonamentoHospitalar.Data
                 //SeedEnfermeiros(db);
                 SeedDiretorServico(db);
                 //SeedEnfermeiroEspecialidade(db);
+                SeedEspecialidadeEnfermeiros(db);
             }
+        }
+
+        private static void SeedEspecialidadeEnfermeiros(HospitalDbContext db)
+        {
+            if (db.EspecialidadesEnfermeiros.Any()) return;
+
+            db.EspecialidadesEnfermeiros.AddRange(
+                
+                new EspecialidadeEnfermeiro { Especialidade = "Enfermagem Comunitária"},
+                new EspecialidadeEnfermeiro { Especialidade = "Enfermagem Médico-Cirúrgica" },
+                new EspecialidadeEnfermeiro { Especialidade = "Enfermagem de Reabilitação" },
+                new EspecialidadeEnfermeiro { Especialidade = "Enfermagem de Saúde Infantil e Pediátrica" },
+                new EspecialidadeEnfermeiro { Especialidade = "Enfermagem de Saúde Materna e Obstétrica" },
+                new EspecialidadeEnfermeiro { Especialidade = "Enfermagem de Saúde Mental e Psiquiátrica" }
+
+                );
+
+            db.SaveChanges();
         }
 
         /*
@@ -72,9 +91,9 @@ namespace EscalonamentoHospitalar.Data
 
             db.SaveChanges();
         }
-         */        
+         */
 
-            
+
         private static void SeedDiretorServico(HospitalDbContext db)
         {
             if (db.DiretorServico.Any()) return;
