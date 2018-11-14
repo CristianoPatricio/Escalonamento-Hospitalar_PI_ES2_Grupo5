@@ -5,12 +5,12 @@
 }
 
 <h3>Tem a certeza que quer apagar o médico?</h3>
-<div>
 
+<div>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            Código
+            Número Mecanográfico
         </dt>
         <dd>
             @Html.DisplayFor(model => model.NumeroMecanografico)
@@ -44,6 +44,18 @@
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Data_Nascimento)
+        </dd>
+        <dt>
+            Especialidade
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NomeEspecialidade)
+        </dd>
+        <dt>
+            Data de inicio ao serviço
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Data_Inicio_Servico)
         </dd>
     </dl>
     

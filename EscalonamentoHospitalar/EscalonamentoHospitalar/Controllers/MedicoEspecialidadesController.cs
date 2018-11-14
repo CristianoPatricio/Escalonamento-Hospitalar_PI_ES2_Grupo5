@@ -47,7 +47,7 @@ namespace EscalonamentoHospitalar.Controllers
         // GET: MedicoEspecialidades/Create
         public IActionResult Create()
         {
-            ViewData["MedicoId"] = new SelectList(_context.Medicos, "MedicoId", "MedicoId");
+            ViewData["MedicoId"] = new SelectList(_context.Medicos, "MedicoId", "CC");
             return View();
         }
 
@@ -56,7 +56,7 @@ namespace EscalonamentoHospitalar.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MedicoEspecialidadeId,Nome,MedicoId")] MedicoEspecialidade medicoEspecialidade)
+        public async Task<IActionResult> Create([Bind("MedicoEspecialidadeId,NomeEspecialidade,MedicoId")] MedicoEspecialidade medicoEspecialidade)
         {
             if (ModelState.IsValid)
             {
@@ -64,7 +64,7 @@ namespace EscalonamentoHospitalar.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MedicoId"] = new SelectList(_context.Medicos, "MedicoId", "MedicoId", medicoEspecialidade.MedicoId);
+            ViewData["MedicoId"] = new SelectList(_context.Medicos, "MedicoId", "CC", medicoEspecialidade.MedicoId);
             return View(medicoEspecialidade);
         }
 
@@ -81,7 +81,7 @@ namespace EscalonamentoHospitalar.Controllers
             {
                 return NotFound();
             }
-            ViewData["MedicoId"] = new SelectList(_context.Medicos, "MedicoId", "MedicoId", medicoEspecialidade.MedicoId);
+            ViewData["MedicoId"] = new SelectList(_context.Medicos, "MedicoId", "CC", medicoEspecialidade.MedicoId);
             return View(medicoEspecialidade);
         }
 
@@ -90,7 +90,7 @@ namespace EscalonamentoHospitalar.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("MedicoEspecialidadeId,Nome,MedicoId")] MedicoEspecialidade medicoEspecialidade)
+        public async Task<IActionResult> Edit(int id, [Bind("MedicoEspecialidadeId,NomeEspecialidade,MedicoId")] MedicoEspecialidade medicoEspecialidade)
         {
             if (id != medicoEspecialidade.MedicoEspecialidadeId)
             {
@@ -117,7 +117,7 @@ namespace EscalonamentoHospitalar.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MedicoId"] = new SelectList(_context.Medicos, "MedicoId", "MedicoId", medicoEspecialidade.MedicoId);
+            ViewData["MedicoId"] = new SelectList(_context.Medicos, "MedicoId", "CC", medicoEspecialidade.MedicoId);
             return View(medicoEspecialidade);
         }
 

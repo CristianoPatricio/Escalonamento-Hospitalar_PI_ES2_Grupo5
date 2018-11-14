@@ -45,21 +45,15 @@ namespace EscalonamentoHospitalar.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Medicos",
+                name: "EspecialidadeMedico",
                 columns: table => new
                 {
-                    MedicoId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    NumeroMecanografico = table.Column<string>(nullable: true),
-                    Nome = table.Column<string>(nullable: true),
-                    Email = table.Column<string>(nullable: true),
-                    Contacto = table.Column<string>(nullable: true),
-                    CC = table.Column<string>(nullable: true),
-                    Data_Nascimento = table.Column<DateTime>(nullable: false)
+                    EspecialidadeMedicoId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Medicos", x => x.MedicoId);
+                    table.PrimaryKey("PK_EspecialidadeMedico", x => x.EspecialidadeMedicoId);
                 });
 
             migrationBuilder.CreateTable(
@@ -103,17 +97,51 @@ namespace EscalonamentoHospitalar.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Medicos",
+                columns: table => new
+                {
+                    MedicoId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    NumeroMecanografico = table.Column<string>(nullable: false),
+                    Nome = table.Column<string>(nullable: false),
+                    Email = table.Column<string>(nullable: true),
+                    Contacto = table.Column<string>(nullable: true),
+                    CC = table.Column<string>(nullable: false),
+                    Data_Nascimento = table.Column<DateTime>(nullable: false),
+                    NomeEspecialidade = table.Column<string>(nullable: false),
+                    Data_Inicio_Servico = table.Column<DateTime>(nullable: false),
+                    EspecialidadeMedicoId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Medicos", x => x.MedicoId);
+                    table.ForeignKey(
+                        name: "FK_Medicos_EspecialidadeMedico_EspecialidadeMedicoId",
+                        column: x => x.EspecialidadeMedicoId,
+                        principalTable: "EspecialidadeMedico",
+                        principalColumn: "EspecialidadeMedicoId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "MedicoEspecialidades",
                 columns: table => new
                 {
                     MedicoEspecialidadeId = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Nome = table.Column<string>(nullable: true),
-                    MedicoId = table.Column<int>(nullable: false)
+                    NomeEspecialidade = table.Column<string>(nullable: true),
+                    MedicoId = table.Column<int>(nullable: false),
+                    EspecialidadeMedicoId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_MedicoEspecialidades", x => x.MedicoEspecialidadeId);
+                    table.ForeignKey(
+                        name: "FK_MedicoEspecialidades_EspecialidadeMedico_EspecialidadeMedicoId",
+                        column: x => x.EspecialidadeMedicoId,
+                        principalTable: "EspecialidadeMedico",
+                        principalColumn: "EspecialidadeMedicoId",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_MedicoEspecialidades_Medicos_MedicoId",
                         column: x => x.MedicoId,
@@ -128,9 +156,19 @@ namespace EscalonamentoHospitalar.Migrations
                 column: "EnfermeiroId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_MedicoEspecialidades_EspecialidadeMedicoId",
+                table: "MedicoEspecialidades",
+                column: "EspecialidadeMedicoId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_MedicoEspecialidades_MedicoId",
                 table: "MedicoEspecialidades",
                 column: "MedicoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Medicos_EspecialidadeMedicoId",
+                table: "Medicos",
+                column: "EspecialidadeMedicoId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -152,6 +190,9 @@ namespace EscalonamentoHospitalar.Migrations
 
             migrationBuilder.DropTable(
                 name: "Medicos");
+
+            migrationBuilder.DropTable(
+                name: "EspecialidadeMedico");
         }
     }
 }

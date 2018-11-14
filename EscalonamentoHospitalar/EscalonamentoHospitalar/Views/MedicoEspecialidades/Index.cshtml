@@ -4,10 +4,10 @@
     ViewData["Title"] = "Index";
 }
 
-<h2>Especialidades</h2>
+<h2>Lista de Especialidades</h2>
 
 <p>
-    <a asp-action="Create">Inserir especialidade</a>
+    <a asp-action="Create">Adicionar nova especialidade</a>
 </p>
 <table class="table">
     <thead>
@@ -16,7 +16,7 @@
                 Especialidade
             </th>
             <th>
-                Médico
+                Medico
             </th>
             <th></th>
         </tr>
@@ -25,7 +25,7 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Nome)
+                @Html.DisplayFor(modelItem => item.NomeEspecialidade)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Medico.Nome)

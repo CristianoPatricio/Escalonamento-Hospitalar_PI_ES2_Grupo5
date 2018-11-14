@@ -12,19 +12,19 @@
             Especialidade
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Nome)
+            @Html.DisplayFor(model => model.NomeEspecialidade)
         </dd>
         <dt>
             Médico
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Medico.MedicoId)
+            @Html.DisplayFor(model => model.Medico.Nome)
         </dd>
     </dl>
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="MedicoEspecialidadeId" />
         <input type="submit" value="APAGAR" class="btn btn-default" /> |
-        <a asp-action="Index">Voltar à lista de especilidades</a>
+        <a asp-action="Index">Voltar à lista de especialidades</a>
     </form>
 </div>

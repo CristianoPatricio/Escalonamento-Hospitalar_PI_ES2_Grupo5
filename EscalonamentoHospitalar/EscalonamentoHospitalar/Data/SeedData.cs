@@ -41,6 +41,8 @@ namespace EscalonamentoHospitalar.Data
                     Contacto = "936571245",
                     CC = "15851657",
                     Data_Nascimento = new DateTime(1987, 6, 29),
+                    NomeEspecialidade = "Patologia",
+                    Data_Inicio_Servico = new DateTime(2010, 11, 14),
                 };
                 db.Medicos.Add(manuel);
                 db.SaveChanges();
@@ -55,6 +57,8 @@ namespace EscalonamentoHospitalar.Data
                     Contacto = "925641937",
                     CC = "16457832",
                     Data_Nascimento = new DateTime(1985, 4, 2),
+                    NomeEspecialidade = "Oncologia",
+                    Data_Inicio_Servico = new DateTime(2008, 12, 14),
                 };
                 db.Medicos.Add(elisabete);
                 db.SaveChanges();
@@ -62,8 +66,8 @@ namespace EscalonamentoHospitalar.Data
 
             db.MedicoEspecialidades.AddRange(
 
-                new MedicoEspecialidade { Nome = "Patologia", MedicoId = manuel.MedicoId },
-                new MedicoEspecialidade { Nome = "Oncologia", MedicoId = elisabete.MedicoId }
+                new MedicoEspecialidade { NomeEspecialidade = "Quimioterapia", MedicoId = manuel.MedicoId },
+                new MedicoEspecialidade { NomeEspecialidade = "Quimioterapia", MedicoId = elisabete.MedicoId }
                 );
 
             db.SaveChanges();
@@ -81,6 +85,8 @@ namespace EscalonamentoHospitalar.Data
                            Contacto = "936571245",
                            CC = "15851657",
                            Data_Nascimento = new DateTime(1987, 6, 29),
+                           NomeEspecialidade = "Patologia",
+                           Data_Inicio_Servico = new DateTime(2010, 11, 14),
                        },
                        new Medico
                        {
@@ -90,6 +96,8 @@ namespace EscalonamentoHospitalar.Data
                            Contacto = "925641937",
                            CC = "16457832",
                            Data_Nascimento = new DateTime(1985, 4, 2),
+                           NomeEspecialidade = "Oncologia",
+                           Data_Inicio_Servico = new DateTime(2008, 12, 14),
                        }
                    );
             db.SaveChanges();

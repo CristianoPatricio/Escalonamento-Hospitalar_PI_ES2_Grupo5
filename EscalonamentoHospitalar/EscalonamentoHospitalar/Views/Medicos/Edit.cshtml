@@ -4,7 +4,7 @@
     ViewData["Title"] = "Edit";
 }
 
-<h2>Editar Médico</h2>
+<h2>Editar médico</h2>
 
 <hr />
 <div class="row">
@@ -13,7 +13,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="MedicoId" />
             <div class="form-group">
-                <label asp-for="NumeroMecanografico" class="control-label">Código</label>
+                <label asp-for="NumeroMecanografico" class="control-label">Número Mecanográfico</label>
                 <input asp-for="NumeroMecanografico" class="form-control" />
                 <span asp-validation-for="NumeroMecanografico" class="text-danger"></span>
             </div>
@@ -41,6 +41,16 @@
                 <label asp-for="Data_Nascimento" class="control-label">Data de Nascimento</label>
                 <input asp-for="Data_Nascimento" class="form-control" />
                 <span asp-validation-for="Data_Nascimento" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NomeEspecialidade" class="control-label">Especialidade</label>
+                <input asp-for="NomeEspecialidade" class="form-control" />
+                <span asp-validation-for="NomeEspecialidade" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Data_Inicio_Servico" class="control-label">Data de inicio ao serviço</label>
+                <input asp-for="Data_Inicio_Servico" class="form-control" />
+                <span asp-validation-for="Data_Inicio_Servico" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="GUARDAR" class="btn btn-default" />

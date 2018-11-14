@@ -12,12 +12,12 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Nome" class="control-label">Especialidade</label>
-                <input asp-for="Nome" class="form-control" />
-                <span asp-validation-for="Nome" class="text-danger"></span>
+                <label asp-for="NomeEspecialidade" class="control-label">Especialidade</label>
+                <input asp-for="NomeEspecialidade" class="form-control" />
+                <span asp-validation-for="NomeEspecialidade" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="MedicoId" class="control-label">Id do Médico</label>
+                <label asp-for="MedicoId" class="control-label"></label>
                 <select asp-for="MedicoId" class ="form-control" asp-items="ViewBag.MedicoId"></select>
             </div>
             <div class="form-group">
