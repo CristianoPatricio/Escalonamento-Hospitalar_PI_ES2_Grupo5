@@ -1,19 +1,19 @@
 ﻿@model IEnumerable<EscalonamentoHospitalar.Models.EspecialidadeEnfermeiro>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Lista de Especialidades dos Enfermeiros";
 }
 
-<h2>Index</h2>
+<h2>Lista de Especialidades dos Enfermeiros</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Inserir nova Especialidade de Enfermeiros</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Especialidade)
+                Nome
             </th>
             <th></th>
         </tr>
@@ -25,9 +25,9 @@
                 @Html.DisplayFor(modelItem => item.Especialidade)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.EspecialidadeEnfermeiroId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.EspecialidadeEnfermeiroId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.EspecialidadeEnfermeiroId">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.EspecialidadeEnfermeiroId">Alterar</a> |
+                <!--<a asp-action="Details" asp-route-id="@item.EspecialidadeEnfermeiroId">Details</a> |-->
+                <a asp-action="Delete" asp-route-id="@item.EspecialidadeEnfermeiroId">Eliminar</a>
             </td>
         </tr>
 }

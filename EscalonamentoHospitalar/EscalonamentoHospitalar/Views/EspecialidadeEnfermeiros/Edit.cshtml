@@ -1,32 +1,30 @@
 ﻿@model EscalonamentoHospitalar.Models.EspecialidadeEnfermeiro
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Alterar Especialidade";
 }
 
-<h2>Edit</h2>
+<h2>Alterar a especialidade <b>@Html.DisplayFor(model => model.Especialidade)</b></h2>
 
-<h4>EspecialidadeEnfermeiro</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="EspecialidadeEnfermeiroId" />
             <div class="form-group">
-                <label asp-for="Especialidade" class="control-label"></label>
+                <label asp-for="Especialidade" class="control-label">Nome da Especialidade</label>
                 <input asp-for="Especialidade" class="form-control" />
                 <span asp-validation-for="Especialidade" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Guardar alterações" class="btn btn-default" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Voltar à lista</a>
 </div>
 
 @section Scripts {

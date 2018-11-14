@@ -1,56 +1,54 @@
 ﻿@model EscalonamentoHospitalar.Models.DiretorServico
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Inserir";
 }
 
-<h2>Create</h2>
+<h2>Inserir novo Diretor de Serviço</h2>
 
-<h4>DiretorServico</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <form asp-action="Create">           
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
+                <label asp-for="Name" class="control-label">Nome</label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="NumeroMecanografico" class="control-label"></label>
+                <label asp-for="NumeroMecanografico" class="control-label">Código</label>
                 <input asp-for="NumeroMecanografico" class="form-control" />
                 <span asp-validation-for="NumeroMecanografico" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Contacto" class="control-label"></label>
+                <label asp-for="Contacto" class="control-label">Contacto</label>
                 <input asp-for="Contacto" class="form-control" />
                 <span asp-validation-for="Contacto" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
+                <label asp-for="Email" class="control-label">Email</label>
                 <input asp-for="Email" class="form-control" />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CC" class="control-label"></label>
+                <label asp-for="CC" class="control-label">Nº CC/BI</label>
                 <input asp-for="CC" class="form-control" />
                 <span asp-validation-for="CC" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Morada" class="control-label"></label>
+                <label asp-for="Morada" class="control-label">Morada</label>
                 <input asp-for="Morada" class="form-control" />
                 <span asp-validation-for="Morada" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Inserir" class="btn btn-default" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Voltar à lista</a>
 </div>
 
 @section Scripts {

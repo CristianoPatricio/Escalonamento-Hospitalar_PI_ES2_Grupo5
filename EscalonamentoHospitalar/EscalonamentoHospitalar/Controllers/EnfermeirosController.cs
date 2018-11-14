@@ -47,7 +47,8 @@ namespace EscalonamentoHospitalar.Controllers
         // GET: Enfermeiros/Create
         public IActionResult Create()
         {
-            ViewData["EspecialidadeEnfermeiroId"] = new SelectList(_context.Set<EspecialidadeEnfermeiro>(), "EspecialidadeEnfermeiroId", "EspecialidadeEnfermeiroId");
+                                                                                                                                         //Apresenta Nome da Especialidade 
+            ViewData["EspecialidadeEnfermeiroId"] = new SelectList(_context.Set<EspecialidadeEnfermeiro>(), "EspecialidadeEnfermeiroId", "Especialidade");
             return View();
         }
 
@@ -60,11 +61,16 @@ namespace EscalonamentoHospitalar.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(enfermeiro);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                // TODO fazer restantes validações
+                //Verificar se a Data de Nascimento está correta (tem de ter no minimo 22 anos)
+                if (!((DateTime.Today.Year - enfermeiro.Data_Nascimento.Year) <= 22 && (DateTime.Today.Year - enfermeiro.Data_Nascimento.Year) <= 0))
+                {
+                    _context.Add(enfermeiro);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
             }
-            ViewData["EspecialidadeEnfermeiroId"] = new SelectList(_context.Set<EspecialidadeEnfermeiro>(), "EspecialidadeEnfermeiroId", "EspecialidadeEnfermeiroId", enfermeiro.EspecialidadeEnfermeiroId);
+            ViewData["EspecialidadeEnfermeiroId"] = new SelectList(_context.Set<EspecialidadeEnfermeiro>(), "EspecialidadeEnfermeiroId", "Especialidade", enfermeiro.EspecialidadeEnfermeiroId);
             return View(enfermeiro);
         }
 
@@ -81,7 +87,7 @@ namespace EscalonamentoHospitalar.Controllers
             {
                 return NotFound();
             }
-            ViewData["EspecialidadeEnfermeiroId"] = new SelectList(_context.Set<EspecialidadeEnfermeiro>(), "EspecialidadeEnfermeiroId", "EspecialidadeEnfermeiroId", enfermeiro.EspecialidadeEnfermeiroId);
+            ViewData["EspecialidadeEnfermeiroId"] = new SelectList(_context.Set<EspecialidadeEnfermeiro>(), "EspecialidadeEnfermeiroId", "Especialidade", enfermeiro.EspecialidadeEnfermeiroId);
             return View(enfermeiro);
         }
 

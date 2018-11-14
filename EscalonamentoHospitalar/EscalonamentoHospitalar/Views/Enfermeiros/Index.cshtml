@@ -1,43 +1,25 @@
 ﻿@model IEnumerable<EscalonamentoHospitalar.Models.Enfermeiro>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Lista de Enfermeiros";
 }
 
-<h2>Index</h2>
+<h2>Lista de Enfermeiros</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Inserir novo Enfermeiro</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.NumeroMecanografico)
+                Número Mecanográfico
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Nome)
+                Nome
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.EspecialidadeEnfermeiro)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Contacto)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Data_Nascimento)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CC)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Filhos)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Data_Nascimento_Filho)
+                Especialidade
             </th>
             <th></th>
         </tr>
@@ -52,30 +34,12 @@
                 @Html.DisplayFor(modelItem => item.Nome)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.EspecialidadeEnfermeiro.EspecialidadeEnfermeiroId)
-            </td>
+                @Html.DisplayFor(modelItem => item.EspecialidadeEnfermeiro.Especialidade)
+            </td>           
             <td>
-                @Html.DisplayFor(modelItem => item.Contacto)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Data_Nascimento)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CC)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Filhos)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Data_Nascimento_Filho)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.EnfermeiroId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.EnfermeiroId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.EnfermeiroId">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.EnfermeiroId">Alterar</a> |
+                <a asp-action="Details" asp-route-id="@item.EnfermeiroId">Detalhes</a> |
+                <a asp-action="Delete" asp-route-id="@item.EnfermeiroId">Eliminar</a>
             </td>
         </tr>
 }

@@ -30,7 +30,7 @@ namespace EscalonamentoHospitalar.Models
         [RegularExpression(@"\d{8}(\s\d{1})?", ErrorMessage = "Nº de CC/BI inválido")]
         public string CC { get; set; }
 
-        [RegularExpression(@"([A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ\s]+)", ErrorMessage = "Morada Inválida")]
+        [RegularExpression(@"([A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ\s]+)", ErrorMessage = "Morada inválida")]
         public string Morada { get; set; }
 
 
