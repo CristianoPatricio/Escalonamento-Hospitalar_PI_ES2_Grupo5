@@ -103,7 +103,7 @@ namespace EscalonamentoHospitalar.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "MedicoEspecialidade",
+                name: "MedicoEspecialidades",
                 columns: table => new
                 {
                     MedicoEspecialidadeId = table.Column<int>(nullable: false)
@@ -113,9 +113,9 @@ namespace EscalonamentoHospitalar.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MedicoEspecialidade", x => x.MedicoEspecialidadeId);
+                    table.PrimaryKey("PK_MedicoEspecialidades", x => x.MedicoEspecialidadeId);
                     table.ForeignKey(
-                        name: "FK_MedicoEspecialidade_Medicos_MedicoId",
+                        name: "FK_MedicoEspecialidades_Medicos_MedicoId",
                         column: x => x.MedicoId,
                         principalTable: "Medicos",
                         principalColumn: "MedicoId",
@@ -128,8 +128,8 @@ namespace EscalonamentoHospitalar.Migrations
                 column: "EnfermeiroId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MedicoEspecialidade_MedicoId",
-                table: "MedicoEspecialidade",
+                name: "IX_MedicoEspecialidades_MedicoId",
+                table: "MedicoEspecialidades",
                 column: "MedicoId");
         }
 
@@ -142,7 +142,7 @@ namespace EscalonamentoHospitalar.Migrations
                 name: "EnfermeiroEspecialidades");
 
             migrationBuilder.DropTable(
-                name: "MedicoEspecialidade");
+                name: "MedicoEspecialidades");
 
             migrationBuilder.DropTable(
                 name: "Pacientes");

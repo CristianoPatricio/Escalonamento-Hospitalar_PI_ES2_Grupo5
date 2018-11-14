@@ -21,7 +21,7 @@ namespace EscalonamentoHospitalar.Controllers
         // GET: MedicoEspecialidades
         public async Task<IActionResult> Index()
         {
-            var hospitalDbContext = _context.MedicoEspecialidade.Include(m => m.Medico);
+            var hospitalDbContext = _context.MedicoEspecialidades.Include(m => m.Medico);
             return View(await hospitalDbContext.ToListAsync());
         }
 
@@ -33,7 +33,7 @@ namespace EscalonamentoHospitalar.Controllers
                 return NotFound();
             }
 
-            var medicoEspecialidade = await _context.MedicoEspecialidade
+            var medicoEspecialidade = await _context.MedicoEspecialidades
                 .Include(m => m.Medico)
                 .FirstOrDefaultAsync(m => m.MedicoEspecialidadeId == id);
             if (medicoEspecialidade == null)
@@ -76,7 +76,7 @@ namespace EscalonamentoHospitalar.Controllers
                 return NotFound();
             }
 
-            var medicoEspecialidade = await _context.MedicoEspecialidade.FindAsync(id);
+            var medicoEspecialidade = await _context.MedicoEspecialidades.FindAsync(id);
             if (medicoEspecialidade == null)
             {
                 return NotFound();
@@ -129,7 +129,7 @@ namespace EscalonamentoHospitalar.Controllers
                 return NotFound();
             }
 
-            var medicoEspecialidade = await _context.MedicoEspecialidade
+            var medicoEspecialidade = await _context.MedicoEspecialidades
                 .Include(m => m.Medico)
                 .FirstOrDefaultAsync(m => m.MedicoEspecialidadeId == id);
             if (medicoEspecialidade == null)
@@ -145,15 +145,15 @@ namespace EscalonamentoHospitalar.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var medicoEspecialidade = await _context.MedicoEspecialidade.FindAsync(id);
-            _context.MedicoEspecialidade.Remove(medicoEspecialidade);
+            var medicoEspecialidade = await _context.MedicoEspecialidades.FindAsync(id);
+            _context.MedicoEspecialidades.Remove(medicoEspecialidade);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool MedicoEspecialidadeExists(int id)
         {
-            return _context.MedicoEspecialidade.Any(e => e.MedicoEspecialidadeId == id);
+            return _context.MedicoEspecialidades.Any(e => e.MedicoEspecialidadeId == id);
         }
     }
 }

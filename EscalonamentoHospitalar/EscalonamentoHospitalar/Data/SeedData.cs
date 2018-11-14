@@ -27,7 +27,7 @@ namespace EscalonamentoHospitalar.Data
 
         private static void SeedMedicoEspecialidade(HospitalDbContext db)
         {
-            if (db.MedicoEspecialidade.Any()) return;
+            if (db.MedicoEspecialidades.Any()) return;
             Medico manuel = db.Medicos.SingleOrDefault(e => e.Nome == "Manuel Santos");
             Medico elisabete = db.Medicos.SingleOrDefault(e => e.Nome == "Elisabete Eiras");
            
@@ -60,7 +60,7 @@ namespace EscalonamentoHospitalar.Data
                 db.SaveChanges();
             }
 
-            db.MedicoEspecialidade.AddRange(
+            db.MedicoEspecialidades.AddRange(
 
                 new MedicoEspecialidade { Nome = "Patologia", MedicoId = manuel.MedicoId },
                 new MedicoEspecialidade { Nome = "Oncologia", MedicoId = elisabete.MedicoId }

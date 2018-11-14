@@ -123,7 +123,7 @@ namespace EscalonamentoHospitalar.Migrations
 
                     b.HasIndex("MedicoId");
 
-                    b.ToTable("MedicoEspecialidade");
+                    b.ToTable("MedicoEspecialidades");
                 });
 
             modelBuilder.Entity("EscalonamentoHospitalar.Models.Paciente", b =>
