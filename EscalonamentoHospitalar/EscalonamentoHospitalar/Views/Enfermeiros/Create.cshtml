@@ -53,19 +53,24 @@
             </div>
 
             <script type="text/javascript">
-                //Se o utilizador selecionou a opcao "SIM" então mostrar textbox para inserir data de nascimento
+                //Algoritmo:
+                //Se o utilizador selecionou a opcao "SIM" então 
+                //mostrar textbox para inserir data de nascimento
+
                 function showForm() {
-                    var selectBox = document.getElementById("YesOrNo");
-                    var selectedValue = selectBox.options[selectBox.selectedIndex].value;
-                    if (selectedValue == "true") {
-                        var form = document.getElementById("formDateData").innerHTML;
-                        document.getElementById("formDate").innerHTML = form;
+                    var selectBox = document.getElementById("YesOrNo"); //drop list
+                    var selectedValue = selectBox.options[selectBox.selectedIndex].value; //valor selecionado na drop list
+                    if (selectedValue == "true") { //Se 'Sim'
+                        //buscar dados da div com o id="fromDateData"
+                        var form = document.getElementById("formDateData").innerHTML; 
+                        //passar os dados para a div com o id="fromDate"
+                        document.getElementById("formDate").innerHTML = form; 
                     }
                 }
             </script>
 
-            <div class="form-group" id="formDateData" hidden>
-                <label asp-for="Data_Nascimento_Filho" class="control-label">Data de Nascimento</label>
+            <div id="formDateData" hidden>
+                <label asp-for="Data_Nascimento_Filho" class="control-label">Data de Nascimento do Filho mais novo</label>
                 <input asp-for="Data_Nascimento_Filho" class="form-control" />
                 <span asp-validation-for="Data_Nascimento_Filho" class="text-danger"></span>
             </div>
