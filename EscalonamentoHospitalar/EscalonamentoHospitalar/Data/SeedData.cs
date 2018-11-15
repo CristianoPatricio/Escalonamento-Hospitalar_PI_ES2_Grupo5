@@ -22,7 +22,33 @@ namespace EscalonamentoHospitalar.Data
 
                 SeedMedicos(db);
                 SeedMedicoEspecialidade(db);
+                SeedEspecialidadeMedico(db);
             }
+        }
+
+        private static void SeedEspecialidadeMedico(HospitalDbContext db)
+        {
+            if (db.EspecialidadeMedicos.Any()) return;
+            db.EspecialidadeMedicos.AddRange(
+                    new EspecialidadeMedico
+                    {
+                        NomeEspecialidade = "Anestesiologia",
+                    }, 
+                    new EspecialidadeMedico
+                    {
+                        NomeEspecialidade = "Cardiologia",
+                    },
+                    new EspecialidadeMedico
+                    {
+                        NomeEspecialidade = "Cirurgia Geral",
+                    },
+                    new EspecialidadeMedico
+                    {
+                        NomeEspecialidade = "Doenças Infesiosas",
+                    }
+
+                );
+            db.SaveChanges();
         }
 
         private static void SeedMedicoEspecialidade(HospitalDbContext db)

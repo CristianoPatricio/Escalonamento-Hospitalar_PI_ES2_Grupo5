@@ -1,0 +1,23 @@
+﻿@model EscalonamentoHospitalar.Models.EspecialidadeMedico
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Detalhes da especialidade</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Especialidade
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NomeEspecialidade)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.EspecialidadeMedicoId">Editar</a> |
+    <a asp-action="Index">Voltar à lista de especialidades</a>
+</div>

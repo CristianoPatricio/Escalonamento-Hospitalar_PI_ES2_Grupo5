@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EscalonamentoHospitalar.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    [Migration("20181114203938_initial")]
+    [Migration("20181115103043_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -94,9 +94,11 @@ namespace EscalonamentoHospitalar.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("NomeEspecialidade");
+
                     b.HasKey("EspecialidadeMedicoId");
 
-                    b.ToTable("EspecialidadeMedico");
+                    b.ToTable("EspecialidadeMedicos");
                 });
 
             modelBuilder.Entity("EscalonamentoHospitalar.Models.Medico", b =>

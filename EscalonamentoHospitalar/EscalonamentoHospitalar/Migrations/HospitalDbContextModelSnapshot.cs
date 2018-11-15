@@ -92,9 +92,11 @@ namespace EscalonamentoHospitalar.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("NomeEspecialidade");
+
                     b.HasKey("EspecialidadeMedicoId");
 
-                    b.ToTable("EspecialidadeMedico");
+                    b.ToTable("EspecialidadeMedicos");
                 });
 
             modelBuilder.Entity("EscalonamentoHospitalar.Models.Medico", b =>
