@@ -4,14 +4,16 @@ using EscalonamentoHospitalar.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EscalonamentoHospitalar.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    partial class HospitalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181116093451_16112018")]
+    partial class _16112018
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -59,7 +61,7 @@ namespace EscalonamentoHospitalar.Migrations
 
                     b.Property<DateTime>("Data_Nascimento");
 
-                    b.Property<DateTime?>("Data_Nascimento_Filho");
+                    b.Property<DateTime>("Data_Nascimento_Filho");
 
                     b.Property<string>("Email")
                         .IsRequired();
