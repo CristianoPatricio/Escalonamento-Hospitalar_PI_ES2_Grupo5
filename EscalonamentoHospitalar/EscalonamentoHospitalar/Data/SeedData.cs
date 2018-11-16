@@ -21,12 +21,12 @@ namespace EscalonamentoHospitalar.Data
                 SeedEnfermeiroEspecialidade(db);
 
                 SeedMedicos(db);
-                SeedMedicoEspecialidade(db);
-                SeedEspecialidadeMedico(db);
+                SeedMedicoEspecialidades(db);
+                SeedEspecialidadeMedicos(db);
             }
         }
 
-        private static void SeedEspecialidadeMedico(HospitalDbContext db)
+        private static void SeedEspecialidadeMedicos(HospitalDbContext db)
         {
             if (db.EspecialidadeMedicos.Any()) return;
             db.EspecialidadeMedicos.AddRange(
@@ -51,57 +51,32 @@ namespace EscalonamentoHospitalar.Data
             db.SaveChanges();
         }
 
-        private static void SeedMedicoEspecialidade(HospitalDbContext db)
+        private static void SeedMedicoEspecialidades(HospitalDbContext db)
         {
             if (db.MedicoEspecialidades.Any()) return;
+
+            EspecialidadeMedico anestesiologia = GetEspecialidadeMedicoCreatingIfNeed(db, "Anestesiologia");
+            EspecialidadeMedico cardiologia = GetEspecialidadeMedicoCreatingIfNeed(db, "Cardiologia");
+
             Medico manuel = db.Medicos.SingleOrDefault(e => e.Nome == "Manuel Santos");
             Medico elisabete = db.Medicos.SingleOrDefault(e => e.Nome == "Elisabete Eiras");
            
-
-            if (manuel == null)
-            {
-                manuel = new Medico {
-                    NumeroMecanografico = "M001",
-                    Nome = "Manuel Santos",
-                    Email = "manuelsantos@uls.guarda.com",
-                    Contacto = "936571245",
-                    CC = "15851657",
-                    Data_Nascimento = new DateTime(1987, 6, 29),
-                    NomeEspecialidade = "Patologia",
-                    Data_Inicio_Servico = new DateTime(2010, 11, 14),
-                };
-                db.Medicos.Add(manuel);
-                db.SaveChanges();
-            }
-
-            if (elisabete == null)
-            {
-                elisabete = new Medico {
-                    NumeroMecanografico = "M002",
-                    Nome = "Elisabete Eiras",
-                    Email = "elisabeteeiras@uls.guarda.com",
-                    Contacto = "925641937",
-                    CC = "16457832",
-                    Data_Nascimento = new DateTime(1985, 4, 2),
-                    NomeEspecialidade = "Oncologia",
-                    Data_Inicio_Servico = new DateTime(2008, 12, 14),
-                };
-                db.Medicos.Add(elisabete);
-                db.SaveChanges();
-            }
-
             db.MedicoEspecialidades.AddRange(
 
-                new MedicoEspecialidade { NomeEspecialidade = "Quimioterapia", MedicoId = manuel.MedicoId },
-                new MedicoEspecialidade { NomeEspecialidade = "Quimioterapia", MedicoId = elisabete.MedicoId }
+                new MedicoEspecialidade { MedicoId = manuel.MedicoId, EspecialidadeMedicoId = anestesiologia.EspecialidadeMedicoId },
+                new MedicoEspecialidade { MedicoId = elisabete.MedicoId, EspecialidadeMedicoId = cardiologia.EspecialidadeMedicoId}
                 );
 
             db.SaveChanges();
         }
 
-        private static void SeedMedicos(HospitalDbContext db)
+       private static void SeedMedicos(HospitalDbContext db)
         {
             if (db.Medicos.Any()) return;
+
+            EspecialidadeMedico anestesiologia = GetEspecialidadeMedicoCreatingIfNeed(db, "Anestesiologia");
+            EspecialidadeMedico cardiologia = GetEspecialidadeMedicoCreatingIfNeed(db, "Cardiologia");
+
             db.Medicos.AddRange(
                        new Medico
                        {
@@ -111,7 +86,7 @@ namespace EscalonamentoHospitalar.Data
                            Contacto = "936571245",
                            CC = "15851657",
                            Data_Nascimento = new DateTime(1987, 6, 29),
-                           NomeEspecialidade = "Patologia",
+                           EspecialidadeMedicoId = anestesiologia.EspecialidadeMedicoId,
                            Data_Inicio_Servico = new DateTime(2010, 11, 14),
                        },
                        new Medico
@@ -122,12 +97,25 @@ namespace EscalonamentoHospitalar.Data
                            Contacto = "925641937",
                            CC = "16457832",
                            Data_Nascimento = new DateTime(1985, 4, 2),
-                           NomeEspecialidade = "Oncologia",
+                           EspecialidadeMedicoId = cardiologia.EspecialidadeMedicoId,
                            Data_Inicio_Servico = new DateTime(2008, 12, 14),
                        }
                    );
             db.SaveChanges();
+        }
 
+        private static EspecialidadeMedico GetEspecialidadeMedicoCreatingIfNeed(HospitalDbContext db, string Nome)
+        {
+            EspecialidadeMedico especialidademedico = db.EspecialidadeMedicos.SingleOrDefault(e => e.NomeEspecialidade == Nome);
+
+            if(especialidademedico == null)
+            {
+                especialidademedico = new EspecialidadeMedico { NomeEspecialidade = Nome };
+                db.Add(especialidademedico);
+                db.SaveChanges();
+            }
+
+            return especialidademedico;
         }
 
         private static void SeedEnfermeiroEspecialidade(HospitalDbContext db)

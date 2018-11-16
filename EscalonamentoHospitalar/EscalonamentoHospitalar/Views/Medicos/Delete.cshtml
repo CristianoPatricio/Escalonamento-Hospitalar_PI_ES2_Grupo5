@@ -5,8 +5,8 @@
 }
 
 <h3>Tem a certeza que quer apagar o médico?</h3>
-
 <div>
+    <h4>Medico</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -49,10 +49,10 @@
             Especialidade
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.NomeEspecialidade)
+            @Html.DisplayFor(model => model.EspecialidadeMedico.EspecialidadeMedicoId)
         </dd>
         <dt>
-            Data de inicio ao serviço
+            Data de início ao serviço
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Data_Inicio_Servico)
@@ -62,6 +62,6 @@
     <form asp-action="Delete">
         <input type="hidden" asp-for="MedicoId" />
         <input type="submit" value="APAGAR" class="btn btn-default" /> |
-        <a asp-action="Index">Voltar à lista dos médicos</a>
+        <a asp-action="Index">Voltar à lista de médicos</a>
     </form>
 </div>

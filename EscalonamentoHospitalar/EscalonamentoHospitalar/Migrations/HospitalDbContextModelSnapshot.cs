@@ -116,12 +116,9 @@ namespace EscalonamentoHospitalar.Migrations
 
                     b.Property<string>("Email");
 
-                    b.Property<int?>("EspecialidadeMedicoId");
+                    b.Property<int>("EspecialidadeMedicoId");
 
                     b.Property<string>("Nome")
-                        .IsRequired();
-
-                    b.Property<string>("NomeEspecialidade")
                         .IsRequired();
 
                     b.Property<string>("NumeroMecanografico")
@@ -136,21 +133,13 @@ namespace EscalonamentoHospitalar.Migrations
 
             modelBuilder.Entity("EscalonamentoHospitalar.Models.MedicoEspecialidade", b =>
                 {
-                    b.Property<int>("MedicoEspecialidadeId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("EspecialidadeMedicoId");
-
                     b.Property<int>("MedicoId");
 
-                    b.Property<string>("NomeEspecialidade");
+                    b.Property<int>("EspecialidadeMedicoId");
 
-                    b.HasKey("MedicoEspecialidadeId");
+                    b.HasKey("MedicoId", "EspecialidadeMedicoId");
 
                     b.HasIndex("EspecialidadeMedicoId");
-
-                    b.HasIndex("MedicoId");
 
                     b.ToTable("MedicoEspecialidades");
                 });
@@ -193,19 +182,20 @@ namespace EscalonamentoHospitalar.Migrations
 
             modelBuilder.Entity("EscalonamentoHospitalar.Models.Medico", b =>
                 {
-                    b.HasOne("EscalonamentoHospitalar.Models.EspecialidadeMedico")
+                    b.HasOne("EscalonamentoHospitalar.Models.EspecialidadeMedico", "EspecialidadeMedico")
                         .WithMany("Medico")
-                        .HasForeignKey("EspecialidadeMedicoId");
+                        .HasForeignKey("EspecialidadeMedicoId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("EscalonamentoHospitalar.Models.MedicoEspecialidade", b =>
                 {
-                    b.HasOne("EscalonamentoHospitalar.Models.EspecialidadeMedico")
+                    b.HasOne("EscalonamentoHospitalar.Models.EspecialidadeMedico", "EspecialidadeMedico")
                         .WithMany("MedicosEspecialidade")
                         .HasForeignKey("EspecialidadeMedicoId");
 
                     b.HasOne("EscalonamentoHospitalar.Models.Medico", "Medico")
-                        .WithMany()
+                        .WithMany("MedicosEspecialidade")
                         .HasForeignKey("MedicoId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

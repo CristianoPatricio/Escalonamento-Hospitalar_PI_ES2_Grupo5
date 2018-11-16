@@ -35,8 +35,10 @@ namespace EscalonamentoHospitalar.Models
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = false)]
         public DateTime Data_Nascimento { get; set; }
 
-        [Required(ErrorMessage = "Por favor introduza a especialidade")]
-        public string NomeEspecialidade { get; set; }
+        public EspecialidadeMedico EspecialidadeMedico { get; set; }
+        public int EspecialidadeMedicoId { get; set; }
+
+        public ICollection<MedicoEspecialidade> MedicosEspecialidade { get; set; }
 
         [Required(ErrorMessage = "Por favor indroduza a data de inicio de serviço")]
         [DataType(DataType.Date)]

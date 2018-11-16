@@ -109,9 +109,8 @@ namespace EscalonamentoHospitalar.Migrations
                     Contacto = table.Column<string>(nullable: true),
                     CC = table.Column<string>(nullable: false),
                     Data_Nascimento = table.Column<DateTime>(nullable: false),
-                    NomeEspecialidade = table.Column<string>(nullable: false),
-                    Data_Inicio_Servico = table.Column<DateTime>(nullable: false),
-                    EspecialidadeMedicoId = table.Column<int>(nullable: true)
+                    EspecialidadeMedicoId = table.Column<int>(nullable: false),
+                    Data_Inicio_Servico = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -121,22 +120,19 @@ namespace EscalonamentoHospitalar.Migrations
                         column: x => x.EspecialidadeMedicoId,
                         principalTable: "EspecialidadeMedicos",
                         principalColumn: "EspecialidadeMedicoId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "MedicoEspecialidades",
                 columns: table => new
                 {
-                    MedicoEspecialidadeId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    NomeEspecialidade = table.Column<string>(nullable: true),
                     MedicoId = table.Column<int>(nullable: false),
-                    EspecialidadeMedicoId = table.Column<int>(nullable: true)
+                    EspecialidadeMedicoId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_MedicoEspecialidades", x => x.MedicoEspecialidadeId);
+                    table.PrimaryKey("PK_MedicoEspecialidades", x => new { x.MedicoId, x.EspecialidadeMedicoId });
                     table.ForeignKey(
                         name: "FK_MedicoEspecialidades_EspecialidadeMedicos_EspecialidadeMedicoId",
                         column: x => x.EspecialidadeMedicoId,
@@ -160,11 +156,6 @@ namespace EscalonamentoHospitalar.Migrations
                 name: "IX_MedicoEspecialidades_EspecialidadeMedicoId",
                 table: "MedicoEspecialidades",
                 column: "EspecialidadeMedicoId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_MedicoEspecialidades_MedicoId",
-                table: "MedicoEspecialidades",
-                column: "MedicoId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Medicos_EspecialidadeMedicoId",

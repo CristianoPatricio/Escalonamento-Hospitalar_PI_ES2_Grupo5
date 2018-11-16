@@ -14,6 +14,30 @@ namespace EscalonamentoHospitalar.Models
         {
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            //Chave composta especialidademedicoId + medicoId
+            modelBuilder.Entity<MedicoEspecialidade>().HasKey(o => new { o.MedicoId, o.EspecialidadeMedicoId });
+
+            //Relação 1 -> N
+            modelBuilder.Entity<MedicoEspecialidade>()
+                .HasOne(ee => ee.Medico)
+                .WithMany(e => e.MedicosEspecialidade)
+                .HasForeignKey(ee => ee.MedicoId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<MedicoEspecialidade>()
+               .HasOne(ee => ee.EspecialidadeMedico)
+               .WithMany(e => e.MedicosEspecialidade)
+               .HasForeignKey(ee => ee.EspecialidadeMedicoId)
+               .OnDelete(DeleteBehavior.ClientSetNull);
+
+
+            base.OnModelCreating(modelBuilder);
+        }
+
+        
+
         public DbSet<EscalonamentoHospitalar.Models.DiretorServico> DiretorServico { get; set; }
 
         public DbSet<EscalonamentoHospitalar.Models.Enfermeiro> Enfermeiros { get; set; }
