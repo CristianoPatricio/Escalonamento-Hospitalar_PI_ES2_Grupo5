@@ -20,7 +20,7 @@
             @Html.DisplayNameFor(model => model.Paciente)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Paciente.Contacto)
+            @Html.DisplayFor(model => model.Paciente.CC)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Grau)
@@ -63,6 +63,12 @@
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Concluido)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Medico)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Medico.MedicoId)
         </dd>
     </dl>
 </div>

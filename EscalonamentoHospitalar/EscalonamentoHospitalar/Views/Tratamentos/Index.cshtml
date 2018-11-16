@@ -39,6 +39,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Concluido)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Medico)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -49,7 +52,7 @@
                 @Html.DisplayFor(modelItem => item.Patologia.PatologiaId)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Paciente.Contacto)
+                @Html.DisplayFor(modelItem => item.Paciente.CC)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Grau.GrauId)
@@ -71,6 +74,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Concluido)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Medico.MedicoId)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.TratamentoId">Edit</a> |

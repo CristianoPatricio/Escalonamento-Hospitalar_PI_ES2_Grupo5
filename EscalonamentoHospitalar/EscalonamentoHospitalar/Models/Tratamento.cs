@@ -44,6 +44,9 @@ namespace EscalonamentoHospitalar.Models
 
         public bool Concluido { get; set; }
 
+        public Medico Medico { get; set; }
+        public int MedicoId { get; set; }
+
 
     }
 }
