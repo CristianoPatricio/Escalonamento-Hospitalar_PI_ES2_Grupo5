@@ -4,14 +4,16 @@ using EscalonamentoHospitalar.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EscalonamentoHospitalar.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    partial class HospitalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181116102320_Initial16")]
+    partial class Initial16
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -182,19 +184,6 @@ namespace EscalonamentoHospitalar.Migrations
                     b.ToTable("Patologia");
                 });
 
-            modelBuilder.Entity("EscalonamentoHospitalar.Models.Regime", b =>
-                {
-                    b.Property<int>("RegimeId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("TipoRegime");
-
-                    b.HasKey("RegimeId");
-
-                    b.ToTable("Regime");
-                });
-
             modelBuilder.Entity("EscalonamentoHospitalar.Models.Tratamento", b =>
                 {
                     b.Property<int>("TratamentoId")
@@ -220,7 +209,7 @@ namespace EscalonamentoHospitalar.Migrations
 
                     b.Property<int>("PatologiaId");
 
-                    b.Property<int>("RegimeId");
+                    b.Property<string>("Regime");
 
                     b.HasKey("TratamentoId");
 
@@ -231,8 +220,6 @@ namespace EscalonamentoHospitalar.Migrations
                     b.HasIndex("PacienteId");
 
                     b.HasIndex("PatologiaId");
-
-                    b.HasIndex("RegimeId");
 
                     b.ToTable("Tratamento");
                 });
@@ -273,11 +260,6 @@ namespace EscalonamentoHospitalar.Migrations
                     b.HasOne("EscalonamentoHospitalar.Models.Patologia", "Patologia")
                         .WithMany()
                         .HasForeignKey("PatologiaId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("EscalonamentoHospitalar.Models.Regime", "Regime")
-                        .WithMany()
-                        .HasForeignKey("RegimeId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

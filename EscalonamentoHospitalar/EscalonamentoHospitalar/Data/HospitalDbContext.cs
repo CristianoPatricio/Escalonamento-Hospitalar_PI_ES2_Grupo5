@@ -31,5 +31,6 @@ namespace EscalonamentoHospitalar.Models
         public object Tratamentos { get; internal set; }
         public DbSet<EscalonamentoHospitalar.Models.Patologia> Patologia { get; set; }
         public DbSet<EscalonamentoHospitalar.Models.Grau> Grau { get; set; }
+        public DbSet<EscalonamentoHospitalar.Models.Regime> Regime { get; set; }
     }
 }

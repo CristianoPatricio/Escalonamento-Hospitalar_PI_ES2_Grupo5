@@ -35,10 +35,14 @@ namespace EscalonamentoHospitalar.Models
         public DateTime DataFim { get; set; }
 
         [Required(ErrorMessage = "Por favor introduza a Duração do Ciclo")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "DD:YYYY 00:00", ApplyFormatInEditMode = false)]
         public string DuracaoCiclo { get; set; }
 
         [RegularExpression(@"([A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ\s]+)", ErrorMessage = "Regime Inválido")]
-        public string Regime { get; set; }
+
+        public Regime Regime { get; set; }
+        public int RegimeId { get; set; }
 
         public bool Decorrer { get; set; }
 

@@ -36,6 +36,9 @@ namespace EscalonamentoHospitalar.Models
 
         public ICollection<EnfermeiroEspecialidade> EnfermeiroEspecialidade { get; set; }
 
+        public ICollection<Medico> Medicos { get; set; }
+
+
     }
 }
 

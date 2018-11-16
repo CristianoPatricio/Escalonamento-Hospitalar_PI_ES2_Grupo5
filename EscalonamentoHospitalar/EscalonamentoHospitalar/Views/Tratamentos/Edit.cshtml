@@ -44,9 +44,9 @@
                 <span asp-validation-for="DuracaoCiclo" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Regime" class="control-label"></label>
-                <input asp-for="Regime" class="form-control" />
-                <span asp-validation-for="Regime" class="text-danger"></span>
+                <label asp-for="RegimeId" class="control-label"></label>
+                <select asp-for="RegimeId" class="form-control" asp-items="ViewBag.RegimeId"></select>
+                <span asp-validation-for="RegimeId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <div class="checkbox">

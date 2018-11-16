@@ -4,14 +4,16 @@ using EscalonamentoHospitalar.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EscalonamentoHospitalar.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    partial class HospitalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181116122227_16Nov01")]
+    partial class _16Nov01
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -220,7 +222,7 @@ namespace EscalonamentoHospitalar.Migrations
 
                     b.Property<int>("PatologiaId");
 
-                    b.Property<int>("RegimeId");
+                    b.Property<string>("Regime");
 
                     b.HasKey("TratamentoId");
 
@@ -231,8 +233,6 @@ namespace EscalonamentoHospitalar.Migrations
                     b.HasIndex("PacienteId");
 
                     b.HasIndex("PatologiaId");
-
-                    b.HasIndex("RegimeId");
 
                     b.ToTable("Tratamento");
                 });
@@ -273,11 +273,6 @@ namespace EscalonamentoHospitalar.Migrations
                     b.HasOne("EscalonamentoHospitalar.Models.Patologia", "Patologia")
                         .WithMany()
                         .HasForeignKey("PatologiaId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("EscalonamentoHospitalar.Models.Regime", "Regime")
-                        .WithMany()
-                        .HasForeignKey("RegimeId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

@@ -21,7 +21,7 @@ namespace EscalonamentoHospitalar.Controllers
         // GET: Tratamentos
         public async Task<IActionResult> Index()
         {
-            var hospitalDbContext = _context.Tratamento.Include(t => t.Grau).Include(t => t.Medico).Include(t => t.Paciente).Include(t => t.Patologia);
+            var hospitalDbContext = _context.Tratamento.Include(t => t.Grau).Include(t => t.Medico).Include(t => t.Paciente).Include(t => t.Patologia).Include(t => t.Regime);
             return View(await hospitalDbContext.ToListAsync());
         }
 
@@ -38,6 +38,7 @@ namespace EscalonamentoHospitalar.Controllers
                 .Include(t => t.Medico)
                 .Include(t => t.Paciente)
                 .Include(t => t.Patologia)
+                .Include(t => t.Regime)
                 .FirstOrDefaultAsync(m => m.TratamentoId == id);
             if (tratamento == null)
             {
@@ -54,6 +55,7 @@ namespace EscalonamentoHospitalar.Controllers
             ViewData["MedicoId"] = new SelectList(_context.Medicos, "MedicoId", "MedicoId");
             ViewData["PacienteId"] = new SelectList(_context.Pacientes, "PacienteId", "CC");
             ViewData["PatologiaId"] = new SelectList(_context.Patologia, "PatologiaId", "PatologiaId");
+            ViewData["RegimeId"] = new SelectList(_context.Regime, "RegimeId", "RegimeId");
             return View();
         }
 
@@ -62,7 +64,7 @@ namespace EscalonamentoHospitalar.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("TratamentoId,PatologiaId,PacienteId,GrauId,DataInicio,DataFim,DuracaoCiclo,Regime,Decorrer,Concluido,MedicoId")] Tratamento tratamento)
+        public async Task<IActionResult> Create([Bind("TratamentoId,PatologiaId,PacienteId,GrauId,DataInicio,DataFim,DuracaoCiclo,RegimeId,Decorrer,Concluido,MedicoId")] Tratamento tratamento)
         {
             if (ModelState.IsValid)
             {
@@ -74,6 +76,7 @@ namespace EscalonamentoHospitalar.Controllers
             ViewData["MedicoId"] = new SelectList(_context.Medicos, "MedicoId", "MedicoId", tratamento.MedicoId);
             ViewData["PacienteId"] = new SelectList(_context.Pacientes, "PacienteId", "CC", tratamento.PacienteId);
             ViewData["PatologiaId"] = new SelectList(_context.Patologia, "PatologiaId", "PatologiaId", tratamento.PatologiaId);
+            ViewData["RegimeId"] = new SelectList(_context.Regime, "RegimeId", "RegimeId", tratamento.RegimeId);
             return View(tratamento);
         }
 
@@ -94,6 +97,7 @@ namespace EscalonamentoHospitalar.Controllers
             ViewData["MedicoId"] = new SelectList(_context.Medicos, "MedicoId", "MedicoId", tratamento.MedicoId);
             ViewData["PacienteId"] = new SelectList(_context.Pacientes, "PacienteId", "CC", tratamento.PacienteId);
             ViewData["PatologiaId"] = new SelectList(_context.Patologia, "PatologiaId", "PatologiaId", tratamento.PatologiaId);
+            ViewData["RegimeId"] = new SelectList(_context.Regime, "RegimeId", "RegimeId", tratamento.RegimeId);
             return View(tratamento);
         }
 
@@ -102,7 +106,7 @@ namespace EscalonamentoHospitalar.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("TratamentoId,PatologiaId,PacienteId,GrauId,DataInicio,DataFim,DuracaoCiclo,Regime,Decorrer,Concluido,MedicoId")] Tratamento tratamento)
+        public async Task<IActionResult> Edit(int id, [Bind("TratamentoId,PatologiaId,PacienteId,GrauId,DataInicio,DataFim,DuracaoCiclo,RegimeId,Decorrer,Concluido,MedicoId")] Tratamento tratamento)
         {
             if (id != tratamento.TratamentoId)
             {
@@ -133,6 +137,7 @@ namespace EscalonamentoHospitalar.Controllers
             ViewData["MedicoId"] = new SelectList(_context.Medicos, "MedicoId", "MedicoId", tratamento.MedicoId);
             ViewData["PacienteId"] = new SelectList(_context.Pacientes, "PacienteId", "CC", tratamento.PacienteId);
             ViewData["PatologiaId"] = new SelectList(_context.Patologia, "PatologiaId", "PatologiaId", tratamento.PatologiaId);
+            ViewData["RegimeId"] = new SelectList(_context.Regime, "RegimeId", "RegimeId", tratamento.RegimeId);
             return View(tratamento);
         }
 
@@ -149,6 +154,7 @@ namespace EscalonamentoHospitalar.Controllers
                 .Include(t => t.Medico)
                 .Include(t => t.Paciente)
                 .Include(t => t.Patologia)
+                .Include(t => t.Regime)
                 .FirstOrDefaultAsync(m => m.TratamentoId == id);
             if (tratamento == null)
             {
