@@ -47,15 +47,38 @@
                 <span asp-validation-for="CC" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Filhos" class="control-label">Filhos</label>
-                <input asp-for="Filhos" class="form-control" />
-                <span asp-validation-for="Filhos" class="text-danger"></span>
+                <label asp-for="Filhos" class="control-label">Tem filhos?</label>
+                <select asp-for="Filhos" class="form-control" id="YesOrNo" onchange="showForm()">
+                    <option value="false">Não</option>
+                    <option value="true">Sim</option>
+                </select>
             </div>
-            <div class="form-group">
+
+            <script type="text/javascript">
+                //Algoritmo:
+                //Se o utilizador selecionou a opcao "SIM" então
+                //mostrar datebox para inserir data de nascimento
+
+                function showForm() {
+                    var selectBox = document.getElementById("YesOrNo"); //drop list
+                    var selectedValue = selectBox.options[selectBox.selectedIndex].value; //valor selecionado na drop list
+                    if (selectedValue == "true") { //Se 'Sim'
+                        //buscar a div que contém o Datebox
+                        var form = document.getElementById("formDate");
+                        //mostrar div
+                        if (form.style.display == 'none') {
+                            form.style.display = 'block';
+                        }
+                    }
+                }
+            </script>
+
+            <div class="form-group" id="formDate" style="display: none;">
                 <label asp-for="Data_Nascimento_Filho" class="control-label">Data de Nascimento filho mais novo</label>
                 <input asp-for="Data_Nascimento_Filho" class="form-control" />
                 <span asp-validation-for="Data_Nascimento_Filho" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <input type="submit" value="Guardar alterações" class="btn btn-default" />
             </div>
