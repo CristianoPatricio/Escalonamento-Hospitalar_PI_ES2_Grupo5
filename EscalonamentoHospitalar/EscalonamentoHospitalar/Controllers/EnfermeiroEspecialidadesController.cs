@@ -48,8 +48,8 @@ namespace EscalonamentoHospitalar.Controllers
         // GET: EnfermeiroEspecialidades/Create
         public IActionResult Create()
         {
-            ViewData["EnfermeiroId"] = new SelectList(_context.Enfermeiros, "EnfermeiroId", "CC");
-            ViewData["EspecialidadeEnfermeiroId"] = new SelectList(_context.Set<EspecialidadeEnfermeiro>(), "EspecialidadeEnfermeiroId", "EspecialidadeEnfermeiroId");
+            ViewData["EnfermeiroId"] = new SelectList(_context.Enfermeiros, "EnfermeiroId", "Nome");
+            ViewData["EspecialidadeEnfermeiroId"] = new SelectList(_context.Set<EspecialidadeEnfermeiro>(), "EspecialidadeEnfermeiroId", "Especialidade");
             return View();
         }
 
@@ -58,7 +58,7 @@ namespace EscalonamentoHospitalar.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("EnfermeiroEspecialidadeId,EspecialidadeEnfermeiroId,EnfermeiroId")] EnfermeiroEspecialidade enfermeiroEspecialidade)
+        public async Task<IActionResult> Create([Bind("EspecialidadeEnfermeiroId,EnfermeiroId")] EnfermeiroEspecialidade enfermeiroEspecialidade)
         {
             if (ModelState.IsValid)
             {
@@ -66,8 +66,8 @@ namespace EscalonamentoHospitalar.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EnfermeiroId"] = new SelectList(_context.Enfermeiros, "EnfermeiroId", "CC", enfermeiroEspecialidade.EnfermeiroId);
-            ViewData["EspecialidadeEnfermeiroId"] = new SelectList(_context.Set<EspecialidadeEnfermeiro>(), "EspecialidadeEnfermeiroId", "EspecialidadeEnfermeiroId", enfermeiroEspecialidade.EspecialidadeEnfermeiroId);
+            ViewData["EnfermeiroId"] = new SelectList(_context.Enfermeiros, "EnfermeiroId", "Nome", enfermeiroEspecialidade.EnfermeiroId);
+            ViewData["EspecialidadeEnfermeiroId"] = new SelectList(_context.Set<EspecialidadeEnfermeiro>(), "EspecialidadeEnfermeiroId", "Especialidade", enfermeiroEspecialidade.EspecialidadeEnfermeiroId);
             return View(enfermeiroEspecialidade);
         }
 
@@ -84,8 +84,8 @@ namespace EscalonamentoHospitalar.Controllers
             {
                 return NotFound();
             }
-            ViewData["EnfermeiroId"] = new SelectList(_context.Enfermeiros, "EnfermeiroId", "CC", enfermeiroEspecialidade.EnfermeiroId);
-            ViewData["EspecialidadeEnfermeiroId"] = new SelectList(_context.Set<EspecialidadeEnfermeiro>(), "EspecialidadeEnfermeiroId", "EspecialidadeEnfermeiroId", enfermeiroEspecialidade.EspecialidadeEnfermeiroId);
+            ViewData["EnfermeiroId"] = new SelectList(_context.Enfermeiros, "EnfermeiroId", "Nome", enfermeiroEspecialidade.EnfermeiroId);
+            ViewData["EspecialidadeEnfermeiroId"] = new SelectList(_context.Set<EspecialidadeEnfermeiro>(), "EspecialidadeEnfermeiroId", "Especialidade", enfermeiroEspecialidade.EspecialidadeEnfermeiroId);
             return View(enfermeiroEspecialidade);
         }
 
@@ -94,7 +94,7 @@ namespace EscalonamentoHospitalar.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("EnfermeiroEspecialidadeId,EspecialidadeEnfermeiroId,EnfermeiroId")] EnfermeiroEspecialidade enfermeiroEspecialidade)
+        public async Task<IActionResult> Edit(int id, [Bind("EspecialidadeEnfermeiroId,EnfermeiroId")] EnfermeiroEspecialidade enfermeiroEspecialidade)
         {
             if (id != enfermeiroEspecialidade.EnfermeiroId)
             {
@@ -121,8 +121,8 @@ namespace EscalonamentoHospitalar.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EnfermeiroId"] = new SelectList(_context.Enfermeiros, "EnfermeiroId", "CC", enfermeiroEspecialidade.EnfermeiroId);
-            ViewData["EspecialidadeEnfermeiroId"] = new SelectList(_context.Set<EspecialidadeEnfermeiro>(), "EspecialidadeEnfermeiroId", "EspecialidadeEnfermeiroId", enfermeiroEspecialidade.EspecialidadeEnfermeiroId);
+            ViewData["EnfermeiroId"] = new SelectList(_context.Enfermeiros, "EnfermeiroId", "Nome", enfermeiroEspecialidade.EnfermeiroId);
+            ViewData["EspecialidadeEnfermeiroId"] = new SelectList(_context.Set<EspecialidadeEnfermeiro>(), "EspecialidadeEnfermeiroId", "Especialidade", enfermeiroEspecialidade.EspecialidadeEnfermeiroId);
             return View(enfermeiroEspecialidade);
         }
 
