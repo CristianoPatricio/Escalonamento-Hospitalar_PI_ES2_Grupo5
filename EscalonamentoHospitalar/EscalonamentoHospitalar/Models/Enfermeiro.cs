@@ -41,10 +41,9 @@ namespace EscalonamentoHospitalar.Models
         [Required]
         public bool? Filhos { get; set; }
 
-        //[Required(ErrorMessage = "Por favor, introduza a data de nascimento")]
         [DataType(DataType.Date, ErrorMessage = "Data de nascimento inválida")]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = false)]
-        public DateTime Data_Nascimento_Filho { get; set; }
+        public DateTime? Data_Nascimento_Filho { get; set; }
 
         public ICollection<EnfermeiroEspecialidade> EnfermeirosEspecialidade { get; set; }
     }
