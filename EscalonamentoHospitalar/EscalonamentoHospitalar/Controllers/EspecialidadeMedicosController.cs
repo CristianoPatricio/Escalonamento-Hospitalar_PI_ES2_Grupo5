@@ -9,23 +9,22 @@ using EscalonamentoHospitalar.Models;
 
 namespace EscalonamentoHospitalar.Controllers
 {
-    public class MedicosController : Controller
+    public class EspecialidadeMedicosController : Controller
     {
         private readonly HospitalDbContext _context;
 
-        public MedicosController(HospitalDbContext context)
+        public EspecialidadeMedicosController(HospitalDbContext context)
         {
             _context = context;
         }
 
-        // GET: Medicos
+        // GET: EspecialidadeMedicos
         public async Task<IActionResult> Index()
         {
-            var hospitalDbContext = _context.Medicos.Include(m => m.EspecialidadeMedico);
-            return View(await hospitalDbContext.ToListAsync());
+            return View(await _context.EspecialidadeMedicos.ToListAsync());
         }
 
-        // GET: Medicos/Details/5
+        // GET: EspecialidadeMedicos/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,42 +32,39 @@ namespace EscalonamentoHospitalar.Controllers
                 return NotFound();
             }
 
-            var medico = await _context.Medicos
-                .Include(m => m.EspecialidadeMedico)
-                .FirstOrDefaultAsync(m => m.MedicoId == id);
-            if (medico == null)
+            var especialidadeMedico = await _context.EspecialidadeMedicos
+                .FirstOrDefaultAsync(m => m.EspecialidadeMedicoId == id);
+            if (especialidadeMedico == null)
             {
                 return NotFound();
             }
 
-            return View(medico);
+            return View(especialidadeMedico);
         }
 
-        // GET: Medicos/Create
+        // GET: EspecialidadeMedicos/Create
         public IActionResult Create()
         {
-            ViewData["EspecialidadeMedicoId"] = new SelectList(_context.EspecialidadeMedicos, "EspecialidadeMedicoId", "NomeEspecialidade");
             return View();
         }
 
-        // POST: Medicos/Create
+        // POST: EspecialidadeMedicos/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("MedicoId,NumeroMecanografico,Nome,Email,Contacto,CC,Data_Nascimento,NomeEspecialidade,Data_Inicio_Servico")] Medico medico)
+        public async Task<IActionResult> Create([Bind("EspecialidadeMedicoId,NomeEspecialidade")] EspecialidadeMedico especialidadeMedico)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(medico);
+                _context.Add(especialidadeMedico);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EspecialidadeMedicoId"] = new SelectList(_context.EspecialidadeMedicos, "EspecialidadeMedicoId", "NomeEspecialidade", medico.EspecialidadeMedicoId);
-            return View(medico);
+            return View(especialidadeMedico);
         }
 
-        // GET: Medicos/Edit/5
+        // GET: EspecialidadeMedicos/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -76,23 +72,22 @@ namespace EscalonamentoHospitalar.Controllers
                 return NotFound();
             }
 
-            var medico = await _context.Medicos.FindAsync(id);
-            if (medico == null)
+            var especialidadeMedico = await _context.EspecialidadeMedicos.FindAsync(id);
+            if (especialidadeMedico == null)
             {
                 return NotFound();
             }
-            ViewData["EspecialidadeMedicoId"] = new SelectList(_context.EspecialidadeMedicos, "EspecialidadeMedicoId", "NomeEspecialidade", medico.EspecialidadeMedicoId);
-            return View(medico);
+            return View(especialidadeMedico);
         }
 
-        // POST: Medicos/Edit/5
+        // POST: EspecialidadeMedicos/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("MedicoId,NumeroMecanografico,Nome,Email,Contacto,CC,Data_Nascimento,NomeEspecialidade,Data_Inicio_Servico")] Medico medico)
+        public async Task<IActionResult> Edit(int id, [Bind("EspecialidadeMedicoId,NomeEspecialidade")] EspecialidadeMedico especialidadeMedico)
         {
-            if (id != medico.MedicoId)
+            if (id != especialidadeMedico.EspecialidadeMedicoId)
             {
                 return NotFound();
             }
@@ -101,12 +96,12 @@ namespace EscalonamentoHospitalar.Controllers
             {
                 try
                 {
-                    _context.Update(medico);
+                    _context.Update(especialidadeMedico);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!MedicoExists(medico.MedicoId))
+                    if (!EspecialidadeMedicoExists(especialidadeMedico.EspecialidadeMedicoId))
                     {
                         return NotFound();
                     }
@@ -117,11 +112,10 @@ namespace EscalonamentoHospitalar.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EspecialidadeMedicoId"] = new SelectList(_context.EspecialidadeMedicos, "EspecialidadeMedicoId", "NomeEspecialidade", medico.EspecialidadeMedicoId);
-            return View(medico);
+            return View(especialidadeMedico);
         }
 
-        // GET: Medicos/Delete/5
+        // GET: EspecialidadeMedicos/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -129,31 +123,30 @@ namespace EscalonamentoHospitalar.Controllers
                 return NotFound();
             }
 
-            var medico = await _context.Medicos
-                .Include(m => m.EspecialidadeMedico)
-                .FirstOrDefaultAsync(m => m.MedicoId == id);
-            if (medico == null)
+            var especialidadeMedico = await _context.EspecialidadeMedicos
+                .FirstOrDefaultAsync(m => m.EspecialidadeMedicoId == id);
+            if (especialidadeMedico == null)
             {
                 return NotFound();
             }
 
-            return View(medico);
+            return View(especialidadeMedico);
         }
 
-        // POST: Medicos/Delete/5
+        // POST: EspecialidadeMedicos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var medico = await _context.Medicos.FindAsync(id);
-            _context.Medicos.Remove(medico);
+            var especialidadeMedico = await _context.EspecialidadeMedicos.FindAsync(id);
+            _context.EspecialidadeMedicos.Remove(especialidadeMedico);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool MedicoExists(int id)
+        private bool EspecialidadeMedicoExists(int id)
         {
-            return _context.Medicos.Any(e => e.MedicoId == id);
+            return _context.EspecialidadeMedicos.Any(e => e.EspecialidadeMedicoId == id);
         }
     }
 }

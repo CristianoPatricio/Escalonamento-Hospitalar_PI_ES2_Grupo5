@@ -4,7 +4,7 @@
     ViewData["Title"] = "Edit";
 }
 
-<h2>Edit</h2>
+<h2>Editar</h2>
 
 <h4>Enfermeiro</h4>
 <hr />
@@ -14,32 +14,32 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="EnfermeiroId" />
             <div class="form-group">
-                <label asp-for="NumeroMecanografico" class="control-label"></label>
+                <label asp-for="NumeroMecanografico" class="control-label">Código</label>
                 <input asp-for="NumeroMecanografico" class="form-control" />
                 <span asp-validation-for="NumeroMecanografico" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Nome" class="control-label"></label>
+                <label asp-for="Nome" class="control-label">Nome</label>
                 <input asp-for="Nome" class="form-control" />
                 <span asp-validation-for="Nome" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Contacto" class="control-label"></label>
+                <label asp-for="Contacto" class="control-label">Contacto</label>
                 <input asp-for="Contacto" class="form-control" />
                 <span asp-validation-for="Contacto" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
+                <label asp-for="Email" class="control-label">Email</label>
                 <input asp-for="Email" class="form-control" />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Data_Nascimento" class="control-label"></label>
+                <label asp-for="Data_Nascimento" class="control-label">Data de Nascimento</label>
                 <input asp-for="Data_Nascimento" class="form-control" />
                 <span asp-validation-for="Data_Nascimento" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CC" class="control-label"></label>
+                <label asp-for="CC" class="control-label">Nº CC/BI</label>
                 <input asp-for="CC" class="form-control" />
                 <span asp-validation-for="CC" class="text-danger"></span>
             </div>
