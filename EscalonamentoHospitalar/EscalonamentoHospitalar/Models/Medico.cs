@@ -11,48 +11,33 @@ namespace EscalonamentoHospitalar.Models
     {
         public int MedicoId { get; set; }
 
-        [Required(ErrorMessage = "Por favor introduza o número mecanográfico respetivo")]
-        [RegularExpression(@"[M]\d+", ErrorMessage = "Número mecanográfico inválido")]
+
+        [RegularExpression(@"\d{7}(\s\d{1})?", ErrorMessage = "Numero Errado")]
         //Numero da Ordem
         public string NumeroMecanografico { get; set; }
 
-        [Required(ErrorMessage = "Por favor introduza o nome")]
-        [RegularExpression(@"([A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ\s]+)", ErrorMessage = "O nome que introduziu não é válido")]
+        [RegularExpression(@"([A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ\s]+)", ErrorMessage = "Nome Inválido")]
         public string Nome { get; set; }
 
-        [RegularExpression(@"(\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,6})", ErrorMessage = "O email que introduziu não é válido")]
+        [RegularExpression(@"(\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,6})", ErrorMessage = "Email Inválido")]
         public string Email { get; set; }
 
-        [RegularExpression(@"(2\d{8})|(9[1236]\d{7})", ErrorMessage = "O número de contacto que introduziu não é válido")]
+        [RegularExpression(@"(2\d{8})|(9[1236]\d{7})", ErrorMessage = "Contacto Inválido")]
         public string Contacto { get; set; }
 
-        [Required(ErrorMessage = "Por favor introduza o nº de cartão de cidadão")]
-        [RegularExpression(@"\d{8}(\s\d{1})?", ErrorMessage = "O nº de cartão de cidadão que introduziu não é válido")]
+        [RegularExpression(@"\d{8}(\s\d{1})?", ErrorMessage = "Cartão de Cidadão Inválido")]
         public string CC { get; set; }
 
-        [Required(ErrorMessage = "Por favor indroduza a data de nascimento")]
+
+        //abc
+        [Required(ErrorMessage = "Por indroduza a data de Nascimento")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = false)]
         public DateTime Data_Nascimento { get; set; }
-
 
      
         public ICollection<MedicoEspecialidade> MedicoEspecialidade { get; set; }
 
         public ICollection<Tratamento> Tratamento { get; set; }
-
-        public EspecialidadeMedico EspecialidadeMedico { get; set; }
-        public int EspecialidadeMedicoId { get; set; }
-
-        public ICollection<MedicoEspecialidade> MedicosEspecialidade { get; set; }
-
-        [Required(ErrorMessage = "Por favor indroduza a data de inicio de serviço")]
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = false)]
-        public DateTime Data_Inicio_Servico { get; set; }
-
-
-        
-
     }
 }

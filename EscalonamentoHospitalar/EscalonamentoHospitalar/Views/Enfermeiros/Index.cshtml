@@ -4,7 +4,7 @@
     ViewData["Title"] = "Index";
 }
 
-<h2>Lista de Enfermeiros</h2>
+<h2>Index</h2>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -13,22 +13,22 @@
     <thead>
         <tr>
             <th>
-                Código
+                @Html.DisplayNameFor(model => model.NumeroMecanografico)
             </th>
             <th>
-                Nome
+                @Html.DisplayNameFor(model => model.Nome)
             </th>
             <th>
-                Contacto
+                @Html.DisplayNameFor(model => model.Contacto)
             </th>
             <th>
-                Email
+                @Html.DisplayNameFor(model => model.Email)
             </th>
             <th>
-                Data de Nascimento
+                @Html.DisplayNameFor(model => model.Data_Nascimento)
             </th>
             <th>
-                Nº CC/BI
+                @Html.DisplayNameFor(model => model.CC)
             </th>
             <th></th>
         </tr>

@@ -4,7 +4,7 @@
     ViewData["Title"] = "Create";
 }
 
-<h2>Criar Novo Enfermeiro</h2>
+<h2>Create</h2>
 
 <h4>Enfermeiro</h4>
 <hr />
@@ -13,7 +13,7 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="NumeroMecanografico" class="control-label">Código</label>
+                <label asp-for="NumeroMecanografico" class="control-label"></label>
                 <input asp-for="NumeroMecanografico" class="form-control" />
                 <span asp-validation-for="NumeroMecanografico" class="text-danger"></span>
             </div>
@@ -33,12 +33,12 @@
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Data_Nascimento" class="control-label">Data de Nascimento</label>
+                <label asp-for="Data_Nascimento" class="control-label"></label>
                 <input asp-for="Data_Nascimento" class="form-control" />
                 <span asp-validation-for="Data_Nascimento" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CC" class="control-label">Nº CC/BI</label>
+                <label asp-for="CC" class="control-label"></label>
                 <input asp-for="CC" class="form-control" />
                 <span asp-validation-for="CC" class="text-danger"></span>
             </div>
