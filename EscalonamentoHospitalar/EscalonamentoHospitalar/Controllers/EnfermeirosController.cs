@@ -59,21 +59,77 @@ namespace EscalonamentoHospitalar.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("EnfermeiroId,NumeroMecanografico,Nome,EspecialidadeEnfermeiroId,Contacto,Email,Data_Nascimento,CC,Filhos,Data_Nascimento_Filho")] Enfermeiro enfermeiro)
         {
+
+            /********************************/
+            DateTime dateNow = DateTime.Now;
+            DateTime enfermeiroBDate = enfermeiro.Data_Nascimento;
+            var numero = enfermeiro.NumeroMecanografico;
+            var email = enfermeiro.Email;
+            var nCC = enfermeiro.CC;
+
+            bool sonBDateIsInvalid = false;
+         
+            //Validar Numero Mecanografico         
+            if (numMecIsInvalid(numero) == true)
+            {              
+                //Mensagem de erro se o número mecanográfico for inválido
+                ModelState.AddModelError("NumeroMecanografico", "Este número já existe");
+            }
+
+            //Validar Email           
+            if (emailIsInvalid(email) == true)
+            {
+                //Mensagem de erro se o email for inválido
+                ModelState.AddModelError("Email", "Este email já existe");
+            }
+
+            //Validar Data de Nascimento do Enfermeiro
+            if (enfDateIsInvalid(enfermeiroBDate) == true)
+            {        
+                //Mensagem de erro se a data de nascimento do enfermeiro for inválida
+                ModelState.AddModelError("Data_Nascimento", "Data de nascimento inválida");
+            }
+
+             //Validar Data de Nascimento do Filho + Novo
+            if (enfermeiro.Data_Nascimento_Filho != null)
+            {
+                DateTime sonDate = (DateTime)enfermeiro.Data_Nascimento_Filho;
+               
+                if (sonDateIsInvalid(sonDate) == true)
+                {
+                    sonBDateIsInvalid = true;
+                    //Mensagem de erro se a data de nascimento do filho for inválida
+                    ModelState.AddModelError("Data_Nascimento_Filho", "Data de nascimento inválida");
+                }
+            }
+
+            //Validar CC através do check digit
+            if (!ValidateNumeroDocumentoCC(nCC))
+            {
+                //Mensagem de erro se o nº de CC é inválido
+                ModelState.AddModelError("CC", "Nº de CC inválido");
+            }
+
+            /********************************/           
+
             if (ModelState.IsValid)
             {
-                // TODO fazer restantes validações
-                //Verificar se a Data de Nascimento está correta (tem de ter no minimo 22 anos)
-                if (!((DateTime.Today.Year - enfermeiro.Data_Nascimento.Year) <= 22 && (DateTime.Today.Year - enfermeiro.Data_Nascimento.Year) <= 0))
+                if (!sonBDateIsInvalid || !numMecIsInvalid(numero) || !emailIsInvalid(email) || !enfDateIsInvalid(enfermeiroBDate) || ValidateNumeroDocumentoCC(nCC))
                 {
                     _context.Add(enfermeiro);
+
+                    //Inserir Registo na Tabela EnfermeiroEspecialidades
+                    InsertDataIntoEnfermeiroEspecialidades(_context, enfermeiro.EspecialidadeEnfermeiroId, enfermeiro.EnfermeiroId);
+
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
                 }
+                           
             }
             ViewData["EspecialidadeEnfermeiroId"] = new SelectList(_context.Set<EspecialidadeEnfermeiro>(), "EspecialidadeEnfermeiroId", "Especialidade", enfermeiro.EspecialidadeEnfermeiroId);
             return View(enfermeiro);
         }
-
+       
         // GET: Enfermeiros/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -98,17 +154,58 @@ namespace EscalonamentoHospitalar.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("EnfermeiroId,NumeroMecanografico,Nome,EspecialidadeEnfermeiroId,Contacto,Email,Data_Nascimento,CC,Filhos,Data_Nascimento_Filho")] Enfermeiro enfermeiro)
         {
+            /*************************************/
+
+            DateTime enfermeiroBDate = enfermeiro.Data_Nascimento;
+            var nCC = enfermeiro.CC;
+
+            bool sonBDateIsInvalid = false;
+
             if (id != enfermeiro.EnfermeiroId)
             {
                 return NotFound();
             }
 
+
+            //Validar Data de Nascimento do Enfermeiro
+            if (enfDateIsInvalid(enfermeiroBDate) == true)
+            {
+                //Mensagem de erro se a data de nascimento do enfermeiro for inválida
+                ModelState.AddModelError("Data_Nascimento", "Data de nascimento inválida");
+            }
+
+            //Validar Data de Nascimento do Filho + Novo
+            if (enfermeiro.Data_Nascimento_Filho != null)
+            {
+                DateTime sonDate = (DateTime)enfermeiro.Data_Nascimento_Filho;
+               
+                if (sonDateIsInvalid(sonDate) == true)
+                {
+                    sonBDateIsInvalid = true;
+                    //Mensagem de erro se a data de nascimento do filho for inválida
+                    ModelState.AddModelError("Data_Nascimento_Filho", "Data de nascimento inválida");
+                }
+            }
+
+            //Validar CC através do check digit
+            if (!ValidateNumeroDocumentoCC(nCC))
+            {
+                //Mensagem de erro se o nº de CC é inválido
+                ModelState.AddModelError("CC", "Nº de CC inválido");
+            }
+
+            /*******************************************/
+
             if (ModelState.IsValid)
             {
                 try
-                {
-                    _context.Update(enfermeiro);
-                    await _context.SaveChangesAsync();
+                {                   
+                    if (!enfDateIsInvalid(enfermeiroBDate) || !sonBDateIsInvalid || ValidateNumeroDocumentoCC(nCC))
+                    {
+                        _context.Update(enfermeiro);
+                        await _context.SaveChangesAsync();
+                    }
+                                  
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -160,6 +257,159 @@ namespace EscalonamentoHospitalar.Controllers
         private bool EnfermeiroExists(int id)
         {
             return _context.Enfermeiros.Any(e => e.EnfermeiroId == id);
+        }
+
+        /**********************Funções auxiliares**************************/
+
+        public bool ValidateNumeroDocumentoCC(string numeroDocumento)
+        {
+            int sum = 0;
+            bool secondDigit = false;
+            numeroDocumento = numeroDocumento.ToString().Replace(" ","");
+
+            if (numeroDocumento.Length != 12)
+                throw new ArgumentException("Tamanho inválido para número de documento.");
+            for (int i = numeroDocumento.Length - 1; i >= 0; --i)
+            {
+                int valor = GetNumberFromChar(numeroDocumento[i]);
+                if (secondDigit)
+                {
+                    valor *= 2;
+                    if (valor > 9)
+                        valor -= 9;
+                }
+                sum += valor;
+                secondDigit = !secondDigit;
+            }
+            return (sum % 10) == 0;
+        }
+
+        public int GetNumberFromChar(char letter)
+        {
+            switch (letter)
+            {
+                case '0': return 0;
+                case '1': return 1;
+                case '2': return 2;
+                case '3': return 3;
+                case '4': return 4;
+                case '5': return 5;
+                case '6': return 6;
+                case '7': return 7;
+                case '8': return 8;
+                case '9': return 9;
+                case 'A': return 10;
+                case 'B': return 11;
+                case 'C': return 12;
+                case 'D': return 13;
+                case 'E': return 14;
+                case 'F': return 15;
+                case 'G': return 16;
+                case 'H': return 17;
+                case 'I': return 18;
+                case 'J': return 19;
+                case 'K': return 20;
+                case 'L': return 21;
+                case 'M': return 22;
+                case 'N': return 23;
+                case 'O': return 24;
+                case 'P': return 25;
+                case 'Q': return 26;
+                case 'R': return 27;
+                case 'S': return 28;
+                case 'T': return 29;
+                case 'U': return 30;
+                case 'V': return 31;
+                case 'W': return 32;
+                case 'X': return 33;
+                case 'Y': return 34;
+                case 'Z': return 35;
+            }
+            throw new ArgumentException("Valor inválido no número de documento.");
+        }
+
+        private void InsertDataIntoEnfermeiroEspecialidades(HospitalDbContext db, int especialidade, int enfermeiro)
+        {
+            db.EnfermeirosEspecialidades.Add(
+                new EnfermeiroEspecialidade { EspecialidadeEnfermeiroId = especialidade, EnfermeiroId = enfermeiro }
+            );
+
+            db.SaveChanges();
+        }
+
+      
+        /**
+         * @param enfDate
+         * @return true if nurse´s date of birth is invalid   
+         */
+        private bool enfDateIsInvalid(DateTime enfDate)
+        {
+            bool IsInvalid = false;
+            DateTime dateNow = DateTime.Now;
+
+            if (dateNow.Year - enfDate.Year <= 22)
+            {
+                IsInvalid = true;
+            }
+
+            return IsInvalid;
+        }
+
+        /**
+         * @param sonDate
+         * @return true if son´s date of birth is invalid   
+         */
+        private bool sonDateIsInvalid(DateTime sonDate)
+        {
+            bool IsInvalid = false;
+            DateTime dateNow = DateTime.Now;          
+
+            int dateTimeCompare = DateTime.Compare(sonDate, dateNow);
+
+            if (dateTimeCompare > 0) //son's date of birth is later than date now
+            {
+                IsInvalid = true;             
+            }
+            return IsInvalid;
+        }
+
+        /**
+        * @param email
+        * @return true if the email already exists in DB  
+        */
+        private bool emailIsInvalid(string email)
+        {
+            bool IsInvalid = false;
+
+            //Procura na BD se existem enfermeiros com o mesmo email
+            var enfermeiros = from e in _context.Enfermeiros
+                              where e.Email.Contains(email)
+                              select e;
+
+            if (!enfermeiros.Count().Equals(0))
+            {
+                IsInvalid = true;               
+            }
+
+            return IsInvalid;
+        }
+
+        private bool numMecIsInvalid(string numero)
+        {
+            bool IsInvalid = false;
+
+
+            //Procura na BD se existem enfermeiros com o mesmo numero mecanografico
+            var enfermeiros = from e in _context.Enfermeiros
+                              where e.NumeroMecanografico.Contains(numero)
+                              select e;
+
+            if (!enfermeiros.Count().Equals(0))
+            {
+                IsInvalid = true;               
+            }
+
+            return IsInvalid;
         }
     }
 }
