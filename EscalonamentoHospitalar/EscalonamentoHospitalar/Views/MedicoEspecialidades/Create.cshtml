@@ -11,8 +11,8 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="MedicoId" class="control-label">MedicoId</label>
-                <select asp-for="MedicoId" class ="form-control" asp-items="ViewBag.MedicoId"></select>
+                <label asp-for="Medico" class="control-label">Médico</label>
+                <select asp-for="Medico" class ="form-control" asp-items="ViewBag.MedicoId"></select>
             </div>
             <div class="form-group">
                 <label asp-for="EspecialidadeMedicoId" class="control-label">Especialidade</label>
@@ -26,7 +26,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">voltar à lista de especialidades do médico</a>
+    <a asp-action="Index">Voltar à lista de especialidades do médico</a>
 </div>
 
 @section Scripts {
