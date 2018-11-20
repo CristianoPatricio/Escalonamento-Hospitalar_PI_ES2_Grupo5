@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EscalonamentoHospitalar.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    [Migration("20181116122227_16Nov01")]
-    partial class _16Nov01
+    [Migration("20181120121934_initial20Nov")]
+    partial class initial20Nov
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -115,11 +115,15 @@ namespace EscalonamentoHospitalar.Migrations
 
                     b.Property<string>("Email");
 
+                    b.Property<int?>("EnfermeiroId");
+
                     b.Property<string>("Nome");
 
                     b.Property<string>("NumeroMecanografico");
 
                     b.HasKey("MedicoId");
+
+                    b.HasIndex("EnfermeiroId");
 
                     b.ToTable("Medicos");
                 });
@@ -222,7 +226,7 @@ namespace EscalonamentoHospitalar.Migrations
 
                     b.Property<int>("PatologiaId");
 
-                    b.Property<string>("Regime");
+                    b.Property<int>("RegimeId");
 
                     b.HasKey("TratamentoId");
 
@@ -234,6 +238,8 @@ namespace EscalonamentoHospitalar.Migrations
 
                     b.HasIndex("PatologiaId");
 
+                    b.HasIndex("RegimeId");
+
                     b.ToTable("Tratamento");
                 });
 
@@ -243,6 +249,13 @@ namespace EscalonamentoHospitalar.Migrations
                         .WithMany("EnfermeiroEspecialidade")
                         .HasForeignKey("EnfermeiroId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("EscalonamentoHospitalar.Models.Medico", b =>
+                {
+                    b.HasOne("EscalonamentoHospitalar.Models.Enfermeiro")
+                        .WithMany("Medicos")
+                        .HasForeignKey("EnfermeiroId");
                 });
 
             modelBuilder.Entity("EscalonamentoHospitalar.Models.MedicoEspecialidade", b =>
@@ -273,6 +286,11 @@ namespace EscalonamentoHospitalar.Migrations
                     b.HasOne("EscalonamentoHospitalar.Models.Patologia", "Patologia")
                         .WithMany()
                         .HasForeignKey("PatologiaId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("EscalonamentoHospitalar.Models.Regime", "Regime")
+                        .WithMany()
+                        .HasForeignKey("RegimeId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

@@ -113,11 +113,15 @@ namespace EscalonamentoHospitalar.Migrations
 
                     b.Property<string>("Email");
 
+                    b.Property<int?>("EnfermeiroId");
+
                     b.Property<string>("Nome");
 
                     b.Property<string>("NumeroMecanografico");
 
                     b.HasKey("MedicoId");
+
+                    b.HasIndex("EnfermeiroId");
 
                     b.ToTable("Medicos");
                 });
@@ -243,6 +247,13 @@ namespace EscalonamentoHospitalar.Migrations
                         .WithMany("EnfermeiroEspecialidade")
                         .HasForeignKey("EnfermeiroId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("EscalonamentoHospitalar.Models.Medico", b =>
+                {
+                    b.HasOne("EscalonamentoHospitalar.Models.Enfermeiro")
+                        .WithMany("Medicos")
+                        .HasForeignKey("EnfermeiroId");
                 });
 
             modelBuilder.Entity("EscalonamentoHospitalar.Models.MedicoEspecialidade", b =>
