@@ -51,11 +51,11 @@ namespace EscalonamentoHospitalar.Controllers
         // GET: Tratamentos/Create
         public IActionResult Create()
         {
-            ViewData["GrauId"] = new SelectList(_context.Grau, "GrauId", "GrauId");
-            ViewData["MedicoId"] = new SelectList(_context.Medicos, "MedicoId", "MedicoId");
-            ViewData["PacienteId"] = new SelectList(_context.Pacientes, "PacienteId", "CC");
-            ViewData["PatologiaId"] = new SelectList(_context.Patologia, "PatologiaId", "PatologiaId");
-            ViewData["RegimeId"] = new SelectList(_context.Regime, "RegimeId", "RegimeId");
+            ViewData["GrauId"] = new SelectList(_context.Grau, "GrauId", "TipoGrau");
+            ViewData["MedicoId"] = new SelectList(_context.Medicos, "MedicoId", "Nome");
+            ViewData["PacienteId"] = new SelectList(_context.Pacientes, "PacienteId", "Nome");
+            ViewData["PatologiaId"] = new SelectList(_context.Patologia, "PatologiaId", "Nome");
+            ViewData["RegimeId"] = new SelectList(_context.Regime, "RegimeId", "TipoRegime");
             return View();
         }
 

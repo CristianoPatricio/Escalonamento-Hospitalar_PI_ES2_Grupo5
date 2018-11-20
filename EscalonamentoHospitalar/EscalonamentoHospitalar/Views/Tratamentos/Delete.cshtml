@@ -1,12 +1,12 @@
 ﻿@model EscalonamentoHospitalar.Models.Tratamento
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Eliminar";
 }
 
 <h2>Delete</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Tem a certeza que deseja eliminar?</h3>
 <div>
     <h4>Tratamento</h4>
     <hr />
@@ -76,6 +76,6 @@
     <form asp-action="Delete">
         <input type="hidden" asp-for="TratamentoId" />
         <input type="submit" value="Delete" class="btn btn-default" /> |
-        <a asp-action="Index">Back to List</a>
+        <a asp-action="Index">Voltar a Lista </a>
     </form>
 </div>

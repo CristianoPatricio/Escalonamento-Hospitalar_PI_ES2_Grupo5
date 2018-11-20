@@ -133,8 +133,8 @@ namespace EscalonamentoHospitalar.Data
             Regime Semanal = db.Regime.SingleOrDefault(e => e.TipoRegime == "Semanal ");
             Regime Mensal = db.Regime.SingleOrDefault(e => e.TipoRegime == "Mensal ");
 
-            //Medico Manuel  = db.Medicos.SingleOrDefault(e => e.Nome == "Manuel");
-           // Medico Elisabete  = db.Medicos.SingleOrDefault(e => e.Nome == "Elisabete");
+            Medico Manuel   = db.Medicos.SingleOrDefault(e => e.Nome == "Manuel Santos");
+            Medico Elisabete  = db.Medicos.SingleOrDefault(e => e.Nome == "Elisabete Eiras");
 
 
 
@@ -151,7 +151,7 @@ namespace EscalonamentoHospitalar.Data
                         DataInicio = new DateTime(2018, 11, 09),
                         DataFim = new DateTime(2018, 12, 31),
                         DuracaoCiclo = "00:30",
-                        //MedicoId = Manuel.MedicoId,
+                        MedicoId = Manuel.MedicoId,
                         
                     },
                     new Tratamento
@@ -163,7 +163,7 @@ namespace EscalonamentoHospitalar.Data
                         DataInicio = new DateTime(2018, 11, 09),
                         DataFim = new DateTime(2018, 12, 31),
                         DuracaoCiclo = "01:10",
-                        //MedicoId = Elisabete.MedicoId,
+                        MedicoId = Elisabete.MedicoId,
 
                     }
                      );

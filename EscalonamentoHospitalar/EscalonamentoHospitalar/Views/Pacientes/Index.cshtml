@@ -4,10 +4,10 @@
     ViewData["Title"] = "Pacientes";
 }
 
-<h2>Index</h2>
+<h2>Pacientes</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Criar</a>
 </p>
 <table class="table">
     <thead>
@@ -35,9 +35,9 @@
             </td>
             
             <td>
-                <a asp-action="Edit" asp-route-id="@item.PacienteId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.PacienteId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.PacienteId">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.PacienteId">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.PacienteId">Detalhes</a> |
+                <a asp-action="Delete" asp-route-id="@item.PacienteId">Eliminar</a>
             </td>
         </tr>
 }
