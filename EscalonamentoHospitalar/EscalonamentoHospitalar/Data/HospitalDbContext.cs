@@ -47,5 +47,9 @@ namespace EscalonamentoHospitalar.Models
 
         public DbSet<EscalonamentoHospitalar.Models.EspecialidadeEnfermeiro> EspecialidadesEnfermeiros { get; set; }
 
+        public DbSet<EscalonamentoHospitalar.Models.Turno> Turnos { get; set; }
+
+        public DbSet<EscalonamentoHospitalar.Models.HorarioEnfermeiro> HorariosEnfermeiro { get; set; }
+
     }
 }

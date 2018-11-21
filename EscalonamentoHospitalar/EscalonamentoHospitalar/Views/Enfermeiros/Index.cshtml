@@ -3,6 +3,31 @@
 @{
     ViewData["Title"] = "Lista de Enfermeiros";
 }
+<p></p>
+
+@if (TempData["notice"] != null)
+{
+    <!--Mensagem de sucesso quandi insere enfermeiro-->
+    <div id="suc_form" class="alert alert-success">
+        <strong>Sucesso!</strong> O registo foi inserido com sucesso.
+    </div>
+}
+
+@if (TempData["deleteEnf"] != null)
+{
+    <!--Mensagem de sucesso quando elimina enfermeiro-->
+    <div id="suc_form" class="alert alert-success">
+        <strong>Sucesso!</strong> Enfermeiro eliminado com sucesso.
+    </div>
+}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    //Passados 5 segundos a mensagem desaparece
+    $(document).ready(function () {
+        $("#suc_form").hide(10000);
+    });
+</script>
 
 <h2>Lista de Enfermeiros</h2>
 
@@ -25,23 +50,24 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.NumeroMecanografico)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nome)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EspecialidadeEnfermeiro.Especialidade)
-            </td>           
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.EnfermeiroId">Alterar</a> |
-                <a asp-action="Details" asp-route-id="@item.EnfermeiroId">Detalhes</a> |
-                <a asp-action="Delete" asp-route-id="@item.EnfermeiroId">Eliminar</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NumeroMecanografico)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EspecialidadeEnfermeiro.Especialidade)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.EnfermeiroId">Alterar</a> |
+                    <a asp-action="Details" asp-route-id="@item.EnfermeiroId">Detalhes</a> |
+                    <a asp-action="Delete" asp-route-id="@item.EnfermeiroId">Eliminar</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

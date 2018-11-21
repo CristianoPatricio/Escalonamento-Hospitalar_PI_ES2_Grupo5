@@ -58,7 +58,7 @@ namespace EscalonamentoHospitalar.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("EspecialidadeEnfermeiroId,EnfermeiroId")] EnfermeiroEspecialidade enfermeiroEspecialidade)
+        public async Task<IActionResult> Create([Bind("EspecialidadeEnfermeiroId,EnfermeiroId,Data_Registo")] EnfermeiroEspecialidade enfermeiroEspecialidade)
         {
             if (ModelState.IsValid)
             {
@@ -94,7 +94,7 @@ namespace EscalonamentoHospitalar.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("EspecialidadeEnfermeiroId,EnfermeiroId")] EnfermeiroEspecialidade enfermeiroEspecialidade)
+        public async Task<IActionResult> Edit(int id, [Bind("EspecialidadeEnfermeiroId,EnfermeiroId,Data_Registo")] EnfermeiroEspecialidade enfermeiroEspecialidade)
         {
             if (id != enfermeiroEspecialidade.EnfermeiroId)
             {

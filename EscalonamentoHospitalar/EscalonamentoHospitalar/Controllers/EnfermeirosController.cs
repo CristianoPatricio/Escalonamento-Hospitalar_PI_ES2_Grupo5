@@ -122,6 +122,7 @@ namespace EscalonamentoHospitalar.Controllers
                     InsertDataIntoEnfermeiroEspecialidades(_context, enfermeiro.EspecialidadeEnfermeiroId, enfermeiro.EnfermeiroId);
 
                     await _context.SaveChangesAsync();
+                    TempData["notice"] = "Registo inserido com sucesso!";
                     return RedirectToAction(nameof(Index));
                 }
                            
@@ -158,6 +159,8 @@ namespace EscalonamentoHospitalar.Controllers
 
             DateTime enfermeiroBDate = enfermeiro.Data_Nascimento;
             var nCC = enfermeiro.CC;
+            var numero = enfermeiro.NumeroMecanografico;
+            var idEnf = enfermeiro.EnfermeiroId;
 
             bool sonBDateIsInvalid = false;
 
@@ -166,6 +169,11 @@ namespace EscalonamentoHospitalar.Controllers
                 return NotFound();
             }
 
+            //Validar Numero Mecanografico
+            if (numMecIsInvalidEdit(numero, idEnf) == true){
+                //Mensagem de erro se a data de nascimento do enfermeiro for inválida
+                ModelState.AddModelError("NumeroMecanografico", "Este número já existe");
+            }
 
             //Validar Data de Nascimento do Enfermeiro
             if (enfDateIsInvalid(enfermeiroBDate) == true)
@@ -200,7 +208,7 @@ namespace EscalonamentoHospitalar.Controllers
             {
                 try
                 {                   
-                    if (!enfDateIsInvalid(enfermeiroBDate) || !sonBDateIsInvalid || ValidateNumeroDocumentoCC(nCC))
+                    if (!numMecIsInvalidEdit(numero, idEnf) || !enfDateIsInvalid(enfermeiroBDate) || !sonBDateIsInvalid || ValidateNumeroDocumentoCC(nCC))
                     {
                         _context.Update(enfermeiro);
                         await _context.SaveChangesAsync();
@@ -251,6 +259,7 @@ namespace EscalonamentoHospitalar.Controllers
             var enfermeiro = await _context.Enfermeiros.FindAsync(id);
             _context.Enfermeiros.Remove(enfermeiro);
             await _context.SaveChangesAsync();
+            TempData["deleteEnf"] = "Enfermeiro eliminado com sucesso!";
             return RedirectToAction(nameof(Index));
         }
 
@@ -330,8 +339,10 @@ namespace EscalonamentoHospitalar.Controllers
 
         private void InsertDataIntoEnfermeiroEspecialidades(HospitalDbContext db, int especialidade, int enfermeiro)
         {
+            DateTime date = DateTime.Now;
+
             db.EnfermeirosEspecialidades.Add(
-                new EnfermeiroEspecialidade { EspecialidadeEnfermeiroId = especialidade, EnfermeiroId = enfermeiro }
+                new EnfermeiroEspecialidade { EspecialidadeEnfermeiroId = especialidade, EnfermeiroId = enfermeiro, Data_Registo = date }
             );
 
             db.SaveChanges();
@@ -394,6 +405,10 @@ namespace EscalonamentoHospitalar.Controllers
             return IsInvalid;
         }
 
+        /**
+        * @param numero
+        * @return true if the numero already exists in DB  
+        */
         private bool numMecIsInvalid(string numero)
         {
             bool IsInvalid = false;
@@ -407,6 +422,50 @@ namespace EscalonamentoHospitalar.Controllers
             if (!enfermeiros.Count().Equals(0))
             {
                 IsInvalid = true;               
+            }
+
+            return IsInvalid;
+        }
+
+        /**
+        * @param cc
+        * @return true if the cc already exists in DB  
+        */
+        private bool ccIsInvalid(string cc)
+        {
+            bool IsInvalid = false;
+
+
+            //Procura na BD se existem enfermeiros com o mesmo numero mecanografico
+            var enfermeiros = from e in _context.Enfermeiros
+                              where e.NumeroMecanografico.Contains(cc)
+                              select e;
+
+            if (!enfermeiros.Count().Equals(0))
+            {
+                IsInvalid = true;
+            }
+
+            return IsInvalid;
+        }
+
+        /**
+        * @param numero
+        * @return true if the numero already exists in DB  
+        */
+        private bool numMecIsInvalidEdit(string numero, int idEnf)
+        {
+            bool IsInvalid = false;
+
+
+            //Procura na BD se existem enfermeiros com o mesmo numero mecanografico
+            var enfermeiros = from e in _context.Enfermeiros
+                              where e.NumeroMecanografico.Contains(numero) && e.EnfermeiroId != idEnf
+                              select e;
+
+            if (!enfermeiros.Count().Equals(0))
+            {
+                IsInvalid = true;
             }
 
             return IsInvalid;

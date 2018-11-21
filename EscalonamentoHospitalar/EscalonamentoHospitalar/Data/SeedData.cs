@@ -20,7 +20,34 @@ namespace EscalonamentoHospitalar.Data
                 SeedDiretorServico(db);               
                 SeedEspecialidadeEnfermeiros(db);
                 SeedEnfermeiroEspecialidade(db);
+                SeedTurnos(db);
+                //SeedHorarioEnfermeiros(db);
             }
+        }
+
+        private static void SeedHorarioEnfermeiros(HospitalDbContext db)
+        {
+            if (db.HorariosEnfermeiro.Any()) return;
+         
+            Enfermeiro enfermeiro = db.Enfermeiros.SingleOrDefault(e => e.Nome == "Marisa Reduto");
+            Turno turno1 = db.Turnos.SingleOrDefault(t => t.Nome == "MANHÃ");        
+            
+
+        }
+
+        private static void SeedTurnos(HospitalDbContext db)
+        {
+            if (db.Turnos.Any()) return;
+
+            db.Turnos.AddRange(
+                
+                new Turno { Nome = "MANHÃ" },
+                new Turno { Nome = "TARDE" },
+                new Turno { Nome = "NOITE" }      
+                
+                );
+
+            db.SaveChanges();
         }
 
         private static void SeedEspecialidadeEnfermeiros(HospitalDbContext db)
@@ -47,18 +74,18 @@ namespace EscalonamentoHospitalar.Data
 
             EspecialidadeEnfermeiro especialidade = GetEspecialidadeCreatingIfNeed(db, "Enfermagem Comunitária");
             Enfermeiro enfermeiro = db.Enfermeiros.SingleOrDefault(e => e.Nome == "Marisa Reduto");
-            db.EnfermeirosEspecialidades.Add(new EnfermeiroEspecialidade { EspecialidadeEnfermeiroId = especialidade.EspecialidadeEnfermeiroId, EnfermeiroId = enfermeiro.EnfermeiroId });
+            db.EnfermeirosEspecialidades.Add(new EnfermeiroEspecialidade { EspecialidadeEnfermeiroId = especialidade.EspecialidadeEnfermeiroId, EnfermeiroId = enfermeiro.EnfermeiroId, Data_Registo = new DateTime(2018, 11, 16) });
 
             especialidade = GetEspecialidadeCreatingIfNeed(db, "Enfermagem Médico-Cirúrgica");
             enfermeiro = db.Enfermeiros.SingleOrDefault(e => e.Nome == "João Silva");
-            db.EnfermeirosEspecialidades.Add(new EnfermeiroEspecialidade { EspecialidadeEnfermeiroId = especialidade.EspecialidadeEnfermeiroId, EnfermeiroId = enfermeiro.EnfermeiroId });
+            db.EnfermeirosEspecialidades.Add(new EnfermeiroEspecialidade { EspecialidadeEnfermeiroId = especialidade.EspecialidadeEnfermeiroId, EnfermeiroId = enfermeiro.EnfermeiroId, Data_Registo = new DateTime(2018, 11, 16) });
 
             especialidade = GetEspecialidadeCreatingIfNeed(db, "Enfermagem de Reabilitação");
             enfermeiro = db.Enfermeiros.SingleOrDefault(e => e.Nome == "Armando Manso");
-            db.EnfermeirosEspecialidades.Add(new EnfermeiroEspecialidade { EspecialidadeEnfermeiroId = especialidade.EspecialidadeEnfermeiroId, EnfermeiroId = enfermeiro.EnfermeiroId });
+            db.EnfermeirosEspecialidades.Add(new EnfermeiroEspecialidade { EspecialidadeEnfermeiroId = especialidade.EspecialidadeEnfermeiroId, EnfermeiroId = enfermeiro.EnfermeiroId, Data_Registo = new DateTime(2018, 11, 16) });
 
             enfermeiro = db.Enfermeiros.SingleOrDefault(e => e.Nome == "Andreia Cunha");
-            db.EnfermeirosEspecialidades.Add(new EnfermeiroEspecialidade { EspecialidadeEnfermeiroId = especialidade.EspecialidadeEnfermeiroId, EnfermeiroId = enfermeiro.EnfermeiroId });
+            db.EnfermeirosEspecialidades.Add(new EnfermeiroEspecialidade { EspecialidadeEnfermeiroId = especialidade.EspecialidadeEnfermeiroId, EnfermeiroId = enfermeiro.EnfermeiroId, Data_Registo = new DateTime(2018, 11, 16) });
 
             db.SaveChanges();
         }

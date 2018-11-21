@@ -47,6 +47,7 @@ namespace EscalonamentoHospitalar.Models
         public DateTime? Data_Nascimento_Filho { get; set; }
 
         public ICollection<EnfermeiroEspecialidade> EnfermeirosEspecialidade { get; set; }
+        public ICollection<HorarioEnfermeiro> HorariosEnfermeiro { get; set; }
     }
 }
 

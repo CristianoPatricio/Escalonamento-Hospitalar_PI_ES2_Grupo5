@@ -13,6 +13,8 @@ namespace EscalonamentoHospitalar.Models
 
         public int EnfermeiroId { get; set; }
         public Enfermeiro Enfermeiro { get; set; }
+
+        public DateTime Data_Registo { get; set; }
        
     }
 }

@@ -21,25 +21,31 @@
             <th>
                 Enfermeiro
             </th>
+            <th>
+                Data de Registo
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
-        <tr>          
+        <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.EspecialidadeEnfermeiro.Especialidade)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Enfermeiro.Nome)
             </td>
-            @*
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                @Html.DisplayFor(modelItem => item.Data_Registo)
             </td>
-                *@
+            @*
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+            *@
         </tr>
 }
     </tbody>
