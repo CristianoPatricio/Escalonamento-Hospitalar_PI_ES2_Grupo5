@@ -128,7 +128,8 @@ namespace EscalonamentoHospitalar.Migrations
                 columns: table => new
                 {
                     MedicoId = table.Column<int>(nullable: false),
-                    EspecialidadeMedicoId = table.Column<int>(nullable: false)
+                    EspecialidadeMedicoId = table.Column<int>(nullable: false),
+                    Data_Registo = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {

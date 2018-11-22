@@ -137,6 +137,8 @@ namespace EscalonamentoHospitalar.Migrations
 
                     b.Property<int>("EspecialidadeMedicoId");
 
+                    b.Property<DateTime>("Data_Registo");
+
                     b.HasKey("MedicoId", "EspecialidadeMedicoId");
 
                     b.HasIndex("EspecialidadeMedicoId");

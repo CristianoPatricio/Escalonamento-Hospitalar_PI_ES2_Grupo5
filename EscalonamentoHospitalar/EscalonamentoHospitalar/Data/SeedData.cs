@@ -63,8 +63,14 @@ namespace EscalonamentoHospitalar.Data
            
             db.MedicoEspecialidades.AddRange(
 
-                new MedicoEspecialidade { MedicoId = manuel.MedicoId, EspecialidadeMedicoId = anestesiologia.EspecialidadeMedicoId },
-                new MedicoEspecialidade { MedicoId = elisabete.MedicoId, EspecialidadeMedicoId = cardiologia.EspecialidadeMedicoId}
+                new MedicoEspecialidade { MedicoId = manuel.MedicoId,
+                                          EspecialidadeMedicoId = anestesiologia.EspecialidadeMedicoId,
+                                          Data_Registo = new DateTime(2018, 11, 21),
+                                        },
+                new MedicoEspecialidade { MedicoId = elisabete.MedicoId,
+                                          EspecialidadeMedicoId = cardiologia.EspecialidadeMedicoId,
+                                          Data_Registo = new DateTime(2018, 11, 20)
+                                        }
                 );
 
             db.SaveChanges();

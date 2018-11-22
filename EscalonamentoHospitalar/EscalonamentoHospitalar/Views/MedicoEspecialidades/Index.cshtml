@@ -7,7 +7,6 @@
 <h2>Lista de especialidades do médico</h2>
 
 <p>
-    <a asp-action="Create">Inserir uma nova especialidade a um médico</a>
     <table class="table">
         <thead>
             <tr>
@@ -17,21 +16,27 @@
                 <th>
                     Especialidade
                 </th>
+                <th>
+                    Data de registo
+                </th>
                 <th></th>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Medico.Nome)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.EspecialidadeMedico.NomeEspecialidade)
-                    </td>
-                   
-                </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Medico.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EspecialidadeMedico.NomeEspecialidade)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Data_Registo)
+                </td>
+
+            </tr>
             }
         </tbody>
     </table>

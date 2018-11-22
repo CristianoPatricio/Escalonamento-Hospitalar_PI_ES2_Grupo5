@@ -19,14 +19,14 @@
                 <select asp-for="EspecialidadeMedicoId" class ="form-control" asp-items="ViewBag.EspecialidadeMedicoId"></select>
             </div>
             <div class="form-group">
-                <input type="submit" value="INSERIR" class="btn btn-default" />
+                <input type="submit" value="INSERIR" class="btn btn-success" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Voltar à lista de especialidades do médico</a>
+    <a asp-action="Index" class="btn btn-default">Voltar à lista de especialidades do médico</a>
 </div>
 
 @section Scripts {

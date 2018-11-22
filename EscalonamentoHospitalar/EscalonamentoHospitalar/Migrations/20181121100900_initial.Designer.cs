@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EscalonamentoHospitalar.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    [Migration("20181116111624_initial")]
+    [Migration("20181121100900_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -138,6 +138,8 @@ namespace EscalonamentoHospitalar.Migrations
                     b.Property<int>("MedicoId");
 
                     b.Property<int>("EspecialidadeMedicoId");
+
+                    b.Property<DateTime>("Data_Registo");
 
                     b.HasKey("MedicoId", "EspecialidadeMedicoId");
 
