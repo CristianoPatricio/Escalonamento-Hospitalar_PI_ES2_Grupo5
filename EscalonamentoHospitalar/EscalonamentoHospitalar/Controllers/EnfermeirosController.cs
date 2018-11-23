@@ -470,7 +470,7 @@ namespace EscalonamentoHospitalar.Controllers
 
             //Procura na BD se existem enfermeiros com o mesmo numero mecanografico
             var enfermeiros = from e in _context.Enfermeiros
-                              where e.NumeroMecanografico.Contains(cc)
+                              where e.CC.Contains(cc)
                               select e;
 
             if (!enfermeiros.Count().Equals(0))
@@ -486,6 +486,7 @@ namespace EscalonamentoHospitalar.Controllers
 
         /**
         * @param numero
+        * @param idEnf
         * @return true if the numero already exists in DB  
         */
         private bool numMecIsInvalidEdit(string numero, int idEnf)
@@ -508,6 +509,7 @@ namespace EscalonamentoHospitalar.Controllers
 
         /**
        * @param email
+       * @param idEnf
        * @return true if the email already exists in DB  
        */
         private bool emailIsInvalidEdit(string email, int idEnf)
@@ -529,6 +531,7 @@ namespace EscalonamentoHospitalar.Controllers
 
         /**
         * @param cc
+        * @param idEnf
         * @return true if the cc already exists in DB  
         */
         private bool ccIsInvalidEdit(string cc, int idEnf)
@@ -538,7 +541,7 @@ namespace EscalonamentoHospitalar.Controllers
 
             //Procura na BD se existem enfermeiros com o mesmo numero mecanografico
             var enfermeiros = from e in _context.Enfermeiros
-                              where e.NumeroMecanografico.Contains(cc) && e.EnfermeiroId != idEnf
+                              where e.CC.Contains(cc) && e.EnfermeiroId != idEnf
                               select e;
 
             if (!enfermeiros.Count().Equals(0))
@@ -549,11 +552,16 @@ namespace EscalonamentoHospitalar.Controllers
             return IsInvalid;
         }
 
+        /**
+        * @param idEnf
+        * @param idEsp
+        * @return true if the number of records equals 0. A new record will be inserted in DB.  
+        */
         private bool insertNewDataIntoEnfEspecialidade(int idEnf, int idEsp)
         {
             bool insert = false;
 
-            //Procura na BD se existem enfermeiros com o mesmo numero mecanografico
+            //Procura na BD se existem enfermeiroespecialidade com o mesmo numero mecanografico e especialidade
             var enfermeirosEspecialidades = from ee in _context.EnfermeirosEspecialidades
                               where ee.EnfermeiroId == idEnf && ee.EspecialidadeEnfermeiroId == idEsp
                               select ee;
