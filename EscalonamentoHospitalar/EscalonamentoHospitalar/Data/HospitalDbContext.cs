@@ -21,15 +21,15 @@ namespace EscalonamentoHospitalar.Models
 
             //Relação 1 -> N
             modelBuilder.Entity<MedicoEspecialidade>()
-                .HasOne(ee => ee.Medico)
-                .WithMany(e => e.MedicosEspecialidade)
-                .HasForeignKey(ee => ee.MedicoId)
+                .HasOne(mm => mm.Medico)
+                .WithMany(m => m.MedicosEspecialidade)
+                .HasForeignKey(mm => mm.MedicoId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<MedicoEspecialidade>()
-               .HasOne(ee => ee.EspecialidadeMedico)
-               .WithMany(e => e.MedicosEspecialidade)
-               .HasForeignKey(ee => ee.EspecialidadeMedicoId)
+               .HasOne(mm => mm.EspecialidadeMedico)
+               .WithMany(m => m.MedicosEspecialidade)
+               .HasForeignKey(mm => mm.EspecialidadeMedicoId)
                .OnDelete(DeleteBehavior.ClientSetNull);
 
 

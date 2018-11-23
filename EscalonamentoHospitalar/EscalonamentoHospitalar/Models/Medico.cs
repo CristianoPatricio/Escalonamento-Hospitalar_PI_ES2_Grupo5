@@ -27,7 +27,7 @@ namespace EscalonamentoHospitalar.Models
         public string Contacto { get; set; }
 
         [Required(ErrorMessage = "Por favor introduza o nº de cartão de cidadão")]
-        [RegularExpression(@"\d{8}(\s\d{1})?", ErrorMessage = "O nº de cartão de cidadão que introduziu não é válido")]
+        [RegularExpression(@"(\d{8}\s\d{1}[A-Z0-9]{2}\d{1})", ErrorMessage = "O nº de cartão de cidadão que introduziu não é válido")]
         public string CC { get; set; }
 
         [Required(ErrorMessage = "Por favor indroduza a data de nascimento")]
