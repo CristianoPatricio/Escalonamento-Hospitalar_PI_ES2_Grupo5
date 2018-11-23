@@ -6,22 +6,21 @@
 
 <h2>Alterar</h2>
 
-<h4>Está a alterar o Diretor de Serviço <b>@Html.DisplayFor(model => model.Name)</b></h4>
+<h4>Está a alterar o Diretor de Serviço <b>@Html.DisplayFor(model => model.Nome)</b></h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="DiretorServicoID" />
             <div class="form-group">
-                <label asp-for="Name" class="control-label">Nome</label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+                <label asp-for="Codigo" class="control-label">Código</label>
+                <input asp-for="Codigo" class="form-control" />
+                <span asp-validation-for="Codigo" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="NumeroMecanografico" class="control-label">Código</label>
-                <input asp-for="NumeroMecanografico" class="form-control" />
-                <span asp-validation-for="NumeroMecanografico" class="text-danger"></span>
+                <label asp-for="Nome" class="control-label">Nome</label>
+                <input asp-for="Nome" class="form-control" />
+                <span asp-validation-for="Nome" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Contacto" class="control-label">Contacto</label>
@@ -34,24 +33,19 @@
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CC" class="control-label">Nº CC/BI</label>
+                <label asp-for="CC" class="control-label">Nº Cartão Cidadão</label>
                 <input asp-for="CC" class="form-control" />
                 <span asp-validation-for="CC" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Morada" class="control-label">Morada</label>
-                <input asp-for="Morada" class="form-control" />
-                <span asp-validation-for="Morada" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Guardar alterações" class="btn btn-default" />
+                <input type="submit" value="Guardar alterações" class="btn btn-success" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Voltar à lista</a>
+    <a asp-action="Index"><input type="button" value="Voltar à lista" class="btn btn-default" /></a>
 </div>
 
 @section Scripts {

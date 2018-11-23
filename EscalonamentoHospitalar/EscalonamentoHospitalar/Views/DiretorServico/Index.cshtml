@@ -4,11 +4,44 @@
     ViewData["Title"] = "Listagem Diretores de Serviço";
 }
 
+@if (TempData["insertSuccess"] != null)
+{
+    <!--Mensagem de sucesso quandi insere diretor de serviço-->
+    <div id="suc_form" class="alert alert-success">
+        <strong>Sucesso!</strong> O registo foi inserido com sucesso.
+    </div>
+}
+
+@if (TempData["deleteSuccess"] != null)
+{
+    <!--Mensagem de sucesso quando elimina diretor de serviço-->
+    <div id="suc_form" class="alert alert-success">
+        <strong>Sucesso!</strong> Diretor Serviço eliminado com sucesso.
+    </div>
+}
+
+@if (TempData["successEdit"] != null)
+{
+    <!--Mensagem de sucesso quando elimina diretor de serviço-->
+    <div id="suc_form" class="alert alert-success">
+        <strong>Sucesso!</strong> O registo foi alterado com sucesso.
+    </div>
+}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    //Passados 5 segundos a mensagem desaparece
+    $(document).ready(function () {
+        $("#suc_form").hide(10000);
+    });
+</script>
+
 <h2>Listagem Diretores de Serviço</h2>
 
 <p>
-    <a asp-action="Create">Inserir Diretor de Serviço</a>
+    <a asp-action="Create"><input type="button" value="Inserir Novo Diretor Serviço" class="btn btn-success" /></a>
 </p>
+
 <table class="table">
     <thead>
         <tr>
@@ -22,20 +55,21 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.NumeroMecanografico)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>          
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.DiretorServicoID">Alterar</a> |
-                <a asp-action="Details" asp-route-id="@item.DiretorServicoID">Detalhes</a> |
-                <a asp-action="Delete" asp-route-id="@item.DiretorServicoID">Eliminar</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Codigo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nome)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.DiretorServicoID"><input type="button" value="Alterar" class="btn btn-warning" /></a> 
+                    <a asp-action="Details" asp-route-id="@item.DiretorServicoID"><input type="button" value="Detalhes" class="btn btn-info" /></a> 
+                    <a asp-action="Delete" asp-route-id="@item.DiretorServicoID"><input type="button" value="Eliminar" class="btn btn-danger" /></a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

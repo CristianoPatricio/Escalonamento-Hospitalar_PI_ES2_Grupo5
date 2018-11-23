@@ -11,13 +11,13 @@ namespace EscalonamentoHospitalar.Models
     {
         public int DiretorServicoID { get; set; }
 
+        [Required(ErrorMessage = "Por favor, introduza o código")]
+        [RegularExpression(@"[D]\d+", ErrorMessage = "Código inválido")]
+        public string Codigo { get; set; }
+
         [Required(ErrorMessage = "Por favor, introduza o nome")]
         [RegularExpression(@"([A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ\s]+)", ErrorMessage = "Nome inválido")]
-        public string Name { get; set; }
-
-        [Required(ErrorMessage = "Por favor, introduza o número mecanográfico")]
-        [RegularExpression(@"[D]\d+", ErrorMessage = "Número errado")]
-        public string NumeroMecanografico { get; set; }
+        public string Nome { get; set; }
 
         [RegularExpression(@"(2\d{8})|(9[1236]\d{7})", ErrorMessage = "Contacto inválido")]
         public string Contacto { get; set; }
@@ -26,13 +26,8 @@ namespace EscalonamentoHospitalar.Models
         [EmailAddress(ErrorMessage = "Email inválido")]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "Por favor, introduza o nº de CC/BI")]
-        [RegularExpression(@"\d{8}(\s\d{1})?", ErrorMessage = "Nº de CC/BI inválido")]
-        public string CC { get; set; }
-
-        [RegularExpression(@"([A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ\s]+)", ErrorMessage = "Morada inválida")]
-        public string Morada { get; set; }
-
-
+        [Required(ErrorMessage = "Por favor, introduza o nº de Cartão de Cidadão")]
+        [RegularExpression(@"(\d{8}\s\d{1}[A-Z0-9]{2}\d{1})", ErrorMessage = "Nº de Cartão de Cidadão inválido")]
+        public string CC { get; set; }    
         }
     }

@@ -113,7 +113,7 @@ namespace EscalonamentoHospitalar.Data
 
             db.DiretorServico.AddRange(
 
-                new DiretorServico { Name = "António Barata", NumeroMecanografico = "D001", Contacto = "965417847", Email = "antoniobarata@uls.guarda", CC = "12547845", Morada = "Guarda" }
+                new DiretorServico { Nome = "António Barata", Codigo = "D001", Contacto = "965417847", Email = "antoniobarata@uls.guarda", CC = "12547845"}
 
                 );
 
