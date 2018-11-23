@@ -13,8 +13,8 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="PatologiaId" class="control-label"></label>
-                <select asp-for="PatologiaId" class ="form-control" asp-items="ViewBag.PatologiaId"></select>
+                <label asp-for="PatologiaId" class="control-label">Patologia</label>
+                <select asp-for="PatologiaId" class ="form-control" asp-items="ViewBag.Patologia"></select>
             </div>
             <div class="form-group">
                 <label asp-for="PacienteId" class="control-label"></label>
@@ -44,18 +44,8 @@
                 <select asp-for="RegimeId" class ="form-control" asp-items="ViewBag.RegimeId"></select>
             </div>
             <div class="form-group">
-                <div class="checkbox">
-                    <label>
-                        <input asp-for="Decorrer" /> @Html.DisplayNameFor(model => model.Decorrer)
-                    </label>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="checkbox">
-                    <label>
-                        <input asp-for="Concluido" /> @Html.DisplayNameFor(model => model.Concluido)
-                    </label>
-                </div>
+                <label asp-for="EstadoId" class="control-label"></label>
+                <select asp-for="EstadoId" class="form-control" asp-items="ViewBag.EstadoId"></select>
             </div>
             <div class="form-group">
                 <label asp-for="MedicoId" class="control-label"></label>

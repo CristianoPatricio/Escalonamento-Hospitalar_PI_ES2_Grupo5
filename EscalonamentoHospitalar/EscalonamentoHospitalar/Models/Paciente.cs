@@ -42,11 +42,13 @@ namespace EscalonamentoHospitalar.Models
         [Required(ErrorMessage = "Por favor indroduza o contacto")]
         public string Contacto {get; set;}
 
-        
+
+        public ICollection<Tratamento> Tratamentos { get; set; }
 
 
 
-      
+
+
 
     }
 }

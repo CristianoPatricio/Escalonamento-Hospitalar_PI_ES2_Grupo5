@@ -44,10 +44,9 @@ namespace EscalonamentoHospitalar.Models
         public Regime Regime { get; set; }
         public int RegimeId { get; set; }
 
-        public bool Decorrer { get; set; }
+        public Estado Estado { get; set; }
 
-        public bool Concluido { get; set; }
-
+        public int EstadoId { get; set; }
         public Medico Medico { get; set; }
         public int MedicoId { get; set; }
 

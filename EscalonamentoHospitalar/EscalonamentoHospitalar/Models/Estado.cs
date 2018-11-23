@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 
 namespace EscalonamentoHospitalar.Models
 {
-    public class Patologia
+    public class Estado
     {
-        public int PatologiaId { get; set; }
+        public int EstadoId { get; set; }
 
         public string Nome { get; set; }
 

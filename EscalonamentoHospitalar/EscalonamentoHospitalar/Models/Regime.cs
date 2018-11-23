@@ -10,9 +10,8 @@ namespace EscalonamentoHospitalar.Models
 
         public int RegimeId { get; set; }
 
-        public string TipoRegime
-        {
-            get; set;
-        }
+        public string TipoRegime{get; set;}
+
+        public ICollection<Tratamento> Tratamentos { get; set; }
     }
 }

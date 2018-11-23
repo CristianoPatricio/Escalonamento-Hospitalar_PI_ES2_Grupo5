@@ -10,5 +10,7 @@ namespace EscalonamentoHospitalar.Models
         public int GrauId { get; set; }
 
         public string TipoGrau { get; set; }
+
+        public ICollection<Tratamento> Tratamentos { get; set; }
     }
 }

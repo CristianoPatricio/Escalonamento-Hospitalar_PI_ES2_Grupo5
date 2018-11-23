@@ -24,17 +24,37 @@ namespace EscalonamentoHospitalar.Data
                 SeedMedicoEspecialidade(db);
 
                 SeedPacientes(db);
-
-                SeedTratamentos(db);
                 SeedGrau(db);
 
                 SeedPatologia(db);
 
                 SeedRegime(db);
 
+                SeedEstado(db);
+
+                SeedTratamentos(db);
+
+
                 
                 
             }
+        }
+
+        private static void SeedEstado(HospitalDbContext db)
+        {
+            if (db.Estado.Any()) return;
+            db.Estado.AddRange(
+                       new Estado
+                       {
+                           Nome = "Decorrer"
+                       },
+                          new Estado
+                          {
+                              Nome = "Concluido"
+                          }
+               );
+
+            db.SaveChanges();
         }
 
         private static void SeedRegime(HospitalDbContext db)
@@ -84,33 +104,16 @@ namespace EscalonamentoHospitalar.Data
         private static void SeedPatologia(HospitalDbContext db)
         {
             if (db.Patologia.Any()) return;
-
-            Patologia Pulmonar = db.Patologia.SingleOrDefault(e => e.Nome == "Pulmonar");
-            Patologia Intestinal = db.Patologia.SingleOrDefault(e => e.Nome == "Intestinal");
-
-            if (Pulmonar == null)
-            {
-                Pulmonar = new Patologia
-                {
-
-                    Nome = "Pulmonar",
-
-                };
-                db.Patologia.Add(Pulmonar);
-                db.SaveChanges();
-            }
-
-            if (Intestinal == null)
-            {
-                Intestinal = new Patologia
-                {
-
-                    Nome = "Intestinal",
-
-                };
-                db.Patologia.Add(Intestinal);
-                db.SaveChanges();
-            }
+         db.Patologia.AddRange(
+                    new Patologia
+                       {
+                          Nome = "Pulmonar"
+                       },
+                       new Patologia
+                       {
+                           Nome = "Intestinal"
+                       }
+            );
         }
 
 
@@ -136,6 +139,9 @@ namespace EscalonamentoHospitalar.Data
             Medico Manuel   = db.Medicos.SingleOrDefault(e => e.Nome == "Manuel Santos");
             Medico Elisabete  = db.Medicos.SingleOrDefault(e => e.Nome == "Elisabete Eiras");
 
+            Estado Decorrer = db.Estado.SingleOrDefault(e => e.Nome == "Decorrer");
+            Estado Concluido = db.Estado.SingleOrDefault(e => e.Nome == "Concluido");
+
 
 
             db.Tratamento.AddRange(
@@ -152,6 +158,7 @@ namespace EscalonamentoHospitalar.Data
                         DataFim = new DateTime(2018, 12, 31),
                         DuracaoCiclo = "00:30",
                         MedicoId = Manuel.MedicoId,
+                        EstadoId = Decorrer.EstadoId,
                         
                     },
                     new Tratamento
@@ -164,6 +171,7 @@ namespace EscalonamentoHospitalar.Data
                         DataFim = new DateTime(2018, 12, 31),
                         DuracaoCiclo = "01:10",
                         MedicoId = Elisabete.MedicoId,
+                        EstadoId = Concluido.EstadoId,
 
                     }
                      );

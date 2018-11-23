@@ -14,19 +14,19 @@
             @Html.DisplayNameFor(model => model.Patologia)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Patologia.PatologiaId)
+            @Html.DisplayFor(model => model.Patologia.Nome)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Paciente)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Paciente.CC)
+            @Html.DisplayFor(model => model.Paciente.Nome)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Grau)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Grau.GrauId)
+            @Html.DisplayFor(model => model.Grau.TipoGrau)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.DataInicio)
@@ -50,20 +50,15 @@
             @Html.DisplayNameFor(model => model.Regime)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Regime.RegimeId)
+            @Html.DisplayFor(model => model.Regime.TipoRegime)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Decorrer)
+            @Html.DisplayNameFor(model => model.Estado)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Decorrer)
+            @Html.DisplayFor(model => model.Estado.Nome)
         </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Concluido)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Concluido)
-        </dd>
+
         <dt>
             @Html.DisplayNameFor(model => model.Medico)
         </dt>
