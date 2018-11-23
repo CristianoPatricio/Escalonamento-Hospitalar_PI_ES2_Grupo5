@@ -58,7 +58,7 @@ namespace EscalonamentoHospitalar.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("HorarioEnfermeiroId,DataInicioTurno,Duracao,TurnoId,EnfermeiroId")] HorarioEnfermeiro horarioEnfermeiro)
+        public async Task<IActionResult> Create([Bind("HorarioEnfermeiroId,DataInicioTurno,Duracao,DataFimTurno,TurnoId,EnfermeiroId")] HorarioEnfermeiro horarioEnfermeiro)
         {
             if (ModelState.IsValid)
             {
@@ -94,7 +94,7 @@ namespace EscalonamentoHospitalar.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("HorarioEnfermeiroId,DataInicioTurno,Duracao,TurnoId,EnfermeiroId")] HorarioEnfermeiro horarioEnfermeiro)
+        public async Task<IActionResult> Edit(int id, [Bind("HorarioEnfermeiroId,DataInicioTurno,Duracao,DataFimTurno,TurnoId,EnfermeiroId")] HorarioEnfermeiro horarioEnfermeiro)
         {
             if (id != horarioEnfermeiro.HorarioEnfermeiroId)
             {

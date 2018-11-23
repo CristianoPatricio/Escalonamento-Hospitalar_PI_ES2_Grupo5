@@ -21,7 +21,7 @@ namespace EscalonamentoHospitalar.Data
                 SeedEspecialidadeEnfermeiros(db);
                 SeedEnfermeiroEspecialidade(db);
                 SeedTurnos(db);
-                //SeedHorarioEnfermeiros(db);
+                SeedHorarioEnfermeiros(db);
             }
         }
 
@@ -30,9 +30,26 @@ namespace EscalonamentoHospitalar.Data
             if (db.HorariosEnfermeiro.Any()) return;
          
             Enfermeiro enfermeiro = db.Enfermeiros.SingleOrDefault(e => e.Nome == "Marisa Reduto");
-            Turno turno1 = db.Turnos.SingleOrDefault(t => t.Nome == "MANHÃ");        
-            
+            Turno turno1 = db.Turnos.SingleOrDefault(t => t.Nome == "MANHÃ");
+            DateTime dataInicioT1 = new DateTime(2018, 11, 21, 8, 0, 0);
+            db.HorariosEnfermeiro.Add(new HorarioEnfermeiro { DataInicioTurno = dataInicioT1, Duracao = 8, DataFimTurno = dataInicioT1.AddHours(8) ,TurnoId = turno1.TurnoId, EnfermeiroId = enfermeiro.EnfermeiroId});
 
+            enfermeiro = db.Enfermeiros.SingleOrDefault(e => e.Nome == "João Silva");
+            turno1 = db.Turnos.SingleOrDefault(t => t.Nome == "MANHÃ");
+            dataInicioT1 = new DateTime(2018, 11, 21, 8, 0, 0);
+            db.HorariosEnfermeiro.Add(new HorarioEnfermeiro { DataInicioTurno = dataInicioT1, Duracao = 8, DataFimTurno = dataInicioT1.AddHours(8), TurnoId = turno1.TurnoId, EnfermeiroId = enfermeiro.EnfermeiroId });
+
+            enfermeiro = db.Enfermeiros.SingleOrDefault(e => e.Nome == "Armando Manso");
+            Turno turno2 = db.Turnos.SingleOrDefault(t => t.Nome == "TARDE");
+            DateTime dataInicioT2 = new DateTime(2018, 11, 21, 16, 0, 0);
+            db.HorariosEnfermeiro.Add(new HorarioEnfermeiro { DataInicioTurno = dataInicioT2, Duracao = 8, DataFimTurno = dataInicioT2.AddHours(8), TurnoId = turno2.TurnoId, EnfermeiroId = enfermeiro.EnfermeiroId });
+
+            enfermeiro = db.Enfermeiros.SingleOrDefault(e => e.Nome == "Andreia Cunha");
+            Turno turno3 = db.Turnos.SingleOrDefault(t => t.Nome == "NOITE");
+            DateTime dataInicioT3 = new DateTime(2018, 11, 22, 0, 0, 0);
+            db.HorariosEnfermeiro.Add(new HorarioEnfermeiro { DataInicioTurno = dataInicioT3, Duracao = 8, DataFimTurno = dataInicioT3.AddHours(8), TurnoId = turno3.TurnoId, EnfermeiroId = enfermeiro.EnfermeiroId });
+
+            db.SaveChanges();
         }
 
         private static void SeedTurnos(HospitalDbContext db)

@@ -13,16 +13,19 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.DataInicioTurno)
+                Data de início do Turno
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Duracao)
+                Duração do Turno (horas)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Turno)
+                Data de fim do Turno (horas)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Enfermeiro)
+                Turno
+            </th>
+            <th>
+                Enfermeiro
             </th>
             <th></th>
         </tr>
@@ -35,12 +38,15 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Duracao)
-            </td>           
-            <td>
-                @Html.DisplayFor(modelItem => item.Turno.TurnoId)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Enfermeiro.CC)
+                @Html.DisplayFor(modelItem => item.DataFimTurno)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Turno.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Enfermeiro.Nome)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.HorarioEnfermeiroId">Edit</a> |
