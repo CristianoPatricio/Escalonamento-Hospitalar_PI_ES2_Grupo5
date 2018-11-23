@@ -170,7 +170,7 @@
 
     <form asp-action="Delete">
         <input type="hidden" asp-for="MedicoId" />
-        <a href="#myDeleteModal" class="trigger-btn" data-toggle="modal">
+        <a href="#myModal" class="trigger-btn" data-toggle="modal">
             <input type="submit" value="APAGAR" class="btn btn-danger" />
         </a>  |
         <a asp-action="Index" class="btn btn-default">Voltar à lista de médicos</a>
@@ -184,11 +184,11 @@
                     <div class="icon-box">
                         <i class="material-icons">&#xE5CD;</i>
                     </div>
-                    <h4 class="modal-title">Tem a certeza que quer eliminar a/o médica/o?</h4>
+                    <h4 class="modal-title">Tem a certeza que quer eliminar a/o médica/o @Html.DisplayFor(model => model.Nome)?</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
                 <div class="modal-body">
-                    <p>Tem a certeza que quer eliminar a/o médica/o? Esta operação é irreversível.</p>
+                    <p>Esta operação é irreversível.</p>
                 </div>
                 <div class="modal-footer">
                     <form asp-action="Delete">
