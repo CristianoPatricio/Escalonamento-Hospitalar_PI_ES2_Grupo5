@@ -110,6 +110,15 @@ namespace EscalonamentoHospitalar.Controllers
                 ModelState.AddModelError("CC", "Nº de CC inválido");
             }
 
+            //Validar CC
+            if (ccIsInvalid(nCC))
+            {
+                //Mensagem de erro se o nº de CC já existe
+                ModelState.AddModelError("CC", "Nº de CC já existente");
+            }
+
+
+
             /********************************/           
 
             if (ModelState.IsValid)
@@ -161,6 +170,8 @@ namespace EscalonamentoHospitalar.Controllers
             var nCC = enfermeiro.CC;
             var numero = enfermeiro.NumeroMecanografico;
             var idEnf = enfermeiro.EnfermeiroId;
+            var email = enfermeiro.Email;
+            var idEsp = enfermeiro.EspecialidadeEnfermeiroId;
 
             bool sonBDateIsInvalid = false;
 
@@ -171,7 +182,7 @@ namespace EscalonamentoHospitalar.Controllers
 
             //Validar Numero Mecanografico
             if (numMecIsInvalidEdit(numero, idEnf) == true){
-                //Mensagem de erro se a data de nascimento do enfermeiro for inválida
+                //Mensagem de erro se o número mecanográfico já existir
                 ModelState.AddModelError("NumeroMecanografico", "Este número já existe");
             }
 
@@ -202,16 +213,37 @@ namespace EscalonamentoHospitalar.Controllers
                 ModelState.AddModelError("CC", "Nº de CC inválido");
             }
 
+            //Validar Email
+            if (emailIsInvalidEdit(email, idEnf))
+            {
+                //Mensagem de erro se o email já existir
+                ModelState.AddModelError("Email", "Email já existente");
+            }
+
+            //Validar CC
+            if (ccIsInvalidEdit(nCC, idEnf))
+            {
+                //Mensagem de erro se o CC já existir
+                ModelState.AddModelError("CC", "Nº de CC já existente");
+            }
+
             /*******************************************/
 
             if (ModelState.IsValid)
             {
                 try
                 {                   
-                    if (!numMecIsInvalidEdit(numero, idEnf) || !enfDateIsInvalid(enfermeiroBDate) || !sonBDateIsInvalid || ValidateNumeroDocumentoCC(nCC))
+                    if (!ccIsInvalidEdit(nCC, idEnf) || !emailIsInvalidEdit(email, idEnf) || !numMecIsInvalidEdit(numero, idEnf) || !enfDateIsInvalid(enfermeiroBDate) || !sonBDateIsInvalid || ValidateNumeroDocumentoCC(nCC))
                     {
                         _context.Update(enfermeiro);
+
+                        //Verifica na tabela EnfermeiroEspecialidade se já existe o registo
+                        if (insertNewDataIntoEnfEspecialidade(idEnf, idEsp)){
+                            InsertDataIntoEnfermeiroEspecialidades(_context, enfermeiro.EspecialidadeEnfermeiroId, enfermeiro.EnfermeiroId);
+                        }
+
                         await _context.SaveChangesAsync();
+                        TempData["successEdit"] = "Registo alterado com sucesso";
                     }
                                   
                 }
@@ -226,7 +258,7 @@ namespace EscalonamentoHospitalar.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index));                
             }
             ViewData["EspecialidadeEnfermeiroId"] = new SelectList(_context.Set<EspecialidadeEnfermeiro>(), "EspecialidadeEnfermeiroId", "Especialidade", enfermeiro.EspecialidadeEnfermeiroId);
             return View(enfermeiro);
@@ -449,6 +481,9 @@ namespace EscalonamentoHospitalar.Controllers
             return IsInvalid;
         }
 
+
+        /*************************EDIT*******************************/
+
         /**
         * @param numero
         * @return true if the numero already exists in DB  
@@ -470,5 +505,67 @@ namespace EscalonamentoHospitalar.Controllers
 
             return IsInvalid;
         }
+
+        /**
+       * @param email
+       * @return true if the email already exists in DB  
+       */
+        private bool emailIsInvalidEdit(string email, int idEnf)
+        {
+            bool IsInvalid = false;
+
+            //Procura na BD se existem enfermeiros com o mesmo email
+            var enfermeiros = from e in _context.Enfermeiros
+                              where e.Email.Contains(email) && e.EnfermeiroId != idEnf
+                              select e;
+
+            if (!enfermeiros.Count().Equals(0))
+            {
+                IsInvalid = true;
+            }
+
+            return IsInvalid;
+        }
+
+        /**
+        * @param cc
+        * @return true if the cc already exists in DB  
+        */
+        private bool ccIsInvalidEdit(string cc, int idEnf)
+        {
+            bool IsInvalid = false;
+
+
+            //Procura na BD se existem enfermeiros com o mesmo numero mecanografico
+            var enfermeiros = from e in _context.Enfermeiros
+                              where e.NumeroMecanografico.Contains(cc) && e.EnfermeiroId != idEnf
+                              select e;
+
+            if (!enfermeiros.Count().Equals(0))
+            {
+                IsInvalid = true;
+            }
+
+            return IsInvalid;
+        }
+
+        private bool insertNewDataIntoEnfEspecialidade(int idEnf, int idEsp)
+        {
+            bool insert = false;
+
+            //Procura na BD se existem enfermeiros com o mesmo numero mecanografico
+            var enfermeirosEspecialidades = from ee in _context.EnfermeirosEspecialidades
+                              where ee.EnfermeiroId == idEnf && ee.EspecialidadeEnfermeiroId == idEsp
+                              select ee;
+
+            if (enfermeirosEspecialidades.Count().Equals(0))
+            {
+                insert = true;
+            }
+
+
+            return insert;
+        }
+
     }
 }
