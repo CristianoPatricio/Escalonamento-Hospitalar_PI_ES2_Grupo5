@@ -1,17 +1,16 @@
 ﻿@model EscalonamentoHospitalar.Models.Enfermeiro
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalhes";
 }
 
-<h2>Detalhes</h2>
+<h2>Detalhes do/a Enfermeiro/a <b>@Html.DisplayFor(model => model.Nome)</b></h2>
 
 <div>
-    <h4>Enfermeiro</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            Código
+            Número Mecanográfico
         </dt>
         <dd>
             @Html.DisplayFor(model => model.NumeroMecanografico)
@@ -21,6 +20,12 @@
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Nome)
+        </dd>
+        <dt>
+            Especialidade
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EspecialidadeEnfermeiro.Especialidade)
         </dd>
         <dt>
             Contacto
@@ -41,14 +46,37 @@
             @Html.DisplayFor(model => model.Data_Nascimento)
         </dd>
         <dt>
-            Nº CC/BI
+            Nº Cartão Cidadão
         </dt>
         <dd>
             @Html.DisplayFor(model => model.CC)
         </dd>
+        <dt>
+            Filhos
+        </dt>
+            
+        @*Se tiver FILHOS escrever 'SIM' Senão escrever 'NÃO'*@
+            @if (Model.Filhos == true)
+            {
+                <dd>SIM</dd>
+            }
+            else
+            {
+                <dd>NÃO</dd>
+            }
+
+        @if (Model.Filhos == true)
+        {
+            <dt>
+                Data de Nascimento do filho mais novo
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Data_Nascimento_Filho)
+            </dd>
+        }
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.EnfermeiroId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model.EnfermeiroId"><input type="button" value="Alterar" class="btn btn-warning" /></a> 
+    <a asp-action="Index"><input type="button" value="Voltar à lista" class="btn btn-default"/></a>
 </div>

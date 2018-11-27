@@ -9,22 +9,22 @@
 <div>
     <h4>EnfermeiroEspecialidade</h4>
     <hr />
-    <dl class="dl-horizontal">
+    <dl class="dl-horizontal">        
         <dt>
-            @Html.DisplayNameFor(model => model.Nome)
+            @Html.DisplayNameFor(model => model.EspecialidadeEnfermeiro)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Nome)
+            @Html.DisplayFor(model => model.EspecialidadeEnfermeiro.EspecialidadeEnfermeiroId)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Enfermeiro)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Enfermeiro.Email)
+            @Html.DisplayFor(model => model.Enfermeiro.CC)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.EnfermeiroEspecialidadeId">Edit</a> |
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
     <a asp-action="Index">Back to List</a>
 </div>

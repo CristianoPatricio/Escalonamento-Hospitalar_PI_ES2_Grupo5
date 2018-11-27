@@ -4,18 +4,20 @@ using EscalonamentoHospitalar.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EscalonamentoHospitalar.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    partial class HospitalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181121153048_21120181530")]
+    partial class _21120181530
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.3-rtm-32065")
+                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -28,15 +30,17 @@ namespace EscalonamentoHospitalar.Migrations
                     b.Property<string>("CC")
                         .IsRequired();
 
-                    b.Property<string>("Codigo")
-                        .IsRequired();
-
                     b.Property<string>("Contacto");
 
                     b.Property<string>("Email")
                         .IsRequired();
 
-                    b.Property<string>("Nome")
+                    b.Property<string>("Morada");
+
+                    b.Property<string>("Name")
+                        .IsRequired();
+
+                    b.Property<string>("NumeroMecanografico")
                         .IsRequired();
 
                     b.HasKey("DiretorServicoID");
@@ -148,6 +152,8 @@ namespace EscalonamentoHospitalar.Migrations
 
                     b.Property<string>("Email");
 
+                    b.Property<string>("Especialidade");
+
                     b.Property<string>("Nome");
 
                     b.Property<string>("NumeroMecanografico");
@@ -179,6 +185,8 @@ namespace EscalonamentoHospitalar.Migrations
                     b.Property<int>("PacienteId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("BoletimClinico");
 
                     b.Property<string>("CC");
 

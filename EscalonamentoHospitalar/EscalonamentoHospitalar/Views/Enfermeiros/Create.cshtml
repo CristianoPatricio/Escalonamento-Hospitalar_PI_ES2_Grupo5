@@ -1,57 +1,98 @@
 ﻿@model EscalonamentoHospitalar.Models.Enfermeiro
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Inserir";
 }
 
-<h2>Criar Novo Enfermeiro</h2>
+<body onload="showForm()">
 
-<h4>Enfermeiro</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="NumeroMecanografico" class="control-label">Código</label>
-                <input asp-for="NumeroMecanografico" class="form-control" />
-                <span asp-validation-for="NumeroMecanografico" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Nome" class="control-label"></label>
-                <input asp-for="Nome" class="form-control" />
-                <span asp-validation-for="Nome" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Contacto" class="control-label"></label>
-                <input asp-for="Contacto" class="form-control" />
-                <span asp-validation-for="Contacto" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Data_Nascimento" class="control-label">Data de Nascimento</label>
-                <input asp-for="Data_Nascimento" class="form-control" />
-                <span asp-validation-for="Data_Nascimento" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CC" class="control-label">Nº CC/BI</label>
-                <input asp-for="CC" class="form-control" />
-                <span asp-validation-for="CC" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </form>
+    <h2>Inserir novo Enfermeiro/a</h2>
+
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Create">
+                <div class="form-group">
+                    <label asp-for="NumeroMecanografico" class="control-label">Número Mecanográfico</label>
+                    <input asp-for="NumeroMecanografico" class="form-control" placeholder="p. ex. E12345" />
+                    <span asp-validation-for="NumeroMecanografico" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Nome" class="control-label">Nome</label>
+                    <input asp-for="Nome" class="form-control" />
+                    <span asp-validation-for="Nome" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="EspecialidadeEnfermeiroId" class="control-label">Especialidade</label>
+                    <select asp-for="EspecialidadeEnfermeiroId" class="form-control" asp-items="ViewBag.EspecialidadeEnfermeiroId"></select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Contacto" class="control-label">Contacto</label>
+                    <input asp-for="Contacto" class="form-control" />
+                    <span asp-validation-for="Contacto" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Email" class="control-label">Email</label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Data_Nascimento" class="control-label">Data de Nascimento</label>
+                    <input asp-for="Data_Nascimento" class="form-control" />
+                    <span asp-validation-for="Data_Nascimento" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CC" class="control-label">Nº Cartão Cidadão</label>
+                    <input asp-for="CC" class="form-control" placeholder="p. ex. 12345678 5ZY9"/>
+                    <span asp-validation-for="CC" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Filhos" class="control-label">Tem filhos?</label>
+                    <select asp-for="Filhos" class="form-control" id="YesOrNo" onchange="showForm()">
+                        <option value="false">Não</option>
+                        <option value="true">Sim</option>
+                    </select>
+                </div>
+
+                <script type="text/javascript">
+                    //Algoritmo:
+                    //Se o utilizador selecionou a opcao "SIM" então
+                    //mostrar datebox para inserir data de nascimento
+
+                    function showForm() {
+                        var selectBox = document.getElementById("YesOrNo"); //drop list
+                        var selectedValue = selectBox.options[selectBox.selectedIndex].value; //valor selecionado na drop list
+                        if (selectedValue == "true") { //Se 'Sim'
+                            //buscar a div que contém o Datebox
+                            var form = document.getElementById("formDate");
+                            //mostrar div
+                            if (form.style.display == 'none') {
+                                form.style.display = 'block';
+                            }
+                        } else if (selectedValue == "false") {
+                            var form = document.getElementById("formDate");
+                            form.style.display = 'none';
+                        }
+                    }
+                </script>
+
+                <div class="form-group" id="formDate" style="display: none;">
+                    <label asp-for="Data_Nascimento_Filho" class="control-label">Data de Nascimento do Filho mais novo</label>
+                    <input asp-for="Data_Nascimento_Filho" class="form-control" />
+                    <span asp-validation-for="Data_Nascimento_Filho" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Inserir" class="btn btn-success" />
+                </div>
+            </form>
+        </div>
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+    <div>
+        <a asp-action="Index"><input type="button" value="Voltar à lista" class="btn btn-default" /></a>
+    </div>
+</body>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

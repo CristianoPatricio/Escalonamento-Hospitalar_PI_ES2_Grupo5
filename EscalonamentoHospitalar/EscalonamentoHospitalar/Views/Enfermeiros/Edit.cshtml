@@ -1,27 +1,32 @@
 ﻿@model EscalonamentoHospitalar.Models.Enfermeiro
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Alterar";
 }
 
-<h2>Editar</h2>
+<body onload="showForm()"></body> @*onload="showForm()" : Verifica se o campo Data_Nascimento_Filho está a true. Se estiver mostra a div da data*@
 
-<h4>Enfermeiro</h4>
+<h2>Alterar o/a Enfermeiro/a <b>@Html.DisplayFor(model => model.Nome)</b></h2>
+
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="EnfermeiroId" />
             <div class="form-group">
-                <label asp-for="NumeroMecanografico" class="control-label">Código</label>
-                <input asp-for="NumeroMecanografico" class="form-control" />
+                <label asp-for="NumeroMecanografico" class="control-label">Número Mecanográfico</label>
+                <input asp-for="NumeroMecanografico" class="form-control" placeholder="p. ex. E12345"/>
                 <span asp-validation-for="NumeroMecanografico" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Nome" class="control-label">Nome</label>
                 <input asp-for="Nome" class="form-control" />
                 <span asp-validation-for="Nome" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EspecialidadeEnfermeiroId" class="control-label">Especialidade</label>
+                <select asp-for="EspecialidadeEnfermeiroId" class="form-control" asp-items="ViewBag.EspecialidadeEnfermeiroId"></select>
+                <span asp-validation-for="EspecialidadeEnfermeiroId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Contacto" class="control-label">Contacto</label>
@@ -39,19 +44,55 @@
                 <span asp-validation-for="Data_Nascimento" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CC" class="control-label">Nº CC/BI</label>
-                <input asp-for="CC" class="form-control" />
+                <label asp-for="CC" class="control-label">Nº Cartão Cidadão</label>
+                <input asp-for="CC" class="form-control"  placeholder="p. ex. 12345678 5ZY9"/>
                 <span asp-validation-for="CC" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <label asp-for="Filhos" class="control-label">Tem filhos?</label>
+                <select asp-for="Filhos" class="form-control" id="YesOrNo" onchange="showForm()">
+                    <option value="false">Não</option>
+                    <option value="true">Sim</option>
+                </select>
+            </div>
+
+            <script type="text/javascript">
+                //Algoritmo:
+                //Se o utilizador selecionou a opcao "SIM" então
+                //mostrar datebox para inserir data de nascimento
+
+                function showForm() {
+                    var selectBox = document.getElementById("YesOrNo"); //drop list
+                    var selectedValue = selectBox.options[selectBox.selectedIndex].value; //valor selecionado na drop list
+                    if (selectedValue == "true") { //Se 'Sim'
+                        //buscar a div que contém o Datebox
+                        var form = document.getElementById("formDate");
+                        //mostrar div
+                        if (form.style.display == 'none') {
+                            form.style.display = 'block';
+                        }
+                    } else if (selectedValue == "false") {
+                        var form = document.getElementById("formDate");
+                        form.style.display = 'none';
+                    }
+                }
+            </script>
+
+            <div class="form-group" id="formDate" style="display: none;">
+                <label asp-for="Data_Nascimento_Filho" class="control-label">Data de Nascimento filho mais novo</label>
+                <input asp-for="Data_Nascimento_Filho" class="form-control" />
+                <span asp-validation-for="Data_Nascimento_Filho" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Guardar alterações" class="btn btn-success" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index"><input type="button" value="Voltar à lista" class="btn btn-default" /></a>
 </div>
 
 @section Scripts {
