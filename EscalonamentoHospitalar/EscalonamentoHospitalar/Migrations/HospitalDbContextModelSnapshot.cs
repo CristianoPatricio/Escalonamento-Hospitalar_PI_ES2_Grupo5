@@ -15,7 +15,7 @@ namespace EscalonamentoHospitalar.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.3-rtm-32065")
+                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -107,6 +107,17 @@ namespace EscalonamentoHospitalar.Migrations
                     b.HasKey("EspecialidadeEnfermeiroId");
 
                     b.ToTable("EspecialidadesEnfermeiros");
+                });
+
+            modelBuilder.Entity("EscalonamentoHospitalar.Models.Grau", b =>
+                {
+                    b.Property<int>("GrauId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.HasKey("GrauId");
+
+                    b.ToTable("Grau");
                 });
 
             modelBuilder.Entity("EscalonamentoHospitalar.Models.HorarioEnfermeiro", b =>
@@ -202,6 +213,53 @@ namespace EscalonamentoHospitalar.Migrations
                     b.ToTable("Pacientes");
                 });
 
+            modelBuilder.Entity("EscalonamentoHospitalar.Models.Patologia", b =>
+                {
+                    b.Property<int>("PatologiaId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.HasKey("PatologiaId");
+
+                    b.ToTable("Patologia");
+                });
+
+            modelBuilder.Entity("EscalonamentoHospitalar.Models.Tratamento", b =>
+                {
+                    b.Property<int>("TratamentoId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Concluido");
+
+                    b.Property<DateTime>("DataFim");
+
+                    b.Property<DateTime>("DataInicio");
+
+                    b.Property<bool>("Decorrer");
+
+                    b.Property<string>("DuracaoCiclo")
+                        .IsRequired();
+
+                    b.Property<int>("GrauId");
+
+                    b.Property<int>("PacienteId");
+
+                    b.Property<int>("PatologiaId");
+
+                    b.Property<string>("Regime");
+
+                    b.HasKey("TratamentoId");
+
+                    b.HasIndex("GrauId");
+
+                    b.HasIndex("PacienteId");
+
+                    b.HasIndex("PatologiaId");
+
+                    b.ToTable("Tratamento");
+                });
+
             modelBuilder.Entity("EscalonamentoHospitalar.Models.Turno", b =>
                 {
                     b.Property<int>("TurnoId")
@@ -253,6 +311,24 @@ namespace EscalonamentoHospitalar.Migrations
                     b.HasOne("EscalonamentoHospitalar.Models.Medico", "Medico")
                         .WithMany("MedicoEspecialidade")
                         .HasForeignKey("MedicoId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("EscalonamentoHospitalar.Models.Tratamento", b =>
+                {
+                    b.HasOne("EscalonamentoHospitalar.Models.Grau", "Grau")
+                        .WithMany()
+                        .HasForeignKey("GrauId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("EscalonamentoHospitalar.Models.Paciente", "Paciente")
+                        .WithMany()
+                        .HasForeignKey("PacienteId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("EscalonamentoHospitalar.Models.Patologia", "Patologia")
+                        .WithMany()
+                        .HasForeignKey("PatologiaId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

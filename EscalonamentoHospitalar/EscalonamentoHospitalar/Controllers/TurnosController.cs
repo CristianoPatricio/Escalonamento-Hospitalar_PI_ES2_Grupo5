@@ -53,11 +53,8 @@ namespace EscalonamentoHospitalar.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-<<<<<<< HEAD:EscalonamentoHospitalar/EscalonamentoHospitalar/Controllers/MedicosController.cs
-        public async Task<IActionResult> Create([Bind("MedicoId,NumeroMecanografico,Nome,Email,Contacto,CC,Data_Nascimento")] Medico medico)
-=======
+     
         public async Task<IActionResult> Create([Bind("TurnoId,Nome")] Turno turno)
->>>>>>> CristianoPatricio:EscalonamentoHospitalar/EscalonamentoHospitalar/Controllers/TurnosController.cs
         {
             if (ModelState.IsValid)
             {
@@ -89,11 +86,8 @@ namespace EscalonamentoHospitalar.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-<<<<<<< HEAD:EscalonamentoHospitalar/EscalonamentoHospitalar/Controllers/MedicosController.cs
-        public async Task<IActionResult> Edit(int id, [Bind("MedicoId,NumeroMecanografico,Nome,Email,Contacto,CC,Data_Nascimento")] Medico medico)
-=======
+
         public async Task<IActionResult> Edit(int id, [Bind("TurnoId,Nome")] Turno turno)
->>>>>>> CristianoPatricio:EscalonamentoHospitalar/EscalonamentoHospitalar/Controllers/TurnosController.cs
         {
             if (id != turno.TurnoId)
             {

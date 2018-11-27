@@ -20,11 +20,10 @@ namespace EscalonamentoHospitalar.Data
                 SeedEnfermeiros(db);
                 SeedDiretorServico(db);                         
                 SeedEnfermeiroEspecialidade(db);
-<<<<<<< HEAD
-
+                SeedTurnos(db);
+                SeedHorarioEnfermeiros(db);
                 SeedMedicos(db);
                 SeedMedicoEspecialidade(db);
-
                 SeedPacientes(db);
                 
             }
@@ -133,10 +132,9 @@ namespace EscalonamentoHospitalar.Data
                 };
                 db.Medicos.Add(elisabete);
                 db.SaveChanges();
-=======
-                SeedTurnos(db);
-                SeedHorarioEnfermeiros(db);
->>>>>>> CristianoPatricio
+
+             
+
             }
 
             db.MedicoEspecialidade.AddRange(
@@ -293,9 +291,6 @@ namespace EscalonamentoHospitalar.Data
 
             db.SaveChanges();
         }
-<<<<<<< HEAD
-         
-=======
 
         private static EspecialidadeEnfermeiro GetEspecialidadeCreatingIfNeed(HospitalDbContext db, string name)
         {
@@ -310,7 +305,5 @@ namespace EscalonamentoHospitalar.Data
 
             return especialidade;
         }
-
->>>>>>> CristianoPatricio
     }
 }

@@ -41,10 +41,6 @@ namespace EscalonamentoHospitalar.Models
 
         public DbSet<EscalonamentoHospitalar.Models.Paciente> Pacientes { get; set; }
 
-<<<<<<< HEAD
-
-        public DbSet<EscalonamentoHospitalar.Models.EnfermeiroEspecialidade> EnfermeiroEspecialidades { get; set; }
-=======
         public DbSet<EscalonamentoHospitalar.Models.Enfermeiro> Enfermeiros { get; set; }
 
         public DbSet<EscalonamentoHospitalar.Models.EnfermeiroEspecialidade> EnfermeirosEspecialidades { get; set; }
@@ -54,7 +50,6 @@ namespace EscalonamentoHospitalar.Models
         public DbSet<EscalonamentoHospitalar.Models.Turno> Turnos { get; set; }
 
         public DbSet<EscalonamentoHospitalar.Models.HorarioEnfermeiro> HorariosEnfermeiro { get; set; }
->>>>>>> CristianoPatricio
 
         public DbSet<EscalonamentoHospitalar.Models.MedicoEspecialidade> MedicoEspecialidade { get; set; }
 
