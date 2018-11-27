@@ -16,9 +16,9 @@ namespace EscalonamentoHospitalar.Data
 
                 var db = serviceScope.ServiceProvider.GetService<HospitalDbContext>();
 
-                SeedEnfermeiros(db);
-                SeedDiretorServico(db);               
                 SeedEspecialidadeEnfermeiros(db);
+                SeedEnfermeiros(db);
+                SeedDiretorServico(db);                         
                 SeedEnfermeiroEspecialidade(db);
                 SeedTurnos(db);
                 SeedHorarioEnfermeiros(db);

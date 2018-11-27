@@ -4,7 +4,7 @@
     ViewData["Title"] = "Inserir";
 }
 
-<h2>Inserir nova Especialidade de Enfermeiros</h2>
+<h2>Inserir Nova Especialidade de Enfermeiros</h2>
 
 <hr />
 <div class="row">
@@ -16,14 +16,14 @@
                 <span asp-validation-for="Especialidade" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Inserir" class="btn btn-default" />
+                <input type="submit" value="Inserir" class="btn btn-success" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Voltar à lista</a>
+    <a asp-action="Index"><input type="button" value="Voltar à lista" class="btn btn-default" /></a>
 </div>
 
 @section Scripts {

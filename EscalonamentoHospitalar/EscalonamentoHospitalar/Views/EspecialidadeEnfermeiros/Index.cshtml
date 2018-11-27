@@ -4,10 +4,50 @@
     ViewData["Title"] = "Lista de Especialidades dos Enfermeiros";
 }
 
+@if (TempData["successInsertEspecialidade"] != null)
+{
+    <!--Mensagem de sucesso quandi insere especialidade-->
+    <div id="suc_form" class="alert alert-success">
+        <strong>Sucesso!</strong> O registo foi inserido com sucesso.
+    </div>
+}
+
+@if (TempData["successEdit"] != null)
+{
+    <!--Mensagem de sucesso quando edita especialidade-->
+    <div id="suc_form" class="alert alert-success">
+        <strong>Sucesso!</strong> O registo foi alterado com sucesso.
+    </div>
+}
+
+
+@if (TempData["errorDelete"] != null)
+{
+    <div id="suc_form" class="alert alert-danger">
+        <strong>ERRO!</strong> Impossível eliminar especialidade que tenha enfermeiros atribuídos.
+    </div>
+}
+
+
+@if (TempData["successDelete"] != null)
+{
+    <div id="suc_form" class="alert alert-success">
+        <strong>Sucesso!</strong> Especialidade elimnada com sucesso.
+    </div>
+}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    //Passados 5 segundos a mensagem desaparece
+    $(document).ready(function () {
+        $("#suc_form").hide(10000);
+    });
+</script>
+
 <h2>Lista de Especialidades dos Enfermeiros</h2>
 
 <p>
-    <a asp-action="Create">Inserir nova Especialidade de Enfermeiros</a>
+    <a asp-action="Create"><input type="button" value="Inserir Nova Especialidade de Enfermeiros" class="btn btn-success" /></a>
 </p>
 <table class="table">
     <thead>
@@ -19,17 +59,18 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Especialidade)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.EspecialidadeEnfermeiroId">Alterar</a> |
-                <!--<a asp-action="Details" asp-route-id="@item.EspecialidadeEnfermeiroId">Details</a> |-->
-                <a asp-action="Delete" asp-route-id="@item.EspecialidadeEnfermeiroId">Eliminar</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Especialidade)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.EspecialidadeEnfermeiroId"><input type="button" value="Alterar" class="btn btn-warning" /></a>
+                    <!--<a asp-action="Details" asp-route-id="@item.EspecialidadeEnfermeiroId">Details</a> |-->
+                    <a asp-action="Delete" asp-route-id="@item.EspecialidadeEnfermeiroId"><input type="button" value="Eliminar" class="btn btn-danger" /></a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
