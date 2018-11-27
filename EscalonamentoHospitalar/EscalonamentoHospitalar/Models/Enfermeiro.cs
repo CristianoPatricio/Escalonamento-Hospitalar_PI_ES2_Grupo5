@@ -46,8 +46,14 @@ namespace EscalonamentoHospitalar.Models
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = false)]
         public DateTime? Data_Nascimento_Filho { get; set; }
 
+
         public ICollection<EnfermeiroEspecialidade> EnfermeirosEspecialidade { get; set; }
         public ICollection<HorarioEnfermeiro> HorariosEnfermeiro { get; set; }
+
+        public ICollection<Medico> Medicos { get; set; }
+
+
+
     }
 }
 

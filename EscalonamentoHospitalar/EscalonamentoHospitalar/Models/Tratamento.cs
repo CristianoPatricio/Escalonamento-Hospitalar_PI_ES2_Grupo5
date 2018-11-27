@@ -24,25 +24,31 @@ namespace EscalonamentoHospitalar.Models
 
         public int GrauId { get; set; }
 
-        [Required(ErrorMessage = "Por indroduza a data de Nascimento")]
+        [Required(ErrorMessage = "Por introduza a data de Inicio")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = false)]
         public DateTime DataInicio {get;set;}
 
-        [Required(ErrorMessage = "Por indroduza a data de Nascimento")]
+        [Required(ErrorMessage = "Por introduza a data de Fim")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = false)]
         public DateTime DataFim { get; set; }
 
         [Required(ErrorMessage = "Por favor introduza a Duração do Ciclo")]
+        //[DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "HH:mm 00:00", ApplyFormatInEditMode = false)]
         public string DuracaoCiclo { get; set; }
 
         [RegularExpression(@"([A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ\s]+)", ErrorMessage = "Regime Inválido")]
-        public string Regime { get; set; }
 
-        public bool Decorrer { get; set; }
+        public Regime Regime { get; set; }
+        public int RegimeId { get; set; }
 
-        public bool Concluido { get; set; }
+        public Estado Estado { get; set; }
+
+        public int EstadoId { get; set; }
+        public Medico Medico { get; set; }
+        public int MedicoId { get; set; }
 
 
     }

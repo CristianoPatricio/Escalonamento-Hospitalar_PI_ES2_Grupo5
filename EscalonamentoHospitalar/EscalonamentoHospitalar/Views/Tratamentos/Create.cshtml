@@ -1,10 +1,10 @@
 ﻿@model EscalonamentoHospitalar.Models.Tratamento
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Tratamentos";
 }
 
-<h2>Create</h2>
+<h2>Criar</h2>
 
 <h4>Tratamento</h4>
 <hr />
@@ -13,8 +13,8 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="PatologiaId" class="control-label"></label>
-                <select asp-for="PatologiaId" class ="form-control" asp-items="ViewBag.PatologiaId"></select>
+                <label asp-for="PatologiaId" class="control-label">Patologia</label>
+                <select asp-for="PatologiaId" class ="form-control" asp-items="ViewBag.Patologia"></select>
             </div>
             <div class="form-group">
                 <label asp-for="PacienteId" class="control-label"></label>
@@ -40,23 +40,16 @@
                 <span asp-validation-for="DuracaoCiclo" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Regime" class="control-label"></label>
-                <input asp-for="Regime" class="form-control" />
-                <span asp-validation-for="Regime" class="text-danger"></span>
+                <label asp-for="RegimeId" class="control-label"></label>
+                <select asp-for="RegimeId" class ="form-control" asp-items="ViewBag.RegimeId"></select>
             </div>
             <div class="form-group">
-                <div class="checkbox">
-                    <label>
-                        <input asp-for="Decorrer" /> @Html.DisplayNameFor(model => model.Decorrer)
-                    </label>
-                </div>
+                <label asp-for="EstadoId" class="control-label"></label>
+                <select asp-for="EstadoId" class="form-control" asp-items="ViewBag.EstadoId"></select>
             </div>
             <div class="form-group">
-                <div class="checkbox">
-                    <label>
-                        <input asp-for="Concluido" /> @Html.DisplayNameFor(model => model.Concluido)
-                    </label>
-                </div>
+                <label asp-for="MedicoId" class="control-label"></label>
+                <select asp-for="MedicoId" class ="form-control" asp-items="ViewBag.MedicoId"></select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />
@@ -66,7 +59,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Voltar a Lista</a>
 </div>
 
 @section Scripts {

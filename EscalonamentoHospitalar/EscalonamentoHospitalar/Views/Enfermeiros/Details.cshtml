@@ -4,24 +4,33 @@
     ViewData["Title"] = "Detalhes";
 }
 
+
 <h2>Detalhes do/a Enfermeiro/a <b>@Html.DisplayFor(model => model.Nome)</b></h2>
+
+<h2>Details</h2>
+
 
 <div>
     <hr />
     <dl class="dl-horizontal">
         <dt>
+
             Número Mecanográfico
+
+            @Html.DisplayNameFor(model => model.NumeroMecanografico)
+
         </dt>
         <dd>
             @Html.DisplayFor(model => model.NumeroMecanografico)
         </dd>
         <dt>
-            Nome
+            @Html.DisplayNameFor(model => model.Nome)
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Nome)
         </dd>
         <dt>
+
             Especialidade
         </dt>
         <dd>
@@ -29,24 +38,31 @@
         </dd>
         <dt>
             Contacto
+
+            @Html.DisplayNameFor(model => model.Contacto)
+
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Contacto)
         </dd>
         <dt>
-            Email
+            @Html.DisplayNameFor(model => model.Email)
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Email)
         </dd>
         <dt>
-            Data de Nascimento
+            @Html.DisplayNameFor(model => model.Data_Nascimento)
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Data_Nascimento)
         </dd>
         <dt>
+
             Nº Cartão Cidadão
+
+            @Html.DisplayNameFor(model => model.CC)
+
         </dt>
         <dd>
             @Html.DisplayFor(model => model.CC)
@@ -77,6 +93,11 @@
     </dl>
 </div>
 <div>
+
     <a asp-action="Edit" asp-route-id="@Model.EnfermeiroId"><input type="button" value="Alterar" class="btn btn-warning" /></a> 
     <a asp-action="Index"><input type="button" value="Voltar à lista" class="btn btn-default"/></a>
+
+    <a asp-action="Editar" asp-route-id="@Model.EnfermeiroId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+
 </div>

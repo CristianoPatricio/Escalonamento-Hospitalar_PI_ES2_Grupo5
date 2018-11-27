@@ -25,11 +25,231 @@ namespace EscalonamentoHospitalar.Data
                 SeedMedicos(db);
                 SeedMedicoEspecialidade(db);
                 SeedPacientes(db);
+                SeedGrau(db);
+
+                SeedPatologia(db);
+
+                SeedRegime(db);
+
+                SeedEstado(db);
+
+                SeedTratamentos(db);
+
+                SeedRegras(db);
+
+
+                
                 
             }
         }
 
-        private static void SeedPacientes(HospitalDbContext db)
+       private static void SeedRegras(HospitalDbContext db)
+        {
+         if (db.Regras.Any()) return;
+         db.Regras.AddRange(
+
+             new Regra
+                {
+
+                    RegrasEscalonamento ="HorasEnfermeirosDia",
+                    Numero = 8,
+
+                },
+
+                 new Regra
+                 {
+
+
+                     RegrasEscalonamento = "HorasEnfermeirosSemana",
+                     Numero = 35,
+                 },
+                 new Regra
+                 {
+
+                     RegrasEscalonamento = "HorasMedicosDia",
+                     Numero = 8,
+
+                 },
+                 new Regra
+                 {
+
+
+                     RegrasEscalonamento = "HorasMedicosSemana",
+                     Numero = 40,
+                 },
+                 new Regra
+                 {
+
+
+                     RegrasEscalonamento = "Folga Enfermeiro",
+                     Numero = 1,
+                 },
+                 new Regra
+                 {
+
+
+                     RegrasEscalonamento = "Folga Medico",
+                     Numero = 1,
+                 },
+                 new Regra
+                 {
+
+
+                     RegrasEscalonamento = "Idade Filho",
+                     Numero = 3,
+                 }
+            );
+
+            db.SaveChanges();
+        }
+    
+
+        private static void SeedEstado(HospitalDbContext db)
+        {
+            if (db.Estado.Any()) return;
+            db.Estado.AddRange(
+                       new Estado
+                       {
+                           Nome = "Decorrer"
+                       },
+                          new Estado
+                          {
+                              Nome = "Concluido"
+                          }
+               );
+
+            db.SaveChanges();
+        }
+
+        private static void SeedRegime(HospitalDbContext db)
+        {
+            if (db.Regime.Any()) return;
+            db.Regime.AddRange(
+                       new Regime
+                       {
+                           TipoRegime = "Semanal"
+                       },
+                          new Regime
+                          {
+                              TipoRegime = "Quinzenal"
+                          },
+                          new Regime
+                          {
+                              TipoRegime = "Mensal"
+                          },
+                          new Regime
+                          {
+                              TipoRegime = "Trimestral"
+                             
+                          }
+               );
+
+            db.SaveChanges();
+        }
+    
+
+        private static void SeedGrau(HospitalDbContext db)
+        {
+         if (db.Grau.Any()) return;
+         db.Grau.AddRange(
+                    new Grau
+                       {
+                          TipoGrau = "1"
+                       },
+                       new Grau
+                       {
+                           TipoGrau = "2"
+                       }
+            );
+
+            db.SaveChanges();
+        }
+
+        private static void SeedPatologia(HospitalDbContext db)
+        {
+            if (db.Patologia.Any()) return;
+         db.Patologia.AddRange(
+                    new Patologia
+                       {
+                          Nome = "Pulmonar"
+                       },
+                       new Patologia
+                       {
+                           Nome = "Intestinal"
+                       }
+            );
+        }
+
+
+
+
+
+        private static void SeedTratamentos(HospitalDbContext db)
+            {
+                if (db.Tratamento.Any()) return;
+
+                Patologia Pulmonar = db.Patologia.SingleOrDefault(e => e.Nome == "Pulmonar");
+                Patologia Intestinal = db.Patologia.SingleOrDefault(e => e.Nome == "Instetinal ");
+
+            Paciente Barbara = db.Pacientes.SingleOrDefault(e => e.Nome == "Barbara ");
+            Paciente Andre = db.Pacientes.SingleOrDefault(e => e.Nome == "Andre ");
+
+            Grau Grau1 = db.Grau.SingleOrDefault(e => e.TipoGrau == "1 ");
+            Grau Grau2 = db.Grau.SingleOrDefault(e => e.TipoGrau == "2 ");
+
+            Regime Semanal = db.Regime.SingleOrDefault(e => e.TipoRegime == "Semanal ");
+            Regime Mensal = db.Regime.SingleOrDefault(e => e.TipoRegime == "Mensal ");
+
+            Medico Manuel   = db.Medicos.SingleOrDefault(e => e.Nome == "Manuel Santos");
+            Medico Elisabete  = db.Medicos.SingleOrDefault(e => e.Nome == "Elisabete Eiras");
+
+            Estado Decorrer = db.Estado.SingleOrDefault(e => e.Nome == "Decorrer");
+            Estado Concluido = db.Estado.SingleOrDefault(e => e.Nome == "Concluido");
+
+
+
+            db.Tratamento.AddRange(
+
+
+                    
+                    new Tratamento
+                    {
+                        PatologiaId= Pulmonar.PatologiaId,
+                        PacienteId = Barbara.PacienteId,
+                        GrauId = Grau1.GrauId,
+                        RegimeId = Semanal.RegimeId,
+                        DataInicio = new DateTime(2018, 11, 09),
+                        DataFim = new DateTime(2018, 12, 31),
+                        DuracaoCiclo = "00:30",
+                        MedicoId = Manuel.MedicoId,
+                        EstadoId = Decorrer.EstadoId,
+                        
+                    },
+                    new Tratamento
+                    {
+                        PatologiaId = Pulmonar.PatologiaId,
+                        PacienteId = Andre.PacienteId,
+                        GrauId = Grau2.GrauId,
+                        RegimeId = Mensal.RegimeId,
+                        DataInicio = new DateTime(2018, 11, 09),
+                        DataFim = new DateTime(2018, 12, 31),
+                        DuracaoCiclo = "01:10",
+                        MedicoId = Elisabete.MedicoId,
+                        EstadoId = Concluido.EstadoId,
+
+                    }
+                     );
+
+
+
+                    
+
+                db.SaveChanges();
+            }
+                 
+            
+
+            private static void SeedPacientes(HospitalDbContext db)
         {
             if (db.Pacientes.Any()) return;
                db.Pacientes.AddRange(
@@ -99,6 +319,11 @@ namespace EscalonamentoHospitalar.Data
             db.SaveChanges();
         }
 
+      
+
+       
+            
+
         private static void SeedMedicoEspecialidade(HospitalDbContext db)
         {
             if (db.MedicoEspecialidade.Any()) return;
@@ -139,8 +364,8 @@ namespace EscalonamentoHospitalar.Data
 
             db.MedicoEspecialidade.AddRange(
 
-                new MedicoEspecialidade { Nome = "Patologia", MedicoId = manuel.MedicoId },
-                new MedicoEspecialidade { Nome = "Oncologia", MedicoId = elisabete.MedicoId }
+                new MedicoEspecialidade { Nome = "Manuel Santos", MedicoId = manuel.MedicoId },
+                new MedicoEspecialidade { Nome = "Elisabete Eiras", MedicoId = elisabete.MedicoId }
                 );
 
             db.SaveChanges();

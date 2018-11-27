@@ -13,6 +13,7 @@ namespace EscalonamentoHospitalar.Models
             : base(options)
         {
         }
+       
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -54,7 +55,11 @@ namespace EscalonamentoHospitalar.Models
         public DbSet<EscalonamentoHospitalar.Models.MedicoEspecialidade> MedicoEspecialidade { get; set; }
 
         public DbSet<EscalonamentoHospitalar.Models.Tratamento> Tratamento { get; set; }
-
-
+        public object Tratamentos { get; internal set; }
+        public DbSet<EscalonamentoHospitalar.Models.Patologia> Patologia { get; set; }
+        public DbSet<EscalonamentoHospitalar.Models.Grau> Grau { get; set; }
+        public DbSet<EscalonamentoHospitalar.Models.Regime> Regime { get; set; }
+        public DbSet<EscalonamentoHospitalar.Models.Estado> Estado { get; set; }
+        public DbSet<EscalonamentoHospitalar.Models.Regra> Regras { get; set; }
     }
 }

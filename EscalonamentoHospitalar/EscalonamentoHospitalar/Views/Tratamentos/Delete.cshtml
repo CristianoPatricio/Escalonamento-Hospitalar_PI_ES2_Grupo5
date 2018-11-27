@@ -1,12 +1,12 @@
 ﻿@model EscalonamentoHospitalar.Models.Tratamento
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Eliminar";
 }
 
 <h2>Delete</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Tem a certeza que deseja eliminar?</h3>
 <div>
     <h4>Tratamento</h4>
     <hr />
@@ -21,7 +21,7 @@
             @Html.DisplayNameFor(model => model.Paciente)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Paciente.Contacto)
+            @Html.DisplayFor(model => model.Paciente.CC)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Grau)
@@ -51,25 +51,26 @@
             @Html.DisplayNameFor(model => model.Regime)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Regime)
+            @Html.DisplayFor(model => model.Regime.RegimeId)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Decorrer)
+            @Html.DisplayNameFor(model => model.Estado)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Decorrer)
+            @Html.DisplayFor(model => model.EstadoId) 
         </dd>
+
         <dt>
-            @Html.DisplayNameFor(model => model.Concluido)
+            @Html.DisplayNameFor(model => model.Medico)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Concluido)
+            @Html.DisplayFor(model => model.Medico.MedicoId)
         </dd>
     </dl>
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="TratamentoId" />
         <input type="submit" value="Delete" class="btn btn-default" /> |
-        <a asp-action="Index">Back to List</a>
+        <a asp-action="Index">Voltar a Lista </a>
     </form>
 </div>

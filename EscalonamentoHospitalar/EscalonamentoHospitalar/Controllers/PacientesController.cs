@@ -55,18 +55,37 @@ namespace EscalonamentoHospitalar.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("PacienteId,Nome,Morada,Cod_Postal,Email,CC,Data_Nascimento,Numero_Utente,Contacto")] Paciente paciente)
         {
+            var nCC = paciente.CC;
+            //Validar CC através do check digit
+            if (!ValidateNumeroDocumentoCC(nCC))
+            {
+                //Mensagem de erro se o nº de CC é inválido
+                ModelState.AddModelError("CC", "Nº de CC inválido");
+            }
+
+            //Validar CC
+            if (ccIsInvalid(nCC))
+            {
+                //Mensagem de erro se o nº de CC já existe
+                ModelState.AddModelError("CC", "Nº de CC já existente");
+            }
+
+
             if (ModelState.IsValid)
             {
                 _context.Add(paciente);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
+
             return View(paciente);
         }
 
         // GET: Pacientes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            
             if (id == null)
             {
                 return NotFound();
@@ -87,6 +106,23 @@ namespace EscalonamentoHospitalar.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("PacienteId,Nome,Morada,Cod_Postal,Email,CC,Data_Nascimento,Numero_Utente,Contacto")] Paciente paciente)
         {
+            var nCC = paciente.CC;
+
+            //Validar CC através do check digit
+            if (!ValidateNumeroDocumentoCC(nCC))
+            {
+                //Mensagem de erro se o nº de CC é inválido
+                ModelState.AddModelError("CC", "Nº de CC inválido");
+            }
+
+        
+
+            //Validar CC
+            //if (ccIsInvalidEdit(nCC))
+            {
+                //Mensagem de erro se o CC já existir
+                ModelState.AddModelError("CC", "Nº de CC já existente");
+            }
             if (id != paciente.PacienteId)
             {
                 return NotFound();
@@ -142,6 +178,93 @@ namespace EscalonamentoHospitalar.Controllers
             _context.Pacientes.Remove(paciente);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+        /**********************Funções auxiliares**************************/
+
+        public bool ValidateNumeroDocumentoCC(string numeroDocumento)
+        {
+            int sum = 0;
+            bool secondDigit = false;
+            numeroDocumento = numeroDocumento.ToString().Replace(" ", "");
+
+            if (numeroDocumento.Length != 12)
+                throw new ArgumentException("Tamanho inválido para número de documento.");
+            for (int i = numeroDocumento.Length - 1; i >= 0; --i)
+            {
+                int valor = GetNumberFromChar(numeroDocumento[i]);
+                if (secondDigit)
+                {
+                    valor *= 2;
+                    if (valor > 9)
+                        valor -= 9;
+                }
+                sum += valor;
+                secondDigit = !secondDigit;
+            }
+            return (sum % 10) == 0;
+        }
+
+        public int GetNumberFromChar(char letter)
+        {
+            switch (letter)
+            {
+                case '0': return 0;
+                case '1': return 1;
+                case '2': return 2;
+                case '3': return 3;
+                case '4': return 4;
+                case '5': return 5;
+                case '6': return 6;
+                case '7': return 7;
+                case '8': return 8;
+                case '9': return 9;
+                case 'A': return 10;
+                case 'B': return 11;
+                case 'C': return 12;
+                case 'D': return 13;
+                case 'E': return 14;
+                case 'F': return 15;
+                case 'G': return 16;
+                case 'H': return 17;
+                case 'I': return 18;
+                case 'J': return 19;
+                case 'K': return 20;
+                case 'L': return 21;
+                case 'M': return 22;
+                case 'N': return 23;
+                case 'O': return 24;
+                case 'P': return 25;
+                case 'Q': return 26;
+                case 'R': return 27;
+                case 'S': return 28;
+                case 'T': return 29;
+                case 'U': return 30;
+                case 'V': return 31;
+                case 'W': return 32;
+                case 'X': return 33;
+                case 'Y': return 34;
+                case 'Z': return 35;
+            }
+            throw new ArgumentException("Valor inválido no número de documento.");
+        }
+
+        private bool ccIsInvalid(string cc)
+        {
+            bool IsInvalid = false;
+
+
+            //Procura na BD se existem enfermeiros com o mesmo numero mecanografico
+            var pacientes = from e in _context.Pacientes
+                              where e.CC.Contains(cc)
+                              select e;
+
+            if (!pacientes.Count().Equals(0))
+            {
+                IsInvalid = true;
+            }
+
+            return IsInvalid;
         }
 
         private bool PacienteExists(int id)

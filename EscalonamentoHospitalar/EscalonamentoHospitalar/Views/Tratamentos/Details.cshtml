@@ -1,10 +1,10 @@
 ﻿@model EscalonamentoHospitalar.Models.Tratamento
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalhes";
 }
 
-<h2>Details</h2>
+<h2>Detalhes</h2>
 
 <div>
     <h4>Tratamento</h4>
@@ -14,19 +14,19 @@
             @Html.DisplayNameFor(model => model.Patologia)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Patologia.PatologiaId)
+            @Html.DisplayFor(model => model.Patologia.Nome)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Paciente)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Paciente.Contacto)
+            @Html.DisplayFor(model => model.Paciente.Nome)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Grau)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Grau.GrauId)
+            @Html.DisplayFor(model => model.Grau.TipoGrau)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.DataInicio)
@@ -50,23 +50,24 @@
             @Html.DisplayNameFor(model => model.Regime)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Regime)
+            @Html.DisplayFor(model => model.Regime.TipoRegime)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Decorrer)
+            @Html.DisplayNameFor(model => model.Estado)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Decorrer)
+            @Html.DisplayFor(model => model.Estado.Nome)
         </dd>
+
         <dt>
-            @Html.DisplayNameFor(model => model.Concluido)
+            @Html.DisplayNameFor(model => model.Medico)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Concluido)
+            @Html.DisplayFor(model => model.Medico.MedicoId)
         </dd>
     </dl>
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.TratamentoId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Voltar a Lista</a>
 </div>

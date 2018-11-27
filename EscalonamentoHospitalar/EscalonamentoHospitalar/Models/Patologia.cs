@@ -8,5 +8,9 @@ namespace EscalonamentoHospitalar.Models
     public class Patologia
     {
         public int PatologiaId { get; set; }
+
+        public string Nome { get; set; }
+
+        public ICollection<Tratamento> Tratamentos { get; set; }
     }
 }
