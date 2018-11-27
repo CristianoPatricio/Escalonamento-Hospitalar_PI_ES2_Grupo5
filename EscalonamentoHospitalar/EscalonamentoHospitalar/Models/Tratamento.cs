@@ -16,6 +16,9 @@ namespace EscalonamentoHospitalar.Models
 
         public int PatologiaId { get; set; }
 
+        public Paciente Paciente { get; set; }
+        public int PacienteId { get; set; }
+
         [RegularExpression(@"([A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ\s]+)", ErrorMessage = "Grau Inválido")]
         public Grau Grau { get; set; }
 

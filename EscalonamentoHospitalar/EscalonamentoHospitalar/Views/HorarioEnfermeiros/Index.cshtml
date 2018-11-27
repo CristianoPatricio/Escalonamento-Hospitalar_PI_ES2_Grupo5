@@ -1,0 +1,59 @@
+﻿@model IEnumerable<EscalonamentoHospitalar.Models.HorarioEnfermeiro>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Data de início do Turno
+            </th>
+            <th>
+                Duração do Turno (horas)
+            </th>
+            <th>
+                Data de fim do Turno (horas)
+            </th>
+            <th>
+                Turno
+            </th>
+            <th>
+                Enfermeiro
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataInicioTurno)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Duracao)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataFimTurno)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Turno.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Enfermeiro.Nome)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.HorarioEnfermeiroId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.HorarioEnfermeiroId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.HorarioEnfermeiroId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

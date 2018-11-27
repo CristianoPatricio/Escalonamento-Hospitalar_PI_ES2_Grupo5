@@ -1,65 +1,86 @@
 ﻿@model IEnumerable<EscalonamentoHospitalar.Models.Enfermeiro>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Lista de Enfermeiros";
 }
+<p></p>
+
+@if (TempData["notice"] != null)
+{
+    <!--Mensagem de sucesso quandi insere enfermeiro-->
+    <div id="suc_form" class="alert alert-success">
+        <strong>Sucesso!</strong> O registo foi inserido com sucesso.
+    </div>
+}
+
+@if (TempData["deleteEnf"] != null)
+{
+    <!--Mensagem de sucesso quando elimina enfermeiro-->
+    <div id="suc_form" class="alert alert-success">
+        <strong>Sucesso!</strong> Enfermeiro eliminado com sucesso.
+    </div>
+}
+
+@if (TempData["successEdit"] != null)
+{
+    <!--Mensagem de sucesso quando edita enfermeiro-->
+    <div id="suc_form" class="alert alert-success">
+        <strong>Sucesso!</strong> O registo foi alterado com sucesso.
+    </div>
+}
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    //Passados 5 segundos a mensagem desaparece
+    $(document).ready(function () {
+        $("#suc_form").hide(10000);
+    });
+</script>
 
 <h2>Lista de Enfermeiros</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create"><input type="button" value="Inserir Novo Enfermeiro" class="btn btn-success" /></a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                Código
-            </th>
-            <th>
-                Nome
-            </th>
-            <th>
-                Contacto
-            </th>
-            <th>
-                Email
-            </th>
-            <th>
-                Data de Nascimento
-            </th>
-            <th>
-                Nº CC/BI
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.NumeroMecanografico)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nome)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Contacto)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Data_Nascimento)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CC)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.EnfermeiroId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.EnfermeiroId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.EnfermeiroId">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+
+
+<!--<div style="background-color:#17A5D4; padding: 30px; border-radius: 25px;">-->
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Número Mecanográfico
+                </th>
+                <th>
+                    Nome
+                </th>
+                <th>
+                    Especialidade
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NumeroMecanografico)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nome)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EspecialidadeEnfermeiro.Especialidade)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.EnfermeiroId"><input type="button" value="Alterar" class="btn btn-warning" /></a>
+                        <a asp-action="Details" asp-route-id="@item.EnfermeiroId"><input type="button" value="Detalhes" class="btn btn-info" /></a>
+                        <a asp-action="Delete" asp-route-id="@item.EnfermeiroId"><input type="button" value="Eliminar" class="btn btn-danger" /></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>

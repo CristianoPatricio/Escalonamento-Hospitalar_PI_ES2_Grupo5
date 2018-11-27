@@ -1,0 +1,31 @@
+﻿@model EscalonamentoHospitalar.Models.EspecialidadeEnfermeiro
+
+@{
+    ViewData["Title"] = "Inserir";
+}
+
+<h2>Inserir Nova Especialidade de Enfermeiros</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div class="form-group">
+                <label asp-for="Especialidade" class="control-label">Nome da Especialidade</label>
+                <input asp-for="Especialidade" class="form-control" />
+                <span asp-validation-for="Especialidade" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Inserir" class="btn btn-success" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index"><input type="button" value="Voltar à lista" class="btn btn-default" /></a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
