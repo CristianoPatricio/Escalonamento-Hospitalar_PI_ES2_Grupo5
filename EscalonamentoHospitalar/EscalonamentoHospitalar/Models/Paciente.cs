@@ -12,13 +12,14 @@ namespace EscalonamentoHospitalar.Models
         
         public int PacienteId { get; set; }
 
+        [Required(ErrorMessage = "Nome Inválido")]
         [RegularExpression(@"([A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ\s]+)", ErrorMessage = "Nome Inválido")]
         public string Nome { get; set; }
 
-        
+        [Required(ErrorMessage = "Morada Inválida")]
         public string Morada { get; set; }
 
-
+        [Required(ErrorMessage = "Codigo Postal Inválido")]
         [RegularExpression(@"\d{4}(-\d{3})?", ErrorMessage = "Código Postal Inválido")]
         public string Cod_Postal { get; set; }
 

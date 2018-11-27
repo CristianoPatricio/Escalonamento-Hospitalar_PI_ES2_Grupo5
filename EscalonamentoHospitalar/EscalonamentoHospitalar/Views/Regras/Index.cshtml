@@ -1,4 +1,4 @@
-﻿@model IEnumerable<EscalonamentoHospitalar.Models.Regras>
+﻿@model IEnumerable<EscalonamentoHospitalar.Models.Regra>
 
 @{
     ViewData["Title"] = "Index";
@@ -15,6 +15,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.RegrasEscalonamento)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Numero)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -25,9 +28,12 @@
                 @Html.DisplayFor(modelItem => item.RegrasEscalonamento)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.RegrasId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.RegrasId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.RegrasId">Delete</a>
+                @Html.DisplayFor(modelItem => item.Numero)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.RegraId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.RegraId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.RegraId">Delete</a>
             </td>
         </tr>
 }

@@ -34,11 +34,74 @@ namespace EscalonamentoHospitalar.Data
 
                 SeedTratamentos(db);
 
+                SeedRegras(db);
+
 
                 
                 
             }
         }
+
+       private static void SeedRegras(HospitalDbContext db)
+        {
+         if (db.Regras.Any()) return;
+         db.Regras.AddRange(
+
+             new Regra
+                {
+
+                    RegrasEscalonamento ="HorasEnfermeirosDia",
+                    Numero = 8,
+
+                },
+
+                 new Regra
+                 {
+
+
+                     RegrasEscalonamento = "HorasEnfermeirosSemana",
+                     Numero = 35,
+                 },
+                 new Regra
+                 {
+
+                     RegrasEscalonamento = "HorasMedicosDia",
+                     Numero = 8,
+
+                 },
+                 new Regra
+                 {
+
+
+                     RegrasEscalonamento = "HorasMedicosSemana",
+                     Numero = 40,
+                 },
+                 new Regra
+                 {
+
+
+                     RegrasEscalonamento = "Folga Enfermeiro",
+                     Numero = 1,
+                 },
+                 new Regra
+                 {
+
+
+                     RegrasEscalonamento = "Folga Medico",
+                     Numero = 1,
+                 },
+                 new Regra
+                 {
+
+
+                     RegrasEscalonamento = "Idade Filho",
+                     Numero = 3,
+                 }
+            );
+
+            db.SaveChanges();
+        }
+    
 
         private static void SeedEstado(HospitalDbContext db)
         {

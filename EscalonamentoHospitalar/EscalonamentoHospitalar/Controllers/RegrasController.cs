@@ -32,14 +32,14 @@ namespace EscalonamentoHospitalar.Controllers
                 return NotFound();
             }
 
-            var regras = await _context.Regras
-                .FirstOrDefaultAsync(m => m.RegrasId == id);
-            if (regras == null)
+            var regra = await _context.Regras
+                .FirstOrDefaultAsync(m => m.RegraId == id);
+            if (regra == null)
             {
                 return NotFound();
             }
 
-            return View(regras);
+            return View(regra);
         }
 
         // GET: Regras/Create
@@ -53,15 +53,15 @@ namespace EscalonamentoHospitalar.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("RegrasId,RegrasEscalonamento")] Regras regras)
+        public async Task<IActionResult> Create([Bind("RegraId,RegrasEscalonamento,Numero")] Regra regra)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(regras);
+                _context.Add(regra);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(regras);
+            return View(regra);
         }
 
         // GET: Regras/Edit/5
@@ -72,12 +72,12 @@ namespace EscalonamentoHospitalar.Controllers
                 return NotFound();
             }
 
-            var regras = await _context.Regras.FindAsync(id);
-            if (regras == null)
+            var regra = await _context.Regras.FindAsync(id);
+            if (regra == null)
             {
                 return NotFound();
             }
-            return View(regras);
+            return View(regra);
         }
 
         // POST: Regras/Edit/5
@@ -85,9 +85,9 @@ namespace EscalonamentoHospitalar.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("RegrasId,RegrasEscalonamento")] Regras regras)
+        public async Task<IActionResult> Edit(int id, [Bind("RegraId,RegrasEscalonamento,Numero")] Regra regra)
         {
-            if (id != regras.RegrasId)
+            if (id != regra.RegraId)
             {
                 return NotFound();
             }
@@ -96,12 +96,12 @@ namespace EscalonamentoHospitalar.Controllers
             {
                 try
                 {
-                    _context.Update(regras);
+                    _context.Update(regra);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!RegrasExists(regras.RegrasId))
+                    if (!RegraExists(regra.RegraId))
                     {
                         return NotFound();
                     }
@@ -112,7 +112,7 @@ namespace EscalonamentoHospitalar.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(regras);
+            return View(regra);
         }
 
         // GET: Regras/Delete/5
@@ -123,14 +123,14 @@ namespace EscalonamentoHospitalar.Controllers
                 return NotFound();
             }
 
-            var regras = await _context.Regras
-                .FirstOrDefaultAsync(m => m.RegrasId == id);
-            if (regras == null)
+            var regra = await _context.Regras
+                .FirstOrDefaultAsync(m => m.RegraId == id);
+            if (regra == null)
             {
                 return NotFound();
             }
 
-            return View(regras);
+            return View(regra);
         }
 
         // POST: Regras/Delete/5
@@ -138,15 +138,15 @@ namespace EscalonamentoHospitalar.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var regras = await _context.Regras.FindAsync(id);
-            _context.Regras.Remove(regras);
+            var regra = await _context.Regras.FindAsync(id);
+            _context.Regras.Remove(regra);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool RegrasExists(int id)
+        private bool RegraExists(int id)
         {
-            return _context.Regras.Any(e => e.RegrasId == id);
+            return _context.Regras.Any(e => e.RegraId == id);
         }
     }
 }
