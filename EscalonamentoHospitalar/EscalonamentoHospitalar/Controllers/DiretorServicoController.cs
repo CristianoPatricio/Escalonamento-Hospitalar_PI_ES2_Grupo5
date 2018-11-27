@@ -148,5 +148,12 @@ namespace EscalonamentoHospitalar.Controllers
         {
             return _context.DiretorServico.Any(e => e.DiretorServicoID == id);
         }
+
+        // GET: DiretorServico/GestaoHospitalar
+        public IActionResult GestaoHospitalar()
+        {
+            return View();
+        }
+
     }
 }
