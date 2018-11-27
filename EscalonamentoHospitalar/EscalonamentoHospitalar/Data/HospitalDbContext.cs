@@ -35,7 +35,7 @@ namespace EscalonamentoHospitalar.Models
             base.OnModelCreating(modelBuilder);
         }
 
-        public DbSet<EscalonamentoHospitalar.Models.DiretorServico> DiretorServico { get; set; }
+        public DbSet<EscalonamentoHospitalar.Models.DiretorServico> DiretoresServico { get; set; }
 
         public DbSet<EscalonamentoHospitalar.Models.Medico> Medicos { get; set; }
 

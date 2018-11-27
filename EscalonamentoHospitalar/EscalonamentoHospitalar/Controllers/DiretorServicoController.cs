@@ -21,7 +21,7 @@ namespace EscalonamentoHospitalar.Controllers
         // GET: DiretorServico
         public async Task<IActionResult> Index()
         {
-            return View(await _context.DiretorServico.ToListAsync());
+            return View(await _context.DiretoresServico.ToListAsync());
         }
 
         // GET: DiretorServico/Details/5
@@ -32,7 +32,7 @@ namespace EscalonamentoHospitalar.Controllers
                 return NotFound();
             }
 
-            var diretorServico = await _context.DiretorServico
+            var diretorServico = await _context.DiretoresServico
                 .FirstOrDefaultAsync(m => m.DiretorServicoID == id);
             if (diretorServico == null)
             {
@@ -110,7 +110,7 @@ namespace EscalonamentoHospitalar.Controllers
                 return NotFound();
             }
 
-            var diretorServico = await _context.DiretorServico.FindAsync(id);
+            var diretorServico = await _context.DiretoresServico.FindAsync(id);
             if (diretorServico == null)
             {
                 return NotFound();
@@ -201,7 +201,7 @@ namespace EscalonamentoHospitalar.Controllers
                 return NotFound();
             }
 
-            var diretorServico = await _context.DiretorServico
+            var diretorServico = await _context.DiretoresServico
                 .FirstOrDefaultAsync(m => m.DiretorServicoID == id);
             if (diretorServico == null)
             {
@@ -216,8 +216,8 @@ namespace EscalonamentoHospitalar.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var diretorServico = await _context.DiretorServico.FindAsync(id);
-            _context.DiretorServico.Remove(diretorServico);
+            var diretorServico = await _context.DiretoresServico.FindAsync(id);
+            _context.DiretoresServico.Remove(diretorServico);
             await _context.SaveChangesAsync();
             TempData["deleteSuccess"] = "Registo eliminado com sucesso!";
             return RedirectToAction(nameof(Index));
@@ -225,7 +225,7 @@ namespace EscalonamentoHospitalar.Controllers
 
         private bool DiretorServicoExists(int id)
         {
-            return _context.DiretorServico.Any(e => e.DiretorServicoID == id);
+            return _context.DiretoresServico.Any(e => e.DiretorServicoID == id);
         }
 
         /**********************Funções auxiliares**************************/
@@ -306,7 +306,7 @@ namespace EscalonamentoHospitalar.Controllers
             bool IsInvalid = false;
 
             //Procura na BD se existem diretores com o mesmo email
-            var diretores = from d in _context.DiretorServico
+            var diretores = from d in _context.DiretoresServico
                               where d.Email.Contains(email)
                               select d;
 
@@ -328,7 +328,7 @@ namespace EscalonamentoHospitalar.Controllers
 
 
             //Procura na BD se existem diretores com o mesmo codigo
-            var diretores = from d in _context.DiretorServico
+            var diretores = from d in _context.DiretoresServico
                               where d.Codigo.Contains(numero)
                               select d;
 
@@ -350,7 +350,7 @@ namespace EscalonamentoHospitalar.Controllers
 
 
             //Procura na BD se existem diretores com o mesmo numero mecanografico
-            var diretores = from d in _context.DiretorServico
+            var diretores = from d in _context.DiretoresServico
                               where d.CC.Contains(cc)
                               select d;
 
@@ -374,7 +374,7 @@ namespace EscalonamentoHospitalar.Controllers
             bool IsInvalid = false;
 
             //Procura na BD se existem diretores com o mesmo email
-            var diretores = from d in _context.DiretorServico
+            var diretores = from d in _context.DiretoresServico
                             where d.Email.Contains(email) && d.DiretorServicoID != idDir
                             select d;
 
@@ -397,7 +397,7 @@ namespace EscalonamentoHospitalar.Controllers
 
 
             //Procura na BD se existem diretores com o mesmo codigo
-            var diretores = from d in _context.DiretorServico
+            var diretores = from d in _context.DiretoresServico
                             where d.Codigo.Contains(numero) && d.DiretorServicoID != idDir
                             select d;
 
@@ -420,7 +420,7 @@ namespace EscalonamentoHospitalar.Controllers
 
 
             //Procura na BD se existem diretores com o mesmo numero mecanografico
-            var diretores = from d in _context.DiretorServico
+            var diretores = from d in _context.DiretoresServico
                             where d.CC.Contains(cc) && d.DiretorServicoID != idDir
                             select d;
 

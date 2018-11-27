@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EscalonamentoHospitalar.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    [Migration("20181127161910_271120181618")]
-    partial class _271120181618
+    [Migration("20181127162856_271120181628")]
+    partial class _271120181628
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -43,7 +43,7 @@ namespace EscalonamentoHospitalar.Migrations
 
                     b.HasKey("DiretorServicoID");
 
-                    b.ToTable("DiretorServico");
+                    b.ToTable("DiretoresServico");
                 });
 
             modelBuilder.Entity("EscalonamentoHospitalar.Models.Enfermeiro", b =>

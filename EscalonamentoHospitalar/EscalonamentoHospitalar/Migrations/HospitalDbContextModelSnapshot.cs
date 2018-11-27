@@ -41,7 +41,7 @@ namespace EscalonamentoHospitalar.Migrations
 
                     b.HasKey("DiretorServicoID");
 
-                    b.ToTable("DiretorServico");
+                    b.ToTable("DiretoresServico");
                 });
 
             modelBuilder.Entity("EscalonamentoHospitalar.Models.Enfermeiro", b =>

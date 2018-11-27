@@ -257,9 +257,9 @@ namespace EscalonamentoHospitalar.Data
       
         private static void SeedDiretorServico(HospitalDbContext db)
         {
-            if (db.DiretorServico.Any()) return;
+            if (db.DiretoresServico.Any()) return;
 
-            db.DiretorServico.AddRange(
+            db.DiretoresServico.AddRange(
 
                 new DiretorServico { Nome = "António Barata", Codigo = "D001", Contacto = "965417847", Email = "antoniobarata@uls.guarda", CC = "12547845"}
 
