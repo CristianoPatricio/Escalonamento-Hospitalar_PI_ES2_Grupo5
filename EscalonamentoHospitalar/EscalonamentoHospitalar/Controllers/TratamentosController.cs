@@ -57,7 +57,7 @@ namespace EscalonamentoHospitalar.Controllers
             ViewData["PacienteId"] = new SelectList(_context.Pacientes, "PacienteId", "Nome");
             ViewData["PatologiaId"] = new SelectList(_context.Patologia, "PatologiaId", "Nome");
             ViewData["RegimeId"] = new SelectList(_context.Regime, "RegimeId", "TipoRegime");
-            ViewData["EstadoId"] = new SelectList(_context.Regime, "EstadoId", "Nome");
+            ViewData["EstadoId"] = new SelectList(_context.Estado, "EstadoId", "Nome");
 
             return View();
         }
@@ -80,7 +80,7 @@ namespace EscalonamentoHospitalar.Controllers
             ViewData["PacienteId"] = new SelectList(_context.Pacientes, "PacienteId", "Nome", tratamento.PacienteId);
             ViewData["PatologiaId"] = new SelectList(_context.Patologia, "PatologiaId", "Nome", tratamento.PatologiaId);
             ViewData["RegimeId"] = new SelectList(_context.Regime, "RegimeId", "TipoRegime", tratamento.RegimeId);
-            ViewData["EstadoId"] = new SelectList(_context.Regime, "EstadoId", "Nome", tratamento.EstadoId);
+            ViewData["EstadoId"] = new SelectList(_context.Estado, "EstadoId", "Nome", tratamento.EstadoId);
             return View(tratamento);
         }
 
@@ -102,7 +102,7 @@ namespace EscalonamentoHospitalar.Controllers
             ViewData["PacienteId"] = new SelectList(_context.Pacientes, "PacienteId", "CC", tratamento.PacienteId);
             ViewData["PatologiaId"] = new SelectList(_context.Patologia, "PatologiaId", "PatologiaId", tratamento.PatologiaId);
             ViewData["RegimeId"] = new SelectList(_context.Regime, "RegimeId", "RegimeId", tratamento.RegimeId);
-            ViewData["EstadoId"] = new SelectList(_context.Regime, "EstadoId", "EstadoId", tratamento.EstadoId);
+            ViewData["EstadoId"] = new SelectList(_context.Estado, "EstadoId", "EstadoId", tratamento.EstadoId);
             return View(tratamento);
         }
 
@@ -143,7 +143,7 @@ namespace EscalonamentoHospitalar.Controllers
             ViewData["PacienteId"] = new SelectList(_context.Pacientes, "PacienteId", "CC", tratamento.PacienteId);
             ViewData["PatologiaId"] = new SelectList(_context.Patologia, "PatologiaId", "PatologiaId", tratamento.PatologiaId);
             ViewData["RegimeId"] = new SelectList(_context.Regime, "RegimeId", "RegimeId", tratamento.RegimeId);
-            ViewData["EstadoId"] = new SelectList(_context.Regime, "EstadoId", "EstadoId", tratamento.EstadoId);
+            ViewData["EstadoId"] = new SelectList(_context.Estado, "EstadoId", "EstadoId", tratamento.EstadoId);
             return View(tratamento);
         }
 

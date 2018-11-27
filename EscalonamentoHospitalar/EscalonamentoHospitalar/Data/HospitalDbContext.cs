@@ -13,6 +13,7 @@ namespace EscalonamentoHospitalar.Models
             : base(options)
         {
         }
+       
 
         public DbSet<EscalonamentoHospitalar.Models.DiretorServico> DiretorServico { get; set; }
 
