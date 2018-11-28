@@ -432,5 +432,13 @@ namespace EscalonamentoHospitalar.Controllers
             return IsInvalid;
         }
 
+        // GET: DiretorServico/GestaoHospitalar
+        public IActionResult GestaoHospitalar()
+        {
+            return View();
+        }
+
+
+
     }
 }

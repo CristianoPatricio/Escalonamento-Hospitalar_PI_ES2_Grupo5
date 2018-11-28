@@ -23,6 +23,7 @@ namespace EscalonamentoHospitalar.Data
                 SeedTurnos(db);
                 SeedHorarioEnfermeiros(db);
                 SeedMedicos(db);
+
                 SeedMedicoEspecialidade(db);
                 SeedPacientes(db);
                 SeedGrau(db);
@@ -41,6 +42,40 @@ namespace EscalonamentoHospitalar.Data
                 
                 
             }
+
+
+                SeedMedicoEspecialidades(db);
+                SeedEspecialidadeMedicos(db);
+            }
+        }
+
+        private static void SeedEspecialidadeMedicos(HospitalDbContext db)
+        {
+
+            if(db.EspecialidadeMedicos.Any()) return;
+            db.EspecialidadeMedicos.AddRange(
+                    new EspecialidadeMedico
+                    {
+                        NomeEspecialidade = "Anestesiologia",
+                    },
+                    new EspecialidadeMedico
+                    {
+                        NomeEspecialidade = "Cardiologia",
+                    },
+                    new EspecialidadeMedico
+                    {
+                        NomeEspecialidade = "Cirurgia Geral",
+                    },
+                    new EspecialidadeMedico
+                    {
+                        NomeEspecialidade = "Doenças Infesiosas",
+                    }
+
+                );
+            db.SaveChanges();
+
+
+
         }
 
        private static void SeedRegras(HospitalDbContext db)
@@ -319,6 +354,7 @@ namespace EscalonamentoHospitalar.Data
             db.SaveChanges();
         }
 
+
       
 
        
@@ -362,10 +398,29 @@ namespace EscalonamentoHospitalar.Data
 
             }
 
+        private static void SeedMedicoEspecialidades(HospitalDbContext db)
+        {
+            if (db.MedicoEspecialidades.Any()) return;
+
+            EspecialidadeMedico anestesiologia = GetEspecialidadeMedicoCreatingIfNeed(db, "Anestesiologia");
+            EspecialidadeMedico cardiologia = GetEspecialidadeMedicoCreatingIfNeed(db, "Cardiologia");
+
+
             db.MedicoEspecialidade.AddRange(
+
 
                 new MedicoEspecialidade { Nome = "Manuel Santos", MedicoId = manuel.MedicoId },
                 new MedicoEspecialidade { Nome = "Elisabete Eiras", MedicoId = elisabete.MedicoId }
+
+                new MedicoEspecialidade { MedicoId = manuel.MedicoId,
+                                          EspecialidadeMedicoId = anestesiologia.EspecialidadeMedicoId,
+                                          Data_Registo = new DateTime(2018, 11, 21),
+                                        },
+                new MedicoEspecialidade { MedicoId = elisabete.MedicoId,
+                                          EspecialidadeMedicoId = cardiologia.EspecialidadeMedicoId,
+                                          Data_Registo = new DateTime(2018, 11, 20)
+                                        }
+
                 );
 
             db.SaveChanges();

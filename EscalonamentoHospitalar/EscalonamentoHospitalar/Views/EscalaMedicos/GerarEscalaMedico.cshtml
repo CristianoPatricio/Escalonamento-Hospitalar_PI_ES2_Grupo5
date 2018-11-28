@@ -1,0 +1,32 @@
+﻿@model GerarEscala
+
+@{
+    ViewData["Title"] = "Gerar Escala Médico";
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="GerarEscalaMedico">
+            <div class="form-group">
+                <label asp-for="NumeroPessoasTurno1" class="control-label">Número de pessoas do turno 1</label>
+                <input asp-for="NumeroPessoasTurno1" class="form-control" placeholder="Número de pessoas do turno 1" />
+            </div>
+            <div class="form-group">
+                <label asp-for="NumeroPessoasTurno2" class="control-label">Número de pessoas do turno 2</label>
+                <input asp-for="NumeroPessoasTurno2" class="form-control" placeholder="Número de pessoas do turno 2" />
+            </div>
+            <div class="form-group">
+                <label asp-for="NumeroPessoasTurno3" class="control-label">Número de pessoas do turno 3</label>
+                <input asp-for="NumeroPessoasTurno3" class="form-control" placeholder="Número de pessoas do turno 3" />
+            </div>
+            <div class="form-group">
+                <label asp-for="DataInicioSemana" class="control-label">Data Início da Semana</label>
+                <input asp-for="DataInicioSemana " class="form-control" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="GERAR" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+

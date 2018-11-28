@@ -1,0 +1,49 @@
+﻿@{
+    ViewData["Title"] = "Gestão Hosiptalar";
+}
+
+<div>
+    <div>
+        <img style="float:left;" class="image" src="~/images/James& Katie.png" alt="" width="400" height="400" />
+    </div>
+</div>
+
+<div style="margin-top:100px;">
+    <h2>Diretor de Serviço - Gestão Hospitalar</h2>
+</div>
+
+<div>
+    <div style = "float:left; margin-top: 100px; margin-right:10px; margin-left:10px;">
+        <a href='@Url.Action("Index", "Medicos")'>
+            <input type="button"  class="btn btn-primary btn-lg btn-block" value="LISTA DE MÉDICOS" />
+        </a>
+    </div>
+    <div style = "float:left; margin-top: 100px; margin-right:10px; margin-left:10px;">
+        <a href='@Url.Action("Index", "Enfermeiros")'>
+            <input type="button" class="btn btn-info btn-lg btn-block" value="LISTA DE ENFERMEIROS" />
+        </a>
+    </div>
+    <div style = "float:left; margin-top: 100px; margin-right:10px; margin-left:10px;">
+        <a href='@Url.Action("Index", "Pacientes")'>
+            <input type="button" class="btn btn-secundary btn-lg btn-block" value="LISTA DE PACIENTES" />
+        </a>
+    </div>
+</div>
+<div>
+    <div style="float:left; margin-top: 200px; margin-right:10px; margin-left:10px;">
+        <a href='@Url.Action("Index", "EscalaMedicos")'>
+            <input type="button" class="btn btn-primary btn-lg btn-block" value="GERAR ESCALA MEDICO" />
+        </a>
+    </div>
+    <div style="float:left; margin-top: 200px; margin-right:10px; margin-left:10px;">
+        <a href='@Url.Action("Index", "EscalaEnfermeiros")'>
+            <input type="button" class="btn btn-info btn-lg btn-block" value="GERAR ESCALA ENFERMEIRO" />
+        </a>
+    </div>
+    <div style="float:left; margin-top: 20px; margin-right:10px; margin-left:10px;">
+        <a href='@Url.Action("Index", "EscalaPacientes")'>
+            <input type="button" class="btn btn-secundary btn-lg btn-block" value="GERAR ESCALA PACIENTE" />
+        </a>
+    </div>
+</div>
+

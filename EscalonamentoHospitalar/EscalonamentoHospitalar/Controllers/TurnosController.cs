@@ -21,7 +21,13 @@ namespace EscalonamentoHospitalar.Controllers
         // GET: Turnos
         public async Task<IActionResult> Index()
         {
+
             return View(await _context.Turnos.ToListAsync());
+
+      
+            return View(await _context.Turnos.ToListAsync());
+
+
         }
 
         // GET: Turnos/Details/5
@@ -52,8 +58,7 @@ namespace EscalonamentoHospitalar.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-     
+        [ValidateAntiForgeryToken]     
         public async Task<IActionResult> Create([Bind("TurnoId,Nome")] Turno turno)
         {
             if (ModelState.IsValid)
@@ -62,7 +67,9 @@ namespace EscalonamentoHospitalar.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
             return View(turno);
+
         }
 
         // GET: Turnos/Edit/5
@@ -78,7 +85,9 @@ namespace EscalonamentoHospitalar.Controllers
             {
                 return NotFound();
             }
+
             return View(turno);
+
         }
 
         // POST: Turnos/Edit/5
@@ -86,6 +95,9 @@ namespace EscalonamentoHospitalar.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+
+
+       
 
         public async Task<IActionResult> Edit(int id, [Bind("TurnoId,Nome")] Turno turno)
         {
@@ -114,7 +126,9 @@ namespace EscalonamentoHospitalar.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+
             return View(turno);
+
         }
 
         // GET: Turnos/Delete/5
@@ -124,6 +138,7 @@ namespace EscalonamentoHospitalar.Controllers
             {
                 return NotFound();
             }
+
 
             var turno = await _context.Turnos
                 .FirstOrDefaultAsync(m => m.TurnoId == id);

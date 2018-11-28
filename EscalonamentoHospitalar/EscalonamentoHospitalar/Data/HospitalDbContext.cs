@@ -17,14 +17,33 @@ namespace EscalonamentoHospitalar.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
+
+            //Chave composta especialidademedicoId + medicoId
+            modelBuilder.Entity<MedicoEspecialidade>().HasKey(o => new { o.MedicoId, o.EspecialidadeMedicoId });
+
+            //Relação 1 -> N
+            modelBuilder.Entity<MedicoEspecialidade>()
+                .HasOne(mm => mm.Medico)
+                .WithMany(m => m.MedicosEspecialidade)
+                .HasForeignKey(mm => mm.MedicoId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<MedicoEspecialidade>()
+               .HasOne(mm => mm.EspecialidadeMedico)
+               .WithMany(m => m.MedicosEspecialidade)
+               .HasForeignKey(mm => mm.EspecialidadeMedicoId)
+               .OnDelete(DeleteBehavior.ClientSetNull);
+
+
             //Chave primária composta
             modelBuilder.Entity<EnfermeiroEspecialidade>().HasKey(o => new { o.EnfermeiroId, o.EspecialidadeEnfermeiroId });
 
             //Relação 1 -> N
             modelBuilder.Entity<EnfermeiroEspecialidade>()
-                .HasOne(ee => ee.Enfermeiro) 
-                .WithMany(e => e.EnfermeirosEspecialidade) 
-                .HasForeignKey(ee => ee.EnfermeiroId) 
+                .HasOne(ee => ee.Enfermeiro)
+                .WithMany(e => e.EnfermeirosEspecialidade)
+                .HasForeignKey(ee => ee.EnfermeiroId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<EnfermeiroEspecialidade>()
@@ -32,7 +51,7 @@ namespace EscalonamentoHospitalar.Models
                 .WithMany(e => e.EnfermeirosEspecialidade)
                 .HasForeignKey(ee => ee.EspecialidadeEnfermeiroId)
                 .OnDelete(DeleteBehavior.ClientSetNull);
-           
+
             base.OnModelCreating(modelBuilder);
         }
 
@@ -54,6 +73,7 @@ namespace EscalonamentoHospitalar.Models
 
         public DbSet<EscalonamentoHospitalar.Models.MedicoEspecialidade> MedicoEspecialidade { get; set; }
 
+
         public DbSet<EscalonamentoHospitalar.Models.Tratamento> Tratamento { get; set; }
         public object Tratamentos { get; internal set; }
         public DbSet<EscalonamentoHospitalar.Models.Patologia> Patologia { get; set; }
@@ -61,5 +81,15 @@ namespace EscalonamentoHospitalar.Models
         public DbSet<EscalonamentoHospitalar.Models.Regime> Regime { get; set; }
         public DbSet<EscalonamentoHospitalar.Models.Estado> Estado { get; set; }
         public DbSet<EscalonamentoHospitalar.Models.Regra> Regras { get; set; }
+
+        public DbSet<EscalonamentoHospitalar.Models.Tratamento> Tratamentos { get; set; }
+
+        public DbSet<EscalonamentoHospitalar.Models.EscalaMedico> EscalaMedicos { get; set; }
+
+        public DbSet<EscalonamentoHospitalar.Models.EscalaPaciente> EscalaPacientes { get; set; }
+
+        public DbSet<EscalonamentoHospitalar.Models.EscalaEnfermeiro> EscalaEnfermeiros { get; set; }
+
+
     }
 }

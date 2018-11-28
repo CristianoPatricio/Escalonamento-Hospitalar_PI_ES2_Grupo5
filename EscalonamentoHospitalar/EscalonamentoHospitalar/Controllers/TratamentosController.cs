@@ -21,7 +21,11 @@ namespace EscalonamentoHospitalar.Controllers
         // GET: Tratamentos
         public async Task<IActionResult> Index()
         {
+
             var hospitalDbContext = _context.Tratamento.Include(t => t.Grau).Include(t => t.Medico).Include(t => t.Paciente).Include(t => t.Patologia).Include(t => t.Regime).Include(t =>t.Estado);
+
+            var hospitalDbContext = _context.Tratamentos.Include(t => t.Grau).Include(t => t.Paciente).Include(t => t.Patologia);
+
             return View(await hospitalDbContext.ToListAsync());
         }
 
@@ -33,7 +37,7 @@ namespace EscalonamentoHospitalar.Controllers
                 return NotFound();
             }
 
-            var tratamento = await _context.Tratamento
+            var tratamento = await _context.Tratamentos
                 .Include(t => t.Grau)
                 .Include(t => t.Medico)
                 .Include(t => t.Paciente)
@@ -92,7 +96,7 @@ namespace EscalonamentoHospitalar.Controllers
                 return NotFound();
             }
 
-            var tratamento = await _context.Tratamento.FindAsync(id);
+            var tratamento = await _context.Tratamentos.FindAsync(id);
             if (tratamento == null)
             {
                 return NotFound();
@@ -155,7 +159,7 @@ namespace EscalonamentoHospitalar.Controllers
                 return NotFound();
             }
 
-            var tratamento = await _context.Tratamento
+            var tratamento = await _context.Tratamentos
                 .Include(t => t.Grau)
                 .Include(t => t.Medico)
                 .Include(t => t.Paciente)
@@ -176,15 +180,15 @@ namespace EscalonamentoHospitalar.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var tratamento = await _context.Tratamento.FindAsync(id);
-            _context.Tratamento.Remove(tratamento);
+            var tratamento = await _context.Tratamentos.FindAsync(id);
+            _context.Tratamentos.Remove(tratamento);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool TratamentoExists(int id)
         {
-            return _context.Tratamento.Any(e => e.TratamentoId == id);
+            return _context.Tratamentos.Any(e => e.TratamentoId == id);
         }
     }
 }

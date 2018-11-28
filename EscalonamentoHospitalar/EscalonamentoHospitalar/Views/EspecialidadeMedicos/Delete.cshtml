@@ -1,15 +1,10 @@
-﻿@model EscalonamentoHospitalar.Models.Medico
+﻿@model EscalonamentoHospitalar.Models.EspecialidadeMedico
 
 @{
     ViewData["Title"] = "Delete";
 }
-
-<h2>Delete</h2>
-
-<h3>Are you sure you want to delete this?</h3>
-
 <head>
-    
+
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
     <style type="text/css">
@@ -118,73 +113,23 @@
     </style>
 </head>
 
-<h3>Tem a certeza que quer eliminar a/o médica/o @Html.DisplayFor(model => model.Nome)?</h3>
+<h3>Tem a certeza que quer apagar a especialidade @Html.DisplayFor(model => model.NomeEspecialidade)?</h3>
 <div>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.NumeroMecanografico)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.NumeroMecanografico)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Nome)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Nome)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Contacto)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Contacto)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.CC)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.CC)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Data_Nascimento)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Data_Nascimento)
-        </dd>
-
-        <dt>
             Especialidade
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.EspecialidadeMedico.NomeEspecialidade)
+            @Html.DisplayFor(model => model.NomeEspecialidade)
         </dd>
-        <dt>
-            Data de início ao serviço
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Data_Inicio_Servico)
-        </dd>
-
     </dl>
 
     <form asp-action="Delete">
-        <input type="hidden" asp-for="MedicoId" />
-
-        <input type="submit" value="Delete" class="btn btn-default" /> |
-        <a asp-action="Index">Back to List</a>
-
-        <a href="#myModal" class="trigger-btn" data-toggle="modal">
-            <input type="submit" value="APAGAR" class="btn btn-danger" />
-        </a>  |
-        <a asp-action="Index" class="btn btn-default">Voltar à lista de médicos</a>
-
+        <input type="hidden" asp-for="EspecialidadeMedicoId" />
+        <a href="#myDeleteModal" class="trigger-btn" data-toggle="modal">
+            <input type="submit" value="APAGAR" class="btn btn-danger" /></a> |
+            <a asp-action="Index" class="btn btn-default">Voltar à lista de especialidades</a>
     </form>
 
     <!-- Modal HTML CONFIRMAÇÃO DO ELIMINAR -->
@@ -195,16 +140,16 @@
                     <div class="icon-box">
                         <i class="material-icons">&#xE5CD;</i>
                     </div>
-                    <h4 class="modal-title">Tem a certeza que quer eliminar a/o médica/o @Html.DisplayFor(model => model.Nome)?</h4>
+                    <h4 class="modal-title">Tem a certeza que quer eliminar a especialidade</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
                 <div class="modal-body">
-                    <p>Esta operação é irreversível.</p>
+                    <p>Tem a certeza que quer eliminar a especilidade? Esta operação é irreversível.</p>
                 </div>
                 <div class="modal-footer">
                     <form asp-action="Delete">
                         <button type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>
-                        <input type="hidden" asp-for="MedicoId" />
+                        <input type="hidden" asp-for="EspecialidadeMedicoId" />
                         <input type="submit" class="btn btn-danger" value="APAGAR" />
                     </form>
                 </div>

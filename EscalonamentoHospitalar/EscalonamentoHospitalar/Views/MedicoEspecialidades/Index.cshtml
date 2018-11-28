@@ -7,6 +7,7 @@
 <h2>Index</h2>
 
 <p>
+
     <a asp-action="Create">Create New</a>
 </p>
 <table class="table">
@@ -39,3 +40,38 @@
 }
     </tbody>
 </table>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Médico
+                </th>
+                <th>
+                    Especialidade
+                </th>
+                <th>
+                    Data de registo
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Medico.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EspecialidadeMedico.NomeEspecialidade)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Data_Registo)
+                </td>
+
+            </tr>
+            }
+        </tbody>
+    </table>
+
