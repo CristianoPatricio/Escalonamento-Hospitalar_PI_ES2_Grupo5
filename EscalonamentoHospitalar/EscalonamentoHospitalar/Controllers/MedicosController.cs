@@ -1,32 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using EscalonamentoHospitalar.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using EscalonamentoHospitalar.Models;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace EscalonamentoHospitalar.Controllers
 {
-    public class TurnosController : Controller
+    public class MedicosController : Controller
+
     {
         private readonly HospitalDbContext _context;
 
-        public TurnosController(HospitalDbContext context)
+        public MedicosController(HospitalDbContext context)
+
         {
             _context = context;
         }
 
-        // GET: Turnos
+        // GET: Medicos
         public async Task<IActionResult> Index()
         {
-      
-            return View(await _context.Turnos.ToListAsync());
+
+            var hospitalDbContext = _context.Medicos.Include(m => m.EspecialidadeMedico);
+            return View(await hospitalDbContext.ToListAsync());
 
         }
 
-        // GET: Turnos/Details/5
+        // GET: Medicos/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -34,47 +36,43 @@ namespace EscalonamentoHospitalar.Controllers
                 return NotFound();
             }
 
-            var turno = await _context.Turnos
-                .FirstOrDefaultAsync(m => m.TurnoId == id);
-            if (turno == null)
+            var medico = await _context.Medicos
+                .Include(m => m.EspecialidadeMedico)
+                .FirstOrDefaultAsync(m => m.MedicoId == id);
+            if (medico == null)
             {
                 return NotFound();
             }
 
-            return View(turno);
+            return View(medico);
         }
 
-        // GET: Turnos/Create
+        // GET: Medicos/Create
         public IActionResult Create()
         {
             ViewData["EspecialidadeMedicoId"] = new SelectList(_context.EspecialidadeMedicos, "EspecialidadeMedicoId", "NomeEspecialidade");
             return View();
         }
 
-        // POST: Turnos/Create
+        // POST: Medicos/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-
-        
-     
-        public async Task<IActionResult> Create([Bind("TurnoId,Nome")] Turno turno)
-
+        public async Task<IActionResult> Create([Bind("MedicoId,NumeroMecanografico,Nome,Email,Contacto,CC,Data_Nascimento,EspecialidadeMedicoId,Data_Inicio_Servico")] Medico medico)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(turno);
+                _context.Add(medico);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
 
-           
-            return View(turno);
-
+            ViewData["EspecialidadeMedicoId"] = new SelectList(_context.EspecialidadeMedicos, "EspecialidadeMedicoId", "NomeEspecialidade", medico.EspecialidadeMedicoId);
+            return View(medico);
         }
 
-        // GET: Turnos/Edit/5
+        // GET: Medicos/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -82,61 +80,49 @@ namespace EscalonamentoHospitalar.Controllers
                 return NotFound();
             }
 
-            var turno = await _context.Turnos.FindAsync(id);
-            if (turno == null)
-            {
+            var medico = await _context.Medicos.FindAsync(id);
+            if (medico == null)
+            { 
                 return NotFound();
             }
 
-           
-
-            return View(turno);
-
+            ViewData["EspecialidadeMedicoId"] = new SelectList(_context.EspecialidadeMedicos, "EspecialidadeMedicoId", "NomeEspecialidade", medico.EspecialidadeMedicoId);
+            return View(medico);
         }
 
-        // POST: Turnos/Edit/5
+        // POST: Medicos/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-
-       
-
-        public async Task<IActionResult> Edit(int id, [Bind("TurnoId,Nome")] Turno turno)
-
+        public async Task<IActionResult> Edit(int id, [Bind("MedicoId,NumeroMecanografico,Nome,Email,Contacto,CC,Data_Nascimento,EspecialidadeMedicoId,Data_Inicio_Servico")] Medico medico)
         {
-            if (id != turno.TurnoId)
+            if (id != medico.MedicoId)
             {
                 return NotFound();
             }
-
-            if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(turno);
+                    _context.Update(medico);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!TurnoExists(turno.TurnoId))
+                    if (!MedicoExists(medico.MedicoId))
                     {
                         return NotFound();
                     }
-                    else
-                    {
-                        throw;
-                    }
+
                 }
                 return RedirectToAction(nameof(Index));
             }
 
-          
-            return View(turno);
-
+            ViewData["EspecialidadeMedicoId"] = new SelectList(_context.EspecialidadeMedicos, "EspecialidadeMedicoId", "NomeEspecialidade", medico.EspecialidadeMedicoId);
+            return View(medico);
         }
-
-        // GET: Turnos/Delete/5
+        
+        // GET: Medicos/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -144,31 +130,32 @@ namespace EscalonamentoHospitalar.Controllers
                 return NotFound();
             }
 
-          
-            var turno = await _context.Turnos
-                .FirstOrDefaultAsync(m => m.TurnoId == id);
-            if (turno == null)
+            var medico = await _context.Medicos
+            .Include(m => m.EspecialidadeMedico)
+            .FirstOrDefaultAsync(m => m.MedicoId == id);
+            if (medico == null)
             {
                 return NotFound();
             }
 
-            return View(turno);
-        }
+            return View(medico);
+         
+        } 
 
-        // POST: Turnos/Delete/5
+        // POST: Medicos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var turno = await _context.Turnos.FindAsync(id);
-            _context.Turnos.Remove(turno);
+            var medico = await _context.Medicos.FindAsync(id);
+            _context.Medicos.Remove(medico);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool TurnoExists(int id)
+        private bool MedicoExists(int id)   
         {
-            return _context.Turnos.Any(e => e.TurnoId == id);
+            return _context.Medicos.Any(e => e.MedicoId == id);
         }
     }
 }

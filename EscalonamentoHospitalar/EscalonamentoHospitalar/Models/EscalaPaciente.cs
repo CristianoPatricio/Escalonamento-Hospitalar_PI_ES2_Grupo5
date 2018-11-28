@@ -10,8 +10,8 @@ namespace EscalonamentoHospitalar.Models
         public int EscalaPacienteId { get; set; }
 
         // O TRATAMENTO ESTÁ DEPENDENTE DO NELSON
-      /*  public Tratamento Tratamento { get; set; }
-          public int TratamentoId { get; set; }*/
+        public Tratamento Tratamento { get; set; }
+          public int TratamentoId { get; set; }
 
         public Paciente Paciente { get; set; }
         public int PacienteId { get; set; }

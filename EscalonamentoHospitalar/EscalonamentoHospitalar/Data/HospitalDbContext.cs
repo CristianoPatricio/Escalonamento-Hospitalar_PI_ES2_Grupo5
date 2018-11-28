@@ -33,22 +33,14 @@ namespace EscalonamentoHospitalar.Models
                .HasForeignKey(mm => mm.EspecialidadeMedicoId)
                .OnDelete(DeleteBehavior.ClientSetNull);
 
-
-            base.OnModelCreating(modelBuilder);
-        }
-
-        
-
-        public DbSet<EscalonamentoHospitalar.Models.DiretorServico> DiretorServico { get; set; }
-
             //Chave primária composta
             modelBuilder.Entity<EnfermeiroEspecialidade>().HasKey(o => new { o.EnfermeiroId, o.EspecialidadeEnfermeiroId });
 
             //Relação 1 -> N
             modelBuilder.Entity<EnfermeiroEspecialidade>()
-                .HasOne(ee => ee.Enfermeiro) 
-                .WithMany(e => e.EnfermeirosEspecialidade) 
-                .HasForeignKey(ee => ee.EnfermeiroId) 
+                .HasOne(ee => ee.Enfermeiro)
+                .WithMany(e => e.EnfermeirosEspecialidade)
+                .HasForeignKey(ee => ee.EnfermeiroId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<EnfermeiroEspecialidade>()
@@ -56,10 +48,9 @@ namespace EscalonamentoHospitalar.Models
                 .WithMany(e => e.EnfermeirosEspecialidade)
                 .HasForeignKey(ee => ee.EspecialidadeEnfermeiroId)
                 .OnDelete(DeleteBehavior.ClientSetNull);
-           
+
             base.OnModelCreating(modelBuilder);
         }
-
 
         public DbSet<EscalonamentoHospitalar.Models.DiretorServico> DiretoresServico { get; set; }
 
@@ -81,7 +72,13 @@ namespace EscalonamentoHospitalar.Models
 
         public DbSet<EscalonamentoHospitalar.Models.EspecialidadeMedico> EspecialidadeMedicos { get; set; }
 
-        public DbSet<EscalonamentoHospitalar.Models.Tratamento> Tratamento { get; set; }
+        public DbSet<EscalonamentoHospitalar.Models.Tratamento> Tratamentos { get; set; }
+
+        public DbSet<EscalonamentoHospitalar.Models.EscalaMedico> EscalaMedicos { get; set; }
+
+        public DbSet<EscalonamentoHospitalar.Models.EscalaPaciente> EscalaPacientes { get; set; }
+
+        public DbSet<EscalonamentoHospitalar.Models.EscalaEnfermeiro> EscalaEnfermeiros { get; set; }
 
 
     }
