@@ -12,19 +12,21 @@ namespace EscalonamentoHospitalar.Models
         
         public int PacienteId { get; set; }
 
+        [Required(ErrorMessage = "Nome Inválido")]
         [RegularExpression(@"([A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ\s]+)", ErrorMessage = "Nome Inválido")]
         public string Nome { get; set; }
 
-        
+        [Required(ErrorMessage = "Morada Inválida")]
         public string Morada { get; set; }
 
-
+        [Required(ErrorMessage = "Codigo Postal Inválido")]
         [RegularExpression(@"\d{4}(-\d{3})?", ErrorMessage = "Código Postal Inválido")]
         public string Cod_Postal { get; set; }
 
         [RegularExpression(@"(\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,6})", ErrorMessage = "Email Inválido")]
         public string Email { get; set; }
 
+        [Required(ErrorMessage = "Numero Inválido")]
         [RegularExpression(@"\d{8}(\s\d{1})?", ErrorMessage = "Cartão de Cidadão Inválido")]
         public string CC { get; set; }
 
@@ -33,6 +35,7 @@ namespace EscalonamentoHospitalar.Models
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = false)]
         public DateTime Data_Nascimento { get; set; }
 
+        [Required(ErrorMessage = "Numero Inválido")]
         [RegularExpression(@"(\d{9})", ErrorMessage = "Nº Utente de Saúde Inválido")]
         public string Numero_Utente { get; set; }
 
@@ -40,11 +43,13 @@ namespace EscalonamentoHospitalar.Models
         [Required(ErrorMessage = "Por favor indroduza o contacto")]
         public string Contacto {get; set;}
 
-        
+
+        public ICollection<Tratamento> Tratamentos { get; set; }
 
 
 
-      
+
+
 
     }
 }
