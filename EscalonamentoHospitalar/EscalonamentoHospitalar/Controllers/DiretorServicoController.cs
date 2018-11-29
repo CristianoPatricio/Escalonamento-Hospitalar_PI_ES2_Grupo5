@@ -59,6 +59,7 @@ namespace EscalonamentoHospitalar.Controllers
             var numero = diretorServico.Codigo;
             var email = diretorServico.Email;
             var nCC = diretorServico.CC;
+            var contacto = diretorServico.Contacto;
 
             //Validar Numero Mecanografico         
             if (numMecIsInvalid(numero) == true)
@@ -88,10 +89,17 @@ namespace EscalonamentoHospitalar.Controllers
                 ModelState.AddModelError("CC", "Nº de CC já existente");
             }
 
+            //Validar contacto
+            if (contactoIsInvalid(contacto))
+            {
+                //Mensagem de erro se o contacto já existe
+                ModelState.AddModelError("Contacto", "Contacto já existente");
+            }
+
 
             if (ModelState.IsValid)
             {
-                if (!numMecIsInvalid(numero) || !emailIsInvalid(email) || !ccIsInvalid(nCC) || ValidateNumeroDocumentoCC(nCC))
+                if (!contactoIsInvalid(contacto) || !numMecIsInvalid(numero) || !emailIsInvalid(email) || !ccIsInvalid(nCC) || ValidateNumeroDocumentoCC(nCC))
                 {
                     _context.Add(diretorServico);
                     await _context.SaveChangesAsync();
@@ -130,6 +138,7 @@ namespace EscalonamentoHospitalar.Controllers
             var email = diretorServico.Email;
             var nCC = diretorServico.CC;
             var idDir = diretorServico.DiretorServicoID;
+            var contacto = diretorServico.Contacto;
 
             //Validar Numero Mecanografico         
             if (numMecIsInvalidEdit(numero, idDir) == true)
@@ -159,6 +168,13 @@ namespace EscalonamentoHospitalar.Controllers
                 ModelState.AddModelError("CC", "Nº de CC já existente");
             }
 
+            //Validar Contacto
+            if (contactoIsInvalidEdit(contacto, idDir))
+            {
+                //Mensagem de erro se o contacto já existe
+                ModelState.AddModelError("Contacto", "Contacto já existente");
+            }
+
 
             if (id != diretorServico.DiretorServicoID)
             {
@@ -169,7 +185,7 @@ namespace EscalonamentoHospitalar.Controllers
             {
                 try
                 {
-                    if (!ccIsInvalidEdit(nCC, idDir) || !emailIsInvalidEdit(email, idDir) || !numMecIsInvalidEdit(numero, idDir) || ValidateNumeroDocumentoCC(nCC))
+                    if (!contactoIsInvalidEdit(contacto, idDir) || !ccIsInvalidEdit(nCC, idDir) || !emailIsInvalidEdit(email, idDir) || !numMecIsInvalidEdit(numero, idDir) || ValidateNumeroDocumentoCC(nCC))
                     {
                         _context.Update(diretorServico);
                         await _context.SaveChangesAsync();
@@ -349,9 +365,30 @@ namespace EscalonamentoHospitalar.Controllers
             bool IsInvalid = false;
 
 
-            //Procura na BD se existem diretores com o mesmo numero mecanografico
+            //Procura na BD se existem diretores com o mesmo CC
             var diretores = from d in _context.DiretorServico
                               where d.CC.Contains(cc)
+                              select d;
+
+            if (!diretores.Count().Equals(0))
+            {
+                IsInvalid = true;
+            }
+
+            return IsInvalid;
+        }
+
+        /**
+        * @param contacto
+        * @return true if the contacto already exists in DB  
+        */
+        private bool contactoIsInvalid(string contacto)
+        {
+            bool IsInvalid = false;
+
+            //Procura na BD se existem diretores com o mesmo contacto
+            var diretores = from d in _context.DiretorServico
+                              where d.Contacto.Contains(contacto)
                               select d;
 
             if (!diretores.Count().Equals(0))
@@ -419,9 +456,30 @@ namespace EscalonamentoHospitalar.Controllers
             bool IsInvalid = false;
 
 
-            //Procura na BD se existem diretores com o mesmo numero mecanografico
+            //Procura na BD se existem diretores com o mesmo CC
             var diretores = from d in _context.DiretorServico
                             where d.CC.Contains(cc) && d.DiretorServicoID != idDir
+                            select d;
+
+            if (!diretores.Count().Equals(0))
+            {
+                IsInvalid = true;
+            }
+
+            return IsInvalid;
+        }
+
+        /**
+       * @param contacto
+       * @return true if the contacto already exists in DB  
+       */
+        private bool contactoIsInvalidEdit(string contacto, int idDir)
+        {
+            bool IsInvalid = false;
+
+            //Procura na BD se existem diretores com o mesmo contacto
+            var diretores = from d in _context.DiretorServico
+                            where d.Contacto.Contains(contacto) && d.DiretorServicoID != idDir
                             select d;
 
             if (!diretores.Count().Equals(0))
