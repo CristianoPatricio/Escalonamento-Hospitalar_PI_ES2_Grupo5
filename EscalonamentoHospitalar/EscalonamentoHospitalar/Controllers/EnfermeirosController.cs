@@ -24,13 +24,11 @@ namespace EscalonamentoHospitalar.Controllers
         {
             string nome = null;
 
-            if (model != null)
+            if (model != null && model.CurrentNome != null)
             {
                 nome = model.CurrentNome;
                 page = 1;
             }
-
-            //var espId = _context.EspecialidadesEnfermeiros.Where(e => e.Especialidade.Contains(especialidade));
 
             var enfermeiros = _context.Enfermeiros
                 .Where(e => nome == null || e.Nome.Contains(nome));
@@ -48,7 +46,7 @@ namespace EscalonamentoHospitalar.Controllers
                 .Skip(PAGE_SIZE * (page - 1))
                 .Take(PAGE_SIZE)
                 .ToListAsync();
-                 
+
             return View(
                 new ListaEnfermeirosViewModel
                 {
@@ -56,7 +54,7 @@ namespace EscalonamentoHospitalar.Controllers
                     Pagination = new PagingViewModel
                     {
                         CurrentPage = page,
-                        PageSize = PAGE_SIZE,
+                        PageSize = PAGE_SIZE,          
                         TotalItems = numEnfermeiros
                     },
                     CurrentNome = nome

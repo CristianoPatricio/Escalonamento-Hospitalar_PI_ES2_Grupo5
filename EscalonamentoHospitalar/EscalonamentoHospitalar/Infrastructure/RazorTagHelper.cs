@@ -22,6 +22,12 @@ namespace EscalonamentoHospitalar.Infrastructure
 
         public string PageAction { get; set; }
 
+        //Adding Classes to Generated Elements in the RazorTagHelper.cs File
+        public bool PageClassesEnabled { get; set; } = false;
+        public string PageClass { get; set; }
+        public string PageClassNormal { get; set; }
+        public string PageClassSelected { get; set; }
+
         private IUrlHelperFactory urlHelperFactory;
 
         [ViewContext]
@@ -59,6 +65,12 @@ namespace EscalonamentoHospitalar.Infrastructure
                 else
                 {
                     link.AddCssClass("btn-default");
+                }
+
+                if (PageClassesEnabled)
+                {
+                    link.AddCssClass(PageClass);
+                    link.AddCssClass(p == PageModel.CurrentPage ? PageClassSelected : PageClassNormal);
                 }
 
                 link.InnerHtml.Append(p.ToString());

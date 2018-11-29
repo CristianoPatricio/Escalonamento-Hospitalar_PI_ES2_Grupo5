@@ -58,6 +58,7 @@
     </div>
 </div>*@
 
+
 <form asp-action="Index">
     <p>
         Pesquisar por nome: <input style="width: 200px;" asp-for="CurrentNome" placeholder="Insira o nome a pesquisar" />
@@ -105,7 +106,14 @@
         </tbody>
     </table>
 
-    <div page-model="@Model.Pagination" page-action="Index"></div>
+    <div page-model="@Model.Pagination" 
+         page-action="Index"
+         page-classes-enabled="true"
+         page-class="btn" 
+         page-class-normal="btn-default"
+         page-class-selected="btn-primary"
+         class="btn-group pull-right">   
+    </div>
 
     <br />
     <hr />
