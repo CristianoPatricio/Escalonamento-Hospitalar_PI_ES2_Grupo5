@@ -1,4 +1,5 @@
-﻿@model IEnumerable<EscalonamentoHospitalar.Models.Enfermeiro>
+﻿@*@model IEnumerable<EscalonamentoHospitalar.Models.Enfermeiro>*@
+@model ListaEnfermeirosViewModel
 
 @{
     ViewData["Title"] = "Lista de Enfermeiros";
@@ -40,10 +41,12 @@
 
 <h2>Index</h2>
 
-<p>
-    <a asp-action="Create"><input type="button" value="Inserir Novo Enfermeiro" class="btn btn-success" /></a>
-</p>
-
+<form asp-action="Index">
+    <p>
+        Pesquisar por nome: <input style="width: 200px;" asp-for="CurrentNome" placeholder="Insira o nome a pesquisar" />
+        <input type="submit" value="Pesquisar" class="btn btn-info" />
+    </p>
+</form>
 
 
 <!--<div style="background-color:#17A5D4; padding: 30px; border-radius: 25px;">-->
@@ -64,7 +67,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
+            @foreach (var item in Model.Enfermeiros)
             {
                 <tr>
                     <td>
@@ -85,6 +88,7 @@
             }
         </tbody>
     </table>
+
 
 <table class="table">
     <thead>
@@ -140,4 +144,19 @@
 }
     </tbody>
 </table>
+
+    <div page-model="@Model.Pagination" 
+         page-action="Index"
+         page-classes-enabled="true"
+         page-class="btn" 
+         page-class-normal="btn-default"
+         page-class-selected="btn-primary"
+         class="btn-group pull-right">   
+    </div>
+
+    <br />
+    <hr />
+    <p>
+        <a asp-action="Create"><input type="button" value="Inserir Novo Enfermeiro" class="btn btn-primary" /></a>
+    </p>
 

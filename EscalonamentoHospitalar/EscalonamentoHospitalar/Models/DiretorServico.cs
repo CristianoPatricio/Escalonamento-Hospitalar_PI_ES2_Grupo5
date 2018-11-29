@@ -19,6 +19,7 @@ namespace EscalonamentoHospitalar.Models
         [RegularExpression(@"([A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ\s]+)", ErrorMessage = "Nome inválido")]
         public string Nome { get; set; }
 
+        [Required(ErrorMessage = "Por favor, introduza o seu telemóvel/telefone")]
         [RegularExpression(@"(2\d{8})|(9[1236]\d{7})", ErrorMessage = "Contacto inválido")]
         public string Contacto { get; set; }
 
