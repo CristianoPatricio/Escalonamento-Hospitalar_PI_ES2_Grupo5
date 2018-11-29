@@ -48,7 +48,7 @@ namespace EscalonamentoHospitalar.Controllers
         // GET: EscalaMedicos/Create
         public IActionResult Create()
         {
-            ViewData["MedicoId"] = new SelectList(_context.Medicos, "MedicoId", "CC");
+            ViewData["MedicoId"] = new SelectList(_context.Medicos, "MedicoId", "MedicoId");
             ViewData["TurnoId"] = new SelectList(_context.Turnos, "TurnoId", "TurnoId");
             return View();
         }
@@ -58,7 +58,7 @@ namespace EscalonamentoHospitalar.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("EscalaMedicoId,TurnoId,MedicoId")] EscalaMedico escalaMedico)
+        public async Task<IActionResult> Create([Bind("EscalaMedicoId,TurnoId,MedicoId,Data_Inicio_Semana")] EscalaMedico escalaMedico)
         {
             if (ModelState.IsValid)
             {
@@ -66,7 +66,7 @@ namespace EscalonamentoHospitalar.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MedicoId"] = new SelectList(_context.Medicos, "MedicoId", "CC", escalaMedico.MedicoId);
+            ViewData["MedicoId"] = new SelectList(_context.Medicos, "MedicoId", "MedicoId", escalaMedico.MedicoId);
             
             ViewData["TurnoId"] = new SelectList(_context.Turnos, "TurnoId", "TurnoId", escalaMedico.TurnoId);
             return View(escalaMedico);
@@ -85,7 +85,7 @@ namespace EscalonamentoHospitalar.Controllers
             {
                 return NotFound();
             }
-            ViewData["MedicoId"] = new SelectList(_context.Medicos, "MedicoId", "CC", escalaMedico.MedicoId);
+            ViewData["MedicoId"] = new SelectList(_context.Medicos, "MedicoId", "MedicoId", escalaMedico.MedicoId);
             
             ViewData["TurnoId"] = new SelectList(_context.Turnos, "TurnoId", "TurnoId", escalaMedico.TurnoId);
             return View(escalaMedico);
@@ -96,7 +96,7 @@ namespace EscalonamentoHospitalar.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("EscalaMedicoId,TurnoId,MedicoId")] EscalaMedico escalaMedico)
+        public async Task<IActionResult> Edit(int id, [Bind("EscalaMedicoId,TurnoId,MedicoId,Data_Inicio_Semana")] EscalaMedico escalaMedico)
         {
             if (id != escalaMedico.EscalaMedicoId)
             {
@@ -123,7 +123,7 @@ namespace EscalonamentoHospitalar.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["MedicoId"] = new SelectList(_context.Medicos, "MedicoId", "CC", escalaMedico.MedicoId);
+            ViewData["MedicoId"] = new SelectList(_context.Medicos, "MedicoId", "MedicoId", escalaMedico.MedicoId);
             
             ViewData["TurnoId"] = new SelectList(_context.Turnos, "TurnoId", "TurnoId", escalaMedico.TurnoId);
             return View(escalaMedico);

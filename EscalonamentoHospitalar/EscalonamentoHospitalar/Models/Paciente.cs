@@ -44,9 +44,8 @@ namespace EscalonamentoHospitalar.Models
         public string Contacto {get; set;}
 
 
+
         public ICollection<Tratamento> Tratamentos { get; set; }
-
-
 
 
 
