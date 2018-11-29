@@ -21,7 +21,7 @@ namespace EscalonamentoHospitalar.Controllers
         // GET: HorarioEnfermeiros
         public async Task<IActionResult> Index()
         {
-            var hospitalDbContext = _context.HorariosEnfermeiro.Include(h => h.Enfermeiro).Include(h => h.Turno);
+            var hospitalDbContext = _context.HorariosEnfermeiro.Include(h => h.Enfermeiro).Include(h => h.Turno).OrderBy(h => h.DataInicioTurno);
             return View(await hospitalDbContext.ToListAsync());
         }
 

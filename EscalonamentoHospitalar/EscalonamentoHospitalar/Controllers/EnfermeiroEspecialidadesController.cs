@@ -11,7 +11,7 @@ namespace EscalonamentoHospitalar.Controllers
 {
     public class EnfermeiroEspecialidadesController : Controller
     {
-        private const int PAGE_SIZE = 10;
+        private const int PAGE_SIZE = 12;
         private readonly HospitalDbContext _context;
 
         public EnfermeiroEspecialidadesController(HospitalDbContext context)
