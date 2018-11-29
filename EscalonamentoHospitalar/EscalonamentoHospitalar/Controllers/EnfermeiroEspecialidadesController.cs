@@ -11,6 +11,7 @@ namespace EscalonamentoHospitalar.Controllers
 {
     public class EnfermeiroEspecialidadesController : Controller
     {
+        private const int PAGE_SIZE = 10;
         private readonly HospitalDbContext _context;
 
         public EnfermeiroEspecialidadesController(HospitalDbContext context)
@@ -19,10 +20,48 @@ namespace EscalonamentoHospitalar.Controllers
         }
 
         // GET: EnfermeiroEspecialidades
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(HistoricoEspecialidadesEnfermeiroViewModel model = null, int page = 1)
         {
-            var hospitalDbContext = _context.EnfermeirosEspecialidades.Include(e => e.Enfermeiro).Include(e => e.EspecialidadeEnfermeiro);
-            return View(await hospitalDbContext.ToListAsync());
+            string nome = null;
+
+            if (model != null && model.CurrentNome != null)
+            {
+                nome = model.CurrentNome;
+                page = 1;
+            }
+
+            var historico = _context.EnfermeirosEspecialidades
+                .Where(e => nome == null || e.Enfermeiro.Nome.Contains(nome));
+
+            int numHistorico = await historico.CountAsync();
+
+            if (page > (numHistorico / PAGE_SIZE) + 1)
+            {
+                page = 1;
+            }
+
+            var listahistorico = await historico
+                .Include(e => e.EspecialidadeEnfermeiro)
+                .Include(e => e.Enfermeiro)
+                .OrderBy(e => e.Data_Registo)
+                .Skip(PAGE_SIZE * (page - 1))
+                .Take(PAGE_SIZE)
+                .ToListAsync();
+
+            return View(
+                new HistoricoEspecialidadesEnfermeiroViewModel
+                {
+                    EnfermeirosEspecialidades = historico,
+                    Pagination = new PagingViewModel
+                    {
+                        CurrentPage = page,
+                        PageSize = PAGE_SIZE,
+                        TotalItems = numHistorico
+                    },
+                    CurrentNome = nome
+                }
+            );
+           
         }
 
         // GET: EnfermeiroEspecialidades/Details/5

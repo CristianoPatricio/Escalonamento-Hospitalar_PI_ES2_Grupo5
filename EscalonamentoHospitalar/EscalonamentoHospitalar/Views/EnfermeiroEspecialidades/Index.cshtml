@@ -1,4 +1,4 @@
-﻿@model IEnumerable<EscalonamentoHospitalar.Models.EnfermeiroEspecialidade>
+﻿@model HistoricoEspecialidadesEnfermeiroViewModel
 
 @{
     ViewData["Title"] = "Lista de Especialidades por Enfermeiro";
@@ -11,6 +11,13 @@
     <a asp-action="Create">Create New</a>
 </p>
 *@
+
+<form asp-action="Index">
+    <p>
+        Pesquisar por nome: <input style="width: 200px;" asp-for="CurrentNome" placeholder="Insira o nome a pesquisar" />
+        <input type="submit" value="Pesquisar" class="btn btn-info" />
+    </p>
+</form>
 
 <table class="table">
     <thead>
@@ -28,7 +35,7 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model.EnfermeirosEspecialidades) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.EspecialidadeEnfermeiro.Especialidade)
@@ -50,3 +57,12 @@
 }
     </tbody>
 </table>
+
+<div page-model="@Model.Pagination"
+     page-action="Index"
+     page-classes-enabled="true"
+     page-class="btn"
+     page-class-normal="btn-default"
+     page-class-selected="btn-primary"
+     class="btn-group pull-right">
+</div>
