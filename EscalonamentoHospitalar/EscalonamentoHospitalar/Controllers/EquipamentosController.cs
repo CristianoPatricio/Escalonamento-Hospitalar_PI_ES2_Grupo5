@@ -9,22 +9,22 @@ using EscalonamentoHospitalar.Models;
 
 namespace EscalonamentoHospitalar.Controllers
 {
-    public class PatologiasController : Controller
+    public class EquipamentosController : Controller
     {
         private readonly HospitalDbContext _context;
 
-        public PatologiasController(HospitalDbContext context)
+        public EquipamentosController(HospitalDbContext context)
         {
             _context = context;
         }
 
-        // GET: Patologias
+        // GET: Equipamentos
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Patologia.ToListAsync());
+            return View(await _context.Equipamento.ToListAsync());
         }
 
-        // GET: Patologias/Details/5
+        // GET: Equipamentos/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -32,43 +32,39 @@ namespace EscalonamentoHospitalar.Controllers
                 return NotFound();
             }
 
-            var patologia = await _context.Patologia
-                .FirstOrDefaultAsync(m => m.PatologiaId == id);
-            if (patologia == null)
+            var equipamento = await _context.Equipamento
+                .FirstOrDefaultAsync(m => m.EquipamentoId == id);
+            if (equipamento == null)
             {
                 return NotFound();
             }
 
-            return View(patologia);
+            return View(equipamento);
         }
 
-        // GET: Patologias/Create
+        // GET: Equipamentos/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Patologias/Create
+        // POST: Equipamentos/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PatologiaId,Nome")] Patologia patologia)
+        public async Task<IActionResult> Create([Bind("EquipamentoId,Nome,Quantidade")] Equipamento equipamento)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(patologia);
+                _context.Add(equipamento);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-
-            
-            return View(patologia);
+            return View(equipamento);
         }
 
-
-
-        // GET: Patologias/Edit/5
+        // GET: Equipamentos/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -76,22 +72,22 @@ namespace EscalonamentoHospitalar.Controllers
                 return NotFound();
             }
 
-            var patologia = await _context.Patologia.FindAsync(id);
-            if (patologia == null)
+            var equipamento = await _context.Equipamento.FindAsync(id);
+            if (equipamento == null)
             {
                 return NotFound();
             }
-            return View(patologia);
+            return View(equipamento);
         }
 
-        // POST: Patologias/Edit/5
+        // POST: Equipamentos/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("PatologiaId,Nome")] Patologia patologia)
+        public async Task<IActionResult> Edit(int id, [Bind("EquipamentoId,Nome,Quantidade")] Equipamento equipamento)
         {
-            if (id != patologia.PatologiaId)
+            if (id != equipamento.EquipamentoId)
             {
                 return NotFound();
             }
@@ -100,12 +96,12 @@ namespace EscalonamentoHospitalar.Controllers
             {
                 try
                 {
-                    _context.Update(patologia);
+                    _context.Update(equipamento);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PatologiaExists(patologia.PatologiaId))
+                    if (!EquipamentoExists(equipamento.EquipamentoId))
                     {
                         return NotFound();
                     }
@@ -116,10 +112,10 @@ namespace EscalonamentoHospitalar.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(patologia);
+            return View(equipamento);
         }
 
-        // GET: Patologias/Delete/5
+        // GET: Equipamentos/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -127,34 +123,30 @@ namespace EscalonamentoHospitalar.Controllers
                 return NotFound();
             }
 
-            var patologia = await _context.Patologia
-                .FirstOrDefaultAsync(m => m.PatologiaId == id);
-            if (patologia == null)
+            var equipamento = await _context.Equipamento
+                .FirstOrDefaultAsync(m => m.EquipamentoId == id);
+            if (equipamento == null)
             {
                 return NotFound();
             }
 
-            return View(patologia);
+            return View(equipamento);
         }
 
-        // POST: Patologias/Delete/5
+        // POST: Equipamentos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var patologia = await _context.Patologia.FindAsync(id);
-            _context.Patologia.Remove(patologia);
+            var equipamento = await _context.Equipamento.FindAsync(id);
+            _context.Equipamento.Remove(equipamento);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool PatologiaExists(int id)
+        private bool EquipamentoExists(int id)
         {
-            return _context.Patologia.Any(e => e.PatologiaId == id);
+            return _context.Equipamento.Any(e => e.EquipamentoId == id);
         }
-
-
-                         
-        
     }
 }
