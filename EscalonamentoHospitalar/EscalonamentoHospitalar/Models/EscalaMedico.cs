@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,5 +16,10 @@ namespace EscalonamentoHospitalar.Models
 
         public Medico Medico { get; set; }
         public int MedicoId { get; set; }
+
+        [Required(ErrorMessage = "Por favor indroduza a data de inicio da semana")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = false)]
+        public DateTime Data_Inicio_Semana { get; set; }
     }
 }

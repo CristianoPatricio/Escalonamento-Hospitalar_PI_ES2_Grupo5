@@ -13,7 +13,6 @@ namespace EscalonamentoHospitalar.Models
 
         //[RegularExpression(@"([A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ\s]+)", ErrorMessage = "Patologia Inválida")]
         public Patologia Patologia { get; set; }
-
         public int PatologiaId { get; set; }
 
         public Paciente Paciente { get; set; }
@@ -21,7 +20,6 @@ namespace EscalonamentoHospitalar.Models
 
         [RegularExpression(@"([A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ\s]+)", ErrorMessage = "Grau Inválido")]
         public Grau Grau { get; set; }
-
         public int GrauId { get; set; }
 
         [Required(ErrorMessage = "Por indroduza a data de Nascimento")]
@@ -44,6 +42,7 @@ namespace EscalonamentoHospitalar.Models
 
         public bool Concluido { get; set; }
 
+    
 
     }
 }
