@@ -41,24 +41,6 @@
 
 <h2>Lista de Enfermeiros</h2>
 
-@*<div class="container">
-    <div class="panel panel-default">
-        <div class="panel-heading">Pesquisa</div>
-        <div class="panel-body">
-            <form asp-action="Index">
-                <div class="form-group">
-                    <label asp-for="CurrentEspecialidade" class="control-label"></label>
-                    <input asp-for="CurrentEspecialidade" class="form-control" />
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Pesquisar" class="btn btn-default" />
-                </div>
-            </form>
-        </div>
-    </div>
-</div>*@
-
-
 <form asp-action="Index">
     <p>
         Pesquisar por nome: <input style="width: 200px;" asp-for="CurrentNome" placeholder="Insira o nome a pesquisar" />

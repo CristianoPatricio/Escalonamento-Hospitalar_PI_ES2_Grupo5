@@ -103,6 +103,7 @@ namespace EscalonamentoHospitalar.Controllers
             var numero = enfermeiro.NumeroMecanografico;
             var email = enfermeiro.Email;
             var nCC = enfermeiro.CC;
+            var contacto = enfermeiro.Contacto;
 
             bool sonBDateIsInvalid = false;
          
@@ -154,13 +155,18 @@ namespace EscalonamentoHospitalar.Controllers
                 ModelState.AddModelError("CC", "Nº de CC já existente");
             }
 
-
+            //Validar Contacto
+            if (contactoIsInvalid(contacto))
+            {
+                //Mensagem de erro se o nº de CC já existe
+                ModelState.AddModelError("Contacto", "Contacto já existente");
+            }
 
             /********************************/           
 
             if (ModelState.IsValid)
             {
-                if (!sonBDateIsInvalid || !numMecIsInvalid(numero) || !emailIsInvalid(email) || !enfDateIsInvalid(enfermeiroBDate) || ValidateNumeroDocumentoCC(nCC))
+                if (!contactoIsInvalid(contacto) || !sonBDateIsInvalid || !numMecIsInvalid(numero) || !emailIsInvalid(email) || !enfDateIsInvalid(enfermeiroBDate) || ValidateNumeroDocumentoCC(nCC))
                 {
                     _context.Add(enfermeiro);
 
@@ -209,6 +215,7 @@ namespace EscalonamentoHospitalar.Controllers
             var idEnf = enfermeiro.EnfermeiroId;
             var email = enfermeiro.Email;
             var idEsp = enfermeiro.EspecialidadeEnfermeiroId;
+            var contacto = enfermeiro.Contacto;
 
             bool sonBDateIsInvalid = false;
 
@@ -264,13 +271,20 @@ namespace EscalonamentoHospitalar.Controllers
                 ModelState.AddModelError("CC", "Nº de CC já existente");
             }
 
+            //Validar Contacto
+            if (contactoIsInvalidEdit(contacto, idEnf))
+            {
+                //Mensagem de erro se o CC já existir
+                ModelState.AddModelError("Contacto", "Contacto já existente");
+            }
+
             /*******************************************/
 
             if (ModelState.IsValid)
             {
                 try
                 {                   
-                    if (!ccIsInvalidEdit(nCC, idEnf) || !emailIsInvalidEdit(email, idEnf) || !numMecIsInvalidEdit(numero, idEnf) || !enfDateIsInvalid(enfermeiroBDate) || !sonBDateIsInvalid || ValidateNumeroDocumentoCC(nCC))
+                    if (!contactoIsInvalidEdit(contacto, idEnf) || !ccIsInvalidEdit(nCC, idEnf) || !emailIsInvalidEdit(email, idEnf) || !numMecIsInvalidEdit(numero, idEnf) || !enfDateIsInvalid(enfermeiroBDate) || !sonBDateIsInvalid || ValidateNumeroDocumentoCC(nCC))
                     {
                         _context.Update(enfermeiro);
 
@@ -505,9 +519,32 @@ namespace EscalonamentoHospitalar.Controllers
             bool IsInvalid = false;
 
 
-            //Procura na BD se existem enfermeiros com o mesmo numero mecanografico
+            //Procura na BD se existem enfermeiros com o mesmo CC
             var enfermeiros = from e in _context.Enfermeiros
                               where e.CC.Contains(cc)
+                              select e;
+
+            if (!enfermeiros.Count().Equals(0))
+            {
+                IsInvalid = true;
+            }
+
+            return IsInvalid;
+        }
+
+
+        /**
+        * @param contacto
+        * @return true if the contacto already exists in DB  
+        */
+        private bool contactoIsInvalid(string contacto)
+        {
+            bool IsInvalid = false;
+
+
+            //Procura na BD se existem enfermeiros com o mesmo contacto
+            var enfermeiros = from e in _context.Enfermeiros
+                              where e.Contacto.Contains(contacto)
                               select e;
 
             if (!enfermeiros.Count().Equals(0))
@@ -610,6 +647,28 @@ namespace EscalonamentoHospitalar.Controllers
 
 
             return insert;
+        }
+
+        /**
+       * @param contacto
+       * @return true if the contacto already exists in DB  
+       */
+        private bool contactoIsInvalidEdit(string contacto, int idEnf)
+        {
+            bool IsInvalid = false;
+
+
+            //Procura na BD se existem enfermeiros com o mesmo contacto
+            var enfermeiros = from e in _context.Enfermeiros
+                              where e.Contacto.Contains(contacto) && e.EnfermeiroId != idEnf
+                              select e;
+
+            if (!enfermeiros.Count().Equals(0))
+            {
+                IsInvalid = true;
+            }
+
+            return IsInvalid;
         }
 
     }

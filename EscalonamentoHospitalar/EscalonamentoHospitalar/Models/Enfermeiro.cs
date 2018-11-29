@@ -22,6 +22,7 @@ namespace EscalonamentoHospitalar.Models
         public EspecialidadeEnfermeiro EspecialidadeEnfermeiro { get; set; }
         public int EspecialidadeEnfermeiroId { get; set; }
 
+        [Required(ErrorMessage = "Por favor, introduza o seu número de telemóvel/telefone")]
         [RegularExpression(@"(2\d{8})|(9[1236]\d{7})", ErrorMessage = "Contacto inválido")]
         public string Contacto { get; set; }
 
