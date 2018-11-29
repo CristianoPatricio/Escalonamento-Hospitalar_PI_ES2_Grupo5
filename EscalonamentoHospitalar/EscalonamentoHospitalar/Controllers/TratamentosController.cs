@@ -97,12 +97,12 @@ namespace EscalonamentoHospitalar.Controllers
             {
                 return NotFound();
             }
-            ViewData["GrauId"] = new SelectList(_context.Grau, "GrauId", "GrauId", tratamento.GrauId);
-            ViewData["MedicoId"] = new SelectList(_context.Medicos, "MedicoId", "MedicoId", tratamento.MedicoId);
-            ViewData["PacienteId"] = new SelectList(_context.Pacientes, "PacienteId", "CC", tratamento.PacienteId);
-            ViewData["PatologiaId"] = new SelectList(_context.Patologia, "PatologiaId", "PatologiaId", tratamento.PatologiaId);
-            ViewData["RegimeId"] = new SelectList(_context.Regime, "RegimeId", "RegimeId", tratamento.RegimeId);
-            ViewData["EstadoId"] = new SelectList(_context.Estado, "EstadoId", "EstadoId", tratamento.EstadoId);
+            ViewData["GrauId"] = new SelectList(_context.Grau, "GrauId", "TipoGrau", tratamento.GrauId);
+            ViewData["MedicoId"] = new SelectList(_context.Medicos, "MedicoId", "Nome", tratamento.MedicoId);
+            ViewData["PacienteId"] = new SelectList(_context.Pacientes, "PacienteId", "Nome", tratamento.PacienteId);
+            ViewData["PatologiaId"] = new SelectList(_context.Patologia, "PatologiaId", "Nome", tratamento.PatologiaId);
+            ViewData["RegimeId"] = new SelectList(_context.Regime, "RegimeId", "TipoRegime", tratamento.RegimeId);
+            ViewData["EstadoId"] = new SelectList(_context.Estado, "EstadoId", "Nome", tratamento.EstadoId);
             return View(tratamento);
         }
 
@@ -138,12 +138,12 @@ namespace EscalonamentoHospitalar.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["GrauId"] = new SelectList(_context.Grau, "GrauId", "GrauId", tratamento.GrauId);
-            ViewData["MedicoId"] = new SelectList(_context.Medicos, "MedicoId", "MedicoId", tratamento.MedicoId);
-            ViewData["PacienteId"] = new SelectList(_context.Pacientes, "PacienteId", "CC", tratamento.PacienteId);
-            ViewData["PatologiaId"] = new SelectList(_context.Patologia, "PatologiaId", "PatologiaId", tratamento.PatologiaId);
-            ViewData["RegimeId"] = new SelectList(_context.Regime, "RegimeId", "RegimeId", tratamento.RegimeId);
-            ViewData["EstadoId"] = new SelectList(_context.Estado, "EstadoId", "EstadoId", tratamento.EstadoId);
+            ViewData["GrauId"] = new SelectList(_context.Grau, "GrauId", "TipoGrau", tratamento.GrauId);
+            ViewData["MedicoId"] = new SelectList(_context.Medicos, "MedicoId", "Nome", tratamento.MedicoId);
+            ViewData["PacienteId"] = new SelectList(_context.Pacientes, "PacienteId", "Nome", tratamento.PacienteId);
+            ViewData["PatologiaId"] = new SelectList(_context.Patologia, "PatologiaId", "Nome", tratamento.PatologiaId);
+            ViewData["RegimeId"] = new SelectList(_context.Regime, "RegimeId", "TipoRegime", tratamento.RegimeId);
+            ViewData["EstadoId"] = new SelectList(_context.Estado, "EstadoId", "Nome", tratamento.EstadoId);
             return View(tratamento);
         }
 

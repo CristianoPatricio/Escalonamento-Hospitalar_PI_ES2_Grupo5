@@ -55,7 +55,18 @@ namespace EscalonamentoHospitalar.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("PacienteId,Nome,Morada,Cod_Postal,Email,CC,Data_Nascimento,Numero_Utente,Contacto")] Paciente paciente)
         {
+
+            
+            DateTime pacienteBDate = paciente.Data_Nascimento;
+
             var nCC = paciente.CC;
+
+            //Validar Data de Nascimento do Paciente
+            if (pacienteDateIsInvalid(pacienteBDate) == true)
+            {
+                //Mensagem de erro se a data de nascimento do enfermeiro for inválida
+                ModelState.AddModelError("Data_Nascimento", "Data de nascimento inválida");
+            }
             //Validar CC através do check digit
             if (!ValidateNumeroDocumentoCC(nCC))
             {
@@ -73,9 +84,12 @@ namespace EscalonamentoHospitalar.Controllers
 
             if (ModelState.IsValid)
             {
-                _context.Add(paciente);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (!pacienteDateIsInvalid(pacienteBDate) || ValidateNumeroDocumentoCC(nCC))
+                {
+                    _context.Add(paciente);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
             }
 
 
@@ -107,7 +121,16 @@ namespace EscalonamentoHospitalar.Controllers
         public async Task<IActionResult> Edit(int id, [Bind("PacienteId,Nome,Morada,Cod_Postal,Email,CC,Data_Nascimento,Numero_Utente,Contacto")] Paciente paciente)
         {
             var nCC = paciente.CC;
+            DateTime pacienteBDate = paciente.Data_Nascimento;
+            var PacienteId = paciente.PacienteId;
 
+
+            //Validar Data de Nascimento do Paciente
+            if (pacienteDateIsInvalid(pacienteBDate) == true)
+            {
+                //Mensagem de erro se a data de nascimento do paciente for inválida
+                ModelState.AddModelError("Data_Nascimento", "Data de nascimento inválida");
+            }
             //Validar CC através do check digit
             if (!ValidateNumeroDocumentoCC(nCC))
             {
@@ -118,7 +141,7 @@ namespace EscalonamentoHospitalar.Controllers
         
 
             //Validar CC
-            if (ccIsInvalid(nCC))
+            if (ccIsInvalidEdit(nCC,PacienteId))
             
             {
                 //Mensagem de erro se o CC já existir
@@ -131,11 +154,17 @@ namespace EscalonamentoHospitalar.Controllers
 
             if (ModelState.IsValid)
             {
-                try
-                {
-                    _context.Update(paciente);
-                    await _context.SaveChangesAsync();
-                }
+                
+                    try
+                    {
+                    if (!pacienteDateIsInvalid(pacienteBDate) || ValidateNumeroDocumentoCC(nCC))
+                    {
+                        _context.Update(paciente);
+                        await _context.SaveChangesAsync();
+                    }
+                    }
+                    
+                
                 catch (DbUpdateConcurrencyException)
                 {
                     if (!PacienteExists(paciente.PacienteId))
@@ -258,6 +287,45 @@ namespace EscalonamentoHospitalar.Controllers
             //Procura na BD se existem enfermeiros com o mesmo numero mecanografico
             var pacientes = from e in _context.Pacientes
                               where e.CC.Contains(cc)
+                              select e;
+
+            if (!pacientes.Count().Equals(0))
+            {
+                IsInvalid = true;
+            }
+
+            return IsInvalid;
+        }
+
+        /*para a Data de Nascimento
+          birth is invalid    */
+        private bool pacienteDateIsInvalid(DateTime Data_Nascimento)
+        {
+            bool IsInvalid = false;
+            DateTime dateNow = DateTime.Now;
+
+            int dateTimeCompare = DateTime.Compare(Data_Nascimento, dateNow);
+
+            if (dateTimeCompare > 0) 
+            {
+                IsInvalid = true;
+            }
+            return IsInvalid;
+        }
+
+        /**
+        * @param cc
+        * @param idEnf
+        * @return true if the cc already exists in DB  
+        */
+        private bool ccIsInvalidEdit(string cc, int PacienteId)
+        {
+            bool IsInvalid = false;
+
+
+            
+            var pacientes = from e in _context.Pacientes
+                              where e.CC.Contains(cc) && e.PacienteId != PacienteId
                               select e;
 
             if (!pacientes.Count().Equals(0))

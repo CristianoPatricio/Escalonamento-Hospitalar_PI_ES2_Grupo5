@@ -14,7 +14,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="PatologiaId" class="control-label">Patologia</label>
-                <select asp-for="PatologiaId" class ="form-control" asp-items="ViewBag.Patologia"></select>
+                <select asp-for="PatologiaId" class ="form-control" asp-items="ViewBag.PatologiaId"></select>
             </div>
             <div class="form-group">
                 <label asp-for="PacienteId" class="control-label"></label>
@@ -41,15 +41,15 @@
             </div>
             <div class="form-group">
                 <label asp-for="RegimeId" class="control-label"></label>
-                <select asp-for="RegimeId" class ="form-control" asp-items="ViewBag.RegimeId"></select>
+                <select asp-for="RegimeId" class ="form-control" asp-items="ViewBag.TipoRegime"></select>
             </div>
             <div class="form-group">
                 <label asp-for="EstadoId" class="control-label"></label>
-                <select asp-for="EstadoId" class="form-control" asp-items="ViewBag.EstadoId"></select>
+                <select asp-for="EstadoId" class="form-control" asp-items="ViewBag.Nome"></select>
             </div>
             <div class="form-group">
                 <label asp-for="MedicoId" class="control-label"></label>
-                <select asp-for="MedicoId" class ="form-control" asp-items="ViewBag.MedicoId"></select>
+                <select asp-for="MedicoId" class ="form-control" asp-items="ViewBag.Nome"></select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />
