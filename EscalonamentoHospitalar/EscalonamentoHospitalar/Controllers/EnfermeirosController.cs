@@ -11,6 +11,7 @@ namespace EscalonamentoHospitalar.Controllers
 {
     public class EnfermeirosController : Controller
     {
+        private const int PAGE_SIZE = 5;
         private readonly HospitalDbContext _context;
 
         public EnfermeirosController(HospitalDbContext context)
@@ -19,10 +20,48 @@ namespace EscalonamentoHospitalar.Controllers
         }
 
         // GET: Enfermeiros
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(ListaEnfermeirosViewModel model = null, int page = 1)
         {
-            var hospitalDbContext = _context.Enfermeiros.Include(e => e.EspecialidadeEnfermeiro);
-            return View(await hospitalDbContext.ToListAsync());
+            string nome = null;
+
+            if (model != null)
+            {
+                nome = model.CurrentNome;
+                page = 1;
+            }
+
+            //var espId = _context.EspecialidadesEnfermeiros.Where(e => e.Especialidade.Contains(especialidade));
+
+            var enfermeiros = _context.Enfermeiros
+                .Where(e => nome == null || e.Nome.Contains(nome));
+
+            int numEnfermeiros = await enfermeiros.CountAsync();
+
+            if (page > (numEnfermeiros / PAGE_SIZE) + 1)
+            {
+                page = 1;
+            }
+
+            var listaEnfermeiro = await enfermeiros
+                .Include(e => e.EspecialidadeEnfermeiro)
+                .OrderBy(e => e.Nome)
+                .Skip(PAGE_SIZE * (page - 1))
+                .Take(PAGE_SIZE)
+                .ToListAsync();
+                 
+            return View(
+                new ListaEnfermeirosViewModel
+                {
+                    Enfermeiros = listaEnfermeiro,
+                    Pagination = new PagingViewModel
+                    {
+                        CurrentPage = page,
+                        PageSize = PAGE_SIZE,
+                        TotalItems = numEnfermeiros
+                    },
+                    CurrentNome = nome
+                }
+            );
         }
 
         // GET: Enfermeiros/Details/5
