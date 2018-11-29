@@ -26,8 +26,8 @@ namespace EscalonamentoHospitalar.Models
         [RegularExpression(@"(\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,6})", ErrorMessage = "Email Inválido")]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "Numero Inválido")]
-        [RegularExpression(@"\d{8}(\s\d{1})?", ErrorMessage = "Cartão de Cidadão Inválido")]
+        [Required(ErrorMessage = "Por favor, introduza o nº de CC/BI")]
+        [RegularExpression(@"(\d{8}\s\d{1}[A-Z0-9]{2}\d{1})", ErrorMessage = "Nº de CC/BI inválido")]
         public string CC { get; set; }
 
         [Required(ErrorMessage = "Por indroduza a data de Nascimento")]

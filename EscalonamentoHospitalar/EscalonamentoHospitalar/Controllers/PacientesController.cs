@@ -118,7 +118,8 @@ namespace EscalonamentoHospitalar.Controllers
         
 
             //Validar CC
-            //if (ccIsInvalidEdit(nCC))
+            if (ccIsInvalid(nCC))
+            
             {
                 //Mensagem de erro se o CC já existir
                 ModelState.AddModelError("CC", "Nº de CC já existente");

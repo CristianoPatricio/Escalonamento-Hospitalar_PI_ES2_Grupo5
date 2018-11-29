@@ -35,5 +35,6 @@ namespace EscalonamentoHospitalar.Models
         public DbSet<EscalonamentoHospitalar.Models.Regime> Regime { get; set; }
         public DbSet<EscalonamentoHospitalar.Models.Estado> Estado { get; set; }
         public DbSet<EscalonamentoHospitalar.Models.Regra> Regras { get; set; }
+        public DbSet<EscalonamentoHospitalar.Models.Equipamento> Equipamento { get; set; }
     }
 }
