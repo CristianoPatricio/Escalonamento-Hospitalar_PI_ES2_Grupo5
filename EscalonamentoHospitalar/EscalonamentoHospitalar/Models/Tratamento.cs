@@ -33,8 +33,8 @@ namespace EscalonamentoHospitalar.Models
         public DateTime DataFim { get; set; }
 
         [Required(ErrorMessage = "Por favor introduza a Duração do Ciclo")]
-        //[DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "HH:mm 00:00", ApplyFormatInEditMode = false)]
+        [DataType(DataType.Time)]
+        [DisplayFormat(DataFormatString = "{0:HH:mm}", ApplyFormatInEditMode = false)]
         public string DuracaoCiclo { get; set; }
 
         [RegularExpression(@"([A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ\s]+)", ErrorMessage = "Regime Inválido")]

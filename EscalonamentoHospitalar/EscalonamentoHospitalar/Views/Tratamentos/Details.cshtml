@@ -11,43 +11,43 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Patologia)
+            Patologia
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Patologia.Nome)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Paciente)
+            Paciente
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Paciente.Nome)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Grau)
+            Grau
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Grau.TipoGrau)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.DataInicio)
+            Data inicio do tratamento
         </dt>
         <dd>
             @Html.DisplayFor(model => model.DataInicio)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.DataFim)
+            Data fim do tratamento
         </dt>
         <dd>
             @Html.DisplayFor(model => model.DataFim)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.DuracaoCiclo)
+            Duração do ciclo
         </dt>
         <dd>
             @Html.DisplayFor(model => model.DuracaoCiclo)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Regime)
+            Regime
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Regime.TipoRegime)
@@ -60,7 +60,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Medico)
+            Médico
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Medico.MedicoId)
@@ -68,6 +68,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.TratamentoId">Edit</a> |
+    <a asp-action="Edit" asp-route-id="@Model.TratamentoId">Editar</a> |
     <a asp-action="Index">Voltar a Lista</a>
 </div>

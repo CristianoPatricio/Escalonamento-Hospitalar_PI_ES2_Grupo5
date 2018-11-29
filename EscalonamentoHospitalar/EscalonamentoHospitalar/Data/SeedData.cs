@@ -205,7 +205,7 @@ namespace EscalonamentoHospitalar.Data
 
         private static void SeedTratamentos(HospitalDbContext db)
             {
-                if (db.Tratamento.Any()) return;
+                if (db.Tratamentos.Any()) return;
 
                 Patologia Pulmonar = db.Patologia.SingleOrDefault(e => e.Nome == "Pulmonar");
                 Patologia Intestinal = db.Patologia.SingleOrDefault(e => e.Nome == "Instetinal ");
@@ -227,7 +227,7 @@ namespace EscalonamentoHospitalar.Data
 
 
 
-            db.Tratamento.AddRange(
+            db.Tratamentos.AddRange(
 
 
                     
@@ -349,19 +349,18 @@ namespace EscalonamentoHospitalar.Data
 
             db.MedicoEspecialidades.AddRange(
 
-
-                new MedicoEspecialidade { Nome = "Manuel Santos", MedicoId = manuel.MedicoId },
-                new MedicoEspecialidade { Nome = "Elisabete Eiras", MedicoId = elisabete.MedicoId }
-
-                new MedicoEspecialidade { MedicoId = manuel.MedicoId,
-                                          EspecialidadeMedicoId = anestesiologia.EspecialidadeMedicoId,
-                                          Data_Registo = new DateTime(2018, 11, 21),
-                                        },
-                new MedicoEspecialidade { MedicoId = elisabete.MedicoId,
-                                          EspecialidadeMedicoId = cardiologia.EspecialidadeMedicoId,
-                                          Data_Registo = new DateTime(2018, 11, 20)
-                                        }
-
+                new MedicoEspecialidade
+                {
+                    MedicoId = manuel.MedicoId,
+                    EspecialidadeMedicoId = anestesiologia.EspecialidadeMedicoId,
+                    Data_Registo = new DateTime(2018, 11, 21),
+                },
+                new MedicoEspecialidade
+                {
+                    MedicoId = elisabete.MedicoId,
+                    EspecialidadeMedicoId = cardiologia.EspecialidadeMedicoId,
+                    Data_Registo = new DateTime(2018, 11, 20)
+                }
                 );
 
             db.SaveChanges();

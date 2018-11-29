@@ -12,65 +12,65 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Patologia)
+            Patologia
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Patologia.PatologiaId)
+            @Html.DisplayFor(model => model.Patologia.Nome)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Paciente)
+            Paciente
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Paciente.CC)
+            @Html.DisplayFor(model => model.Paciente.Nome)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Grau)
+            Grau
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Grau.GrauId)
+            @Html.DisplayFor(model => model.Grau.TipoGrau)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.DataInicio)
+            Data de inicio do tratamento
         </dt>
         <dd>
             @Html.DisplayFor(model => model.DataInicio)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.DataFim)
+            Data de fim do tratamento
         </dt>
         <dd>
             @Html.DisplayFor(model => model.DataFim)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.DuracaoCiclo)
+            Duração do ciclo
         </dt>
         <dd>
             @Html.DisplayFor(model => model.DuracaoCiclo)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Regime)
+            Regime
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Regime.RegimeId)
+            @Html.DisplayFor(model => model.Regime.TipoRegime)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Estado)
+            Estado
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.EstadoId) 
+            @Html.DisplayFor(model => model.Estado.Nome) 
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Medico)
+            Médico
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Medico.MedicoId)
+            @Html.DisplayFor(model => model.Medico.Nome)
         </dd>
     </dl>
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="TratamentoId" />
-        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <input type="submit" value="Apagar" class="btn btn-default" /> |
         <a asp-action="Index">Voltar a Lista </a>
     </form>
 </div>

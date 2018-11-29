@@ -39,7 +39,7 @@
     });
 </script>
 
-<h2>Index</h2>
+<h2>Lista de Enfermeiros</h2>
 
 <form asp-action="Index">
     <p>
@@ -48,123 +48,57 @@
     </p>
 </form>
 
-
 <!--<div style="background-color:#17A5D4; padding: 30px; border-radius: 25px;">-->
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    Número Mecanográfico
-                </th>
-                <th>
-                    Nome
-                </th>
-                <th>
-                    Especialidade
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.Enfermeiros)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.NumeroMecanografico)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Nome)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.EspecialidadeEnfermeiro.Especialidade)
-                    </td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.EnfermeiroId"><input type="button" value="Alterar" class="btn btn-warning" /></a>
-                        <a asp-action="Details" asp-route-id="@item.EnfermeiroId"><input type="button" value="Detalhes" class="btn btn-info" /></a>
-                        <a asp-action="Delete" asp-route-id="@item.EnfermeiroId"><input type="button" value="Eliminar" class="btn btn-danger" /></a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-
-
 
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.NumeroMecanografico)
+                Número Mecanográfico
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Nome)
+                Nome
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Contacto)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Data_Nascimento)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CC)
+                Especialidade
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.NumeroMecanografico)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nome)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Contacto)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Data_Nascimento)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CC)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.EnfermeiroId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.EnfermeiroId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.EnfermeiroId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.Enfermeiros)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NumeroMecanografico)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EspecialidadeEnfermeiro.Especialidade)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.EnfermeiroId"><input type="button" value="Alterar" class="btn btn-warning" /></a>
+                    <a asp-action="Details" asp-route-id="@item.EnfermeiroId"><input type="button" value="Detalhes" class="btn btn-info" /></a>
+                    <a asp-action="Delete" asp-route-id="@item.EnfermeiroId"><input type="button" value="Eliminar" class="btn btn-danger" /></a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
 
-    <div page-model="@Model.Pagination" 
-         page-action="Index"
-         page-classes-enabled="true"
-         page-class="btn" 
-         page-class-normal="btn-default"
-         page-class-selected="btn-primary"
-         class="btn-group pull-right">   
-    </div>
+<div page-model="@Model.Pagination"
+     page-action="Index"
+     page-classes-enabled="true"
+     page-class="btn"
+     page-class-normal="btn-default"
+     page-class-selected="btn-primary"
+     class="btn-group pull-right">
+</div>
 
-    <br />
-    <hr />
-    <p>
-        <a asp-action="Create"><input type="button" value="Inserir Novo Enfermeiro" class="btn btn-primary" /></a>
-    </p>
-
-
-    <div>
-        <a href='@Url.Action("GestaoHospitalar", "DiretorServico")'>
-            <input type="button" class="btn btn-default" value="Voltar à página inicial" />
-        </a>
-    </div>
-
+<br />
+<hr />
+<p>
+    <a asp-action="Create"><input type="button" value="Inserir Novo Enfermeiro" class="btn btn-primary" /></a>
+</p>

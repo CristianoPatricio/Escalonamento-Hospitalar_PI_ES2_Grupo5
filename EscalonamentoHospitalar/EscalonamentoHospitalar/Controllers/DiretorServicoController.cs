@@ -364,13 +364,8 @@ namespace EscalonamentoHospitalar.Controllers
         {
             bool IsInvalid = false;
 
-
-
-            //Procura na BD se existem diretores com o mesmo numero mecanografico
-            var diretores = from d in _context.DiretoresServico
-
             //Procura na BD se existem diretores com o mesmo CC
-            var diretores = from d in _context.DiretorServico
+            var diretores = from d in _context.DiretoresServico
                               where d.CC.Contains(cc)
                               select d;
 
@@ -391,7 +386,7 @@ namespace EscalonamentoHospitalar.Controllers
             bool IsInvalid = false;
 
             //Procura na BD se existem diretores com o mesmo contacto
-            var diretores = from d in _context.DiretorServico
+            var diretores = from d in _context.DiretoresServico
                               where d.Contacto.Contains(contacto)
                               select d;
 
@@ -459,13 +454,8 @@ namespace EscalonamentoHospitalar.Controllers
         {
             bool IsInvalid = false;
 
-
-
-            //Procura na BD se existem diretores com o mesmo numero mecanografico
-            var diretores = from d in _context.DiretoresServico
-
             //Procura na BD se existem diretores com o mesmo CC
-            var diretores = from d in _context.DiretorServico
+            var diretores = from d in _context.DiretoresServico
                             where d.CC.Contains(cc) && d.DiretorServicoID != idDir
                             select d;
 
@@ -494,7 +484,7 @@ namespace EscalonamentoHospitalar.Controllers
             bool IsInvalid = false;
 
             //Procura na BD se existem diretores com o mesmo contacto
-            var diretores = from d in _context.DiretorServico
+            var diretores = from d in _context.DiretoresServico
                             where d.Contacto.Contains(contacto) && d.DiretorServicoID != idDir
                             select d;
 

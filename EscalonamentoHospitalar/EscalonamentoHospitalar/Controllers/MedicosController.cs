@@ -109,18 +109,16 @@ namespace EscalonamentoHospitalar.Controllers
                 ModelState.AddModelError("CC", "Nº de Cartão de Cidadão já existente");
             }
 
-            //Validar Data de Inicio de Serviço do Médico
-            if (medico.Data_Inicio_Servico != null)
-            {
-                DateTime medicoISDate = (DateTime)medico.Data_Inicio_Servico;
+            //Validar Data de Inicio de Serviço do Médico        
+            DateTime medicoISDate = (DateTime)medico.Data_Inicio_Servico;
 
-                if (medicoInSerDateIsInvalid(medicoISDate, medicoBDate) == true)
-                {
-                    medicoISDateIsInvalid = true;
-                    //Mensagem de erro se a data de inicio de serviço do médico for inválida
-                    ModelState.AddModelError("Data_Inicio_Servico", "Data de inicio de serviço inválida");
-                }
-            }
+             if (medicoInSerDateIsInvalid(medicoISDate, medicoBDate) == true)
+             {
+                 medicoISDateIsInvalid = true;
+                 //Mensagem de erro se a data de inicio de serviço do médico for inválida
+                 ModelState.AddModelError("Data_Inicio_Servico", "Data de inicio de serviço inválida");
+             }
+            
 
             /********************************/
 
@@ -171,7 +169,7 @@ namespace EscalonamentoHospitalar.Controllers
             /***************VALIDAÇÕES**********************/
 
             DateTime medicoBDate = medico.Data_Nascimento;
-            
+            DateTime medicoISDate = medico.Data_Inicio_Servico;
             var nCC = medico.CC;
             var numero = medico.NumeroMecanografico;
             var idMedico = medico.MedicoId;
@@ -222,9 +220,8 @@ namespace EscalonamentoHospitalar.Controllers
             }
 
             //Validar Data de inicio de serviço do médico
-            if (medico.Data_Inicio_Servico != null)
-            {
-                DateTime medicoISDate = (DateTime)medico.Data_Inicio_Servico;
+            
+               
 
                 if (medicoInSerDateIsInvalid(medicoISDate, medicoBDate) == true)
                 {
@@ -232,7 +229,7 @@ namespace EscalonamentoHospitalar.Controllers
                     //Mensagem de erro se a data de inicio de serviço do médico for inválida
                     ModelState.AddModelError("Data_Inicio_Servico", "Data de inicio de serviço inválida");
                 }
-            }
+            
 
             /*******************************************/
             if (ModelState.IsValid)
@@ -477,12 +474,13 @@ namespace EscalonamentoHospitalar.Controllers
         private bool medicoInSerDateIsInvalid(DateTime medicoISDate, DateTime medicoBDate)
         {
             bool IsInvalid = false;
+
             DateTime dateNow = DateTime.Now;
 
             int dateTimeCompare = DateTime.Compare(medicoISDate, dateNow);
             int dateTimeCompare2 = DateTime.Compare(medicoISDate, medicoBDate);
 
-            if (dateTimeCompare > 0 && dateTimeCompare2 <= 0) //doctor's date of start of service is later than date now
+            if (dateTimeCompare > 0 || dateTimeCompare2 <= 0 || (medicoISDate.Year - medicoBDate.Year <= 24)) //doctor's date of start of service is later than date now
             {
                 IsInvalid = true;
             }

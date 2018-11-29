@@ -22,9 +22,7 @@ namespace EscalonamentoHospitalar.Controllers
         public async Task<IActionResult> Index()
         {
 
-            var hospitalDbContext = _context.Tratamento.Include(t => t.Grau).Include(t => t.Medico).Include(t => t.Paciente).Include(t => t.Patologia).Include(t => t.Regime).Include(t =>t.Estado);
-
-            var hospitalDbContext = _context.Tratamentos.Include(t => t.Grau).Include(t => t.Paciente).Include(t => t.Patologia);
+            var hospitalDbContext = _context.Tratamentos.Include(t => t.Grau).Include(t => t.Medico).Include(t => t.Paciente).Include(t => t.Patologia).Include(t => t.Regime).Include(t =>t.Estado);
 
             return View(await hospitalDbContext.ToListAsync());
         }
@@ -171,7 +169,12 @@ namespace EscalonamentoHospitalar.Controllers
             {
                 return NotFound();
             }
-
+            ViewData["GrauId"] = new SelectList(_context.Grau, "GrauId", "TipoGrau", tratamento.GrauId);
+            ViewData["MedicoId"] = new SelectList(_context.Medicos, "MedicoId", "Nome", tratamento.MedicoId);
+            ViewData["PacienteId"] = new SelectList(_context.Pacientes, "PacienteId", "Nome", tratamento.PacienteId);
+            ViewData["PatologiaId"] = new SelectList(_context.Patologia, "PatologiaId", "Nome", tratamento.PatologiaId);
+            ViewData["RegimeId"] = new SelectList(_context.Regime, "RegimeId", "TipoRegime", tratamento.RegimeId);
+            ViewData["EstadoId"] = new SelectList(_context.Estado, "EstadoId", "Nome", tratamento.EstadoId);
             return View(tratamento);
         }
 

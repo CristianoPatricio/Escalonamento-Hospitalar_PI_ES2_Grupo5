@@ -14,53 +14,53 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="TratamentoId" />
             <div class="form-group">
-                <label asp-for="PatologiaId" class="control-label"></label>
-                <select asp-for="PatologiaId" class="form-control" asp-items="ViewBag.Nome"></select>
+                <label asp-for="PatologiaId" class="control-label">Patologia</label>
+                <select asp-for="PatologiaId" class="form-control" asp-items="ViewBag.PatologiaId"></select>
                 <span asp-validation-for="PatologiaId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="PacienteId" class="control-label"></label>
-                <select asp-for="PacienteId" class="form-control" asp-items="ViewBag.Nome"></select>
+                <label asp-for="PacienteId" class="control-label">Paciente</label>
+                <select asp-for="PacienteId" class="form-control" asp-items="ViewBag.PacienteId"></select>
                 <span asp-validation-for="PacienteId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="GrauId" class="control-label"></label>
-                <select asp-for="GrauId" class="form-control" asp-items="ViewBag.TipoGrau"></select>
+                <label asp-for="GrauId" class="control-label">Grau</label>
+                <select asp-for="GrauId" class="form-control" asp-items="ViewBag.GrauId"></select>
                 <span asp-validation-for="GrauId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="DataInicio" class="control-label"></label>
+                <label asp-for="DataInicio" class="control-label">Data de incio do tratamento</label>
                 <input asp-for="DataInicio" class="form-control" />
                 <span asp-validation-for="DataInicio" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="DataFim" class="control-label"></label>
+                <label asp-for="DataFim" class="control-label">Data de fim do tratamento</label>
                 <input asp-for="DataFim" class="form-control" />
                 <span asp-validation-for="DataFim" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="DuracaoCiclo" class="control-label"></label>
+                <label asp-for="DuracaoCiclo" class="control-label">Duração do ciclo</label>
                 <input asp-for="DuracaoCiclo" class="form-control" />
                 <span asp-validation-for="DuracaoCiclo" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="RegimeId" class="control-label"></label>
+                <label asp-for="RegimeId" class="control-label">Regime</label>
                 <select asp-for="RegimeId" class="form-control" asp-items="ViewBag.RegimeId"></select>
                 <span asp-validation-for="RegimeId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="EstadoId" class="control-label"></label>
+                <label asp-for="EstadoId" class="control-label">Estado</label>
                 <select asp-for="EstadoId" class="form-control" asp-items="ViewBag.EstadoId"></select>
                 <span asp-validation-for="EstadoId" class="text-danger"></span>
             </div>
 
             <div class="form-group">
-                <label asp-for="MedicoId" class="control-label"></label>
+                <label asp-for="MedicoId" class="control-label">Medico</label>
                 <select asp-for="MedicoId" class="form-control" asp-items="ViewBag.MedicoId"></select>
                 <span asp-validation-for="MedicoId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Guardar" class="btn btn-default" />
             </div>
         </form>
     </div>

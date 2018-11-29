@@ -4,34 +4,23 @@
     ViewData["Title"] = "Edit";
 }
 
-<h2>Edit</h2>
-
-<h4>MedicoEspecialidade</h4>
+<h2>Editar a especialidade do médico</h2>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="MedicoEspecialidadeId" />
+            <input type="hidden" asp-for="MedicoId" />
+            <input type="hidden" asp-for="EspecialidadeMedicoId" />
             <div class="form-group">
-                <label asp-for="Nome" class="control-label"></label>
-                <input asp-for="Nome" class="form-control" />
-                <span asp-validation-for="Nome" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MedicoId" class="control-label"></label>
-                <select asp-for="MedicoId" class="form-control" asp-items="ViewBag.MedicoId"></select>
-                <span asp-validation-for="MedicoId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="GUARDAR" class="btn btn-default" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Voltar à lista de especialidades do médico </a>
 </div>
 
 @section Scripts {

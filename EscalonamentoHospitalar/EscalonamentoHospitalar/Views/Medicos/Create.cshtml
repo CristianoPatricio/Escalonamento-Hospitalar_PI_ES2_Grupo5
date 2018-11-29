@@ -4,48 +4,43 @@
     ViewData["Title"] = "Create";
 }
 
-<h2>Create</h2>
-
-<h4>Medico</h4>
+<h2>Inserir médico</h2>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="NumeroMecanografico" class="control-label"></label>
+                <label asp-for="NumeroMecanografico" class="control-label">Número Mecanográfico</label>
                 <input asp-for="NumeroMecanografico" class="form-control" />
                 <span asp-validation-for="NumeroMecanografico" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Nome" class="control-label"></label>
+                <label asp-for="Nome" class="control-label">Nome</label>
                 <input asp-for="Nome" class="form-control" />
                 <span asp-validation-for="Nome" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
+                <label asp-for="Email" class="control-label">Email</label>
                 <input asp-for="Email" class="form-control" />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Contacto" class="control-label"></label>
+                <label asp-for="Contacto" class="control-label">Contacto</label>
                 <input asp-for="Contacto" class="form-control" />
                 <span asp-validation-for="Contacto" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CC" class="control-label"></label>
+                <label asp-for="CC" class="control-label">Nº Cartão de Cidadão</label>
                 <input asp-for="CC" class="form-control" />
                 <span asp-validation-for="CC" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Data_Nascimento" class="control-label"></label>
+                <label asp-for="Data_Nascimento" class="control-label">Data de Nascimento</label>
                 <input asp-for="Data_Nascimento" class="form-control" />
                 <span asp-validation-for="Data_Nascimento" class="text-danger"></span>
             </div>
             <div class="form-group">
-
-                <input type="submit" value="Create" class="btn btn-default" />
-
                 <label asp-for="EspecialidadeMedicoId" class="control-label">Especialidade</label>
                 <select asp-for="EspecialidadeMedicoId" class="form-control" asp-items="ViewBag.EspecialidadeMedicoId"></select>
             </div>
@@ -56,16 +51,13 @@
             </div>
             <div class="form-group">
                 <input type="submit" value="INSERIR" class="btn btn-success" />
-
             </div>
         </form>
     </div>
 </div>
 
 <div>
-
     <a asp-action="Index" class="btn btn-default">Voltar à lista de médicos</a>
-
 </div>
 
 @section Scripts {
