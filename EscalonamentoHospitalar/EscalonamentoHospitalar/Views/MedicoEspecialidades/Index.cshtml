@@ -1,21 +1,28 @@
-﻿@model IEnumerable<EscalonamentoHospitalar.Models.MedicoEspecialidade>
-
+﻿@*@model IEnumerable<EscalonamentoHospitalar.Models.MedicoEspecialidade>*@
+@model HistoricoEspecialidadesMedicoViewModel
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Lista de especialidades por médico";
 }
 
 <h2>Lista de especialidades do médico</h2>
 
+<form asp-action="Index">
+    <p style="float:right">
+        Pesquisar por nome: <input style="width: 200px;" asp-for="CurrentNome" placeholder="Insira o nome a pesquisar" />
+        <input type="submit" value="Pesquisar" class="btn btn-info" />
+    </p>
+</form>
 <p>
     <table class="table">
         <thead>
             <tr>
                 <th>
-                    Médico
-                </th>
-                <th>
                     Especialidade
                 </th>
+                <th>
+                    Médico
+                </th>
+
                 <th>
                     Data de registo
                 </th>
@@ -23,15 +30,16 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model)
+            @foreach (var item in Model.MedicoEspecialidades)
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Medico.Nome)
-                    </td>
-                    <td>
                         @Html.DisplayFor(modelItem => item.EspecialidadeMedico.NomeEspecialidade)
                     </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Medico.Nome)
+                    </td>
+
                     <td>
                         @Html.DisplayFor(modelItem => item.Data_Registo)
                     </td>
@@ -40,3 +48,20 @@
             }
         </tbody>
     </table>
+
+    <div page-model="@Model.Pagination"
+         page-action="Index"
+         page-classes-enabled="true"
+         page-class="btn"
+         page-class-normal="btn-default"
+         page-class-selected="btn-primary"
+         class="btn-group pull-right">
+    </div>
+
+    <hr />
+    <div>
+        <a href='@Url.Action("GestaoHospitalar", "DiretorServico")'>
+            <input type="button" class="btn btn-default" value="Voltar à página inicial" />
+        </a>
+    </div>
+   

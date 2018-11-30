@@ -55,11 +55,24 @@ namespace EscalonamentoHospitalar.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("EspecialidadeMedicoId,NomeEspecialidade")] EspecialidadeMedico especialidadeMedico)
         {
+            var nomeEspecialidade = especialidadeMedico.NomeEspecialidade;
+
+            //Validar Nome Especialidade
+            if (NomeEspecialidadeIsInvalid(nomeEspecialidade) == true)
+            {
+                //Mensagem de erro se a especialidade já existir
+                ModelState.AddModelError("NomeEspecialidade", "Esta especialidade já existe");
+            }
+
             if (ModelState.IsValid)
             {
-                _context.Add(especialidadeMedico);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (!NomeEspecialidadeIsInvalid(nomeEspecialidade))
+                {
+                    _context.Add(especialidadeMedico);
+                    await _context.SaveChangesAsync();
+                    TempData["successInsertEspecialidade"] = "Especialidade inserida com sucesso";
+                    return RedirectToAction(nameof(Index));
+                }
             }
             return View(especialidadeMedico);
         }
@@ -92,12 +105,26 @@ namespace EscalonamentoHospitalar.Controllers
                 return NotFound();
             }
 
+            var nomeEspecialidade = especialidadeMedico.NomeEspecialidade;
+            var idEspecialidade = especialidadeMedico.EspecialidadeMedicoId;
+
+            //Validar Especialidade
+            if (NomeEspecialidadeIsInvalidEdit(nomeEspecialidade, idEspecialidade) == true)
+            {
+                //Mensagem de erro se a especialidade já existir
+                ModelState.AddModelError("NomeEspecialidade", "Esta especialidade já existe");
+            }
+
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(especialidadeMedico);
-                    await _context.SaveChangesAsync();
+                    if (!NomeEspecialidadeIsInvalidEdit(nomeEspecialidade, idEspecialidade))
+                    {
+                        _context.Update(especialidadeMedico);
+                        await _context.SaveChangesAsync();
+                        TempData["successEdit"] = "Especialidade alterada com sucesso";
+                    }
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -139,14 +166,88 @@ namespace EscalonamentoHospitalar.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var especialidadeMedico = await _context.EspecialidadeMedicos.FindAsync(id);
-            _context.EspecialidadeMedicos.Remove(especialidadeMedico);
-            await _context.SaveChangesAsync();
+
+            if (EspecialidadeContainsMedicos(id))
+            {
+                TempData["errorDelete"] = "IMPOSSIVEL ELIMINAR";
+                // voltar para a mesma página
+            }
+
+            if (!EspecialidadeContainsMedicos(id))
+            {
+                _context.EspecialidadeMedicos.Remove(especialidadeMedico);
+                await _context.SaveChangesAsync();
+                TempData["successDelete"] = "Registo eliminado com sucesso";
+                return RedirectToAction(nameof(Index));
+            }
+
             return RedirectToAction(nameof(Index));
         }
 
         private bool EspecialidadeMedicoExists(int id)
         {
             return _context.EspecialidadeMedicos.Any(e => e.EspecialidadeMedicoId == id);
+        }
+
+        /************************Funções auxiliares************************/
+        /**
+        * @param especialidade
+        * @return true if the especialidade already exist in DB
+        */
+        private bool NomeEspecialidadeIsInvalid(string especialidade)
+        {
+            bool IsInvalid = false;
+
+            //Procura na BD se existem especialidades com o mesmo nome
+            var especialidades = from m in _context.EspecialidadeMedicos
+                                 where m.NomeEspecialidade == especialidade
+                                 select m;
+
+            if (!especialidades.Count().Equals(0))
+            {
+                IsInvalid = true;
+            }
+
+            return IsInvalid;
+        }
+
+        private bool EspecialidadeContainsMedicos(int idEspecialidade)
+        {
+            bool IsInvalid = false;
+
+            //Procura na BD dos Enfermeiros se há enfermeiros que têm essa especialidade
+            var medicoContainsEspecialidade = from m in _context.Medicos
+                                 where m.EspecialidadeMedicoId == idEspecialidade
+                                 select m;
+
+            if (!medicoContainsEspecialidade.Count().Equals(0))
+            {
+                IsInvalid = true;
+            }
+
+            return IsInvalid;
+        }
+
+        /************************Edit***************************/
+        /**
+       * @param especialidade
+       * @return true if the especialidade already exist in DB
+       */
+        private bool NomeEspecialidadeIsInvalidEdit(string especialidade, int id)
+        {
+            bool IsInvalid = false;
+
+            //Procura na BD se existem especialidades com o mesmo nome
+            var especialidades = from m in _context.EspecialidadeMedicos
+                                 where m.NomeEspecialidade == especialidade && m.EspecialidadeMedicoId != id
+                                 select m;
+
+            if (!especialidades.Count().Equals(0))
+            {
+                IsInvalid = true;
+            }
+
+            return IsInvalid;
         }
     }
 }

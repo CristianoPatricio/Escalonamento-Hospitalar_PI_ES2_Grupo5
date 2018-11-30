@@ -11,6 +11,7 @@ namespace EscalonamentoHospitalar.Controllers
 {
     public class MedicoEspecialidadesController : Controller
     {
+        private const int PAGE_SIZE = 12;
         private readonly HospitalDbContext _context;
 
         public MedicoEspecialidadesController(HospitalDbContext context)
@@ -19,10 +20,47 @@ namespace EscalonamentoHospitalar.Controllers
         }
 
         // GET: MedicoEspecialidades
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(HistoricoEspecialidadesMedicoViewModel model = null, int page = 1)
         {
-            var hospitalDbContext = _context.MedicoEspecialidades.Include(m => m.EspecialidadeMedico).Include(m => m.Medico);
-            return View(await hospitalDbContext.ToListAsync());
+            string nome = null;
+
+            if (model != null && model.CurrentNome != null)
+            {
+                nome = model.CurrentNome;
+                page = 1;
+            }
+
+            var historico = _context.MedicoEspecialidades
+                .Where(e => nome == null || e.Medico.Nome.Contains(nome));
+
+            int numHistorico = await historico.CountAsync();
+
+            if (page > (numHistorico / PAGE_SIZE) + 1)
+            {
+                page = 1;
+            }
+
+            var listahistorico = await historico
+                .Include(e => e.EspecialidadeMedico)
+                .Include(e => e.Medico)
+                .OrderBy(e => e.Data_Registo)
+                .Skip(PAGE_SIZE * (page - 1))
+                .Take(PAGE_SIZE)
+                .ToListAsync();
+
+            return View(
+                new HistoricoEspecialidadesMedicoViewModel
+                {
+                    MedicoEspecialidades = historico,
+                    Pagination = new PagingViewModel
+                    {
+                        CurrentPage = page,
+                        PageSize = PAGE_SIZE,
+                        TotalItems = numHistorico
+                    },
+                    CurrentNome = nome
+                }
+            );
         }
 
         // GET: MedicoEspecialidades/Details/5

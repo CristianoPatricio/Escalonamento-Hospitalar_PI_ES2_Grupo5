@@ -12,6 +12,7 @@ namespace EscalonamentoHospitalar.Controllers
     public class MedicosController : Controller
 
     {
+        private const int PAGE_SIZE = 5;
         private readonly HospitalDbContext _context;
 
         public MedicosController(HospitalDbContext context)
@@ -21,11 +22,46 @@ namespace EscalonamentoHospitalar.Controllers
         }
 
         // GET: Medicos
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(ListaMedicosViewModel model = null, int page = 1)
         {
+            string nome = null;
 
-            var hospitalDbContext = _context.Medicos.Include(m => m.EspecialidadeMedico);
-            return View(await hospitalDbContext.ToListAsync());
+            if (model != null && model.CurrentNome != null)
+            {
+                nome = model.CurrentNome;
+                page = 1;
+            }
+
+            var medicos = _context.Medicos
+                .Where(e => nome == null || e.Nome.Contains(nome));
+
+            int numMedicos = await medicos.CountAsync();
+
+            if (page > (numMedicos / PAGE_SIZE) + 1)
+            {
+                page = 1;
+            }
+
+            var listaMedico = await medicos
+                .Include(e => e.EspecialidadeMedico)
+                .OrderBy(e => e.Nome)
+                .Skip(PAGE_SIZE * (page - 1))
+                .Take(PAGE_SIZE)
+                .ToListAsync();
+
+            return View(
+                new ListaMedicosViewModel
+                {
+                    Medicos = listaMedico,
+                    Pagination = new PagingViewModel
+                    {
+                        CurrentPage = page,
+                        PageSize = PAGE_SIZE,
+                        TotalItems = numMedicos
+                    },
+                    CurrentNome = nome
+                }
+            );
 
         }
 
@@ -51,7 +87,7 @@ namespace EscalonamentoHospitalar.Controllers
         // GET: Medicos/Create
         public IActionResult Create()
         {
-            ViewData["EspecialidadeMedicoId"] = new SelectList(_context.EspecialidadeMedicos, "EspecialidadeMedicoId", "NomeEspecialidade");
+            ViewData["EspecialidadeMedicoId"] = new SelectList(_context.Set<EspecialidadeMedico>(), "EspecialidadeMedicoId", "NomeEspecialidade");
             return View();
         }
 
@@ -132,11 +168,12 @@ namespace EscalonamentoHospitalar.Controllers
                     InsertDataIntoMedicoEspecialidades(_context, medico.EspecialidadeMedicoId, medico.MedicoId);
 
                     await _context.SaveChangesAsync();
+                    TempData["notice"] = "Registo inserido com sucesso!";
                     return RedirectToAction(nameof(Index));
                 }
             }
 
-            ViewData["EspecialidadeMedicoId"] = new SelectList(_context.EspecialidadeMedicos, "EspecialidadeMedicoId", "NomeEspecialidade", medico.EspecialidadeMedicoId);
+            ViewData["EspecialidadeMedicoId"] = new SelectList(_context.Set<EspecialidadeMedico>(), "EspecialidadeMedicoId", "NomeEspecialidade", medico.EspecialidadeMedicoId);
             return View(medico);
         }
 
@@ -154,7 +191,7 @@ namespace EscalonamentoHospitalar.Controllers
                 return NotFound();
             }
 
-            ViewData["EspecialidadeMedicoId"] = new SelectList(_context.EspecialidadeMedicos, "EspecialidadeMedicoId", "NomeEspecialidade", medico.EspecialidadeMedicoId);
+            ViewData["EspecialidadeMedicoId"] = new SelectList(_context.Set<EspecialidadeMedico>(), "EspecialidadeMedicoId", "NomeEspecialidade", medico.EspecialidadeMedicoId);
             return View(medico);
         }
 
@@ -248,6 +285,7 @@ namespace EscalonamentoHospitalar.Controllers
                         }
 
                         await _context.SaveChangesAsync();
+                        TempData["successEdit"] = "Registo alterado com sucesso";
                     }
                 }
                 catch (DbUpdateConcurrencyException)
@@ -265,7 +303,7 @@ namespace EscalonamentoHospitalar.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewData["EspecialidadeMedicoId"] = new SelectList(_context.EspecialidadeMedicos, "EspecialidadeMedicoId", "NomeEspecialidade", medico.EspecialidadeMedicoId);
+            ViewData["EspecialidadeMedicoId"] = new SelectList(_context.Set<EspecialidadeMedico>(), "EspecialidadeMedicoId", "NomeEspecialidade", medico.EspecialidadeMedicoId);
             return View(medico);
         }
         
@@ -297,6 +335,7 @@ namespace EscalonamentoHospitalar.Controllers
             var medico = await _context.Medicos.FindAsync(id);
             _context.Medicos.Remove(medico);
             await _context.SaveChangesAsync();
+            TempData["deleteMedico"] = "Médico eliminado com sucesso!";
             return RedirectToAction(nameof(Index));
         }
 

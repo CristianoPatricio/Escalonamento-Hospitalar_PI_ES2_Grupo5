@@ -13,7 +13,7 @@
             <input type="hidden" asp-for="MedicoId" />
             <div class="form-group">
                 <label asp-for="NumeroMecanografico" class="control-label">Número Mecanográfico</label>
-                <input asp-for="NumeroMecanografico" class="form-control" />
+                <input asp-for="NumeroMecanografico" class="form-control"  placeholder="p. ex. E12345" />
                 <span asp-validation-for="NumeroMecanografico" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -23,7 +23,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Email" class="control-label">Email</label>
-                <input asp-for="Email" class="form-control" />
+                <input asp-for="Email" class="form-control" placeholder="p. ex. teste@gmail.com"/>
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="form-group">

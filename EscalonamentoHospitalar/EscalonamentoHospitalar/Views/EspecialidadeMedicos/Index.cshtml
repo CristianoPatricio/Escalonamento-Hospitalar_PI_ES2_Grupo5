@@ -4,11 +4,50 @@
     ViewData["Title"] = "Lista";
 }
 
-<h2>Lista de Especialidades</h2>
+@if (TempData["successInsertEspecialidade"] != null)
+{
+    <!--Mensagem de sucesso quando insere especialidade-->
+    <div id="suc_form" class="alert alert-success">
+        <strong>Sucesso!</strong> O registo foi inserido com sucesso.
+    </div>
+}
 
-<p>
-    <a asp-action="Create" class="btn btn-primary">Inserir uma nova especialidade</a>
-</p>
+@if (TempData["successEdit"] != null)
+{
+    <!--Mensagem de sucesso quando edita especialidade-->
+    <div id="suc_form" class="alert alert-success">
+        <strong>Sucesso!</strong> O registo foi alterado com sucesso.
+    </div>
+}
+
+
+@if (TempData["errorDelete"] != null)
+{
+    <div id="suc_form" class="alert alert-danger">
+        <strong>ERRO!</strong> Impossível eliminar especialidade que tenha médicos atribuídos.
+    </div>
+}
+
+
+@if (TempData["successDelete"] != null)
+{
+    <div id="suc_form" class="alert alert-success">
+        <strong>Sucesso!</strong> Especialidade eliminada com sucesso.
+    </div>
+}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    //Passados 5 segundos a mensagem desaparece
+    $(document).ready(function () {
+        $("#suc_form").hide(10000);
+    });
+</script>
+
+
+<h2>Lista de especialidades dos médicos</h2>
+
+
 <table class="table">
     <thead>
         <tr>
@@ -26,7 +65,7 @@
                     @Html.DisplayFor(modelItem => item.NomeEspecialidade)
                 </td>
                 <td>
-                    <a asp-action="Edit" class="btn btn-warning" asp-route-id="@item.EspecialidadeMedicoId">Editar</a> 
+                    <a asp-action="Edit" class="btn btn-warning" asp-route-id="@item.EspecialidadeMedicoId">Editar</a>
                     @*<a asp-action="Details" class="btn btn-info"  asp-route-id="@item.EspecialidadeMedicoId">Detalhes</a> |*@
                     <a asp-action="Delete" class="btn btn-danger" asp-route-id="@item.EspecialidadeMedicoId">Eliminar</a>
                 </td>
@@ -34,3 +73,15 @@
         }
     </tbody>
 </table>
+
+<br />
+<hr />
+<p>
+    <a asp-action="Create" class="btn btn-primary">Inserir uma nova especialidade</a>
+</p>
+<hr />
+<div>
+    <a href='@Url.Action("GestaoHospitalar", "DiretorServico")'>
+        <input type="button" class="btn btn-default" value="Voltar à página inicial" />
+    </a>
+</div>
