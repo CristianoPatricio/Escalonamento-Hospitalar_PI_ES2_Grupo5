@@ -1,10 +1,10 @@
 ﻿@model EscalonamentoHospitalar.Models.Medico
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Detalhes";
 }
 
-<h2>Detalhes do médico</h2>
+<h2>Detalhes do/a médico/a <b>@Html.DisplayFor(model => model.Nome)</b></h2>
 
 <div>
     <hr />
@@ -60,6 +60,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" class="btn btn-warning" asp-route-id="@Model.MedicoId">Editar</a> |
+    <a asp-action="Edit" class="btn btn-warning" asp-route-id="@Model.MedicoId">EDITAR</a> 
     <a asp-action="Index" class="btn btn-default">Voltar à lista de médicos</a>
 </div>

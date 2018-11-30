@@ -1,7 +1,7 @@
 ﻿@model EscalonamentoHospitalar.Models.Medico
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Eliminar";
 }
 
 <head>
@@ -114,7 +114,7 @@
     </style>
 </head>
 
-<h3>Tem a certeza que quer eliminar a/o médica/o @Html.DisplayFor(model => model.Nome)?</h3>
+<h3>Tem a certeza que quer eliminar o/a médico/a <b>@Html.DisplayFor(model => model.Nome)</b>?</h3>
 <div>
     <hr />
     <dl class="dl-horizontal">
@@ -171,8 +171,8 @@
     <form asp-action="Delete">
         <input type="hidden" asp-for="MedicoId" />
         <a href="#myModal" class="trigger-btn" data-toggle="modal">
-            <input type="submit" value="APAGAR" class="btn btn-danger" />
-        </a>  |
+            <input type="submit" value="ELIMINAR" class="btn btn-danger" />
+        </a>  
         <a asp-action="Index" class="btn btn-default">Voltar à lista de médicos</a>
     </form>
 
@@ -184,7 +184,7 @@
                     <div class="icon-box">
                         <i class="material-icons">&#xE5CD;</i>
                     </div>
-                    <h4 class="modal-title">Tem a certeza que quer eliminar a/o médica/o @Html.DisplayFor(model => model.Nome)?</h4>
+                    <h4 class="modal-title">Tem a certeza que quer eliminar o/a médico/a <b>@Html.DisplayFor(model => model.Nome)</b>?</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
                 <div class="modal-body">
@@ -192,9 +192,10 @@
                 </div>
                 <div class="modal-footer">
                     <form asp-action="Delete">
-                        <button type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>
                         <input type="hidden" asp-for="MedicoId" />
-                        <input type="submit" class="btn btn-danger" value="APAGAR" />
+                        <input type="submit" class="btn btn-danger" value="ELIMINAR" />
+                        <button type="button" class="btn btn-info" data-dismiss="modal">CANCELAR</button>
+
                     </form>
                 </div>
             </div>

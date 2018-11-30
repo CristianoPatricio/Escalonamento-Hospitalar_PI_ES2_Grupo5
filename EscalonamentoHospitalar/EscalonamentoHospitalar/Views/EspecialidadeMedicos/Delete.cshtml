@@ -1,7 +1,7 @@
 ﻿@model EscalonamentoHospitalar.Models.EspecialidadeMedico
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Eliminar";
 }
 <head>
 
@@ -113,7 +113,7 @@
     </style>
 </head>
 
-<h3>Tem a certeza que quer apagar a especialidade @Html.DisplayFor(model => model.NomeEspecialidade)?</h3>
+<h3>Tem a certeza que quer eliminar a especialidade <b>@Html.DisplayFor(model => model.NomeEspecialidade)</b>?</h3>
 <div>
     <hr />
     <dl class="dl-horizontal">
@@ -127,8 +127,8 @@
 
     <form asp-action="Delete">
         <input type="hidden" asp-for="EspecialidadeMedicoId" />
-        <a href="#myDeleteModal" class="trigger-btn" data-toggle="modal">
-            <input type="submit" value="APAGAR" class="btn btn-danger" /></a> |
+        <a href="#myModal" class="trigger-btn" data-toggle="modal">
+            <input type="submit" value="ELIMINAR" class="btn btn-danger" /></a> |
             <a asp-action="Index" class="btn btn-default">Voltar à lista de especialidades</a>
     </form>
 
@@ -140,17 +140,18 @@
                     <div class="icon-box">
                         <i class="material-icons">&#xE5CD;</i>
                     </div>
-                    <h4 class="modal-title">Tem a certeza que quer eliminar a especialidade</h4>
+                    <h4 class="modal-title">Tem a certeza que quer eliminar a especialidade <b>@Html.DisplayFor(model => model.NomeEspecialidade)</b>?</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
                 <div class="modal-body">
-                    <p>Tem a certeza que quer eliminar a especilidade? Esta operação é irreversível.</p>
+                    <p>Esta operação é irreversível.</p>
                 </div>
                 <div class="modal-footer">
                     <form asp-action="Delete">
-                        <button type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>
                         <input type="hidden" asp-for="EspecialidadeMedicoId" />
-                        <input type="submit" class="btn btn-danger" value="APAGAR" />
+                        <input type="submit" class="btn btn-danger" value="ELIMINAR" />
+                        <button type="button" class="btn btn-info" data-dismiss="modal">CANCELAR</button>
+
                     </form>
                 </div>
             </div>
