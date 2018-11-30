@@ -25,8 +25,7 @@ namespace EscalonamentoHospitalar.Controllers
             return View(await _context.Turnos.ToListAsync());
 
       
-            return View(await _context.Turnos.ToListAsync());
-
+            
 
         }
 

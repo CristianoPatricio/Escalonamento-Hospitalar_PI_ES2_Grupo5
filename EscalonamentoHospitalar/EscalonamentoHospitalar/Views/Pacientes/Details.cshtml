@@ -4,56 +4,56 @@
     ViewData["Title"] = "Detalhes";
 }
 
-<h2>Detalhes</h2>
+<h2>Detalhes do/a paciente <b>@Html.DisplayFor(model => model.Nome)</b></h2>
 
 <div>
-    <h4>Paciente</h4>
+    
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Nome)
+            Nome
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Nome)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Morada)
+            Morada
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Morada)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Cod_Postal)
+            Código Postal
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Cod_Postal)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Email)
+            Email
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Email)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.CC)
+            Nº Cartão de Cidadão
         </dt>
         <dd>
             @Html.DisplayFor(model => model.CC)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Data_Nascimento)
+            Data de Nascimento
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Data_Nascimento)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Numero_Utente)
+            Número de Utente
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Numero_Utente)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Contacto)
+            Contacto
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Contacto)
@@ -61,6 +61,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.PacienteId">Editar</a> |
-    <a asp-action="Index">Voltar a Lista</a>
+    <a asp-action="Edit" class="btn btn-warning" asp-route-id="@Model.PacienteId">EDITAR</a> |
+    <a asp-action="Index" class="btn btn-default">Voltar à lista de pacientes</a>
 </div>

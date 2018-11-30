@@ -4,24 +4,25 @@
     ViewData["Title"] = "Eliminar";
 }
 
-<h2>Delete</h2>
 
-<h3>Tem a certeza que deseja eliminar?</h3>
+
+<h3>Tem a certeza que pretende eliminar o tratamento?</h3>
 <div>
-    <h4>Tratamento</h4>
+    
     <hr />
     <dl class="dl-horizontal">
-        <dt>
-            Patologia
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Patologia.Nome)
-        </dd>
         <dt>
             Paciente
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Paciente.Nome)
+        </dd>
+
+        <dt>
+            Patologia
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Patologia.Nome)
         </dd>
         <dt>
             Grau
@@ -30,8 +31,20 @@
             @Html.DisplayFor(model => model.Grau.TipoGrau)
         </dd>
         <dt>
+            Duração do ciclo
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DuracaoCiclo)
+        </dd>
+        <dt>
             Data de inicio do tratamento
         </dt>
+        <dt>
+            Regime
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Regime.TipoRegime)
+        </dd>
         <dd>
             @Html.DisplayFor(model => model.DataInicio)
         </dd>
@@ -41,23 +54,13 @@
         <dd>
             @Html.DisplayFor(model => model.DataFim)
         </dd>
-        <dt>
-            Duração do ciclo
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.DuracaoCiclo)
-        </dd>
-        <dt>
-            Regime
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Regime.TipoRegime)
-        </dd>
+
+
         <dt>
             Estado
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Estado.Nome) 
+            @Html.DisplayFor(model => model.Estado.Nome)
         </dd>
 
         <dt>
