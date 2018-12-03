@@ -4,18 +4,12 @@
     ViewData["Title"] = "Detalhes";
 }
 
-<h2>Detalhes</h2>
+<h2>Detalhes do tratamento</h2>
 
 <div>
     <h4>Tratamento</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
-            Patologia
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Patologia.Nome)
-        </dd>
         <dt>
             Paciente
         </dt>
@@ -23,22 +17,17 @@
             @Html.DisplayFor(model => model.Paciente.Nome)
         </dd>
         <dt>
+            Patologia
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Patologia.Nome)
+        </dd>
+
+        <dt>
             Grau
         </dt>
         <dd>
             @Html.DisplayFor(model => model.Grau.TipoGrau)
-        </dd>
-        <dt>
-            Data inicio do tratamento
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.DataInicio)
-        </dd>
-        <dt>
-            Data fim do tratamento
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.DataFim)
         </dd>
         <dt>
             Duração do ciclo
@@ -52,6 +41,19 @@
         <dd>
             @Html.DisplayFor(model => model.Regime.TipoRegime)
         </dd>
+        <dt>
+            Data inicio do tratamento
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DataInicio)
+        </dd>
+        <dt>
+            Data fim do tratamento
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DataFim)
+        </dd>
+
         <dt>
             @Html.DisplayNameFor(model => model.Estado)
         </dt>
@@ -68,6 +70,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.TratamentoId">Editar</a> |
-    <a asp-action="Index">Voltar a Lista</a>
+    <a asp-action="Edit" class="btn btn-warning" asp-route-id="@Model.TratamentoId">EDITAR</a> 
+    <a asp-action="Index" class="btn btn-default">Voltar à lista de tratamentos</a>
 </div>
