@@ -4,27 +4,38 @@
     ViewData["Title"] = "Gerar Horário Enfermeiro";
 }
 
+<h2>Gerar Horário Enfermeiro</h2>
+
+<p></p>
+
 <div class="row">
     <div class="col-md-4">
         <form asp-action="GerarHorarioEnfermeiro">
-            <div class="form-group">
+            <div class="form-group" >
                 <label asp-for="NumeroPessoasTurno1" class="control-label">Número de pessoas do turno 1</label>
-                <input asp-for="NumeroPessoasTurno1" class="form-control" placeholder="Número de pessoas do turno 1" />
+                <input asp-for="NumeroPessoasTurno1" class="form-control" style="width: 80px"/>
             </div>
             <div class="form-group">
                 <label asp-for="NumeroPessoasTurno2" class="control-label">Número de pessoas do turno 2</label>
-                <input asp-for="NumeroPessoasTurno2" class="form-control" placeholder="Número de pessoas do turno 2" />
+                <input asp-for="NumeroPessoasTurno2" class="form-control" style="width: 80px"/>
             </div>
             <div class="form-group">
                 <label asp-for="NumeroPessoasTurno3" class="control-label">Número de pessoas do turno 3</label>
-                <input asp-for="NumeroPessoasTurno3" class="form-control" placeholder="Número de pessoas do turno 3" />
+                <input asp-for="NumeroPessoasTurno3" class="form-control" style="width: 80px"/>
             </div>
             <div class="form-group">
                 <label asp-for="DataInicioSemana" class="control-label">Data Início da Semana</label>
                 <input asp-for="DataInicioSemana " class="form-control" />
             </div>
+            <hr />
             <div class="form-group">
-                <input type="submit" value="Gerar" class="btn btn-default" />
+                <input type="submit" value="Gerar" class="btn btn-success" />
+            </div>
+            <hr />
+            <div>
+                <a href='@Url.Action("GestaoHospitalar", "DiretorServico")'>
+                    <input type="button" class="btn btn-default" value="Voltar" />
+                </a>
             </div>
         </form>
     </div>

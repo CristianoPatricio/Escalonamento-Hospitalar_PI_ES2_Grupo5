@@ -161,5 +161,39 @@ namespace EscalonamentoHospitalar.Controllers
         {
             return _context.HorariosEnfermeiro.Any(e => e.HorarioEnfermeiroId == id);
         }
+
+        // GET: HorarioEnfermeiro/GerarHorarioEnfermeiro
+        public IActionResult GerarHorarioEnfermeiro()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult GerarHorarioEnfermeiro(GerarHorarioEnfermeiro gerarHorarioEnfermeiro)
+        {
+            if (ModelState.IsValid)
+            {
+
+
+            }
+            return RedirectToAction(nameof(Index));
+        }
+
+        /*************************Funções Auxiliares************************/
+        private void InsertDataIntoHorarioEnfermeiro(HospitalDbContext db, int numT1, int numT2, int numT3, DateTime data)
+        {
+
+        }
+
+        private int[] EnfermeirosIds()
+        {
+            var enfermeiros = from e in _context.Enfermeiros
+                              select e.EnfermeiroId;
+
+            int[] arrIdEnfermeiros = enfermeiros.ToArray();
+
+            return arrIdEnfermeiros;
+        }
+
     }
 }
