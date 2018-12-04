@@ -4,6 +4,10 @@
     ViewData["Title"] = "Gerar Escala Médico";
 }
 
+<h2>Gerar escala do médico</h2>
+
+<br />
+
 <div class="row">
     <div class="col-md-4">
         <form asp-action="GerarEscalaMedico">
@@ -24,9 +28,17 @@
                 <input asp-for="DataInicioSemana " class="form-control" />
             </div>
             <div class="form-group">
-                <input type="submit" value="GERAR" class="btn btn-default" />
+                <input type="submit" value="Gerar escala" class="btn btn-success" />
             </div>
         </form>
     </div>
 </div>
+
+<hr />
+<div>
+    <a href='@Url.Action("GestaoHospitalar", "DiretorServico")'>
+        <input type="button" class="btn btn-default" value="Voltar à página inicial" />
+    </a>
+</div>
+
 

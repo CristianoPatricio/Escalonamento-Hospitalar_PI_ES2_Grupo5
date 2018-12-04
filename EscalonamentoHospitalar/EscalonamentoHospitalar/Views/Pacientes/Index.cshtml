@@ -40,9 +40,8 @@
 
 <h2>Lista de Pacientes</h2>
 
-<p>
-    <a asp-action="Create" class="btn btn-primary">Inserir um novo paciente</a>
-</p>
+@*/*pesquisa*/*@
+
 <table class="table">
     <thead>
         <tr>
@@ -78,6 +77,16 @@
         }
     </tbody>
 </table>
+
+
+@*/*paginação*/*@
+
+<br />
+<hr />
+<p>
+    <a asp-action="Create" class="btn btn-primary">Inserir um novo paciente</a>
+</p>
+<hr />
 <div>
     <a href='@Url.Action("GestaoHospitalar", "DiretorServico")'>
         <input type="button" class="btn btn-default" value="Voltar à página inicial" />
