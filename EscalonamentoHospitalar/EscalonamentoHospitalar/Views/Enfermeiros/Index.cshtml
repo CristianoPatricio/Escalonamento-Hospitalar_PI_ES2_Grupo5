@@ -42,7 +42,7 @@
 <h2>Lista de Enfermeiros</h2>
 
 <form asp-action="Index">
-    <p>
+    <p style="float: right">
         Pesquisar por nome: <input style="width: 200px;" asp-for="CurrentNome" placeholder="Insira o nome a pesquisar" />
         <input type="submit" value="Pesquisar" class="btn btn-info" />
     </p>
@@ -79,7 +79,7 @@
                     @Html.DisplayFor(modelItem => item.EspecialidadeEnfermeiro.Especialidade)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.EnfermeiroId"><input type="button" value="Alterar" class="btn btn-warning" /></a>
+                    <a asp-action="Edit" asp-route-id="@item.EnfermeiroId"><input type="button" value="Editar" class="btn btn-warning" /></a>
                     <a asp-action="Details" asp-route-id="@item.EnfermeiroId"><input type="button" value="Detalhes" class="btn btn-info" /></a>
                     <a asp-action="Delete" asp-route-id="@item.EnfermeiroId"><input type="button" value="Eliminar" class="btn btn-danger" /></a>
                 </td>
@@ -100,7 +100,7 @@
 <br />
 <hr />
 <p>
-    <a asp-action="Create"><input type="button" value="Inserir Novo Enfermeiro" class="btn btn-primary" /></a>
+    <a asp-action="Create"><input type="button" value="Inserir um novo enfermeiro" class="btn btn-primary" /></a>
 </p>
 <hr />
 <div>

@@ -44,11 +44,8 @@
     });
 </script>
 
-<h2>Lista de Especialidades dos Enfermeiros</h2>
+<h2>Lista de especialidades dos enfermeiros</h2>
 
-<p>
-    <a asp-action="Create"><input type="button" value="Inserir Nova Especialidade de Enfermeiros" class="btn btn-primary" /></a>
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -66,7 +63,7 @@
                     @Html.DisplayFor(modelItem => item.Especialidade)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.EspecialidadeEnfermeiroId"><input type="button" value="Alterar" class="btn btn-warning" /></a>
+                    <a asp-action="Edit" asp-route-id="@item.EspecialidadeEnfermeiroId"><input type="button" value="Editar" class="btn btn-warning" /></a>
                     <!--<a asp-action="Details" asp-route-id="@item.EspecialidadeEnfermeiroId">Details</a> |-->
                     <a asp-action="Delete" asp-route-id="@item.EspecialidadeEnfermeiroId"><input type="button" value="Eliminar" class="btn btn-danger" /></a>
                 </td>
@@ -74,3 +71,15 @@
         }
     </tbody>
 </table>
+
+<br />
+<hr />
+<p>
+    <a asp-action="Create" class="btn btn-primary">Inserir uma nova especialidade</a>
+</p>
+<hr />
+<div>
+    <a href='@Url.Action("GestaoHospitalar", "DiretorServico")'>
+        <input type="button" class="btn btn-default" value="Voltar à página inicial" />
+    </a>
+</div>

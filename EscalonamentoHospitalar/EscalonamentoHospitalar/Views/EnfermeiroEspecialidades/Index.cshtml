@@ -4,7 +4,7 @@
     ViewData["Title"] = "Lista de Especialidades por Enfermeiro";
 }
 
-<h2>Lista de Especialidades por Enfermeiro</h2>
+<h2>Lista de especialidades por enfermeiro</h2>
 
 @*
     <p>
@@ -13,7 +13,7 @@
 *@
 
 <form asp-action="Index">
-    <p>
+    <p style="float:right">
         Pesquisar por nome: <input style="width: 200px;" asp-for="CurrentNome" placeholder="Insira o nome a pesquisar" />
         <input type="submit" value="Pesquisar" class="btn btn-info" />
     </p>
@@ -66,4 +66,10 @@
      page-class-normal="btn-default"
      page-class-selected="btn-primary"
      class="btn-group pull-right">
+</div>
+<hr />
+<div>
+    <a href='@Url.Action("GestaoHospitalar", "DiretorServico")'>
+        <input type="button" class="btn btn-default" value="Voltar à página inicial" />
+    </a>
 </div>

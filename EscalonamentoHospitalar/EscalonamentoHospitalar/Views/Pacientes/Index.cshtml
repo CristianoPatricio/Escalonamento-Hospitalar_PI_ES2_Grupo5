@@ -6,43 +6,53 @@
 
 <h2>Lista de Pacientes</h2>
 
-<p>
-    <a asp-action="Create" class="btn btn-primary">Inserir um novo paciente</a>
-</p>
+@*/*pesquisa*/*@
+
 <table class="table">
     <thead>
         <tr>
             <th>
-                Nome 
+                Nome
             </th>
-            
+
             <th>
                 Número de Utente
             </th>
-            
+
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nome)
-            </td>
-            
-            <td>
-                @Html.DisplayFor(modelItem => item.Numero_Utente)
-            </td>
-            
-            <td>
-                <a asp-action="Edit" class="btn btn-warning" asp-route-id="@item.PacienteId">Editar</a> 
-                <a asp-action="Details" class="btn btn-info" asp-route-id="@item.PacienteId">Detalhes</a> 
-                <a asp-action="Delete" class="btn btn-danger" asp-route-id="@item.PacienteId">Eliminar</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nome)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Numero_Utente)
+                </td>
+
+                <td>
+                    <a asp-action="Edit" class="btn btn-warning" asp-route-id="@item.PacienteId">Editar</a>
+                    <a asp-action="Details" class="btn btn-info" asp-route-id="@item.PacienteId">Detalhes</a>
+                    <a asp-action="Delete" class="btn btn-danger" asp-route-id="@item.PacienteId">Eliminar</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
+
+@*/*paginação*/*@
+
+<br />
+<hr />
+<p>
+    <a asp-action="Create" class="btn btn-primary">Inserir um novo paciente</a>
+</p>
+<hr />
 <div>
     <a href='@Url.Action("GestaoHospitalar", "DiretorServico")'>
         <input type="button" class="btn btn-default" value="Voltar à página inicial" />
