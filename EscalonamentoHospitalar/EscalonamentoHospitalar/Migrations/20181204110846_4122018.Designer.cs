@@ -10,14 +10,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EscalonamentoHospitalar.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    [Migration("20181130144310_initial")]
-    partial class initial
+    [Migration("20181204110846_4122018")]
+    partial class _4122018
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.3-rtm-32065")
+                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -251,8 +251,6 @@ namespace EscalonamentoHospitalar.Migrations
 
                     b.Property<string>("Email");
 
-                    b.Property<int?>("EnfermeiroId");
-
                     b.Property<int>("EspecialidadeMedicoId");
 
                     b.Property<string>("Nome")
@@ -262,8 +260,6 @@ namespace EscalonamentoHospitalar.Migrations
                         .IsRequired();
 
                     b.HasKey("MedicoId");
-
-                    b.HasIndex("EnfermeiroId");
 
                     b.HasIndex("EspecialidadeMedicoId");
 
@@ -479,10 +475,6 @@ namespace EscalonamentoHospitalar.Migrations
 
             modelBuilder.Entity("EscalonamentoHospitalar.Models.Medico", b =>
                 {
-                    b.HasOne("EscalonamentoHospitalar.Models.Enfermeiro")
-                        .WithMany("Medicos")
-                        .HasForeignKey("EnfermeiroId");
-
                     b.HasOne("EscalonamentoHospitalar.Models.EspecialidadeMedico", "EspecialidadeMedico")
                         .WithMany("Medico")
                         .HasForeignKey("EspecialidadeMedicoId")
