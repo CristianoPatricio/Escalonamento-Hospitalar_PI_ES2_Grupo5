@@ -75,6 +75,7 @@ namespace EscalonamentoHospitalar.Controllers
             {
                 _context.Add(tratamento);
                 await _context.SaveChangesAsync();
+                TempData["notice"] = "Tratamento inserido com sucesso!";
                 return RedirectToAction(nameof(Index));
             }
             ViewData["GrauId"] = new SelectList(_context.Grau, "GrauId", "TipoGrau", tratamento.GrauId);
@@ -126,6 +127,7 @@ namespace EscalonamentoHospitalar.Controllers
                 {
                     _context.Update(tratamento);
                     await _context.SaveChangesAsync();
+                    TempData["successEdit"] = "Registo alterado com sucesso";
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -186,6 +188,8 @@ namespace EscalonamentoHospitalar.Controllers
             var tratamento = await _context.Tratamentos.FindAsync(id);
             _context.Tratamentos.Remove(tratamento);
             await _context.SaveChangesAsync();
+            TempData["deleteEnf"] = "Tratamento eliminado com sucesso!";
+
             return RedirectToAction(nameof(Index));
         }
 

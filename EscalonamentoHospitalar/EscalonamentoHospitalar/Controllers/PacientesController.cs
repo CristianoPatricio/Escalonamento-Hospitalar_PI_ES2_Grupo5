@@ -88,6 +88,7 @@ namespace EscalonamentoHospitalar.Controllers
                 {
                     _context.Add(paciente);
                     await _context.SaveChangesAsync();
+                    TempData["notice"] = "Registo inserido com sucesso!";
                     return RedirectToAction(nameof(Index));
                 }
             }
@@ -161,6 +162,7 @@ namespace EscalonamentoHospitalar.Controllers
                     {
                         _context.Update(paciente);
                         await _context.SaveChangesAsync();
+                        TempData["successEdit"] = "Registo alterado com sucesso";
                     }
                     }
                     
@@ -207,6 +209,7 @@ namespace EscalonamentoHospitalar.Controllers
             var paciente = await _context.Pacientes.FindAsync(id);
             _context.Pacientes.Remove(paciente);
             await _context.SaveChangesAsync();
+            TempData["deleteEnf"] = "Paciente eliminado com sucesso!";
             return RedirectToAction(nameof(Index));
         }
 
