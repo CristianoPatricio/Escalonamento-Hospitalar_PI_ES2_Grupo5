@@ -3,6 +3,40 @@
 @{
     ViewData["Title"] = "Pacientes";
 }
+<p></p>
+
+@if (TempData["notice"] != null)
+{
+    <!--Mensagem de sucesso quandi insere paciente-->
+    <div id="suc_form" class="alert alert-success">
+        <strong>Sucesso!</strong> O registo foi inserido com sucesso.
+    </div>
+}
+
+@if (TempData["deleteEnf"] != null)
+{
+    <!--Mensagem de sucesso quando elimina paciente-->
+    <div id="suc_form" class="alert alert-success">
+        <strong>Sucesso!</strong> Paciente eliminado com sucesso.
+    </div>
+}
+
+@if (TempData["successEdit"] != null)
+{
+    <!--Mensagem de sucesso quando edita paciente-->
+    <div id="suc_form" class="alert alert-success">
+        <strong>Sucesso!</strong> O registo foi alterado com sucesso.
+    </div>
+}
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    //Passados 5 segundos a mensagem desaparece
+    $(document).ready(function () {
+        $("#suc_form").hide(10000);
+    });
+</script>
 
 <h2>Lista de Pacientes</h2>
 
