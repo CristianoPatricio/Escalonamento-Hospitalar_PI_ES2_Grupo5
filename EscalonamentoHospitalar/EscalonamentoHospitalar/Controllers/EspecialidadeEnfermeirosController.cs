@@ -171,6 +171,7 @@ namespace EscalonamentoHospitalar.Controllers
             if (EspecialidadeContainsEnfermeiros(id))
             {
                 TempData["errorDelete"] = "IMPOSSIVEL ELIMINAR";
+                return RedirectToAction(nameof(Delete));
             }
 
             if (!EspecialidadeContainsEnfermeiros(id))

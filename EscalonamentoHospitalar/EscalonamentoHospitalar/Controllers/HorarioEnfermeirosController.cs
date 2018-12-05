@@ -11,6 +11,7 @@ namespace EscalonamentoHospitalar.Controllers
 {
     public class HorarioEnfermeirosController : Controller
     {
+        private const int PAGE_SIZE = 45;
         private readonly HospitalDbContext _context;
 
         public HorarioEnfermeirosController(HospitalDbContext context)
@@ -19,10 +20,47 @@ namespace EscalonamentoHospitalar.Controllers
         }
 
         // GET: HorarioEnfermeiros
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(HorariosEnfermeirosViewModel model = null, int page = 1)
         {
-            var hospitalDbContext = _context.HorariosEnfermeiro.Include(h => h.Enfermeiro).Include(h => h.Turno).OrderBy(h => h.DataInicioTurno);
-            return View(await hospitalDbContext.ToListAsync());
+            string nome = null;
+
+            if (model != null && model.CurrentNome != null)
+            {
+                nome = model.CurrentNome;
+                page = 1;
+            }
+
+            var horario = _context.HorariosEnfermeiro
+                .Where(h => nome == null || h.Enfermeiro.Nome.Contains(nome)); ;
+
+            int numHorario = await horario.CountAsync();
+
+            if (page > (numHorario / PAGE_SIZE) + 1)
+            {
+                page = 1;
+            }
+
+            var listahorario = await horario
+                .Include(h => h.Enfermeiro)
+                .Include(h => h.Turno)
+                .OrderBy(h => h.DataInicioTurno)
+                .Skip(PAGE_SIZE * (page - 1))
+                .Take(PAGE_SIZE)
+                .ToListAsync();
+
+            return View(
+                new HorariosEnfermeirosViewModel
+                {
+                    HorariosEnfermeiros = listahorario,
+                    Pagination = new PagingViewModel
+                    {
+                        CurrentPage = page,
+                        PageSize = PAGE_SIZE,
+                        TotalItems = numHorario
+                    },
+                    CurrentNome = nome
+                }
+            );
         }
 
         // GET: HorarioEnfermeiros/Details/5

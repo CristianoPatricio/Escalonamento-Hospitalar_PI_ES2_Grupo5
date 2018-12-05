@@ -4,6 +4,13 @@
     ViewData["Title"] = "Eliminar";
 }
 
+@if (TempData["errorDelete"] != null)
+{
+    <div id="suc_form" class="alert alert-danger">
+        <strong>ERRO!</strong> Impossível eliminar especialidade que tenha enfermeiros atribuídos.
+    </div>
+}
+
 <head>
     <!--icon-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">

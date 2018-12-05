@@ -51,7 +51,7 @@ namespace EscalonamentoHospitalar.Controllers
             return View(
                 new HistoricoEspecialidadesEnfermeiroViewModel
                 {
-                    EnfermeirosEspecialidades = historico,
+                    EnfermeirosEspecialidades = listahistorico,
                     Pagination = new PagingViewModel
                     {
                         CurrentPage = page,

@@ -1,4 +1,5 @@
-﻿@model IEnumerable<EscalonamentoHospitalar.Models.HorarioEnfermeiro>
+﻿@*@model IEnumerable<EscalonamentoHospitalar.Models.HorarioEnfermeiro>*@
+@model HorariosEnfermeirosViewModel
 
 @{
     ViewData["Title"] = "Index";
@@ -12,17 +13,21 @@
 </p>
 *@
 
+<form asp-action="Index">
+    <p>
+        Pesquisar por nome: <input style="width: 200px;" asp-for="CurrentNome" placeholder="Insira o nome a pesquisar" />
+        <input type="submit" value="Pesquisar" class="btn btn-info" />
+    </p>
+</form>
+
 <table class="table">
     <thead>
         <tr>
             <th>
                 Data de início do Turno
-            </th>
+            </th>         
             <th>
-                Duração do Turno (horas)
-            </th>
-            <th>
-                Data de fim do Turno (horas)
+                Data de fim do Turno
             </th>
             <th>
                 Turno
@@ -34,14 +39,11 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+@foreach (var item in Model.HorariosEnfermeiros) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.DataInicioTurno)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Duracao)
-            </td>
+            </td>         
             <td>
                 @Html.DisplayFor(modelItem => item.DataFimTurno)
             </td>
@@ -62,3 +64,12 @@
 }
     </tbody>
 </table>
+
+<div page-model="@Model.Pagination"
+     page-action="Index"
+     page-classes-enabled="true"
+     page-class="btn"
+     page-class-normal="btn-default"
+     page-class-selected="btn-primary"
+     class="btn-group pull-right">
+</div>

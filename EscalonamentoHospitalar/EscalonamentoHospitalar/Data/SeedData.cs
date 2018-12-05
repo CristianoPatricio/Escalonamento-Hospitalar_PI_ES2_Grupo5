@@ -511,10 +511,7 @@ namespace EscalonamentoHospitalar.Data
             db.HorariosEnfermeiro.Add(new HorarioEnfermeiro { DataInicioTurno = dataInicioT1, Duracao = 8, DataFimTurno = dataInicioT1.AddHours(8), TurnoId = turno1.TurnoId, EnfermeiroId = enfermeiro6.EnfermeiroId });
             db.HorariosEnfermeiro.Add(new HorarioEnfermeiro { DataInicioTurno = dataInicioT1CFilhos, Duracao = 8, DataFimTurno = dataInicioT1CFilhos.AddHours(8), TurnoId = turno1.TurnoId, EnfermeiroId = enfermeiro12.EnfermeiroId });
             db.HorariosEnfermeiro.Add(new HorarioEnfermeiro { DataInicioTurno = dataInicioT1, Duracao = 8, DataFimTurno = dataInicioT1.AddHours(8), TurnoId = turno1.TurnoId, EnfermeiroId = enfermeiro5.EnfermeiroId });
-            db.HorariosEnfermeiro.Add(new HorarioEnfermeiro { DataInicioTurno = dataInicioT1CFilhos, Duracao = 8, DataFimTurno = dataInicioT1CFilhos.AddHours(8), TurnoId = turno1.TurnoId, EnfermeiroId = enfermeiro10.EnfermeiroId });
-            db.HorariosEnfermeiro.Add(new HorarioEnfermeiro { DataInicioTurno = dataInicioT2, Duracao = 8, DataFimTurno = dataInicioT2.AddHours(8), TurnoId = turno2.TurnoId, EnfermeiroId = enfermeiro4.EnfermeiroId });
-            db.HorariosEnfermeiro.Add(new HorarioEnfermeiro { DataInicioTurno = dataInicioT2, Duracao = 8, DataFimTurno = dataInicioT2.AddHours(8), TurnoId = turno2.TurnoId, EnfermeiroId = enfermeiro1.EnfermeiroId });
-            db.HorariosEnfermeiro.Add(new HorarioEnfermeiro { DataInicioTurno = dataInicioT2, Duracao = 8, DataFimTurno = dataInicioT2.AddHours(8), TurnoId = turno2.TurnoId, EnfermeiroId = enfermeiro7.EnfermeiroId });      
+            db.HorariosEnfermeiro.Add(new HorarioEnfermeiro { DataInicioTurno = dataInicioT1CFilhos, Duracao = 8, DataFimTurno = dataInicioT1CFilhos.AddHours(8), TurnoId = turno1.TurnoId, EnfermeiroId = enfermeiro10.EnfermeiroId });                
 
             db.SaveChanges();
         }
