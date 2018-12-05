@@ -11,21 +11,25 @@
 <div class="row">
     <div class="col-md-4">
         <form asp-action="GerarHorarioEnfermeiro">
-            <div class="form-group" >
+            <div class="form-group">
                 <label asp-for="NumeroPessoasTurno1" class="control-label">Número de pessoas do turno 1</label>
-                <input asp-for="NumeroPessoasTurno1" class="form-control" style="width: 80px"/>
+                <input asp-for="NumeroPessoasTurno1" class="form-control" style="width: 80px" />
+                <span asp-validation-for="NumeroPessoasTurno1" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="NumeroPessoasTurno2" class="control-label">Número de pessoas do turno 2</label>
-                <input asp-for="NumeroPessoasTurno2" class="form-control" style="width: 80px"/>
+                <input asp-for="NumeroPessoasTurno2" class="form-control" style="width: 80px" />
+                <span asp-validation-for="NumeroPessoasTurno2" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="NumeroPessoasTurno3" class="control-label">Número de pessoas do turno 3</label>
-                <input asp-for="NumeroPessoasTurno3" class="form-control" style="width: 80px"/>
+                <input asp-for="NumeroPessoasTurno3" class="form-control" style="width: 80px" />
+                <span asp-validation-for="NumeroPessoasTurno3" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="DataInicioSemana" class="control-label">Data Início da Semana</label>
                 <input asp-for="DataInicioSemana " class="form-control" />
+                <span asp-validation-for="DataInicioSemana" class="text-danger"></span>
             </div>
             <hr />
             <div class="form-group">
@@ -41,4 +45,6 @@
     </div>
 </div>
 
-
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

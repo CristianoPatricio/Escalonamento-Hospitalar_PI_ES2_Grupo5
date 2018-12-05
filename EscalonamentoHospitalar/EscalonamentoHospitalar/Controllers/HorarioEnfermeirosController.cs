@@ -207,7 +207,8 @@ namespace EscalonamentoHospitalar.Controllers
         }
 
         [HttpPost]
-        public IActionResult GerarHorarioEnfermeiro(GerarHorarioEnfermeiro gerarHorarioEnfermeiro)
+        [ValidateAntiForgeryToken]
+        public IActionResult GerarHorarioEnfermeiro([Bind("NumeroPessoasTurno1, NumeroPessoasTurno2, NumeroPessoasTurno3, DataInicioSemana")] GerarHorarioEnfermeiro gerarHorarioEnfermeiro)
         {
             //Variáveis
             int numPessoasT1 = gerarHorarioEnfermeiro.NumeroPessoasTurno1;
@@ -220,15 +221,48 @@ namespace EscalonamentoHospitalar.Controllers
             int mes = dataInicio.Month;
             int dia = dataInicio.Day;
 
+            /**********Validações***********/
+
+            //Validar se Data de Início de Semana é uma segunda-feira
+            if (DataInicioSemanaIsNotAMonday(dataInicio) == true)
+            {
+                //Mensagem de erro caso os enfermeiros por turno não sejam suficientes para gerar o horário
+                ModelState.AddModelError("DataInicioSemana", "Tem de selecionar uma data correspondente a uma segunda-feira e/ou igual ou superior à data atual");
+            }          
+
+            //Validar Numero de Enfermeiros por Turno
+            if (NumEnfermeirosPorTurnoIsInvalid(numPessoasT1, numPessoasT2, numPessoasT3) == true)
+            {
+                //Mensagem de erro caso os enfermeiros por turno não sejam suficientes para gerar o horário
+                ModelState.AddModelError("NumeroPessoasTurno3", "Não tem enfermeiros suficientes para todos os turnos. Por favor, verifique os campos e tente novamente");
+            }
+
             if (ModelState.IsValid)
             {
-                //Função que insere registo na BD
-                GenerateHorarioEnfermeiro(_context, numPessoasT1, numPessoasT2, numPessoasT3, ano, mes, dia);
+                if (!DataInicioSemanaIsNotAMonday(dataInicio) || !NumEnfermeirosPorTurnoIsInvalid(numPessoasT1, numPessoasT2, numPessoasT3))
+                {
+                    //Função que insere registo na BD
+                    GenerateHorarioEnfermeiro(_context, numPessoasT1, numPessoasT2, numPessoasT3, ano, mes, dia);
+                    TempData["Success"] = "Horário gerado com sucesso!";
+                    return RedirectToAction(nameof(Index));
+                }
             }
-            return RedirectToAction(nameof(Index));
+
+            return View(gerarHorarioEnfermeiro);
         }
 
         /*************************Funções Auxiliares************************/
+
+        /**
+        * @param db
+        * @param numT1
+        * @param numT2
+        * @param numT3
+        * @param ano
+        * @param mes
+        * @param dia
+        * @generate a random shcedule for the nurses
+        */
         private void GenerateHorarioEnfermeiro(HospitalDbContext db, int numT1, int numT2, int numT3, int ano, int mes, int dia)
         {
             //Variáveis
@@ -451,7 +485,15 @@ namespace EscalonamentoHospitalar.Controllers
             return arrIdEnfermeirosSemFilhos;
         }
 
-
+        /**
+        * @param db
+        * @param dataInicioTurno
+        * @param duracao
+        * @param dataFimTurno
+        * @param turnoId
+        * @param enfermeiroId
+        * @insert in the HorarioEnfermeiro table a record with the above parameters
+        */
         private void InsertDataIntoHorarioEnfermeiro(HospitalDbContext db, DateTime dataInicioTurno, int duracao, DateTime dataFimTurno, Turno turnoId, Enfermeiro enfermeiroId)
         {
             db.HorariosEnfermeiro.Add(
@@ -459,6 +501,46 @@ namespace EscalonamentoHospitalar.Controllers
             );
 
             db.SaveChanges();
+        }
+
+
+        /**
+        * @param data
+        * @return true if the day of the selected date isn't a Monday
+        */
+        private bool DataInicioSemanaIsNotAMonday(DateTime data)
+        {
+            bool IsInvalid = false;
+            DateTime dateNow = DateTime.Now;
+
+            int dateTimeCompare = DateTime.Compare(data, dateNow);
+
+            if ((data.DayOfWeek != DayOfWeek.Monday) || dateTimeCompare < 0)
+            {
+                IsInvalid = true;
+            }
+
+            return IsInvalid;
+        }
+
+        /**
+        * @param numT1
+        * @param numT2
+        * @param numT3
+        * @return true if total nurses is less than sum of numT1 + numT2 + numT3
+        */
+        private bool NumEnfermeirosPorTurnoIsInvalid(int numT1, int numT2, int numT3)
+        {
+            bool IsInvalid = false;
+
+            int totalEnf = numT1 + numT2 + numT3;
+
+            if (EnfermeirosIds().Length <= totalEnf)
+            {
+                IsInvalid = true;
+            }
+
+            return IsInvalid;
         }
 
     }
