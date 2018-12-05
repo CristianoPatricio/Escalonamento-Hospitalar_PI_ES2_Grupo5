@@ -184,8 +184,8 @@ namespace EscalonamentoHospitalar.Controllers
 
             if (ModelState.IsValid)
             {
-
-
+                //Função que insere registo na BD
+                GenerateHorarioEnfermeiro(_context, numPessoasT1, numPessoasT2, numPessoasT3, ano, mes, dia);
             }
             return RedirectToAction(nameof(Index));
         }
@@ -264,6 +264,8 @@ namespace EscalonamentoHospitalar.Controllers
                 {
                     string turno = "MANHÃ";
 
+                    int duracao = 8;
+
                     Turno turnoId = _context.Turnos.SingleOrDefault(t => t.Nome.Equals(turno));
 
                     if (j % 2 == 0 && listaEnfermeirosComFilhos.Count() != 0) //escolhe enfermeiros com filhos
@@ -279,10 +281,10 @@ namespace EscalonamentoHospitalar.Controllers
                         data = new DateTime(ano, mes, dia, 8, 0, 0);
                     }
 
-                    Enfermeiro enfermeiroT1 = _context.Enfermeiros.SingleOrDefault(e => e.EnfermeiroId == enfT1);
+                    Enfermeiro enfermeiroIdT1 = _context.Enfermeiros.SingleOrDefault(e => e.EnfermeiroId == enfT1);
 
                     //Adicionar função para inserir na BD
-                    InsertDataIntoHorarioEnfermeiro(db, data.AddDays(i - 2), 8, data.AddDays(i - 2).AddHours(8), turnoId, enfermeiroT1);
+                    InsertDataIntoHorarioEnfermeiro(db, data.AddDays(i - 2), duracao, data.AddDays(i - 2).AddHours(duracao), turnoId, enfermeiroIdT1);
 
                     //remove da lista o enfermeiro do turno
                     listaEnfermeirosComFilhos.Remove(enfT1);
@@ -313,6 +315,10 @@ namespace EscalonamentoHospitalar.Controllers
                     {
                         string turno = "TARDE";
 
+                        Turno turnoId = _context.Turnos.SingleOrDefault(t => t.Nome.Equals(turno));
+
+                        int duracao = 8;
+
                         if (k % 2 == 0 && listaEnfermeirosComFilhos.Count() != 0)
                         {
                             enfT2 = listaEnfermeirosComFilhos[rnd.Next(0, listaEnfermeirosComFilhos.Count())];
@@ -324,7 +330,10 @@ namespace EscalonamentoHospitalar.Controllers
 
                         data = new DateTime(ano, mes, dia, 16, 0, 0);
 
-                        Console.Write("Data: " + data.AddDays(i - 2) + " | " + turno + " | " + i + "feira | " + enfT2 + "\n");
+                        Enfermeiro enfermeiroIdT2 = _context.Enfermeiros.SingleOrDefault(e => e.EnfermeiroId == enfT2);
+
+                        //Adicionar função para inserir na BD
+                        InsertDataIntoHorarioEnfermeiro(db, data.AddDays(i - 2), duracao, data.AddDays(i - 2).AddHours(duracao), turnoId, enfermeiroIdT2);
 
                         //remove da lista o enfermeiro do turno
                         listaEnfermeirosComFilhos.Remove(enfT2);
@@ -342,12 +351,19 @@ namespace EscalonamentoHospitalar.Controllers
                     {
                         string turno = "NOITE";
 
+                        Turno turnoId = _context.Turnos.SingleOrDefault(t => t.Nome.Equals(turno));
+
+                        int duracao = 8;
+
                         enfT3 = listaEnfermeirosSemFilhos[rnd.Next(0, listaEnfermeirosSemFilhos.Count())];
                         idEnfNoite[l] = enfT3;
 
                         data = new DateTime(ano, mes, dia + 1, 0, 0, 0);
 
-                        Console.Write("Data: " + data.AddDays(i - 2) + " | " + turno + " | " + i + "feira | " + enfT3 + "\n");
+                        Enfermeiro enfermeiroIdT3 = _context.Enfermeiros.SingleOrDefault(e => e.EnfermeiroId == enfT3);
+
+                        //Adicionar função para inserir na BD
+                        InsertDataIntoHorarioEnfermeiro(db, data.AddDays(i - 2), duracao, data.AddDays(i - 2).AddHours(duracao), turnoId, enfermeiroIdT3);                 
 
                         //remove da lista o enfermeiro do turno
                         listaEnfermeirosSemFilhos.Remove(enfT3);
