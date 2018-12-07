@@ -71,6 +71,25 @@ namespace EscalonamentoHospitalar.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("TratamentoId,PatologiaId,PacienteId,GrauId,DataInicio,DataFim,DuracaoCiclo,RegimeId,EstadoId,MedicoId")] Tratamento tratamento)
         {
+
+                                        /******************Validações**********************/
+
+
+            DateTime dateNow = DateTime.Now;
+            DateTime inicioTratamento = tratamento.DataInicio;
+            DateTime fimTratamento = tratamento.DataFim;
+
+            bool inicioTratamentoIsInvalid = true;
+
+
+
+
+            //Validar Data de inicio do tratamento
+
+
+
+
+
             if (ModelState.IsValid)
             {
                 _context.Add(tratamento);

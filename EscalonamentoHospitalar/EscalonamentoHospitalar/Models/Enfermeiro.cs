@@ -17,8 +17,9 @@ namespace EscalonamentoHospitalar.Models
 
         [Required(ErrorMessage = "Por favor, introduza o nome")]
         [RegularExpression(@"([A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ\s]+)", ErrorMessage = "Nome inválido")]
+        [StringLength(maximumLength: 50, MinimumLength = 3)]
         public string Nome { get; set; }
-
+        
         public EspecialidadeEnfermeiro EspecialidadeEnfermeiro { get; set; }
         public int EspecialidadeEnfermeiroId { get; set; }
 

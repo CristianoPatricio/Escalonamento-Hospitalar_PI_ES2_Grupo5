@@ -18,12 +18,14 @@ namespace EscalonamentoHospitalar.Models
 
         [Required(ErrorMessage = "Por favor introduza o nome")]
         [RegularExpression(@"([A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ\s]+)", ErrorMessage = "O nome que introduziu não é válido")]
+        [StringLength(maximumLength:50,MinimumLength =3)]
         public string Nome { get; set; }
 
-        [RegularExpression(@"(\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,6})", ErrorMessage = "O email que introduziu não é válido")]
+        [Required(ErrorMessage = "Por favor, introduza o email")]
+        [EmailAddress(ErrorMessage = "Email inválido")]
         public string Email { get; set; }
 
-        [RegularExpression(@"(2\d{8})|(9[1236]\d{7})", ErrorMessage = "O número de contacto que introduziu não é válido")]
+        [RegularExpression(@"(2[123]\d{8})|(9[1236]\d{7})", ErrorMessage = "O número de contacto que introduziu não é válido")]
         public string Contacto { get; set; }
 
         [Required(ErrorMessage = "Por favor introduza o nº de cartão de cidadão")]

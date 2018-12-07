@@ -96,6 +96,8 @@ namespace EscalonamentoHospitalar.Controllers
 
             
             DateTime pacienteBDate = paciente.Data_Nascimento;
+            
+            
 
             var nCC = paciente.CC;
 
