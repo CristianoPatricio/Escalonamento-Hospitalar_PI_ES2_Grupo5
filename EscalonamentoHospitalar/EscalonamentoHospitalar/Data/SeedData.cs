@@ -127,9 +127,13 @@ namespace EscalonamentoHospitalar.Data
         {
             if (db.Estado.Any()) return;
             db.Estado.AddRange(
+                 new Estado
+                 {
+                     Nome = "Em Espera"
+                 },
                        new Estado
                        {
-                           Nome = "Decorrer"
+                           Nome = "A Decorrer"
                        },
                           new Estado
                           {

@@ -71,6 +71,15 @@ namespace EscalonamentoHospitalar.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("TratamentoId,PatologiaId,PacienteId,GrauId,DataInicio,DataFim,DuracaoCiclo,RegimeId,EstadoId,MedicoId")] Tratamento tratamento)
         {
+            /*********Validações***********/
+
+            DateTime dateNow = DateTime.Now;
+            DateTime inicioTratamento = tratamento.DataInicio;
+            DateTime fimTratamento = tratamento.DataFim;
+
+
+           
+
             if (ModelState.IsValid)
             {
                 _context.Add(tratamento);
@@ -193,6 +202,27 @@ namespace EscalonamentoHospitalar.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        private string EstadoTratamento(DateTime dataAtual,DateTime dataInicio)
+        {
+            string estado = null;
+
+            int compare = DateTime.Compare(dataAtual, dataInicio);
+
+            if (compare >= 0) //significa que a minha data atual é igual ou superior a data de inicio
+            {
+                estado = "A Decorrer";
+
+            }
+            else
+            {
+                estado = "Em Espera"; //significa que a minha data atual é inferior a data de inicio
+            }
+
+
+            return estado;
+        }
+
+        //falta adicionar para a data de fim 
         private bool TratamentoExists(int id)
         {
             return _context.Tratamentos.Any(e => e.TratamentoId == id);

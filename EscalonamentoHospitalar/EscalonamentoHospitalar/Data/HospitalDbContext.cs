@@ -90,7 +90,7 @@ namespace EscalonamentoHospitalar.Models
 
 
 
-        public DbSet<EscalonamentoHospitalar.Models.Equipamento> Equipamento { get; set; }
+        
 
     }
 }
