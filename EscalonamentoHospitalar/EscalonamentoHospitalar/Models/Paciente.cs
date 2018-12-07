@@ -14,6 +14,7 @@ namespace EscalonamentoHospitalar.Models
 
         [Required(ErrorMessage = "Nome Inválido")]
         [RegularExpression(@"([A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ\s]+)", ErrorMessage = "Nome Inválido")]
+        [StringLength(maximumLength: 50, MinimumLength = 3)]
         public string Nome { get; set; }
 
         [Required(ErrorMessage = "Morada Inválida")]
@@ -23,7 +24,8 @@ namespace EscalonamentoHospitalar.Models
         [RegularExpression(@"\d{4}(-\d{3})?", ErrorMessage = "Código Postal Inválido")]
         public string Cod_Postal { get; set; }
 
-        [RegularExpression(@"(\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,6})", ErrorMessage = "Email Inválido")]
+        [Required(ErrorMessage = "Por favor, introduza o email")]
+        [EmailAddress(ErrorMessage = "Email inválido")]
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Por favor, introduza o nº de CC/BI")]
