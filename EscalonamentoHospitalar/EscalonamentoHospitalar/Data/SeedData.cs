@@ -17,6 +17,7 @@ namespace EscalonamentoHospitalar.Data
                 var db = serviceScope.ServiceProvider.GetService<HospitalDbContext>();
 
                 SeedEspecialidadeEnfermeiros(db);
+                SeedEstadoPedidoTrocas(db);
                 SeedEnfermeiros(db);
                 SeedDiretorServico(db);                         
                 SeedEnfermeiroEspecialidade(db);
@@ -33,6 +34,22 @@ namespace EscalonamentoHospitalar.Data
                 SeedMedicoEspecialidades(db);
                 SeedEspecialidadeMedicos(db);
             }
+        }
+
+        private static void SeedEstadoPedidoTrocas(HospitalDbContext db)
+        {
+            if (db.EstadoPedidoTrocas.Any()) return;
+
+            db.EstadoPedidoTrocas.AddRange(
+                
+                new EstadoPedidoTroca { Nome = "Aprovado"},
+                new EstadoPedidoTroca { Nome = "Não Aprovado"},
+                new EstadoPedidoTroca { Nome = "Pendente"},
+                new EstadoPedidoTroca { Nome = "Validado"}
+                
+                );
+
+            db.SaveChanges();
         }
 
         private static void SeedEspecialidadeMedicos(HospitalDbContext db)
