@@ -1,0 +1,63 @@
+﻿@model EscalonamentoHospitalar.Models.PedidoTrocaTurnosEnfermeiro
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>PedidoTrocaTurnosEnfermeiro</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DataPedido)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DataPedido)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EnfermeiroRequerenteId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EnfermeiroRequerenteId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.HorarioATrocarId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.HorarioATrocarId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EnfermeiroATrocarId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EnfermeiroATrocarId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.HorarioParaTrocaId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.HorarioParaTrocaId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EnfermeiroParaTrocaId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EnfermeiroParaTrocaId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EstadoPedidoTroca)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EstadoPedidoTroca.EstadoPedidoTrocaId)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="PedidoTrocaTurnosEnfermeiroId" />
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

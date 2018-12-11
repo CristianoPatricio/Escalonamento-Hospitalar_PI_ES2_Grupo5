@@ -1,0 +1,60 @@
+﻿@model EscalonamentoHospitalar.Models.PedidoTrocaTurnosEnfermeiro
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>PedidoTrocaTurnosEnfermeiro</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DataPedido)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DataPedido)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EnfermeiroRequerenteId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EnfermeiroRequerenteId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.HorarioATrocarId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.HorarioATrocarId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EnfermeiroATrocarId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EnfermeiroATrocarId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.HorarioParaTrocaId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.HorarioParaTrocaId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EnfermeiroParaTrocaId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EnfermeiroParaTrocaId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EstadoPedidoTroca)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EstadoPedidoTroca.EstadoPedidoTrocaId)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.PedidoTrocaTurnosEnfermeiroId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

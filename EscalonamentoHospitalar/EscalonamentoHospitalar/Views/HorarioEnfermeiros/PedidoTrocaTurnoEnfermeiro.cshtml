@@ -1,0 +1,70 @@
+﻿@model PedidoTrocaTurnosEnfermeiro
+
+@{
+    ViewData["Title"] = "Pedido Troca Turnos Enfermeiro";
+}
+
+<h2>Solicitar pedido de troca de turnos - Enfermeiros</h2>
+
+<p></p>
+
+<div>
+    <h4>Horário a Trocar</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.HorarioEnfermeiro.DataInicioTurno)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.HorarioEnfermeiro.DataInicioTurno)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.HorarioEnfermeiro.DataFimTurno)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.HorarioEnfermeiro.DataFimTurno)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.HorarioEnfermeiro.Turno)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.HorarioEnfermeiro.Turno.Nome)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.HorarioEnfermeiro.Enfermeiro)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.HorarioEnfermeiro.Enfermeiro.Nome)
+        </dd>        
+    </dl>
+</div>
+
+<!--
+<form asp-action="Index">
+    <p>
+        Pesquisar por data: <input style="width: 200px;" asp-for="CurrentNome" placeholder="Insira o nome a pesquisar" />
+        <input type="submit" value="Pesquisar" class="btn btn-info" />
+    </p>
+</form>
+    -->
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="PedidoTrocaTurnoEnfermeiro">          
+            <hr />
+            <div class="form-group">
+                <input type="submit" value="Solicitar Troca" class="btn btn-success" />
+            </div>
+            <hr />
+            <div>
+                <a href='@Url.Action("Index", "HorarioEnfermeiros")'>
+                    <input type="button" class="btn btn-default" value="Voltar" />
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

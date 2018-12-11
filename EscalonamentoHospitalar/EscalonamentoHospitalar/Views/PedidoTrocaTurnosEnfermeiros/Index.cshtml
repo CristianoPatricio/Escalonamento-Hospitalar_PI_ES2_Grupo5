@@ -1,0 +1,71 @@
+﻿@model IEnumerable<EscalonamentoHospitalar.Models.PedidoTrocaTurnosEnfermeiro>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DataPedido)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EnfermeiroRequerenteId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HorarioATrocarId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EnfermeiroATrocarId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HorarioParaTrocaId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EnfermeiroParaTrocaId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EstadoPedidoTroca)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataPedido)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EnfermeiroRequerenteId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HorarioATrocarId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EnfermeiroATrocarId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HorarioParaTrocaId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EnfermeiroParaTrocaId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EstadoPedidoTroca.EstadoPedidoTrocaId)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.PedidoTrocaTurnosEnfermeiroId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.PedidoTrocaTurnosEnfermeiroId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.PedidoTrocaTurnosEnfermeiroId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
