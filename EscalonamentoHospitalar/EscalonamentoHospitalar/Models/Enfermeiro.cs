@@ -50,6 +50,7 @@ namespace EscalonamentoHospitalar.Models
 
         public ICollection<EnfermeiroEspecialidade> EnfermeirosEspecialidade { get; set; }
         public ICollection<HorarioEnfermeiro> HorariosEnfermeiro { get; set; }
+        public ICollection<PedidoTrocaTurnosEnfermeiro> pedidoTrocaTurnosEnfermeiros { get; set; }
 
 
     }

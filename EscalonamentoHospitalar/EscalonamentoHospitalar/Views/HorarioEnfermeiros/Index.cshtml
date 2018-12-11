@@ -52,14 +52,12 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Enfermeiro.Nome)
-            </td>
-            @*
+            </td>           
             <td>
-                <a asp-action="Edit" asp-route-id="@item.HorarioEnfermeiroId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.HorarioEnfermeiroId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.HorarioEnfermeiroId">Delete</a>
-            </td>
-                *@
+                <a asp-action="Details" asp-route-id="@item.HorarioEnfermeiroId"><input type="button" value="Trocar" class="btn btn-info" /></a>
+                @*<a asp-action="Details" asp-route-id="@item.HorarioEnfermeiroId">Details</a>*@
+                @*<a asp-action="Delete" asp-route-id="@item.HorarioEnfermeiroId">Delete</a>*@
+            </td>               
         </tr>
 }
     </tbody>

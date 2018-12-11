@@ -58,7 +58,7 @@ namespace EscalonamentoHospitalar.Controllers
                         PageSize = PAGE_SIZE,
                         TotalItems = numHorario
                     },
-                    CurrentNome = nome
+                    CurrentNome = nome                  
                 }
             );
         }
@@ -251,6 +251,30 @@ namespace EscalonamentoHospitalar.Controllers
             return View(gerarHorarioEnfermeiro);
         }
 
+
+        // GET: HorarioEnfermeiro/PedidoTrocaTurnoEnfermeiro
+        public async Task<IActionResult> PedidoTrocaTurnoEnfermeiroAsync(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var horarioEnfermeiro = await _context.HorariosEnfermeiro
+                .Include(h => h.Enfermeiro)
+                .Include(h => h.Turno)
+                .FirstOrDefaultAsync(m => m.HorarioEnfermeiroId == id);
+
+            if (horarioEnfermeiro == null)
+            {
+                return NotFound();
+            }
+
+            return View(horarioEnfermeiro);
+        }
+
+
+
         /*************************Funções Auxiliares************************/
 
         /**
@@ -281,9 +305,9 @@ namespace EscalonamentoHospitalar.Controllers
             int enfT2 = 0;
             int enfT3 = 0;
 
-            int nEnfComFolgaPorDia = enfermeiros.Length - (numPessoasT1 + numPessoasT2 + numPessoasT3);
+            //int nEnfComFolgaPorDia = enfermeiros.Length - (numPessoasT1 + numPessoasT2 + numPessoasT3);
 
-            int[] idEnfComFolga = new int[nEnfComFolgaPorDia];
+            //int[] idEnfComFolga = new int[nEnfComFolgaPorDia];
 
             int[] idEnfNoite = null;
 
@@ -305,7 +329,7 @@ namespace EscalonamentoHospitalar.Controllers
                 listaEnfermeirosSemFilhos = new List<int>(enfermeirosSemFilhos);
                 listaEnfermeirosComFilhos = new List<int>(enfermeirosComFilhos);
 
-                for (int m = 0; m < nEnfComFolgaPorDia; m++) //para cada nEnf de folga por dia
+                /*for (int m = 0; m < nEnfComFolgaPorDia; m++) //para cada nEnf de folga por dia
                 {
                     //escolhe aleatoriamente um enfermeiro para folga;
                     idEnfComFolga[m] = listaEnfermeiros[rnd.Next(0, listaEnfermeiros.Count())];
@@ -315,10 +339,8 @@ namespace EscalonamentoHospitalar.Controllers
                     //remove enf da lista
                     listaEnfermeirosComFilhos.Remove(idEnfComFolga[m]);
                     //remove enf da lista
-                    listaEnfermeirosSemFilhos.Remove(idEnfComFolga[m]);
-
-                    //Console.Write("Folgas: " + idEnfComFolga[m] + "\n");
-                }
+                    listaEnfermeirosSemFilhos.Remove(idEnfComFolga[m]);                  
+                }*/
 
                 //remover da lista enfermeiros que fizeram noite
                 if (idEnfNoite != null)
@@ -334,25 +356,26 @@ namespace EscalonamentoHospitalar.Controllers
 
                 for (int j = 0; j < numPessoasT1; j++) //para cada nPessoas do Turno 1
                 {
-                    string turno = "MANHÃ";
 
-                    int duracao = 8;
-
-                    Turno turnoId = _context.Turnos.SingleOrDefault(t => t.Nome.Equals(turno));
+                    string turno;
+                    int duracao = 8;                   
 
                     if (j % 2 == 0 && listaEnfermeirosComFilhos.Count() != 0) //escolhe enfermeiros com filhos
                     {
                         //escolhe aleatoriamente um enfermeiro para o turno
                         enfT1 = listaEnfermeirosComFilhos[rnd.Next(0, listaEnfermeirosComFilhos.Count())];
                         data = new DateTime(ano, mes, dia, 9, 0, 0);
+                        turno = "MANHÃ-2";
                     }
                     else //escolhe enfermeiros sem filhos
                     {
                         //escolhe aleatoriamente um enfermeiro para o turno
                         enfT1 = listaEnfermeirosSemFilhos[rnd.Next(0, listaEnfermeirosSemFilhos.Count())];           
                         data = new DateTime(ano, mes, dia, 8, 0, 0);
+                        turno = "MANHÃ-1";
                     }
 
+                    Turno turnoId = _context.Turnos.SingleOrDefault(t => t.Nome.Equals(turno));
                     Enfermeiro enfermeiroIdT1 = _context.Enfermeiros.SingleOrDefault(e => e.EnfermeiroId == enfT1);
 
                     //Adicionar função para inserir na BD
@@ -374,10 +397,10 @@ namespace EscalonamentoHospitalar.Controllers
                             listaEnfermeirosSemFilhos.Add(idEnfNoite[n]);
                         }
                     }
-                    for (int u = 0; u < nEnfComFolgaPorDia; u++)
+                    /*for (int u = 0; u < nEnfComFolgaPorDia; u++)
                     {
                         listaEnfermeirosSemFilhos.Remove(idEnfComFolga[u]);
-                    }
+                    }*/
 
                 }         
 
