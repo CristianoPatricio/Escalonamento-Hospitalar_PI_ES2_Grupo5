@@ -78,8 +78,7 @@ namespace EscalonamentoHospitalar.Controllers
             DateTime dateNow = DateTime.Now;
             DateTime inicioTratamento = tratamento.DataInicio;
             DateTime fimTratamento = tratamento.DataFim;
-
-            bool inicioTratamentoIsInvalid = true;
+            
 
 
 

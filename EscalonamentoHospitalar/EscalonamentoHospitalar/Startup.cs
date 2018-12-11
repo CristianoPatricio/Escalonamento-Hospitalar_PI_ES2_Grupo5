@@ -42,6 +42,25 @@ namespace EscalonamentoHospitalar
             services.AddDefaultIdentity<IdentityUser>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
+            services.Configure<IdentityOptions>(
+                options =>
+                {
+                    // Definições da password
+                    options.Password.RequireUppercase = true;
+                    options.Password.RequireDigit = true;
+                    options.Password.RequiredLength = 6;
+                    options.Password.RequireUppercase = true;
+                    options.Password.RequiredUniqueChars = 3;
+
+                    // Definições de lockout
+                    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(2);
+                    options.Lockout.MaxFailedAccessAttempts = 3;
+
+                }
+                
+            );
+
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddDbContext<HospitalDbContext>(options =>
@@ -49,10 +68,15 @@ namespace EscalonamentoHospitalar
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, HospitalDbContext db, UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
         {
+           SeedData.CreateRolesAndUsersAsync(userManager, roleManager).Wait();
+
             if (env.IsDevelopment())
             {
+                SeedData.CreateRolesAndUsersAsync(userManager, roleManager).Wait();
+                SeedData.Populate(db);
+
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
             }

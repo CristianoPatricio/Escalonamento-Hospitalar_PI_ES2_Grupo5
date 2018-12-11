@@ -1,4 +1,5 @@
 ﻿using EscalonamentoHospitalar.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,11 @@ namespace EscalonamentoHospitalar.Data
 {
     public static class SeedData
     {
+        // Criação dos Utilizadores: Diretor de serviço / Médico / Enfermeiro
+        private const string ROLE_DIRETORSERVICO = "DiretorServico";
+        private const string ROLE_MEDICO = "Medico";
+        private const string ROLE_ENFERMEIRO = "Enfermeiro";
+
         internal static void Populate(IServiceProvider applicationServices)
         {
             using (var serviceScope = applicationServices.CreateScope())
@@ -35,6 +41,74 @@ namespace EscalonamentoHospitalar.Data
             }
         }
 
+        private static async void MakeSureRoleExistsAsync(RoleManager<IdentityRole> roleManager, string role)
+        {
+            if(!await roleManager.RoleExistsAsync(role))
+            {
+                await roleManager.CreateAsync(new IdentityRole(role));
+            }
+        }
+
+        // Criação dos roles e utilizador: Diretor de Serviço
+        public static async Task CreateRolesAndUsersAsync(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
+        {
+            const string DIRETORSERVICO_USER = "D001";
+            const string DIRETORSERVICO_PASSWORD = "1234";
+            
+            MakeSureRoleExistsAsync(roleManager, ROLE_DIRETORSERVICO);
+            MakeSureRoleExistsAsync(roleManager, ROLE_MEDICO);
+            MakeSureRoleExistsAsync(roleManager, ROLE_ENFERMEIRO);
+
+            IdentityUser diretorServico = await userManager.FindByNameAsync(DIRETORSERVICO_USER);
+            if(diretorServico == null)
+            {
+                diretorServico = new IdentityUser { UserName = DIRETORSERVICO_USER };
+                await userManager.CreateAsync(diretorServico, DIRETORSERVICO_PASSWORD);
+            }
+            if (!await userManager.IsInRoleAsync(diretorServico, ROLE_DIRETORSERVICO))
+            {
+                await userManager.AddToRoleAsync(diretorServico, ROLE_DIRETORSERVICO);
+            }
+
+        }
+
+        // Criação do utilizador médico
+        public static async Task CreateMedicoUsersAsync(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
+        {
+            const string MEDICO_USER = "M001";
+            const string MEDICO_PASSWORD = "1234";
+
+            IdentityUser medicoUser = await userManager.FindByNameAsync(MEDICO_USER);
+            if(medicoUser == null )
+            {
+                medicoUser = new IdentityUser { UserName = MEDICO_USER };
+                await userManager.CreateAsync(medicoUser, MEDICO_PASSWORD);
+            }
+
+            if(!await userManager.IsInRoleAsync(medicoUser, MEDICO_USER))
+            {
+                await userManager.AddToRoleAsync(medicoUser, MEDICO_USER);
+            }
+        }
+     
+        // Criação do utilizador enfermeiro
+        public static async Task CreateEnfermeiroUsersAsync(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
+        {
+            const string ENFERMEIRO_USER = "E001";
+            const string ENFERMEIRO_PASSWORD = "1234";
+
+            IdentityUser medicoUser = await userManager.FindByNameAsync(ENFERMEIRO_USER);
+            if (medicoUser == null)
+            {
+                medicoUser = new IdentityUser { UserName = ENFERMEIRO_USER };
+                await userManager.CreateAsync(medicoUser, ENFERMEIRO_PASSWORD);
+            }
+
+            if (!await userManager.IsInRoleAsync(medicoUser, ENFERMEIRO_USER))
+            {
+                await userManager.AddToRoleAsync(medicoUser, ENFERMEIRO_USER);
+            }
+        }
         private static void SeedEspecialidadeMedicos(HospitalDbContext db)
         {
 
