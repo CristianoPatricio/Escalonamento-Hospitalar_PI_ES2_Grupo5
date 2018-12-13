@@ -1,0 +1,55 @@
+﻿@model PedidoTrocaTurnosEnfermeiroViewModel
+
+@{
+    ViewData["Title"] = "Solicitar Pedido Troca de Turnos - Enfermeiros";
+}
+
+<h2>Sumário - Pedido de Troca de Turnos - Enfermeiros</h2>
+
+<div>
+    <h4>Horário a trocar Enfermeiro @Model.horarioEnfermeiroATrocar.Enfermeiro.Nome</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Data de início de turno:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.horarioEnfermeiroATrocar.DataInicioTurno)
+        </dd>
+        <dt>
+            Enfermeiro:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.horarioEnfermeiroATrocar.Enfermeiro.Nome)
+        </dd>
+    </dl>
+</div>
+
+<hr />
+
+
+<div>
+    <h4>Horário para troca: Enfermeiro @Model.horarioEnfermeiroParaTroca.Enfermeiro.Nome</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Data de início de turno:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.horarioEnfermeiroParaTroca.DataInicioTurno)
+        </dd>
+        <dt>
+            Enfermeiro:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.horarioEnfermeiroParaTroca.Enfermeiro.Nome)
+        </dd>
+    </dl>
+</div>
+
+
+<form asp-action="SolicitarPedidoTrocaTurnoEnfermeiro">
+    <a asp-route-idHorario1="@ViewBag.HorarioATrocar" asp-route-idHorario2="@ViewBag.HorarioParaTroca">
+    <input type="submit" value="Solicitar Pedido" class="btn btn-success" /></a>
+    <a asp-action="Index"><input type="button" value="Cancelar" class="btn btn-default" /></a>
+</form>

@@ -18,7 +18,6 @@ namespace EscalonamentoHospitalar.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
-
             //Chave composta especialidademedicoId + medicoId
             modelBuilder.Entity<MedicoEspecialidade>().HasKey(o => new { o.MedicoId, o.EspecialidadeMedicoId });
 
@@ -92,7 +91,11 @@ namespace EscalonamentoHospitalar.Models
 
         public DbSet<EscalonamentoHospitalar.Models.EstadoPedidoTroca> EstadoPedidoTrocas { get; set; }
 
-        public DbSet<EscalonamentoHospitalar.Models.PedidoTrocaTurnosEnfermeiro> PedidoTrocaTurnosEnfermeiro { get; set; }
+        public DbSet<EscalonamentoHospitalar.Models.PedidoTrocaTurnosEnfermeiro> PedidoTrocaTurnosEnfermeiros { get; set; }
+
+        public DbSet<EscalonamentoHospitalar.Models.HorarioATrocarEnfermeiro> HorarioATrocarEnfermeiros { get; set; }
+
+        public DbSet<EscalonamentoHospitalar.Models.HorarioParaTrocaEnfermeiro> HorarioParaTrocaEnfermeiros { get; set; }
 
     }
 }

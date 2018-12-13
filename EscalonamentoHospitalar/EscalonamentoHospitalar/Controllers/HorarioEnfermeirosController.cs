@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EscalonamentoHospitalar.Models;
+using System.Dynamic;
 
 namespace EscalonamentoHospitalar.Controllers
 {
@@ -253,27 +254,101 @@ namespace EscalonamentoHospitalar.Controllers
 
 
         // GET: HorarioEnfermeiro/PedidoTrocaTurnoEnfermeiro
-        public async Task<IActionResult> PedidoTrocaTurnoEnfermeiroAsync(int? id)
+        public async Task<IActionResult> PedidoTrocaTurnoEnfermeiro(int? idHorario1)
         {
-            if (id == null)
+
+            if (idHorario1 == null)
             {
                 return NotFound();
             }
 
-            var horarioEnfermeiro = await _context.HorariosEnfermeiro
-                .Include(h => h.Enfermeiro)
+            //Select EnfermeiroID Where HorarioEnfermeiroId = idHorario1
+            var idEnf = from h in _context.HorariosEnfermeiro
+                     where h.HorarioEnfermeiroId == idHorario1
+                     select h.EnfermeiroId;
+      
+            var horarios = _context.HorariosEnfermeiro
                 .Include(h => h.Turno)
-                .FirstOrDefaultAsync(m => m.HorarioEnfermeiroId == id);
+                .Include(h => h.Enfermeiro)
+                .Where(h => h.HorarioEnfermeiroId != idHorario1 && h.EnfermeiroId != idEnf.Single());
 
-            if (horarioEnfermeiro == null)
+            if (horarios == null)
             {
                 return NotFound();
             }
+          
+            ViewBag.HorarioATrocar = idHorario1;
 
-            return View(horarioEnfermeiro);
+            return View(await horarios.ToListAsync());          
         }
 
+        //GET: HorarioEnfermeiro/SolicitarPedidoTrocaTurnoEnfermeiro
+        public async Task<IActionResult> SolicitarPedidoTrocaTurnoEnfermeiro(int? idHorario1, int? idHorario2)
+        {
+            if (idHorario1 == null || idHorario2 == null)
+            {
+                return NotFound();
+            }
 
+            var horarioEnfermeiro1 = await _context.HorariosEnfermeiro
+                .Include(h => h.Enfermeiro)
+                .Include(h => h.Turno)
+                .FirstOrDefaultAsync(m => m.HorarioEnfermeiroId == idHorario1);
+
+            var horarioEnfermeiro2 = await _context.HorariosEnfermeiro
+                .Include(h => h.Enfermeiro)
+                .Include(h => h.Turno)
+                .FirstOrDefaultAsync(m => m.HorarioEnfermeiroId == idHorario2);
+
+            if (horarioEnfermeiro1 == null || horarioEnfermeiro2 == null)
+            {
+                return NotFound();
+            }
+
+            ViewBag.HorarioATrocar = idHorario1;
+            ViewBag.HorarioParaTroca = idHorario2;
+
+            return View(
+                
+                new PedidoTrocaTurnosEnfermeiroViewModel
+                {
+                    horarioEnfermeiroATrocar = horarioEnfermeiro1,
+                    horarioEnfermeiroParaTroca = horarioEnfermeiro2
+                }
+                
+                );
+        }
+
+        //POST:HorarioEnfermeiro/SolicitarPedidoTrocaTurnoEnfermeiro 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult SolicitarPedidoTrocaTurnoEnfermeiro(int idHorario1, int idHorario2)
+        {
+            DateTime dataPedido = DateTime.Now;
+
+            //Select EnfermeiroID Where HorarioEnfermeiroId = idHorario1
+            var idEnf1 = from h in _context.HorariosEnfermeiro
+                        where h.HorarioEnfermeiroId == idHorario1
+                        select h.EnfermeiroId;
+
+            //Select EnfermeiroID Where HorarioEnfermeiroId = idHorario2
+            var idEnf2 = from h in _context.HorariosEnfermeiro
+                         where h.HorarioEnfermeiroId == idHorario2
+                         select h.EnfermeiroId;
+
+            Enfermeiro enfermeiroRequerenteId = _context.Enfermeiros.SingleOrDefault(e => e.EnfermeiroId == idEnf1.Single());
+            
+            HorarioATrocarEnfermeiro horarioATrocarId = _context.HorarioATrocarEnfermeiros.SingleOrDefault(h => h.HorarioATrocarId == idHorario1);
+            HorarioParaTrocaEnfermeiro horarioParaTrocaId = _context.HorarioParaTrocaEnfermeiros.SingleOrDefault(h => h.HorarioParaTrocaId == idHorario2);
+
+            EstadoPedidoTroca estadoPedidoTrocaId = _context.EstadoPedidoTrocas.SingleOrDefault(e => e.Nome == "Pendente");
+
+            //TODO Inserir nas duas tabelas
+            //Insert into PedidoTrocaTurnos Table
+            //InsertDataIntoPedidoTrocaTurnoEnfermeiro(_context, dataPedido, enfermeiroRequerenteId, horarioATrocarId, horarioParaTrocaId, estadoPedidoTrocaId);
+            TempData["SuccessRequired"] = "Pedido realizado com sucesso!";
+            return RedirectToAction(nameof(Index));
+        }
 
         /*************************Funções Auxiliares************************/
 
@@ -526,6 +601,17 @@ namespace EscalonamentoHospitalar.Controllers
             db.SaveChanges();
         }
 
+        private void InsertDataIntoPedidoTrocaTurnoEnfermeiro(HospitalDbContext db, DateTime dataPedido, Enfermeiro enfermeiroRequerenteId, HorarioATrocarEnfermeiro horarioATrocarId, HorarioParaTrocaEnfermeiro horarioParaTrocaId, EstadoPedidoTroca estadoPedidoTrocaId)
+        {
+            db.PedidoTrocaTurnosEnfermeiros.Add(
+
+                new PedidoTrocaTurnosEnfermeiro {DataPedido = dataPedido, EnfermeiroRequerenteId = enfermeiroRequerenteId.EnfermeiroId, HorarioATrocarId = horarioATrocarId.HorarioATrocarId, HorarioParaTrocaId = horarioParaTrocaId.HorarioParaTrocaId, EstadoPedidoTrocaId = estadoPedidoTrocaId.EstadoPedidoTrocaId }
+
+                );
+
+            db.SaveChanges();            
+        }
+        
 
         /**
         * @param data

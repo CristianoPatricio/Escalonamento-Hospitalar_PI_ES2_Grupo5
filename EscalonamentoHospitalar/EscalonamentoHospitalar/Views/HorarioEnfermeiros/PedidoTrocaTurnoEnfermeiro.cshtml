@@ -1,4 +1,4 @@
-﻿@model PedidoTrocaTurnosEnfermeiro
+﻿@model IEnumerable<EscalonamentoHospitalar.Models.HorarioEnfermeiro>
 
 @{
     ViewData["Title"] = "Pedido Troca Turnos Enfermeiro";
@@ -8,36 +8,49 @@
 
 <p></p>
 
-<div>
-    <h4>Horário a Trocar</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.HorarioEnfermeiro.DataInicioTurno)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.HorarioEnfermeiro.DataInicioTurno)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.HorarioEnfermeiro.DataFimTurno)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.HorarioEnfermeiro.DataFimTurno)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.HorarioEnfermeiro.Turno)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.HorarioEnfermeiro.Turno.Nome)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.HorarioEnfermeiro.Enfermeiro)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.HorarioEnfermeiro.Enfermeiro.Nome)
-        </dd>        
-    </dl>
-</div>
+<h3>Selecione um turno para troca</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Data de início do Turno
+            </th>
+            <th>
+                Data de fim do Turno
+            </th>
+            <th>
+                Turno
+            </th>
+            <th>
+                Enfermeiro
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DataInicioTurno)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DataFimTurno)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Turno.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Enfermeiro.Nome)
+                </td>
+                <td>
+                    <a asp-action="SolicitarPedidoTrocaTurnoEnfermeiro" asp-route-idHorario1="@ViewBag.HorarioATrocar" asp-route-idHorario2="@item.HorarioEnfermeiroId"><input type="hidden"/><input type="button" value="Trocar" class="btn btn-info" /></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
 
 <!--
 <form asp-action="Index">
@@ -47,24 +60,3 @@
     </p>
 </form>
     -->
-
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="PedidoTrocaTurnoEnfermeiro">          
-            <hr />
-            <div class="form-group">
-                <input type="submit" value="Solicitar Troca" class="btn btn-success" />
-            </div>
-            <hr />
-            <div>
-                <a href='@Url.Action("Index", "HorarioEnfermeiros")'>
-                    <input type="button" class="btn btn-default" value="Voltar" />
-                </a>
-            </div>
-        </form>
-    </div>
-</div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}

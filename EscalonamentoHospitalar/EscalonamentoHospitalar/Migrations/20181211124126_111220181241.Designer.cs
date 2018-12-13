@@ -4,14 +4,16 @@ using EscalonamentoHospitalar.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace EscalonamentoHospitalar.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    partial class HospitalDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181211124126_111220181241")]
+    partial class _111220181241
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -220,23 +222,6 @@ namespace EscalonamentoHospitalar.Migrations
                     b.ToTable("Grau");
                 });
 
-            modelBuilder.Entity("EscalonamentoHospitalar.Models.HorarioATrocarEnfermeiro", b =>
-                {
-                    b.Property<int>("HorarioATrocarEnfermeiroId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("HorarioATrocarId");
-
-                    b.Property<int?>("HorarioEnfermeiroId");
-
-                    b.HasKey("HorarioATrocarEnfermeiroId");
-
-                    b.HasIndex("HorarioEnfermeiroId");
-
-                    b.ToTable("HorarioATrocarEnfermeiros");
-                });
-
             modelBuilder.Entity("EscalonamentoHospitalar.Models.HorarioEnfermeiro", b =>
                 {
                     b.Property<int>("HorarioEnfermeiroId")
@@ -260,23 +245,6 @@ namespace EscalonamentoHospitalar.Migrations
                     b.HasIndex("TurnoId");
 
                     b.ToTable("HorariosEnfermeiro");
-                });
-
-            modelBuilder.Entity("EscalonamentoHospitalar.Models.HorarioParaTrocaEnfermeiro", b =>
-                {
-                    b.Property<int>("HorarioParaTrocaEnfermeiroId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("HorarioEnfermeiroId");
-
-                    b.Property<int>("HorarioParaTrocaId");
-
-                    b.HasKey("HorarioParaTrocaEnfermeiroId");
-
-                    b.HasIndex("HorarioEnfermeiroId");
-
-                    b.ToTable("HorarioParaTrocaEnfermeiros");
                 });
 
             modelBuilder.Entity("EscalonamentoHospitalar.Models.Medico", b =>
@@ -384,29 +352,31 @@ namespace EscalonamentoHospitalar.Migrations
 
                     b.Property<DateTime>("DataPedido");
 
+                    b.Property<int>("EnfermeiroATrocarId");
+
+                    b.Property<int?>("EnfermeiroId");
+
+                    b.Property<int>("EnfermeiroParaTrocaId");
+
                     b.Property<int>("EnfermeiroRequerenteId");
 
                     b.Property<int>("EstadoPedidoTrocaId");
 
-                    b.Property<int?>("HorarioATrocarEnfermeiroId");
-
                     b.Property<int>("HorarioATrocarId");
 
-                    b.Property<int?>("HorarioParaTrocaEnfermeiroId");
+                    b.Property<int?>("HorarioEnfermeiroId");
 
                     b.Property<int>("HorarioParaTrocaId");
 
                     b.HasKey("PedidoTrocaTurnosEnfermeiroId");
 
-                    b.HasIndex("EnfermeiroRequerenteId");
+                    b.HasIndex("EnfermeiroId");
 
                     b.HasIndex("EstadoPedidoTrocaId");
 
-                    b.HasIndex("HorarioATrocarEnfermeiroId");
+                    b.HasIndex("HorarioEnfermeiroId");
 
-                    b.HasIndex("HorarioParaTrocaEnfermeiroId");
-
-                    b.ToTable("PedidoTrocaTurnosEnfermeiros");
+                    b.ToTable("PedidoTrocaTurnosEnfermeiro");
                 });
 
             modelBuilder.Entity("EscalonamentoHospitalar.Models.Regime", b =>
@@ -542,13 +512,6 @@ namespace EscalonamentoHospitalar.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("EscalonamentoHospitalar.Models.HorarioATrocarEnfermeiro", b =>
-                {
-                    b.HasOne("EscalonamentoHospitalar.Models.HorarioEnfermeiro", "HorarioEnfermeiro")
-                        .WithMany("horarioATrocarEnfermeiros")
-                        .HasForeignKey("HorarioEnfermeiroId");
-                });
-
             modelBuilder.Entity("EscalonamentoHospitalar.Models.HorarioEnfermeiro", b =>
                 {
                     b.HasOne("EscalonamentoHospitalar.Models.Enfermeiro", "Enfermeiro")
@@ -560,13 +523,6 @@ namespace EscalonamentoHospitalar.Migrations
                         .WithMany("HorariosEnfermeiro")
                         .HasForeignKey("TurnoId")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("EscalonamentoHospitalar.Models.HorarioParaTrocaEnfermeiro", b =>
-                {
-                    b.HasOne("EscalonamentoHospitalar.Models.HorarioEnfermeiro", "HorarioEnfermeiro")
-                        .WithMany("horarioParaTrocaEnfermeiros")
-                        .HasForeignKey("HorarioEnfermeiroId");
                 });
 
             modelBuilder.Entity("EscalonamentoHospitalar.Models.Medico", b =>
@@ -591,23 +547,18 @@ namespace EscalonamentoHospitalar.Migrations
 
             modelBuilder.Entity("EscalonamentoHospitalar.Models.PedidoTrocaTurnosEnfermeiro", b =>
                 {
-                    b.HasOne("EscalonamentoHospitalar.Models.Enfermeiro", "EnfermeiroRequerente")
+                    b.HasOne("EscalonamentoHospitalar.Models.Enfermeiro", "Enfermeiro")
                         .WithMany("pedidoTrocaTurnosEnfermeiros")
-                        .HasForeignKey("EnfermeiroRequerenteId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("EnfermeiroId");
 
                     b.HasOne("EscalonamentoHospitalar.Models.EstadoPedidoTroca", "EstadoPedidoTroca")
                         .WithMany("pedidoTrocaTurnosEnfermeiros")
                         .HasForeignKey("EstadoPedidoTrocaId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("EscalonamentoHospitalar.Models.HorarioATrocarEnfermeiro", "HorarioATrocarEnfermeiro")
+                    b.HasOne("EscalonamentoHospitalar.Models.HorarioEnfermeiro", "HorarioEnfermeiro")
                         .WithMany("pedidoTrocaTurnosEnfermeiros")
-                        .HasForeignKey("HorarioATrocarEnfermeiroId");
-
-                    b.HasOne("EscalonamentoHospitalar.Models.HorarioParaTrocaEnfermeiro", "HorarioParaTrocaEnfermeiro")
-                        .WithMany("pedidoTrocaTurnosEnfermeiros")
-                        .HasForeignKey("HorarioParaTrocaEnfermeiroId");
+                        .HasForeignKey("HorarioEnfermeiroId");
                 });
 
             modelBuilder.Entity("EscalonamentoHospitalar.Models.Tratamento", b =>

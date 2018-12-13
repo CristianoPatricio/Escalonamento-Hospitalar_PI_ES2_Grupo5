@@ -7,10 +7,12 @@
 
 <h2>Horário dos Enfermeiros</h2>
 
+@ViewBag.EnfReq
+
 @*
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
 *@
 
 <form asp-action="Index">
@@ -25,7 +27,7 @@
         <tr>
             <th>
                 Data de início do Turno
-            </th>         
+            </th>
             <th>
                 Data de fim do Turno
             </th>
@@ -39,27 +41,26 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.HorariosEnfermeiros) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.DataInicioTurno)
-            </td>         
-            <td>
-                @Html.DisplayFor(modelItem => item.DataFimTurno)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Turno.Nome)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Enfermeiro.Nome)
-            </td>           
-            <td>
-                <a asp-action="Details" asp-route-id="@item.HorarioEnfermeiroId"><input type="button" value="Trocar" class="btn btn-info" /></a>
-                @*<a asp-action="Details" asp-route-id="@item.HorarioEnfermeiroId">Details</a>*@
-                @*<a asp-action="Delete" asp-route-id="@item.HorarioEnfermeiroId">Delete</a>*@
-            </td>               
-        </tr>
-}
+        @foreach (var item in Model.HorariosEnfermeiros)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DataInicioTurno)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DataFimTurno)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Turno.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Enfermeiro.Nome)
+                </td>
+                <td>
+                    <a asp-action="PedidoTrocaTurnoEnfermeiro" asp-route-idHorario1="@item.HorarioEnfermeiroId"><input type="button" value="Trocar" class="btn btn-info" /></a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
 
