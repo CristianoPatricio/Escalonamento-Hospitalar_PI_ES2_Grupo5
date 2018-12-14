@@ -44,6 +44,8 @@
     });
 </script>
 
+@if (User.IsInRole("DiretorServico"))
+{
 
 <h2>Lista de especialidades dos médicos</h2>
 
@@ -85,3 +87,4 @@
         <input type="button" class="btn btn-default" value="Voltar à página inicial" />
     </a>
 </div>
+}

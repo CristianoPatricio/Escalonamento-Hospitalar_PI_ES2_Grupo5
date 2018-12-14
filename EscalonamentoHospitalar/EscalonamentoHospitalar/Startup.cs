@@ -39,8 +39,34 @@ namespace EscalonamentoHospitalar
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+            /*   services.AddDefaultIdentity<IdentityUser>()
+                   .AddEntityFrameworkStores<ApplicationDbContext>();*/
+
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultUI()
+                .AddDefaultTokenProviders();
+
+            // Política para acesso restrito ao diretor de serviço
+            services.AddAuthorization(options => {
+                options.AddPolicy("AcessoRestritoDiretorServico",
+                    policy => policy.RequireRole("DiretorServico"));
+            });
+
+            // Política para acesso restrito ao médico
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("AcessoRestritoMedico",
+                    policy => policy.RequireRole("Medico"));
+            });
+
+            // Política para acesso restrito ao enfermeiro
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("AcessoRestritoEnfermeiro",
+                    policy => policy.RequireRole("Enfermeiro"));
+            });
+            
 
             services.Configure<IdentityOptions>(
                 options =>
@@ -75,7 +101,7 @@ namespace EscalonamentoHospitalar
             if (env.IsDevelopment())
             {
                 SeedData.CreateRolesAndUsersAsync(userManager, roleManager).Wait();
-                SeedData.Populate(db);
+             //   SeedData.Populate(db);
 
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();

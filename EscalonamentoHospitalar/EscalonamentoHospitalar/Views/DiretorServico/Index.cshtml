@@ -36,7 +36,9 @@
     });
 </script>
 
-<h2>Listagem Diretores de Serviço</h2>
+@if (User.IsInRole("DiretorServico")) { 
+
+<h2>Lista de Diretores de Serviço</h2>
 
 <table class="table">
     <thead>
@@ -61,7 +63,7 @@
                     @Html.DisplayFor(modelItem => item.Nome)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.DiretorServicoID"><input type="button" value="Alterar" class="btn btn-warning" /></a>
+                    <a asp-action="Edit" asp-route-id="@item.DiretorServicoID"><input type="button" value="Editar" class="btn btn-warning" /></a>
                     <a asp-action="Details" asp-route-id="@item.DiretorServicoID"><input type="button" value="Detalhes" class="btn btn-info" /></a>
                     <a asp-action="Delete" asp-route-id="@item.DiretorServicoID"><input type="button" value="Eliminar" class="btn btn-danger" /></a>
                 </td>
@@ -73,5 +75,6 @@
 <br />
 <hr />
 <p>
-    <a asp-action="Create"><input type="button" value="Inserir Novo Diretor Serviço" class="btn btn-primary" /></a>
+    <a asp-action="Create"><input type="button" value="Inserir novo Diretor Serviço" class="btn btn-primary" /></a>
 </p>
+}

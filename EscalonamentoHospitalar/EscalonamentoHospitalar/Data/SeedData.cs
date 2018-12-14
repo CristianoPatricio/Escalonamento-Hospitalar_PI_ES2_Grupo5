@@ -97,16 +97,16 @@ namespace EscalonamentoHospitalar.Data
             const string ENFERMEIRO_USER = "E001";
             const string ENFERMEIRO_PASSWORD = "1234";
 
-            IdentityUser medicoUser = await userManager.FindByNameAsync(ENFERMEIRO_USER);
-            if (medicoUser == null)
+            IdentityUser enfermeiroUser = await userManager.FindByNameAsync(ENFERMEIRO_USER);
+            if (enfermeiroUser == null)
             {
-                medicoUser = new IdentityUser { UserName = ENFERMEIRO_USER };
-                await userManager.CreateAsync(medicoUser, ENFERMEIRO_PASSWORD);
+                enfermeiroUser = new IdentityUser { UserName = ENFERMEIRO_USER };
+                await userManager.CreateAsync(enfermeiroUser, ENFERMEIRO_PASSWORD);
             }
 
-            if (!await userManager.IsInRoleAsync(medicoUser, ENFERMEIRO_USER))
+            if (!await userManager.IsInRoleAsync(enfermeiroUser, ENFERMEIRO_USER))
             {
-                await userManager.AddToRoleAsync(medicoUser, ENFERMEIRO_USER);
+                await userManager.AddToRoleAsync(enfermeiroUser, ENFERMEIRO_USER);
             }
         }
         private static void SeedEspecialidadeMedicos(HospitalDbContext db)

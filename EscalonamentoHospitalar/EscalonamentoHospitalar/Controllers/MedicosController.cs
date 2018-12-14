@@ -1,4 +1,5 @@
 ﻿using EscalonamentoHospitalar.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace EscalonamentoHospitalar.Controllers
 {
+    [Authorize(Policy = "AcessoRestritoDiretorServico")] // Política de acesso restrito ao Diretor de Serviço
     public class MedicosController : Controller
 
     {

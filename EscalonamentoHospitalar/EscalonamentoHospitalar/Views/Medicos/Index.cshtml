@@ -37,7 +37,8 @@
         $("#suc_form").hide(10000);
     });
 </script>
-
+@if (User.IsInRole("DiretorServico"))
+{
 <h2>Lista de Médicos</h2>
 
 <form asp-action="Index">
@@ -109,3 +110,4 @@
         <input type="button" class="btn btn-default" value="Voltar à página inicial" />
     </a>
 </div>
+}

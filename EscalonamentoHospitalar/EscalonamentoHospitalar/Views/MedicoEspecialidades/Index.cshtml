@@ -4,6 +4,8 @@
     ViewData["Title"] = "Lista de especialidades por médico";
 }
 
+@if( User.IsInRole("DiretorServivo")) { 
+
 <h2>Lista de especialidades por médico</h2>
 
 <form asp-action="Index">
@@ -12,7 +14,7 @@
         <input type="submit" value="Pesquisar" class="btn btn-info" />
     </p>
 </form>
-<p>
+
     <table class="table">
         <thead>
             <tr>
@@ -64,4 +66,4 @@
             <input type="button" class="btn btn-default" value="Voltar à página inicial" />
         </a>
     </div>
-   
+}
