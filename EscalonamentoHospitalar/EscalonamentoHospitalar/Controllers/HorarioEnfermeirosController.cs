@@ -327,28 +327,44 @@ namespace EscalonamentoHospitalar.Controllers
             DateTime dataPedido = DateTime.Now;
 
             //Select EnfermeiroID Where HorarioEnfermeiroId = idHorario1
-            var idEnf1 = from h in _context.HorariosEnfermeiro
-                        where h.HorarioEnfermeiroId == idHorario1
-                        select h.EnfermeiroId;
+            var idEnfRequerente = from h in _context.HorariosEnfermeiro
+                          where h.HorarioEnfermeiroId == idHorario1
+                          select h.EnfermeiroId;
 
-            //Select EnfermeiroID Where HorarioEnfermeiroId = idHorario2
-            var idEnf2 = from h in _context.HorariosEnfermeiro
-                         where h.HorarioEnfermeiroId == idHorario2
-                         select h.EnfermeiroId;
+            HorarioEnfermeiro horarioATrocar = _context.HorariosEnfermeiro.SingleOrDefault(h => h.HorarioEnfermeiroId == idHorario1);
+            HorarioEnfermeiro horarioParaTroca = _context.HorariosEnfermeiro.SingleOrDefault(h => h.HorarioEnfermeiroId == idHorario2);       
 
-            Enfermeiro enfermeiroRequerenteId = _context.Enfermeiros.SingleOrDefault(e => e.EnfermeiroId == idEnf1.Single());
-            
-            HorarioATrocarEnfermeiro horarioATrocarId = _context.HorarioATrocarEnfermeiros.SingleOrDefault(h => h.HorarioATrocarId == idHorario1);
-            HorarioParaTrocaEnfermeiro horarioParaTrocaId = _context.HorarioParaTrocaEnfermeiros.SingleOrDefault(h => h.HorarioParaTrocaId == idHorario2);
+            //Insert into HorarioATrocarEnfermeiro
+            InsertDataIntoHorarioATrocarEnfermeiro(_context, horarioATrocar);
+
+            //Insert into HorarioParaTrocaEnfermeiro
+            InsertDataIntoHorarioParaTrocaEnfermeiro(_context, horarioParaTroca);
+
+            HorarioATrocarEnfermeiro horarioATrocarId = _context.HorarioATrocarEnfermeiros.SingleOrDefault(h => h.HorarioEnfermeiroId == idHorario1);
+            HorarioParaTrocaEnfermeiro horarioParaTrocaId = _context.HorarioParaTrocaEnfermeiros.SingleOrDefault(h => h.HorarioEnfermeiroId == idHorario2);
+
+            Enfermeiro enfermeiroRequerenteId = _context.Enfermeiros.SingleOrDefault(e => e.EnfermeiroId == idEnfRequerente.Single());
 
             EstadoPedidoTroca estadoPedidoTrocaId = _context.EstadoPedidoTrocas.SingleOrDefault(e => e.Nome == "Pendente");
 
-            //TODO Inserir nas duas tabelas
             //Insert into PedidoTrocaTurnos Table
-            //InsertDataIntoPedidoTrocaTurnoEnfermeiro(_context, dataPedido, enfermeiroRequerenteId, horarioATrocarId, horarioParaTrocaId, estadoPedidoTrocaId);
-            TempData["SuccessRequired"] = "Pedido realizado com sucesso!";
+            //try
+            //{
+            //    //InsertDataIntoPedidoTrocaTurnoEnfermeiro(_context, dataPedido, enfermeiroRequerenteId, horarioATrocarId, horarioParaTrocaId, estadoPedidoTrocaId);
+            //    TempData["SuccessRequired"] = "Pedido realizado com sucesso!";
+            //    return RedirectToAction(nameof(Index));
+            //}
+            //catch (DbUpdateConcurrencyException)
+            //{
+            //    TempData["ErrorRequired"] = "Erro ao inserir pedido!";
+            //    return RedirectToAction(nameof(Index));
+            //}
+
             return RedirectToAction(nameof(Index));
+
         }
+
+      
 
         /*************************Funções Auxiliares************************/
 
@@ -601,17 +617,59 @@ namespace EscalonamentoHospitalar.Controllers
             db.SaveChanges();
         }
 
-        private void InsertDataIntoPedidoTrocaTurnoEnfermeiro(HospitalDbContext db, DateTime dataPedido, Enfermeiro enfermeiroRequerenteId, HorarioATrocarEnfermeiro horarioATrocarId, HorarioParaTrocaEnfermeiro horarioParaTrocaId, EstadoPedidoTroca estadoPedidoTrocaId)
-        {
-            db.PedidoTrocaTurnosEnfermeiros.Add(
+        /**
+        * @param db
+        * @param dataPedido
+        * @param enfermeiroRequerente
+        * @param horarioATrocarId
+        * @param horarioParaTrocaId
+        * @param estadoPedidoTrocaId
+        * @insert in the PedidoTrocaTurnoEnfermeiro table a record with the above parameters
+        */
+        //private void InsertDataIntoPedidoTrocaTurnoEnfermeiro(HospitalDbContext db, DateTime dataPedido, Enfermeiro enfermeiroRequerenteId, HorarioATrocarEnfermeiro horarioATrocarId, HorarioParaTrocaEnfermeiro horarioParaTrocaId, EstadoPedidoTroca estadoPedidoTrocaId)
+        //{
+        //    db.PedidoTrocaTurnosEnfermeiros.Add(
 
-                new PedidoTrocaTurnosEnfermeiro {DataPedido = dataPedido, EnfermeiroRequerenteId = enfermeiroRequerenteId.EnfermeiroId, HorarioATrocarId = horarioATrocarId.HorarioATrocarId, HorarioParaTrocaId = horarioParaTrocaId.HorarioParaTrocaId, EstadoPedidoTrocaId = estadoPedidoTrocaId.EstadoPedidoTrocaId }
+        //        new PedidoTrocaTurnosEnfermeiro {DataPedido = dataPedido, EnfermeiroId = enfermeiroRequerenteId.EnfermeiroId, HorarioATrocarEnfermeiroId = horarioATrocarId.HorarioEnfermeiroId, HorarioParaTrocaEnfermeiroId = horarioParaTrocaId.HorarioEnfermeiroId, EstadoPedidoTrocaId = estadoPedidoTrocaId.EstadoPedidoTrocaId }
+
+        //        );
+
+        //    db.SaveChanges();            
+        //}
+
+        /**
+        * @param db
+        * @param horarioATrocar
+        * @insert in the HorarioATrocarEnfermeiro table a record with the above parameters
+        */
+        private void InsertDataIntoHorarioATrocarEnfermeiro(HospitalDbContext db, HorarioEnfermeiro horarioATrocar)
+        {
+            db.HorarioATrocarEnfermeiros.Add(
+
+                new HorarioATrocarEnfermeiro { HorarioEnfermeiroId = horarioATrocar.HorarioEnfermeiroId }
 
                 );
 
-            db.SaveChanges();            
+            db.SaveChanges();
         }
-        
+
+        /**
+        * @param db
+        * @param horarioParaTroca
+        * @insert in the HorarioParaTrocaEnfermeiro table a record with the above parameters
+        */
+        private void InsertDataIntoHorarioParaTrocaEnfermeiro(HospitalDbContext db, HorarioEnfermeiro horarioParaTroca)
+        {
+            db.HorarioParaTrocaEnfermeiros.Add(
+
+                new HorarioParaTrocaEnfermeiro { HorarioEnfermeiroId = horarioParaTroca.HorarioEnfermeiroId }
+
+                );
+
+            db.SaveChanges();
+        }
+
+
 
         /**
         * @param data

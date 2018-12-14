@@ -21,7 +21,9 @@ namespace EscalonamentoHospitalar.Controllers
         // GET: HorarioParaTrocaEnfermeiroes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.HorarioParaTrocaEnfermeiros.ToListAsync());
+            return View(await _context.HorarioParaTrocaEnfermeiros
+                .Include(h => h.HorarioEnfermeiro)
+                .ToListAsync());
         }
 
         // GET: HorarioParaTrocaEnfermeiroes/Details/5
@@ -33,6 +35,7 @@ namespace EscalonamentoHospitalar.Controllers
             }
 
             var horarioParaTrocaEnfermeiro = await _context.HorarioParaTrocaEnfermeiros
+                .Include(h => h.HorarioEnfermeiro)
                 .FirstOrDefaultAsync(m => m.HorarioParaTrocaEnfermeiroId == id);
             if (horarioParaTrocaEnfermeiro == null)
             {
@@ -45,6 +48,7 @@ namespace EscalonamentoHospitalar.Controllers
         // GET: HorarioParaTrocaEnfermeiroes/Create
         public IActionResult Create()
         {
+            ViewData["HorarioEnfermeiroId"] = new SelectList(_context.HorariosEnfermeiro, "HorarioEnfermeiroId", "DataInicioTurno");
             return View();
         }
 
@@ -53,7 +57,7 @@ namespace EscalonamentoHospitalar.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("HorarioParaTrocaEnfermeiroId,HorarioParaTrocaId")] HorarioParaTrocaEnfermeiro horarioParaTrocaEnfermeiro)
+        public async Task<IActionResult> Create([Bind("HorarioParaTrocaEnfermeiroId,HorarioEnfermeiroId")] HorarioParaTrocaEnfermeiro horarioParaTrocaEnfermeiro)
         {
             if (ModelState.IsValid)
             {
@@ -61,6 +65,8 @@ namespace EscalonamentoHospitalar.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
+            ViewData["HorarioEnfermeiroId"] = new SelectList(_context.HorariosEnfermeiro, "HorarioEnfermeiroId", "DataInicioTurno", horarioParaTrocaEnfermeiro.HorarioEnfermeiroId);
             return View(horarioParaTrocaEnfermeiro);
         }
 
@@ -77,6 +83,8 @@ namespace EscalonamentoHospitalar.Controllers
             {
                 return NotFound();
             }
+
+            ViewData["HorarioEnfermeiroId"] = new SelectList(_context.HorariosEnfermeiro, "HorarioEnfermeiroId", "DataInicioTurno");
             return View(horarioParaTrocaEnfermeiro);
         }
 
@@ -85,7 +93,7 @@ namespace EscalonamentoHospitalar.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("HorarioParaTrocaEnfermeiroId,HorarioParaTrocaId")] HorarioParaTrocaEnfermeiro horarioParaTrocaEnfermeiro)
+        public async Task<IActionResult> Edit(int id, [Bind("HorarioParaTrocaEnfermeiroId,HorarioEnfermeiroId")] HorarioParaTrocaEnfermeiro horarioParaTrocaEnfermeiro)
         {
             if (id != horarioParaTrocaEnfermeiro.HorarioParaTrocaEnfermeiroId)
             {
@@ -112,6 +120,8 @@ namespace EscalonamentoHospitalar.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+
+            ViewData["HorarioEnfermeiroId"] = new SelectList(_context.HorariosEnfermeiro, "HorarioEnfermeiroId", "DataInicioTurno", horarioParaTrocaEnfermeiro.HorarioEnfermeiroId);
             return View(horarioParaTrocaEnfermeiro);
         }
 
@@ -124,6 +134,7 @@ namespace EscalonamentoHospitalar.Controllers
             }
 
             var horarioParaTrocaEnfermeiro = await _context.HorarioParaTrocaEnfermeiros
+                .Include(h => h.HorarioEnfermeiro)
                 .FirstOrDefaultAsync(m => m.HorarioParaTrocaEnfermeiroId == id);
             if (horarioParaTrocaEnfermeiro == null)
             {

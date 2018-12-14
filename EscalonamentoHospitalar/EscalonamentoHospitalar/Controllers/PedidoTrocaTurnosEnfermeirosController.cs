@@ -21,12 +21,7 @@ namespace EscalonamentoHospitalar.Controllers
         // GET: PedidoTrocaTurnosEnfermeiros
         public async Task<IActionResult> Index()
         {
-            var hospitalDbContext = _context.PedidoTrocaTurnosEnfermeiros
-                .Include(p => p.EstadoPedidoTroca)
-                .Include(p => p.EnfermeiroRequerente)
-                .Include(p => p.HorarioATrocarEnfermeiro)
-                .Include(p => p.HorarioParaTrocaEnfermeiro);
-
+            var hospitalDbContext = _context.PedidoTrocaTurnosEnfermeiros.Include(p => p.Enfermeiro).Include(p => p.EstadoPedidoTroca).Include(p => p.HorarioATrocarEnfermeiro).Include(p => p.HorarioParaTrocaEnfermeiro);
             return View(await hospitalDbContext.ToListAsync());
         }
 
@@ -39,12 +34,11 @@ namespace EscalonamentoHospitalar.Controllers
             }
 
             var pedidoTrocaTurnosEnfermeiro = await _context.PedidoTrocaTurnosEnfermeiros
+                .Include(p => p.Enfermeiro)
                 .Include(p => p.EstadoPedidoTroca)
-                .Include(p => p.EnfermeiroRequerente)
                 .Include(p => p.HorarioATrocarEnfermeiro)
                 .Include(p => p.HorarioParaTrocaEnfermeiro)
                 .FirstOrDefaultAsync(m => m.PedidoTrocaTurnosEnfermeiroId == id);
-
             if (pedidoTrocaTurnosEnfermeiro == null)
             {
                 return NotFound();
@@ -56,10 +50,10 @@ namespace EscalonamentoHospitalar.Controllers
         // GET: PedidoTrocaTurnosEnfermeiros/Create
         public IActionResult Create()
         {
-            ViewData["EnfermeiroRequerenteId"] = new SelectList(_context.Enfermeiros, "EnfermeiroId", "Nome");
-            ViewData["HorarioATrocarId"] = new SelectList(_context.HorarioATrocarEnfermeiros, "HorarioATrocarId", "HorarioATrocarId");
-            ViewData["HorarioParaTrocaId"] = new SelectList(_context.Enfermeiros, "HorarioParaTrocaId", "HorarioParaTrocaId");
-            ViewData["EstadoPedidoTrocaId"] = new SelectList(_context.EstadoPedidoTrocas, "EstadoPedidoTrocaId", "Nome");
+            ViewData["EnfermeiroId"] = new SelectList(_context.Enfermeiros, "EnfermeiroId", "CC");
+            ViewData["EstadoPedidoTrocaId"] = new SelectList(_context.EstadoPedidoTrocas, "EstadoPedidoTrocaId", "EstadoPedidoTrocaId");
+            ViewData["HorarioATrocarEnfermeiroId"] = new SelectList(_context.HorarioATrocarEnfermeiros, "HorarioATrocarEnfermeiroId", "HorarioATrocarEnfermeiroId");
+            ViewData["HorarioParaTrocaEnfermeiroId"] = new SelectList(_context.HorarioParaTrocaEnfermeiros, "HorarioParaTrocaEnfermeiroId", "HorarioParaTrocaEnfermeiroId");
             return View();
         }
 
@@ -68,7 +62,7 @@ namespace EscalonamentoHospitalar.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("PedidoTrocaTurnosEnfermeiroId,DataPedido,EnfermeiroRequerenteId,HorarioATrocarId,HorarioParaTrocaId,EstadoPedidoTrocaId")] PedidoTrocaTurnosEnfermeiro pedidoTrocaTurnosEnfermeiro)
+        public async Task<IActionResult> Create([Bind("PedidoTrocaTurnosEnfermeiroId,DataPedido,EnfermeiroId,HorarioATrocarEnfermeiroId,HorarioParaTrocaEnfermeiroId,EstadoPedidoTrocaId")] PedidoTrocaTurnosEnfermeiro pedidoTrocaTurnosEnfermeiro)
         {
             if (ModelState.IsValid)
             {
@@ -76,10 +70,10 @@ namespace EscalonamentoHospitalar.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EnfermeiroRequerenteId"] = new SelectList(_context.Enfermeiros, "EnfermeiroId", "Nome", pedidoTrocaTurnosEnfermeiro.EnfermeiroRequerenteId);
-            ViewData["HorarioATrocarId"] = new SelectList(_context.HorarioATrocarEnfermeiros, "HorarioATrocarId", "HorarioATrocarId", pedidoTrocaTurnosEnfermeiro.HorarioATrocarId);
-            ViewData["HorarioParaTrocaId"] = new SelectList(_context.Enfermeiros, "HorarioParaTrocaId", "HorarioParaTrocaId", pedidoTrocaTurnosEnfermeiro.HorarioParaTrocaId);
+            ViewData["EnfermeiroId"] = new SelectList(_context.Enfermeiros, "EnfermeiroId", "CC", pedidoTrocaTurnosEnfermeiro.EnfermeiroId);
             ViewData["EstadoPedidoTrocaId"] = new SelectList(_context.EstadoPedidoTrocas, "EstadoPedidoTrocaId", "EstadoPedidoTrocaId", pedidoTrocaTurnosEnfermeiro.EstadoPedidoTrocaId);
+            ViewData["HorarioATrocarEnfermeiroId"] = new SelectList(_context.HorarioATrocarEnfermeiros, "HorarioATrocarEnfermeiroId", "HorarioATrocarEnfermeiroId", pedidoTrocaTurnosEnfermeiro.HorarioATrocarEnfermeiroId);
+            ViewData["HorarioParaTrocaEnfermeiroId"] = new SelectList(_context.HorarioParaTrocaEnfermeiros, "HorarioParaTrocaEnfermeiroId", "HorarioParaTrocaEnfermeiroId", pedidoTrocaTurnosEnfermeiro.HorarioParaTrocaEnfermeiroId);
             return View(pedidoTrocaTurnosEnfermeiro);
         }
 
@@ -96,10 +90,10 @@ namespace EscalonamentoHospitalar.Controllers
             {
                 return NotFound();
             }
-            ViewData["EnfermeiroRequerenteId"] = new SelectList(_context.Enfermeiros, "EnfermeiroId", "Nome");
-            ViewData["HorarioATrocarId"] = new SelectList(_context.HorarioATrocarEnfermeiros, "HorarioATrocarId", "HorarioATrocarId");
-            ViewData["HorarioParaTrocaId"] = new SelectList(_context.Enfermeiros, "HorarioParaTrocaId", "HorarioParaTrocaId");
+            ViewData["EnfermeiroId"] = new SelectList(_context.Enfermeiros, "EnfermeiroId", "CC", pedidoTrocaTurnosEnfermeiro.EnfermeiroId);
             ViewData["EstadoPedidoTrocaId"] = new SelectList(_context.EstadoPedidoTrocas, "EstadoPedidoTrocaId", "EstadoPedidoTrocaId", pedidoTrocaTurnosEnfermeiro.EstadoPedidoTrocaId);
+            ViewData["HorarioATrocarEnfermeiroId"] = new SelectList(_context.HorarioATrocarEnfermeiros, "HorarioATrocarEnfermeiroId", "HorarioATrocarEnfermeiroId", pedidoTrocaTurnosEnfermeiro.HorarioATrocarEnfermeiroId);
+            ViewData["HorarioParaTrocaEnfermeiroId"] = new SelectList(_context.HorarioParaTrocaEnfermeiros, "HorarioParaTrocaEnfermeiroId", "HorarioParaTrocaEnfermeiroId", pedidoTrocaTurnosEnfermeiro.HorarioParaTrocaEnfermeiroId);
             return View(pedidoTrocaTurnosEnfermeiro);
         }
 
@@ -108,7 +102,7 @@ namespace EscalonamentoHospitalar.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("PedidoTrocaTurnosEnfermeiroId,DataPedido,EnfermeiroRequerenteId,HorarioATrocarId,HorarioParaTrocaId,EstadoPedidoTrocaId")] PedidoTrocaTurnosEnfermeiro pedidoTrocaTurnosEnfermeiro)
+        public async Task<IActionResult> Edit(int id, [Bind("PedidoTrocaTurnosEnfermeiroId,DataPedido,EnfermeiroId,HorarioATrocarEnfermeiroId,HorarioParaTrocaEnfermeiroId,EstadoPedidoTrocaId")] PedidoTrocaTurnosEnfermeiro pedidoTrocaTurnosEnfermeiro)
         {
             if (id != pedidoTrocaTurnosEnfermeiro.PedidoTrocaTurnosEnfermeiroId)
             {
@@ -135,10 +129,10 @@ namespace EscalonamentoHospitalar.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EnfermeiroRequerenteId"] = new SelectList(_context.Enfermeiros, "EnfermeiroId", "Nome", pedidoTrocaTurnosEnfermeiro.EnfermeiroRequerenteId);
-            ViewData["HorarioATrocarId"] = new SelectList(_context.HorarioATrocarEnfermeiros, "HorarioATrocarId", "HorarioATrocarId", pedidoTrocaTurnosEnfermeiro.HorarioATrocarId);
-            ViewData["HorarioParaTrocaId"] = new SelectList(_context.Enfermeiros, "HorarioParaTrocaId", "HorarioParaTrocaId", pedidoTrocaTurnosEnfermeiro.HorarioParaTrocaId);
+            ViewData["EnfermeiroId"] = new SelectList(_context.Enfermeiros, "EnfermeiroId", "CC", pedidoTrocaTurnosEnfermeiro.EnfermeiroId);
             ViewData["EstadoPedidoTrocaId"] = new SelectList(_context.EstadoPedidoTrocas, "EstadoPedidoTrocaId", "EstadoPedidoTrocaId", pedidoTrocaTurnosEnfermeiro.EstadoPedidoTrocaId);
+            ViewData["HorarioATrocarEnfermeiroId"] = new SelectList(_context.HorarioATrocarEnfermeiros, "HorarioATrocarEnfermeiroId", "HorarioATrocarEnfermeiroId", pedidoTrocaTurnosEnfermeiro.HorarioATrocarEnfermeiroId);
+            ViewData["HorarioParaTrocaEnfermeiroId"] = new SelectList(_context.HorarioParaTrocaEnfermeiros, "HorarioParaTrocaEnfermeiroId", "HorarioParaTrocaEnfermeiroId", pedidoTrocaTurnosEnfermeiro.HorarioParaTrocaEnfermeiroId);
             return View(pedidoTrocaTurnosEnfermeiro);
         }
 
@@ -151,8 +145,8 @@ namespace EscalonamentoHospitalar.Controllers
             }
 
             var pedidoTrocaTurnosEnfermeiro = await _context.PedidoTrocaTurnosEnfermeiros
+                .Include(p => p.Enfermeiro)
                 .Include(p => p.EstadoPedidoTroca)
-                .Include(p => p.EnfermeiroRequerente)
                 .Include(p => p.HorarioATrocarEnfermeiro)
                 .Include(p => p.HorarioParaTrocaEnfermeiro)
                 .FirstOrDefaultAsync(m => m.PedidoTrocaTurnosEnfermeiroId == id);

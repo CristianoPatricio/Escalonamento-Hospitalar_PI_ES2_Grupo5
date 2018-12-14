@@ -12,14 +12,14 @@ namespace EscalonamentoHospitalar.Models
 
         public DateTime DataPedido { get; set; }
 
-        public Enfermeiro EnfermeiroRequerente { get; set; }
-        public int EnfermeiroRequerenteId { get; set; }
+        public Enfermeiro Enfermeiro { get; set; }
+        public int EnfermeiroId { get; set; }
 
         public HorarioATrocarEnfermeiro HorarioATrocarEnfermeiro { get; set; }
-        public int HorarioATrocarId { get; set; }
+        public int HorarioATrocarEnfermeiroId { get; set; }
 
         public HorarioParaTrocaEnfermeiro HorarioParaTrocaEnfermeiro { get; set; }
-        public int HorarioParaTrocaId { get; set; }
+        public int HorarioParaTrocaEnfermeiroId { get; set; }
 
         public EstadoPedidoTroca EstadoPedidoTroca { get; set; }
         public int EstadoPedidoTrocaId { get; set; }     

@@ -11,6 +11,6 @@ namespace EscalonamentoHospitalar.Models
 
         public string Nome { get; set; }
 
-        public ICollection<PedidoTrocaTurnosEnfermeiro> pedidoTrocaTurnosEnfermeiros { get; set; }
+        public ICollection<PedidoTrocaTurnosEnfermeiro> PedidoTrocaTurnosEnfermeiros { get; set; }
     }
 }

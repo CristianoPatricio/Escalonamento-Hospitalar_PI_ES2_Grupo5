@@ -10,8 +10,8 @@ namespace EscalonamentoHospitalar.Models
         public int HorarioATrocarEnfermeiroId { get; set; }
 
         public HorarioEnfermeiro HorarioEnfermeiro { get; set; }
-        public int HorarioATrocarId { get; set; }
+        public int HorarioEnfermeiroId { get; set; }
 
-        public ICollection<PedidoTrocaTurnosEnfermeiro> pedidoTrocaTurnosEnfermeiros { get; set; }
+        public ICollection<PedidoTrocaTurnosEnfermeiro> PedidoTrocaTurnosEnfermeiros { get; set; }
     }
 }

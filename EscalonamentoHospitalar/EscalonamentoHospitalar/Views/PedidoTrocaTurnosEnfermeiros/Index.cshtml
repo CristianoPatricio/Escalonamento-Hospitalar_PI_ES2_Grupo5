@@ -16,13 +16,13 @@
                 @Html.DisplayNameFor(model => model.DataPedido)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.EnfermeiroRequerenteId)
+                @Html.DisplayNameFor(model => model.Enfermeiro)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.HorarioATrocarId)
+                @Html.DisplayNameFor(model => model.HorarioATrocarEnfermeiro)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.HorarioParaTrocaId)
+                @Html.DisplayNameFor(model => model.HorarioParaTrocaEnfermeiro)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.EstadoPedidoTroca)
@@ -37,13 +37,13 @@
                 @Html.DisplayFor(modelItem => item.DataPedido)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.EnfermeiroRequerenteId)
+                @Html.DisplayFor(modelItem => item.Enfermeiro.CC)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.HorarioATrocarId)
+                @Html.DisplayFor(modelItem => item.HorarioATrocarEnfermeiro.HorarioATrocarEnfermeiroId)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.HorarioParaTrocaId)
+                @Html.DisplayFor(modelItem => item.HorarioParaTrocaEnfermeiro.HorarioParaTrocaEnfermeiroId)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.EstadoPedidoTroca.EstadoPedidoTrocaId)
