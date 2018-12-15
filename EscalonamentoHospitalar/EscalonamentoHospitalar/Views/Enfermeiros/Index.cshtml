@@ -4,7 +4,7 @@
 @{
     ViewData["Title"] = "Lista de Enfermeiros";
 }
-<p></p>
+
 
 @if (TempData["notice"] != null)
 {
@@ -39,7 +39,7 @@
     });
 </script>
 
-@if (User.IsInRole("DiretorServico"))
+@if (User.IsInRole("DiretorServico")) // Acesso restrito ao Diretor de Serviço
 {
 
 <h2>Lista de Enfermeiros</h2>

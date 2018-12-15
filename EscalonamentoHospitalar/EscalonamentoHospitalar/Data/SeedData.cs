@@ -15,16 +15,11 @@ namespace EscalonamentoHospitalar.Data
         private const string ROLE_MEDICO = "Medico";
         private const string ROLE_ENFERMEIRO = "Enfermeiro";
 
-        internal static void Populate(IServiceProvider applicationServices)
+        public static void Populate(HospitalDbContext db)
         {
-            using (var serviceScope = applicationServices.CreateScope())
-            {
-
-                var db = serviceScope.ServiceProvider.GetService<HospitalDbContext>();
-
                 SeedEspecialidadeEnfermeiros(db);
                 SeedEnfermeiros(db);
-                SeedDiretorServico(db);                         
+                SeedDiretorServico(db);
                 SeedEnfermeiroEspecialidade(db);
                 SeedTurnos(db);
                 SeedHorarioEnfermeiros(db);
@@ -38,8 +33,34 @@ namespace EscalonamentoHospitalar.Data
                 SeedRegras(db);
                 SeedMedicoEspecialidades(db);
                 SeedEspecialidadeMedicos(db);
-            }
+            
         }
+
+        /*  internal static void Populate(IServiceProvider applicationServices)
+          {
+              using (var serviceScope = applicationServices.CreateScope())
+              {
+
+                  var db = serviceScope.ServiceProvider.GetService<HospitalDbContext>();
+
+                  SeedEspecialidadeEnfermeiros(db);
+                  SeedEnfermeiros(db);
+                  SeedDiretorServico(db);                         
+                  SeedEnfermeiroEspecialidade(db);
+                  SeedTurnos(db);
+                  SeedHorarioEnfermeiros(db);
+                  SeedMedicos(db);
+                  SeedPacientes(db);
+                  SeedGrau(db);
+                  SeedPatologia(db);
+                  SeedRegime(db);
+                  SeedEstado(db);
+                  SeedTratamentos(db);
+                  SeedRegras(db);
+                  SeedMedicoEspecialidades(db);
+                  SeedEspecialidadeMedicos(db);
+              }
+          }*/
 
         private static async void MakeSureRoleExistsAsync(RoleManager<IdentityRole> roleManager, string role)
         {

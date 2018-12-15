@@ -2,6 +2,9 @@
     ViewData["Title"] = "Gestão Hosiptalar";
 }
 
+@if (User.IsInRole("DiretorServico")) // Acesso restrito ao Diretor de Serviço
+{
+
 <div>
     <div>
         <img style="float:left;" class="image" src="~/images/James& Katie.png" alt="" width="400" height="400" />
@@ -70,4 +73,5 @@
         </a>
     </div>
 </div>
+}
 

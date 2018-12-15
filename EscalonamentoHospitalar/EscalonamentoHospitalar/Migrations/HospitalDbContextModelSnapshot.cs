@@ -70,7 +70,8 @@ namespace EscalonamentoHospitalar.Migrations
                         .IsRequired();
 
                     b.Property<string>("Nome")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(50);
 
                     b.Property<string>("NumeroMecanografico")
                         .IsRequired();
@@ -95,63 +96,6 @@ namespace EscalonamentoHospitalar.Migrations
                     b.HasIndex("EspecialidadeEnfermeiroId");
 
                     b.ToTable("EnfermeirosEspecialidades");
-                });
-
-            modelBuilder.Entity("EscalonamentoHospitalar.Models.Equipamento", b =>
-                {
-                    b.Property<int>("EquipamentoId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Nome");
-
-                    b.Property<int>("Quantidade");
-
-                    b.HasKey("EquipamentoId");
-
-                    b.ToTable("Equipamento");
-                });
-
-            modelBuilder.Entity("EscalonamentoHospitalar.Models.EscalaEnfermeiro", b =>
-                {
-                    b.Property<int>("EscalaEnfermeiroId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("Data_Inicio_Semana");
-
-                    b.Property<int>("EnfermeiroId");
-
-                    b.Property<int>("TurnoId");
-
-                    b.HasKey("EscalaEnfermeiroId");
-
-                    b.HasIndex("EnfermeiroId");
-
-                    b.HasIndex("TurnoId");
-
-                    b.ToTable("EscalaEnfermeiros");
-                });
-
-            modelBuilder.Entity("EscalonamentoHospitalar.Models.EscalaMedico", b =>
-                {
-                    b.Property<int>("EscalaMedicoId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("Data_Inicio_Semana");
-
-                    b.Property<int>("MedicoId");
-
-                    b.Property<int>("TurnoId");
-
-                    b.HasKey("EscalaMedicoId");
-
-                    b.HasIndex("MedicoId");
-
-                    b.HasIndex("TurnoId");
-
-                    b.ToTable("EscalaMedicos");
                 });
 
             modelBuilder.Entity("EscalonamentoHospitalar.Models.EspecialidadeEnfermeiro", b =>
@@ -247,21 +191,19 @@ namespace EscalonamentoHospitalar.Migrations
 
                     b.Property<DateTime>("Data_Nascimento");
 
-                    b.Property<string>("Email");
-
-                    b.Property<int?>("EnfermeiroId");
+                    b.Property<string>("Email")
+                        .IsRequired();
 
                     b.Property<int>("EspecialidadeMedicoId");
 
                     b.Property<string>("Nome")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(50);
 
                     b.Property<string>("NumeroMecanografico")
                         .IsRequired();
 
                     b.HasKey("MedicoId");
-
-                    b.HasIndex("EnfermeiroId");
 
                     b.HasIndex("EspecialidadeMedicoId");
 
@@ -275,10 +217,6 @@ namespace EscalonamentoHospitalar.Migrations
                     b.Property<int>("EspecialidadeMedicoId");
 
                     b.Property<DateTime>("Data_Registo");
-
-                    b.Property<int>("MedicoEspecialidadeId");
-
-                    b.Property<string>("Nome");
 
                     b.HasKey("MedicoId", "EspecialidadeMedicoId");
 
@@ -304,13 +242,15 @@ namespace EscalonamentoHospitalar.Migrations
 
                     b.Property<DateTime>("Data_Nascimento");
 
-                    b.Property<string>("Email");
+                    b.Property<string>("Email")
+                        .IsRequired();
 
                     b.Property<string>("Morada")
                         .IsRequired();
 
                     b.Property<string>("Nome")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(50);
 
                     b.Property<string>("Numero_Utente")
                         .IsRequired();
@@ -436,32 +376,6 @@ namespace EscalonamentoHospitalar.Migrations
                         .HasForeignKey("EspecialidadeEnfermeiroId");
                 });
 
-            modelBuilder.Entity("EscalonamentoHospitalar.Models.EscalaEnfermeiro", b =>
-                {
-                    b.HasOne("EscalonamentoHospitalar.Models.Enfermeiro", "Enfermeiro")
-                        .WithMany()
-                        .HasForeignKey("EnfermeiroId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("EscalonamentoHospitalar.Models.Turno", "Turno")
-                        .WithMany()
-                        .HasForeignKey("TurnoId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("EscalonamentoHospitalar.Models.EscalaMedico", b =>
-                {
-                    b.HasOne("EscalonamentoHospitalar.Models.Medico", "Medico")
-                        .WithMany()
-                        .HasForeignKey("MedicoId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("EscalonamentoHospitalar.Models.Turno", "Turno")
-                        .WithMany()
-                        .HasForeignKey("TurnoId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
             modelBuilder.Entity("EscalonamentoHospitalar.Models.HorarioEnfermeiro", b =>
                 {
                     b.HasOne("EscalonamentoHospitalar.Models.Enfermeiro", "Enfermeiro")
@@ -477,10 +391,6 @@ namespace EscalonamentoHospitalar.Migrations
 
             modelBuilder.Entity("EscalonamentoHospitalar.Models.Medico", b =>
                 {
-                    b.HasOne("EscalonamentoHospitalar.Models.Enfermeiro")
-                        .WithMany("Medicos")
-                        .HasForeignKey("EnfermeiroId");
-
                     b.HasOne("EscalonamentoHospitalar.Models.EspecialidadeMedico", "EspecialidadeMedico")
                         .WithMany("Medico")
                         .HasForeignKey("EspecialidadeMedicoId")

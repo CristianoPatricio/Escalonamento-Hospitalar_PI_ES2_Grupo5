@@ -101,7 +101,7 @@ namespace EscalonamentoHospitalar
             if (env.IsDevelopment())
             {
                 SeedData.CreateRolesAndUsersAsync(userManager, roleManager).Wait();
-             //   SeedData.Populate(db);
+                SeedData.Populate(db);
 
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
@@ -125,7 +125,7 @@ namespace EscalonamentoHospitalar
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
 
-            SeedData.Populate(app.ApplicationServices);
+           // SeedData.Populate(app.ApplicationServices);
         }
     }
 }
