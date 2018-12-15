@@ -12,6 +12,7 @@ namespace EscalonamentoHospitalar.Controllers
 {
     public class HorarioEnfermeirosController : Controller
     {
+        
         private const int PAGE_SIZE = 45;
         private readonly HospitalDbContext _context;
 
@@ -266,11 +267,16 @@ namespace EscalonamentoHospitalar.Controllers
             var idEnf = from h in _context.HorariosEnfermeiro
                      where h.HorarioEnfermeiroId == idHorario1
                      select h.EnfermeiroId;
-      
+
+            var dataInicio = from h in _context.HorariosEnfermeiro
+                             where h.HorarioEnfermeiroId == idHorario1
+                             select h.DataInicioTurno;
+
             var horarios = _context.HorariosEnfermeiro
                 .Include(h => h.Turno)
                 .Include(h => h.Enfermeiro)
-                .Where(h => h.HorarioEnfermeiroId != idHorario1 && h.EnfermeiroId != idEnf.Single());
+                .Where(h => h.HorarioEnfermeiroId != idHorario1 && h.EnfermeiroId != idEnf.Single() && h.DataInicioTurno >= dataInicio.Single())
+                .OrderBy(h => h.DataInicioTurno);
 
             if (horarios == null)
             {
@@ -284,7 +290,7 @@ namespace EscalonamentoHospitalar.Controllers
 
         //GET: HorarioEnfermeiro/SolicitarPedidoTrocaTurnoEnfermeiro
         public async Task<IActionResult> SolicitarPedidoTrocaTurnoEnfermeiro(int? idHorario1, int? idHorario2)
-        {
+        {  
             if (idHorario1 == null || idHorario2 == null)
             {
                 return NotFound();
@@ -320,51 +326,55 @@ namespace EscalonamentoHospitalar.Controllers
         }
 
         //POST:HorarioEnfermeiro/SolicitarPedidoTrocaTurnoEnfermeiro 
-        [HttpPost]
+        [HttpPost, ActionName("SolicitarPedidoTrocaTurnoEnfermeiro")]
         [ValidateAntiForgeryToken]
-        public IActionResult SolicitarPedidoTrocaTurnoEnfermeiro(int idHorario1, int idHorario2)
+        public IActionResult SolicitarPedidoTrocaTurnoEnfermeiroConfirmed(int idHor1, int idHor2)
         {
             DateTime dataPedido = DateTime.Now;
 
             //Select EnfermeiroID Where HorarioEnfermeiroId = idHorario1
-            var idEnfRequerente = from h in _context.HorariosEnfermeiro
-                          where h.HorarioEnfermeiroId == idHorario1
-                          select h.EnfermeiroId;
+             var idEnfRequerente = from h in _context.HorariosEnfermeiro
+                                   where h.HorarioEnfermeiroId == idHor1
+                                   select h.EnfermeiroId;
 
-            HorarioEnfermeiro horarioATrocar = _context.HorariosEnfermeiro.SingleOrDefault(h => h.HorarioEnfermeiroId == idHorario1);
-            HorarioEnfermeiro horarioParaTroca = _context.HorariosEnfermeiro.SingleOrDefault(h => h.HorarioEnfermeiroId == idHorario2);       
+            HorarioEnfermeiro horarioATrocar = _context.HorariosEnfermeiro.SingleOrDefault(h => h.HorarioEnfermeiroId == idHor1);
+            HorarioEnfermeiro horarioParaTroca = _context.HorariosEnfermeiro.SingleOrDefault(h => h.HorarioEnfermeiroId == idHor2);
 
-            //Insert into HorarioATrocarEnfermeiro
-            InsertDataIntoHorarioATrocarEnfermeiro(_context, horarioATrocar);
+            try
+            {
+                //Insert into HorarioATrocarEnfermeiro
+                InsertDataIntoHorarioATrocarEnfermeiro(_context, horarioATrocar);
 
-            //Insert into HorarioParaTrocaEnfermeiro
-            InsertDataIntoHorarioParaTrocaEnfermeiro(_context, horarioParaTroca);
+                //Insert into HorarioParaTrocaEnfermeiro
+                InsertDataIntoHorarioParaTrocaEnfermeiro(_context, horarioParaTroca);
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                TempData["ErrorRequired"] = "Erro ao inserir pedido!";
+                return RedirectToAction(nameof(Index));
+            }
 
-            HorarioATrocarEnfermeiro horarioATrocarId = _context.HorarioATrocarEnfermeiros.SingleOrDefault(h => h.HorarioEnfermeiroId == idHorario1);
-            HorarioParaTrocaEnfermeiro horarioParaTrocaId = _context.HorarioParaTrocaEnfermeiros.SingleOrDefault(h => h.HorarioEnfermeiroId == idHorario2);
+            HorarioATrocarEnfermeiro horarioATrocarId = _context.HorarioATrocarEnfermeiros.SingleOrDefault(h => h.HorarioEnfermeiroId == idHor1);
+            HorarioParaTrocaEnfermeiro horarioParaTrocaId = _context.HorarioParaTrocaEnfermeiros.SingleOrDefault(h => h.HorarioEnfermeiroId == idHor2);
 
-            Enfermeiro enfermeiroRequerenteId = _context.Enfermeiros.SingleOrDefault(e => e.EnfermeiroId == idEnfRequerente.Single());
+            Enfermeiro enfermeiroRequerenteId =  _context.Enfermeiros.SingleOrDefault(e => e.EnfermeiroId == idEnfRequerente.Single());
 
             EstadoPedidoTroca estadoPedidoTrocaId = _context.EstadoPedidoTrocas.SingleOrDefault(e => e.Nome == "Pendente");
 
             //Insert into PedidoTrocaTurnos Table
-            //try
-            //{
-            //    //InsertDataIntoPedidoTrocaTurnoEnfermeiro(_context, dataPedido, enfermeiroRequerenteId, horarioATrocarId, horarioParaTrocaId, estadoPedidoTrocaId);
-            //    TempData["SuccessRequired"] = "Pedido realizado com sucesso!";
-            //    return RedirectToAction(nameof(Index));
-            //}
-            //catch (DbUpdateConcurrencyException)
-            //{
-            //    TempData["ErrorRequired"] = "Erro ao inserir pedido!";
-            //    return RedirectToAction(nameof(Index));
-            //}
-
-            return RedirectToAction(nameof(Index));
+            try
+            {
+                InsertDataIntoPedidoTrocaTurnoEnfermeiro(_context, dataPedido, enfermeiroRequerenteId, horarioATrocarId, horarioParaTrocaId, estadoPedidoTrocaId);
+                TempData["SuccessRequired"] = "Pedido realizado com sucesso!";
+                return RedirectToAction(nameof(Index));
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                TempData["ErrorRequired"] = "Erro ao inserir pedido!";
+                return RedirectToAction(nameof(Index));
+            }           
 
         }
-
-      
 
         /*************************Funções Auxiliares************************/
 
@@ -626,16 +636,16 @@ namespace EscalonamentoHospitalar.Controllers
         * @param estadoPedidoTrocaId
         * @insert in the PedidoTrocaTurnoEnfermeiro table a record with the above parameters
         */
-        //private void InsertDataIntoPedidoTrocaTurnoEnfermeiro(HospitalDbContext db, DateTime dataPedido, Enfermeiro enfermeiroRequerenteId, HorarioATrocarEnfermeiro horarioATrocarId, HorarioParaTrocaEnfermeiro horarioParaTrocaId, EstadoPedidoTroca estadoPedidoTrocaId)
-        //{
-        //    db.PedidoTrocaTurnosEnfermeiros.Add(
+        private void InsertDataIntoPedidoTrocaTurnoEnfermeiro(HospitalDbContext db, DateTime dataPedido, Enfermeiro enfermeiroRequerenteId, HorarioATrocarEnfermeiro horarioATrocarId, HorarioParaTrocaEnfermeiro horarioParaTrocaId, EstadoPedidoTroca estadoPedidoTrocaId)
+        {
+            db.PedidoTrocaTurnosEnfermeiros.Add(
 
-        //        new PedidoTrocaTurnosEnfermeiro {DataPedido = dataPedido, EnfermeiroId = enfermeiroRequerenteId.EnfermeiroId, HorarioATrocarEnfermeiroId = horarioATrocarId.HorarioEnfermeiroId, HorarioParaTrocaEnfermeiroId = horarioParaTrocaId.HorarioEnfermeiroId, EstadoPedidoTrocaId = estadoPedidoTrocaId.EstadoPedidoTrocaId }
+                new PedidoTrocaTurnosEnfermeiro {DataPedido = dataPedido, EnfermeiroId = enfermeiroRequerenteId.EnfermeiroId, HorarioATrocarEnfermeiroId = horarioATrocarId.HorarioATrocarEnfermeiroId, HorarioParaTrocaEnfermeiroId = horarioParaTrocaId.HorarioParaTrocaEnfermeiroId, EstadoPedidoTrocaId = estadoPedidoTrocaId.EstadoPedidoTrocaId }
 
-        //        );
+               );
 
-        //    db.SaveChanges();            
-        //}
+            db.SaveChanges();            
+        }
 
         /**
         * @param db

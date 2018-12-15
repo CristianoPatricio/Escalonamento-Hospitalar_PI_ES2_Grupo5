@@ -21,7 +21,11 @@ namespace EscalonamentoHospitalar.Controllers
         // GET: PedidoTrocaTurnosEnfermeiros
         public async Task<IActionResult> Index()
         {
-            var hospitalDbContext = _context.PedidoTrocaTurnosEnfermeiros.Include(p => p.Enfermeiro).Include(p => p.EstadoPedidoTroca).Include(p => p.HorarioATrocarEnfermeiro).Include(p => p.HorarioParaTrocaEnfermeiro);
+            var hospitalDbContext = _context.PedidoTrocaTurnosEnfermeiros
+                .Include(p => p.Enfermeiro)
+                .Include(p => p.EstadoPedidoTroca)
+                .Include(p => p.HorarioATrocarEnfermeiro.HorarioEnfermeiro)
+                .Include(p => p.HorarioParaTrocaEnfermeiro.HorarioEnfermeiro);
             return View(await hospitalDbContext.ToListAsync());
         }
 
@@ -50,10 +54,10 @@ namespace EscalonamentoHospitalar.Controllers
         // GET: PedidoTrocaTurnosEnfermeiros/Create
         public IActionResult Create()
         {
-            ViewData["EnfermeiroId"] = new SelectList(_context.Enfermeiros, "EnfermeiroId", "CC");
-            ViewData["EstadoPedidoTrocaId"] = new SelectList(_context.EstadoPedidoTrocas, "EstadoPedidoTrocaId", "EstadoPedidoTrocaId");
-            ViewData["HorarioATrocarEnfermeiroId"] = new SelectList(_context.HorarioATrocarEnfermeiros, "HorarioATrocarEnfermeiroId", "HorarioATrocarEnfermeiroId");
-            ViewData["HorarioParaTrocaEnfermeiroId"] = new SelectList(_context.HorarioParaTrocaEnfermeiros, "HorarioParaTrocaEnfermeiroId", "HorarioParaTrocaEnfermeiroId");
+            ViewData["EnfermeiroId"] = new SelectList(_context.Enfermeiros, "EnfermeiroId", "Nome");
+            ViewData["EstadoPedidoTrocaId"] = new SelectList(_context.EstadoPedidoTrocas, "EstadoPedidoTrocaId", "Nome");
+            ViewData["HorarioATrocarEnfermeiroId"] = new SelectList(_context.HorarioATrocarEnfermeiros, "HorarioATrocarEnfermeiroId", "HorarioEnfermeiroId");
+            ViewData["HorarioParaTrocaEnfermeiroId"] = new SelectList(_context.HorarioParaTrocaEnfermeiros, "HorarioParaTrocaEnfermeiroId", "HorarioEnfermeiroId");
             return View();
         }
 

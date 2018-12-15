@@ -7,13 +7,19 @@
 
 <h2>Horário dos Enfermeiros</h2>
 
-@ViewBag.EnfReq
-
 @*
     <p>
         <a asp-action="Create">Create New</a>
     </p>
 *@
+
+@if (TempData["SuccessRequired"] != null)
+{
+    <!--Mensagem de sucesso quandi insere enfermeiro-->
+    <div id="suc_form" class="alert alert-success">
+        <strong>Sucesso!</strong> O pedido foi registado com sucesso.
+    </div>
+}
 
 <form asp-action="Index">
     <p>

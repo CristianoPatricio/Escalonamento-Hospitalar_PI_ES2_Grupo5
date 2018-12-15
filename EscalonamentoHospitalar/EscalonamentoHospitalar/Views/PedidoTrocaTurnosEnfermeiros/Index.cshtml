@@ -13,19 +13,19 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.DataPedido)
+                Data do Pedido
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Enfermeiro)
+                Enfermeiro Requerente
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.HorarioATrocarEnfermeiro)
+                Data do Horário a trocar
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.HorarioParaTrocaEnfermeiro)
+                Data do Horário para troca
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.EstadoPedidoTroca)
+                Estado
             </th>
             <th></th>
         </tr>
@@ -37,16 +37,16 @@
                 @Html.DisplayFor(modelItem => item.DataPedido)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Enfermeiro.CC)
+                @Html.DisplayFor(modelItem => item.Enfermeiro.Nome)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.HorarioATrocarEnfermeiro.HorarioATrocarEnfermeiroId)
+                @Html.DisplayFor(modelItem => item.HorarioATrocarEnfermeiro.HorarioEnfermeiro.DataInicioTurno)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.HorarioParaTrocaEnfermeiro.HorarioParaTrocaEnfermeiroId)
+                @Html.DisplayFor(modelItem => item.HorarioParaTrocaEnfermeiro.HorarioEnfermeiro.DataInicioTurno)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.EstadoPedidoTroca.EstadoPedidoTrocaId)
+                @Html.DisplayFor(modelItem => item.EstadoPedidoTroca.Nome)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.PedidoTrocaTurnosEnfermeiroId">Edit</a> |
