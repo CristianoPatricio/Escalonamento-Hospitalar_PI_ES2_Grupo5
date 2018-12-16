@@ -25,42 +25,105 @@ namespace EscalonamentoHospitalar.Controllers
         public async Task<IActionResult> Index(HorariosEnfermeirosViewModel model = null, int page = 1)
         {
             string nome = null;
+            DateTime? data = null;
 
-            if (model != null && model.CurrentNome != null)
+            if (model != null && model.DataInicio != null || model.CurrentNome != null)
             {
                 nome = model.CurrentNome;
+                data = model.DataInicio;
                 page = 1;
             }
 
-            var horario = _context.HorariosEnfermeiro
-                .Where(h => nome == null || h.Enfermeiro.Nome.Contains(nome)); ;
+            IQueryable<HorarioEnfermeiro> horario;
+            int numHorario;     
+            IEnumerable<HorarioEnfermeiro> listaHorario;
+           
+            if (data.HasValue && string.IsNullOrEmpty(nome)) //Pesquisa por data
+            {
+                int ano = data.Value.Year;
+                int mes = data.Value.Month;
+                int dia = data.Value.Day;
 
-            int numHorario = await horario.CountAsync();
+                horario = _context.HorariosEnfermeiro
+                   .Where(h => h.DataInicioTurno.Year.Equals(ano) && h.DataInicioTurno.Month.Equals(mes) && h.DataInicioTurno.Day.Equals(dia));
+
+                numHorario = await horario.CountAsync();
+
+                listaHorario = await horario
+                    .Include(h => h.Enfermeiro)
+                    .Include(h => h.Turno)
+                    .OrderBy(h => h.DataInicioTurno)
+                    .Skip(PAGE_SIZE * (page - 1))
+                    .Take(PAGE_SIZE)
+                    .ToListAsync();
+            }
+            else if (!string.IsNullOrEmpty(nome) && !data.HasValue) //Pesquisa por Nome
+            {
+                horario = _context.HorariosEnfermeiro
+                    .Where(h => h.Enfermeiro.Nome.Contains(nome.Trim()));
+
+                numHorario = await horario.CountAsync();
+
+                listaHorario = await horario
+                    .Include(h => h.Enfermeiro)
+                    .Include(h => h.Turno)
+                    .OrderBy(h => h.DataInicioTurno)
+                    .Skip(PAGE_SIZE * (page - 1))
+                    .Take(PAGE_SIZE)
+                    .ToListAsync();
+            }
+            else if (!string.IsNullOrEmpty(nome) && data.HasValue) //Pesquisa por nome e data
+            {
+                int ano = data.Value.Year;
+                int mes = data.Value.Month;
+                int dia = data.Value.Day;
+
+                horario = _context.HorariosEnfermeiro
+                    .Where(h => h.Enfermeiro.Nome.Contains(nome.Trim()) && h.DataInicioTurno.Year.Equals(ano) && h.DataInicioTurno.Month.Equals(mes) && h.DataInicioTurno.Day.Equals(dia));
+
+                numHorario = await horario.CountAsync();
+
+                listaHorario = await horario
+                  .Include(h => h.Enfermeiro)
+                  .Include(h => h.Turno)
+                  .OrderBy(h => h.DataInicioTurno)
+                  .Skip(PAGE_SIZE * (page - 1))
+                  .Take(PAGE_SIZE)
+                  .ToListAsync();
+            }
+            else
+            {
+                horario = _context.HorariosEnfermeiro;
+
+                numHorario = await horario.CountAsync();
+
+                listaHorario = await horario
+                  .Include(h => h.Enfermeiro)
+                  .Include(h => h.Turno)
+                  .OrderBy(h => h.DataInicioTurno)
+                  .Skip(PAGE_SIZE * (page - 1))
+                  .Take(PAGE_SIZE)
+                  .ToListAsync();
+            }
 
             if (page > (numHorario / PAGE_SIZE) + 1)
             {
                 page = 1;
             }
 
-            var listahorario = await horario
-                .Include(h => h.Enfermeiro)
-                .Include(h => h.Turno)
-                .OrderBy(h => h.DataInicioTurno)
-                .Skip(PAGE_SIZE * (page - 1))
-                .Take(PAGE_SIZE)
-                .ToListAsync();
 
             return View(
                 new HorariosEnfermeirosViewModel
                 {
-                    HorariosEnfermeiros = listahorario,
+                    HorariosEnfermeiros = listaHorario,
                     Pagination = new PagingViewModel
                     {
                         CurrentPage = page,
                         PageSize = PAGE_SIZE,
                         TotalItems = numHorario
                     },
-                    CurrentNome = nome                  
+                    CurrentNome = nome,
+                    DataInicio = data
                 }
             );
         }

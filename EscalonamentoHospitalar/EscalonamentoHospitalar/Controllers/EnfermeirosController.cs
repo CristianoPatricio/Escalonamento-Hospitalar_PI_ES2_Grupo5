@@ -26,7 +26,7 @@ namespace EscalonamentoHospitalar.Controllers
 
             if (model != null && model.CurrentNome != null)
             {
-                nome = model.CurrentNome;
+                nome = model.CurrentNome.Trim();
                 page = 1;
             }
 

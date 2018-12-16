@@ -15,15 +15,32 @@
 
 @if (TempData["SuccessRequired"] != null)
 {
-    <!--Mensagem de sucesso quandi insere enfermeiro-->
+    <!--Mensagem de sucesso quando insere pedido de troca de turno-->
     <div id="suc_form" class="alert alert-success">
         <strong>Sucesso!</strong> O pedido foi registado com sucesso.
     </div>
 }
 
+@if (TempData["Success"] != null)
+{
+    <!--Mensagem de sucesso quando gera horário-->
+    <div id="suc_form" class="alert alert-success">
+        <strong>Sucesso!</strong> O horário foi gerado com sucesso.
+    </div>
+}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    //Passados 5 segundos a mensagem desaparece
+    $(document).ready(function () {
+        $("#suc_form").hide(10000);
+    });
+</script>
+
 <form asp-action="Index">
     <p>
         Pesquisar por nome: <input style="width: 200px;" asp-for="CurrentNome" placeholder="Insira o nome a pesquisar" />
+        Pesquisar por data: <input style="width: 200px;" asp-for="DataInicio" />
         <input type="submit" value="Pesquisar" class="btn btn-info" />
     </p>
 </form>
