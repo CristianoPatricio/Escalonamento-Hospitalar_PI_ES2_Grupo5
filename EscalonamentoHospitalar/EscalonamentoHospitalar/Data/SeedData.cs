@@ -177,11 +177,11 @@ namespace EscalonamentoHospitalar.Data
          db.Grau.AddRange(
                     new Grau
                        {
-                          TipoGrau = "1"
+                          TipoGrau = "grave"
                        },
                        new Grau
                        {
-                           TipoGrau = "2"
+                           TipoGrau = "muito_grave"
                        }
             );
 
@@ -194,11 +194,11 @@ namespace EscalonamentoHospitalar.Data
          db.Patologia.AddRange(
                     new Patologia
                        {
-                          Nome = "Pulmonar"
+                          Nome = "Tubo_Digestivo"
                        },
                        new Patologia
                        {
-                           Nome = "Intestinal"
+                           Nome = "Rim"
                        }
             );
         }
@@ -211,14 +211,14 @@ namespace EscalonamentoHospitalar.Data
             {
                 if (db.Tratamentos.Any()) return;
 
-                Patologia Pulmonar = db.Patologia.SingleOrDefault(e => e.Nome == "Pulmonar");
-                Patologia Intestinal = db.Patologia.SingleOrDefault(e => e.Nome == "Instetinal ");
+                Patologia Tubo_Digestivo = db.Patologia.SingleOrDefault(e => e.Nome == "Tubo_Digestivo");
+                Patologia Rim = db.Patologia.SingleOrDefault(e => e.Nome == "Rim ");
 
             Paciente Barbara = db.Pacientes.SingleOrDefault(e => e.Nome == "Barbara ");
             Paciente Andre = db.Pacientes.SingleOrDefault(e => e.Nome == "Andre ");
 
-            Grau Grau1 = db.Grau.SingleOrDefault(e => e.TipoGrau == "1 ");
-            Grau Grau2 = db.Grau.SingleOrDefault(e => e.TipoGrau == "2 ");
+            Grau grave = db.Grau.SingleOrDefault(e => e.TipoGrau == "grave ");
+            Grau muito_grave = db.Grau.SingleOrDefault(e => e.TipoGrau == "muito grave ");
 
             Regime Semanal = db.Regime.SingleOrDefault(e => e.TipoRegime == "Semanal ");
             Regime Mensal = db.Regime.SingleOrDefault(e => e.TipoRegime == "Mensal ");
@@ -226,7 +226,7 @@ namespace EscalonamentoHospitalar.Data
             Medico Manuel   = db.Medicos.SingleOrDefault(e => e.Nome == "Manuel Santos");
             Medico Elisabete  = db.Medicos.SingleOrDefault(e => e.Nome == "Elisabete Eiras");
 
-            Estado Decorrer = db.Estado.SingleOrDefault(e => e.Nome == "Decorrer");
+            Estado  A_Decorrer = db.Estado.SingleOrDefault(e => e.Nome == "A Decorrer");
             Estado Concluido = db.Estado.SingleOrDefault(e => e.Nome == "Concluido");
 
 
@@ -237,22 +237,23 @@ namespace EscalonamentoHospitalar.Data
                     
                     new Tratamento
                     {
-                        PatologiaId= Pulmonar.PatologiaId,
+                        PatologiaId= Tubo_Digestivo.PatologiaId,
                         PacienteId = Barbara.PacienteId,
-                        GrauId = Grau1.GrauId,
+                        GrauId = grave.GrauId,
                         RegimeId = Semanal.RegimeId,
                         DataInicio = new DateTime(2018, 11, 09),
                         DataFim = new DateTime(2018, 12, 31),
                         DuracaoCiclo = "00:30",
                         MedicoId = Manuel.MedicoId,
-                        EstadoId = Decorrer.EstadoId,
+                        EstadoId = A_Decorrer.EstadoId, 
+                        
                         
                     },
                     new Tratamento
                     {
-                        PatologiaId = Pulmonar.PatologiaId,
+                        PatologiaId = Rim.PatologiaId,
                         PacienteId = Andre.PacienteId,
-                        GrauId = Grau2.GrauId,
+                        GrauId = muito_grave.GrauId,
                         RegimeId = Mensal.RegimeId,
                         DataInicio = new DateTime(2018, 11, 09),
                         DataFim = new DateTime(2018, 12, 31),

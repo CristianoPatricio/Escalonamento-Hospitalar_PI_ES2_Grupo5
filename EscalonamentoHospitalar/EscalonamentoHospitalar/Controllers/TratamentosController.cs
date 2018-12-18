@@ -59,7 +59,7 @@ namespace EscalonamentoHospitalar.Controllers
             ViewData["PacienteId"] = new SelectList(_context.Pacientes, "PacienteId", "Nome");
             ViewData["PatologiaId"] = new SelectList(_context.Patologia, "PatologiaId", "Nome");
             ViewData["RegimeId"] = new SelectList(_context.Regime, "RegimeId", "TipoRegime");
-            ViewData["EstadoId"] = new SelectList(_context.Estado, "EstadoId", "Nome");
+            //ViewData["EstadoId"] = new SelectList(_context.Estado, "EstadoId", "Nome");
 
             return View();
         }
@@ -69,20 +69,43 @@ namespace EscalonamentoHospitalar.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("TratamentoId,PatologiaId,PacienteId,GrauId,DataInicio,DataFim,DuracaoCiclo,RegimeId,EstadoId,MedicoId")] Tratamento tratamento)
+        public async Task<IActionResult> Create([Bind("TratamentoId,PatologiaId,PacienteId,GrauId,DataInicio,DataFim,DuracaoCiclo,RegimeId,MedicoId")] Tratamento tratamento)
         {
             /*********Validações***********/
 
             DateTime dateNow = DateTime.Now;
             DateTime inicioTratamento = tratamento.DataInicio;
             DateTime fimTratamento = tratamento.DataFim;
+            int tratamentoId = tratamento.TratamentoId;
+            int patologiaId = tratamento.PatologiaId;
+            int pacienteId = tratamento.PacienteId;
+            int grauId = tratamento.GrauId;
+            DateTime DataInicio = tratamento.DataInicio;
+            DateTime DataFim = tratamento.DataFim;
+            string DuracaoCiclo = tratamento.DuracaoCiclo;
+            int RegimeId = tratamento.RegimeId;
+            int MedicoId = tratamento.MedicoId;
+            
 
 
-           
+            Estado estadoTratamento = _context.Estado.SingleOrDefault(e => e.Nome == "Em Espera");
+
+            /*bool dataTratamentoIsInvalid = false;
+
+            if(DataTratamentoIsInvalid(dateNow,inicioTratamento) == true)
+            {
+                dataTratamentoIsInvalid = true;
+                ModelState.AddModelError("DataInicio", "Data Inválida, não pode ser inferior à data atual");
+            }
+            */
 
             if (ModelState.IsValid)
             {
-                _context.Add(tratamento);
+                _context.Add(
+                    
+                    new Tratamento {TratamentoId = tratamentoId, EstadoId = estadoTratamento.EstadoId }
+                    
+                    );
                 await _context.SaveChangesAsync();
                 TempData["notice"] = "Tratamento inserido com sucesso!";
                 return RedirectToAction(nameof(Index));
@@ -91,8 +114,6 @@ namespace EscalonamentoHospitalar.Controllers
             ViewData["MedicoId"] = new SelectList(_context.Medicos, "MedicoId", "Nome", tratamento.MedicoId);
             ViewData["PacienteId"] = new SelectList(_context.Pacientes, "PacienteId", "Nome", tratamento.PacienteId);
             ViewData["PatologiaId"] = new SelectList(_context.Patologia, "PatologiaId", "Nome", tratamento.PatologiaId);
-            ViewData["RegimeId"] = new SelectList(_context.Regime, "RegimeId", "TipoRegime", tratamento.RegimeId);
-            ViewData["EstadoId"] = new SelectList(_context.Estado, "EstadoId", "Nome", tratamento.EstadoId);
             return View(tratamento);
         }
 
@@ -222,6 +243,24 @@ namespace EscalonamentoHospitalar.Controllers
             return estado;
         }
 
+        private bool DataTratamentoIsInvalid(DateTime inicioTratamento, DateTime fimTratamento) { 
+
+            bool IsInvalid = false;
+
+            DateTime dateNow = DateTime.Now;
+
+            int x = DateTime.Compare(dateNow, inicioTratamento);
+            int y = DateTime.Compare(dateNow, fimTratamento);
+            int z = DateTime.Compare(inicioTratamento, fimTratamento);
+
+
+            if (x >= 0 || y >= 0 || z <= 0) {
+
+                IsInvalid = true;
+            }
+            return IsInvalid;
+
+        }
         //falta adicionar para a data de fim 
         private bool TratamentoExists(int id)
         {

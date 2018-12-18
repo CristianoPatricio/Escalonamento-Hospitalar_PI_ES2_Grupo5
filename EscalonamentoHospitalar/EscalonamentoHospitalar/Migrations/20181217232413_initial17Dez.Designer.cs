@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EscalonamentoHospitalar.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    [Migration("20181207115345_Initial07Dez")]
-    partial class Initial07Dez
+    [Migration("20181217232413_initial17Dez")]
+    partial class initial17Dez
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -354,8 +354,7 @@ namespace EscalonamentoHospitalar.Migrations
 
                     b.Property<DateTime>("DataInicio");
 
-                    b.Property<string>("DuracaoCiclo")
-                        .IsRequired();
+                    b.Property<string>("DuracaoCiclo");
 
                     b.Property<int>("EstadoId");
 
