@@ -96,14 +96,14 @@ namespace EscalonamentoHospitalar.Controllers
             {
                 dataTratamentoIsInvalid = true;
                 ModelState.AddModelError("DataInicio", "Data Inválida, não pode ser inferior à data atual");
-            }
-            */
+            }*/
+            
 
             if (ModelState.IsValid)
             {
                 _context.Add(
                     
-                    new Tratamento {TratamentoId = tratamentoId, EstadoId = estadoTratamento.EstadoId }
+                    new Tratamento {TratamentoId = tratamentoId,PatologiaId = patologiaId, PacienteId = pacienteId,GrauId = grauId, RegimeId = RegimeId,EstadoId = estadoTratamento.EstadoId, MedicoId = MedicoId  }
                     
                     );
                 await _context.SaveChangesAsync();
