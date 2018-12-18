@@ -4,53 +4,44 @@
     ViewData["Title"] = "Solicitar Pedido Troca de Turnos - Enfermeiros";
 }
 
+<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.5.0/css/all.css' integrity='sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU' crossorigin='anonymous'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 <h2>Sumário - Pedido de Troca de Turno - Enfermeiros</h2>
 
-<div>
-    <h4><b>Horário a trocar:</b></h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            Data de início de turno:
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.horarioEnfermeiroATrocar.DataInicioTurno)
-        </dd>
-        <dt>
-            Enfermeiro:
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.horarioEnfermeiroATrocar.Enfermeiro.Nome)
-        </dd>
-    </dl>
+<p></p>
+<div class="col-md-4">
+    <div class="panel panel-danger">
+        <div class="panel-heading"><b>Horário a Trocar</b></div>
+        <div class="panel-body">
+            <i style='font-size:24px' class='far'>&#xf073;</i> Data de início do turno
+            <b>@Html.DisplayFor(model => model.horarioEnfermeiroATrocar.DataInicioTurno)</b><br /><br />
+            <i style='font-size:24px' class='fas'>&#xf0f0;</i> Enfermeiro
+            <b>@Html.DisplayFor(model => model.horarioEnfermeiroATrocar.Enfermeiro.Nome)</b>
+        </div>
+    </div>
+
+    <p></p>
+    <i class="fa fa-long-arrow-up" style="font-size:48px;color:black"></i>
+    <i class="fa fa-long-arrow-down" style="font-size:48px;color:black"></i>
+    <p></p>
+
+    <div class="panel panel-success">
+        <div class="panel-heading"><b>Horário para Troca</b></div>
+        <div class="panel-body">
+            <i style='font-size:24px' class='far'>&#xf073;</i> Data de início do turno:
+            <b>@Html.DisplayFor(model => model.horarioEnfermeiroParaTroca.DataInicioTurno)</b><br /><br />
+            <i style='font-size:24px' class='fas'>&#xf0f0;</i> Enfermeiro:
+            <b>@Html.DisplayFor(model => model.horarioEnfermeiroParaTroca.Enfermeiro.Nome)</b>
+        </div>
+    </div>
+
+    <p></p>
+
+    <form asp-action="SolicitarPedidoTrocaTurnoEnfermeiro">
+        <input type="hidden" asp-for="horarioEnfermeiroATrocar.HorarioEnfermeiroId" name="idHor1" />
+        <input type="hidden" asp-for="horarioEnfermeiroParaTroca.HorarioEnfermeiroId" name="idHor2" />
+        <input type="submit" value="Solicitar Pedido" class="btn btn-success" />
+        <a asp-action="Index"><input type="button" value="Cancelar" class="btn btn-default" /></a>
+    </form>
 </div>
-
-<hr />
-
-
-<div>
-    <h4><b>Horário para troca:</b></h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            Data de início de turno:
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.horarioEnfermeiroParaTroca.DataInicioTurno)
-        </dd>
-        <dt>
-            Enfermeiro:
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.horarioEnfermeiroParaTroca.Enfermeiro.Nome)
-        </dd>
-    </dl>
-</div>
-
-
-<form asp-action="SolicitarPedidoTrocaTurnoEnfermeiro">
-    <input type="hidden" asp-for="horarioEnfermeiroATrocar.HorarioEnfermeiroId" name="idHor1" />
-    <input type="hidden" asp-for="horarioEnfermeiroParaTroca.HorarioEnfermeiroId" name="idHor2" />
-    <input type="submit" value="Solicitar Pedido" class="btn btn-success" />
-    <a asp-action="Index"><input type="button" value="Cancelar" class="btn btn-default" /></a>
-</form>
