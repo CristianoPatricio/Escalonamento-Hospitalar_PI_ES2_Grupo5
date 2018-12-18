@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace EscalonamentoHospitalar.Migrations
+namespace EscalonamentoHospitalar.Migrations.HospitalDb
 {
     public partial class initial : Migration
     {

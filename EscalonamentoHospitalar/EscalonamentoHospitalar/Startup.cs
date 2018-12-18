@@ -47,6 +47,12 @@ namespace EscalonamentoHospitalar
                 .AddDefaultUI()
                 .AddDefaultTokenProviders();
 
+            
+            services.AddAuthorization(options => {
+                options.AddPolicy("AcessoRestritoAdministrador",
+                    policy => policy.RequireRole("Administrador"));
+            });
+
             // Política para acesso restrito ao diretor de serviço
             services.AddAuthorization(options => {
                 options.AddPolicy("AcessoRestritoDiretorServico",
@@ -100,7 +106,7 @@ namespace EscalonamentoHospitalar
 
             if (env.IsDevelopment())
             {
-                SeedData.CreateRolesAndUsersAsync(userManager, roleManager).Wait();
+                //SeedData.CreateRolesAndUsersAsync(userManager, roleManager).Wait();
                 SeedData.Populate(db);
 
                 app.UseDeveloperExceptionPage();

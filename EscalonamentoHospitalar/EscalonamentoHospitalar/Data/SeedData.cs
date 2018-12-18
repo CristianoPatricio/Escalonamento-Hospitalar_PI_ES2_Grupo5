@@ -10,6 +10,9 @@ namespace EscalonamentoHospitalar.Data
 {
     public static class SeedData
     {
+        
+        private const string ROLE_ADMINISTRADOR = "Administrador";
+
         // Criação dos Utilizadores: Diretor de serviço / Médico / Enfermeiro
         private const string ROLE_DIRETORSERVICO = "DiretorServico";
         private const string ROLE_MEDICO = "Medico";
@@ -64,31 +67,53 @@ namespace EscalonamentoHospitalar.Data
 
         private static async void MakeSureRoleExistsAsync(RoleManager<IdentityRole> roleManager, string role)
         {
-            if(!await roleManager.RoleExistsAsync(role))
+            if (!await roleManager.RoleExistsAsync(role))
             {
                 await roleManager.CreateAsync(new IdentityRole(role));
             }
         }
 
-        // Criação dos roles e utilizador: Diretor de Serviço
         public static async Task CreateRolesAndUsersAsync(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
         {
-            const string DIRETORSERVICO_USER = "D001";
-            const string DIRETORSERVICO_PASSWORD = "1234";
-            
+            const string ADMIN_USER = "A001";
+            const string ADMIN_PASSWORD = "1234";
+
+            MakeSureRoleExistsAsync(roleManager, ROLE_ADMINISTRADOR);
             MakeSureRoleExistsAsync(roleManager, ROLE_DIRETORSERVICO);
             MakeSureRoleExistsAsync(roleManager, ROLE_MEDICO);
             MakeSureRoleExistsAsync(roleManager, ROLE_ENFERMEIRO);
+                
 
-            IdentityUser diretorServico = await userManager.FindByNameAsync(DIRETORSERVICO_USER);
-            if(diretorServico == null)
+            IdentityUser admin = await userManager.FindByNameAsync(ADMIN_USER);
+            if (admin == null)
             {
-                diretorServico = new IdentityUser { UserName = DIRETORSERVICO_USER };
-                await userManager.CreateAsync(diretorServico, DIRETORSERVICO_PASSWORD);
+                admin = new IdentityUser { UserName = ADMIN_USER };
+                await userManager.CreateAsync(admin, ADMIN_PASSWORD);
             }
-            if (!await userManager.IsInRoleAsync(diretorServico, ROLE_DIRETORSERVICO))
+
+            if (!await userManager.IsInRoleAsync(admin, ROLE_ADMINISTRADOR))
             {
-                await userManager.AddToRoleAsync(diretorServico, ROLE_DIRETORSERVICO);
+                await userManager.AddToRoleAsync(admin, ROLE_ADMINISTRADOR);
+            }
+        }
+
+
+        // Criação do utilizador: Diretor de Serviço
+        public static async Task CreateDiretorServicoUsersAsync(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
+        {
+            const string DIRETORSERVICO_USER = "D001";
+            const string DIRETORSERVICO_PASSWORD = "1234";
+
+            IdentityUser diretorServicoUser = await userManager.FindByNameAsync(DIRETORSERVICO_USER);
+            if (diretorServicoUser == null)
+            {
+                diretorServicoUser = new IdentityUser { UserName = DIRETORSERVICO_USER };
+                await userManager.CreateAsync(diretorServicoUser, DIRETORSERVICO_PASSWORD);
+            }
+
+            if (!await userManager.IsInRoleAsync(diretorServicoUser, DIRETORSERVICO_USER))
+            {
+                await userManager.AddToRoleAsync(diretorServicoUser, DIRETORSERVICO_USER);
             }
 
         }

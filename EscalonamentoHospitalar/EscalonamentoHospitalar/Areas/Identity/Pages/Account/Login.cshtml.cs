@@ -17,6 +17,7 @@ namespace EscalonamentoHospitalar.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
+             
 
         public LoginModel(SignInManager<IdentityUser> signInManager, ILogger<LoginModel> logger)
         {
@@ -33,6 +34,8 @@ namespace EscalonamentoHospitalar.Areas.Identity.Pages.Account
 
         [TempData]
         public string ErrorMessage { get; set; }
+        public static IdentityUser Codigo { get; private set; }
+        public static bool SignInAs { get; private set; }
 
         public class InputModel
         {
@@ -65,7 +68,7 @@ namespace EscalonamentoHospitalar.Areas.Identity.Pages.Account
             ReturnUrl = returnUrl;
         }
 
-        /*
+
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
@@ -74,7 +77,7 @@ namespace EscalonamentoHospitalar.Areas.Identity.Pages.Account
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(Input.Codigo, Input.Password, Input.SignInAs, lockoutOnFailure: true);
+                var result = await _signInManager.PasswordSignInAsync(LoginModel.Codigo, Input.Password, LoginModel.SignInAs, lockoutOnFailure: true);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
@@ -98,6 +101,6 @@ namespace EscalonamentoHospitalar.Areas.Identity.Pages.Account
 
             // If we got this far, something failed, redisplay form
             return Page();
-        }*/
+        }
     }
 }

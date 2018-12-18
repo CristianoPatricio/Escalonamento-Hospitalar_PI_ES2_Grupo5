@@ -4,16 +4,14 @@ using EscalonamentoHospitalar.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace EscalonamentoHospitalar.Migrations
+namespace EscalonamentoHospitalar.Migrations.HospitalDb
 {
     [DbContext(typeof(HospitalDbContext))]
-    [Migration("20181215193801_initial")]
-    partial class initial
+    partial class HospitalDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
