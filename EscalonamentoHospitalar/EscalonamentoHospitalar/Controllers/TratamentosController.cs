@@ -103,7 +103,7 @@ namespace EscalonamentoHospitalar.Controllers
             {
                 _context.Add(
                     
-                    new Tratamento {TratamentoId = tratamentoId,PatologiaId = patologiaId, PacienteId = pacienteId,GrauId = grauId, RegimeId = RegimeId,EstadoId = estadoTratamento.EstadoId, MedicoId = MedicoId  }
+                    new Tratamento {TratamentoId = tratamentoId,PatologiaId = patologiaId, PacienteId = pacienteId,GrauId = grauId,DataInicio = DataInicio, DataFim = DataFim ,RegimeId = RegimeId,EstadoId = estadoTratamento.EstadoId, MedicoId = MedicoId  }
                     
                     );
                 await _context.SaveChangesAsync();
