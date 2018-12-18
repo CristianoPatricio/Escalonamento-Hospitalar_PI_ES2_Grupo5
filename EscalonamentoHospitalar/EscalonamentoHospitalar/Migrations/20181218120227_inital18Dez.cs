@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace EscalonamentoHospitalar.Migrations
 {
-    public partial class initial17Dez : Migration
+    public partial class inital18Dez : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

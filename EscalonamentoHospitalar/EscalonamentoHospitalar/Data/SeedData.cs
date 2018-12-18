@@ -218,7 +218,7 @@ namespace EscalonamentoHospitalar.Data
             Paciente Andre = db.Pacientes.SingleOrDefault(e => e.Nome == "Andre ");
 
             Grau grave = db.Grau.SingleOrDefault(e => e.TipoGrau == "grave ");
-            Grau muito_grave = db.Grau.SingleOrDefault(e => e.TipoGrau == "muito grave ");
+            Grau muito_grave = db.Grau.SingleOrDefault(e => e.TipoGrau == "muito_grave ");
 
             Regime Semanal = db.Regime.SingleOrDefault(e => e.TipoRegime == "Semanal ");
             Regime Mensal = db.Regime.SingleOrDefault(e => e.TipoRegime == "Mensal ");

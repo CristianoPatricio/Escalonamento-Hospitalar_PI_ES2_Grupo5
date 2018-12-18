@@ -85,11 +85,12 @@ namespace EscalonamentoHospitalar.Controllers
             string DuracaoCiclo = tratamento.DuracaoCiclo;
             int RegimeId = tratamento.RegimeId;
             int MedicoId = tratamento.MedicoId;
+
+            string estado = EstadoTratamento(dateNow, DataInicio);
+
+            Estado estadoTratamento = _context.Estado.SingleOrDefault(e => e.Nome == estado);
+
             
-
-
-            Estado estadoTratamento = _context.Estado.SingleOrDefault(e => e.Nome == "Em Espera");
-
             /*bool dataTratamentoIsInvalid = false;
 
             if(DataTratamentoIsInvalid(dateNow,inicioTratamento) == true)
