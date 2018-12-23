@@ -12,6 +12,13 @@
         <a asp-action="Create">Create New</a>
     </p>
 *@
+@if (TempData["PedidoAlreadyDone"] != null)
+{
+    <!--Mensagem de sucesso quando insere pedido de troca de turno-->
+    <div id="suc_form" class="alert alert-warning">
+        <strong>Atenção!</strong> Já existe um pedido feito para a troca dos horários selecionados!
+    </div>
+}
 
 @if (TempData["SuccessRequired"] != null)
 {
@@ -89,9 +96,32 @@
 
 @if (TempData["NoItemsFound"] != null)
 {
-    <!--Mensagem de sucesso quando gera horário-->
-    <div id="suc_form" class="alert alert-info">
-        <strong>Ops!</strong> Não foram encontrados resultados para a sua pesquisa.
+    <script>
+        //Show #myModal when there aren't records founded of search by date or name
+        $(document).ready(function () {
+            $("#myModal").modal();
+        });
+    </script>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title" style="color:dodgerblue;"><strong>Ops!</strong></h4>
+                </div>
+                <div class="modal-body">
+                    <p> Não foram encontrados resultados para a sua pesquisa :(</p>
+                </div>
+                <div class="modal-footer">
+                    <a asp-action="Index"><input type="hidden" /><input type="button" class="btn btn-default" value="Ok" /></a>
+                </div>
+            </div>
+
+        </div>
     </div>
 }
 

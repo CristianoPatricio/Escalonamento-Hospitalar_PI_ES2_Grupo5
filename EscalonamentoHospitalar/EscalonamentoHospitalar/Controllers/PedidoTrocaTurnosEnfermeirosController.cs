@@ -40,8 +40,8 @@ namespace EscalonamentoHospitalar.Controllers
             var pedidoTrocaTurnosEnfermeiro = await _context.PedidoTrocaTurnosEnfermeiros
                 .Include(p => p.Enfermeiro)
                 .Include(p => p.EstadoPedidoTroca)
-                .Include(p => p.HorarioATrocarEnfermeiro)
-                .Include(p => p.HorarioParaTrocaEnfermeiro)
+                .Include(p => p.HorarioATrocarEnfermeiro.HorarioEnfermeiro.Enfermeiro)
+                .Include(p => p.HorarioParaTrocaEnfermeiro.HorarioEnfermeiro.Enfermeiro)
                 .FirstOrDefaultAsync(m => m.PedidoTrocaTurnosEnfermeiroId == id);
             if (pedidoTrocaTurnosEnfermeiro == null)
             {

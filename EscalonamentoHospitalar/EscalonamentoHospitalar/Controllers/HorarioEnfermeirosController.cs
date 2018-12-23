@@ -487,15 +487,22 @@ namespace EscalonamentoHospitalar.Controllers
         public IActionResult SolicitarPedidoTrocaTurnoEnfermeiroConfirmed(int idHor1, int idHor2)
         {
             DateTime dataPedido = DateTime.Now;
+          
+            // Verifica se já existe um pedido feito com os id's dos horários
+            if (PedidoTrocaTurnoJaFoiEfetudado(idHor1, idHor2) == true)
+            {
+                TempData["PedidoAlreadyDone"] = "Já existe um pedido feito para a troca destes horários";
+                return RedirectToAction(nameof(Index));
+            }
 
             //Select EnfermeiroID Where HorarioEnfermeiroId = idHorario1
-             var idEnfRequerente = from h in _context.HorariosEnfermeiro
+            var idEnfRequerente = from h in _context.HorariosEnfermeiro
                                    where h.HorarioEnfermeiroId == idHor1
                                    select h.EnfermeiroId;
 
             HorarioEnfermeiro horarioATrocar = _context.HorariosEnfermeiro.SingleOrDefault(h => h.HorarioEnfermeiroId == idHor1);
             HorarioEnfermeiro horarioParaTroca = _context.HorariosEnfermeiro.SingleOrDefault(h => h.HorarioEnfermeiroId == idHor2);
-
+         
             try
             {
                 //Insert into HorarioATrocarEnfermeiro
@@ -510,8 +517,8 @@ namespace EscalonamentoHospitalar.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            HorarioATrocarEnfermeiro horarioATrocarId = _context.HorarioATrocarEnfermeiros.SingleOrDefault(h => h.HorarioEnfermeiroId == idHor1);
-            HorarioParaTrocaEnfermeiro horarioParaTrocaId = _context.HorarioParaTrocaEnfermeiros.SingleOrDefault(h => h.HorarioEnfermeiroId == idHor2);
+            HorarioATrocarEnfermeiro horarioATrocarId = _context.HorarioATrocarEnfermeiros.LastOrDefault(h => h.HorarioEnfermeiroId == idHor1);
+            HorarioParaTrocaEnfermeiro horarioParaTrocaId = _context.HorarioParaTrocaEnfermeiros.LastOrDefault(h => h.HorarioEnfermeiroId == idHor2);
 
             Enfermeiro enfermeiroRequerenteId =  _context.Enfermeiros.SingleOrDefault(e => e.EnfermeiroId == idEnfRequerente.Single());
 
@@ -520,16 +527,21 @@ namespace EscalonamentoHospitalar.Controllers
             //Insert into PedidoTrocaTurnos Table
             try
             {
-                InsertDataIntoPedidoTrocaTurnoEnfermeiro(_context, dataPedido, enfermeiroRequerenteId, horarioATrocarId, horarioParaTrocaId, estadoPedidoTrocaId);
-                TempData["SuccessRequired"] = "Pedido realizado com sucesso!";
-                return RedirectToAction(nameof(Index));
+                if (!PedidoTrocaTurnoJaFoiEfetudado(idHor1, idHor2))
+                {
+                    InsertDataIntoPedidoTrocaTurnoEnfermeiro(_context, dataPedido, enfermeiroRequerenteId, horarioATrocarId, horarioParaTrocaId, estadoPedidoTrocaId);
+                    TempData["SuccessRequired"] = "Pedido realizado com sucesso!";
+                    return RedirectToAction(nameof(Index));
+                }
+                
             }
             catch (DbUpdateConcurrencyException)
             {
                 TempData["ErrorRequired"] = "Erro ao inserir pedido!";
                 return RedirectToAction(nameof(Index));
-            }           
+            }
 
+            return RedirectToAction(nameof(Index));
         }
 
         /*************************Funções Auxiliares************************/
@@ -874,6 +886,28 @@ namespace EscalonamentoHospitalar.Controllers
             }
 
             return IsInvalid;
+        }
+
+
+        /**
+       * @param idHorarioATrocar
+       * @param idHorarioParaTroca
+       * @return true if a request with above parameters was already done.
+       */
+        private bool PedidoTrocaTurnoJaFoiEfetudado(int idHorarioATrocar, int idHorarioParaTroca)
+        {
+            bool pedidoEfetuado = false;
+
+            var pedido = from p in _context.PedidoTrocaTurnosEnfermeiros
+                         where p.HorarioATrocarEnfermeiro.HorarioEnfermeiroId == idHorarioATrocar || p.HorarioParaTrocaEnfermeiro.HorarioEnfermeiroId == idHorarioParaTroca
+                         select p;
+
+            if (pedido.Count() != 0)
+            {
+                pedidoEfetuado = true;
+            }
+
+            return pedidoEfetuado;
         }
 
     }
