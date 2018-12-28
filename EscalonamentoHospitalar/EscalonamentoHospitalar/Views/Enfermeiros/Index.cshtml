@@ -39,38 +39,38 @@
     });
 
     //Select the appropriate input text to search by name or speciality
-    function searchBy(){
-         var selectOption = document.getElementById("inputGroupSelect01");
-         var selectedValue = selectOption.options[selectOption.selectedIndex].value;
-         if (selectedValue == "Especialidade") {
+    function searchBy() {
+        var selectOption = document.getElementById("inputGroupSelect01");
+        var selectedValue = selectOption.options[selectOption.selectedIndex].value;
+        if (selectedValue == "Especialidade") {
             //get name and speciality inputs
             var form = document.getElementById("inputEspecialidade");
             var form2 = document.getElementById("inputName");
             //show speciality input
             if (form.style.display == 'none') {
-                 form.style.display = 'inline';
-             }
+                form.style.display = 'inline';
+            }
             //hide name input
             if (form2.style.display == 'inline') {
                 form2.style.display = 'none';
                 form2.value = '';
             }
-         }
-         else //Selected value = NOME
-         {
-              //get name and speciality inputs
-             var form = document.getElementById("inputEspecialidade");
-             var form2 = document.getElementById("inputName");
-             //hide speciality input
-             if (form.style.display == 'inline') {
-                 form.style.display = 'none';
-                 form.value = '';
-             }
-             //show name input
-             if (form2.style.display == 'none') {
-                 form2.style.display = 'inline';
-             }
-         }
+        }
+        else //Selected value = NOME
+        {
+            //get name and speciality inputs
+            var form = document.getElementById("inputEspecialidade");
+            var form2 = document.getElementById("inputName");
+            //hide speciality input
+            if (form.style.display == 'inline') {
+                form.style.display = 'none';
+                form.value = '';
+            }
+            //show name input
+            if (form2.style.display == 'none') {
+                form2.style.display = 'inline';
+            }
+        }
     }
 
     //Delete the speciality input field when the user clicks on name input
@@ -88,8 +88,8 @@
         <option selected value="Nome">Nome</option>
         <option value="Especialidade">Especialidade</option>
     </select>
-    <input id="inputName" style="width: 200px; display: inline;" asp-for="CurrentNome" placeholder="Insira o nome a pesquisar"  onclick="deleteSpecialityField()">    
-    <input id="inputEspecialidade" style="width: 250px; display: none;" asp-for="CurrentEspecialidade" placeholder="Insira a especialidade a pesquisar">  
+    <input id="inputName" style="width: 200px; display: inline;" asp-for="CurrentNome" placeholder="Insira o nome a pesquisar" onclick="deleteSpecialityField()">
+    <input id="inputEspecialidade" style="width: 250px; display: none;" asp-for="CurrentEspecialidade" placeholder="Insira a especialidade a pesquisar">
     <button class="btn btn-info" type="submit" value="Pesquisar"><span class="glyphicon glyphicon-search"></span> Pesquisar</button>
 </form>
 
@@ -134,6 +134,37 @@
         }
     </tbody>
 </table>
+
+@if (TempData["NoItemsFound"] != null)
+{
+    <script>
+        //Show #myModal when there aren't records founded of search by name or speciality
+        $(document).ready(function () {
+            $("#myModal").modal();
+        });
+    </script>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title" style="color:dodgerblue;"><strong>Ops!</strong></h4>
+                </div>
+                <div class="modal-body">
+                    <p> Não foram encontrados resultados para a sua pesquisa :(</p>
+                </div>
+                <div class="modal-footer">
+                    <a asp-action="Index"><input type="hidden" /><input type="button" class="btn btn-default" value="Ok" /></a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+}
 
 <div page-model="@Model.Pagination"
      page-action="Index"

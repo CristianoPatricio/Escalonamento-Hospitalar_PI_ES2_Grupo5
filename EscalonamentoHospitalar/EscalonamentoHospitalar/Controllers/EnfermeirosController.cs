@@ -82,7 +82,13 @@ namespace EscalonamentoHospitalar.Controllers
             {
                 page = 1;
             }
-        
+
+
+            if (listaEnfermeiro.Count() == 0)
+            {
+                TempData["NoItemsFound"] = "Não foram encontrados resultados para a sua pesquisa";
+            }
+
             return View(
                 new ListaEnfermeirosViewModel
                 {
