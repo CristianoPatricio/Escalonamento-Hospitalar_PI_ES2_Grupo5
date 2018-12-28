@@ -12,7 +12,7 @@ namespace EscalonamentoHospitalar.Models
         public int EnfermeiroId{ get; set; }
 
         [Required(ErrorMessage = "Por favor, introduza o seu número mecanográfico")]
-        [RegularExpression(@"[E]\d+", ErrorMessage = "Número errado")]
+        [RegularExpression(@"(\d+)", ErrorMessage = "Número errado")]
         public string NumeroMecanografico{ get; set; }
 
         [Required(ErrorMessage = "Por favor, introduza o nome")]
