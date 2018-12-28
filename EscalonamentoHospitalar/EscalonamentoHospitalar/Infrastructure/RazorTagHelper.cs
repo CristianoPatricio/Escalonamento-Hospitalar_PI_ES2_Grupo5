@@ -55,7 +55,7 @@ namespace EscalonamentoHospitalar.Infrastructure
             {
                 var link = new TagBuilder("a");
 
-                link.Attributes["href"] = urlHelper.Action(PageAction, new { page = p });
+                link.Attributes["href"] = urlHelper.Action(PageAction, new { page = p, nome = PageModel.Nome, especialidade = PageModel.Especialidade });
                 link.AddCssClass("btn");
 
                 if (p == PageModel.CurrentPage)

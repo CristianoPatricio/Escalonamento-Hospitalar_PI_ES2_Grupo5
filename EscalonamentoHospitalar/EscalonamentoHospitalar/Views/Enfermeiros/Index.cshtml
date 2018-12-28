@@ -30,23 +30,70 @@
     </div>
 }
 
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
 <script>
     //Passados 5 segundos a mensagem desaparece
     $(document).ready(function () {
         $("#suc_form").hide(10000);
     });
+
+    //Select the appropriate input text to search by name or speciality
+    function searchBy(){
+         var selectOption = document.getElementById("inputGroupSelect01");
+         var selectedValue = selectOption.options[selectOption.selectedIndex].value;
+         if (selectedValue == "Especialidade") {
+            //get name and speciality inputs
+            var form = document.getElementById("inputEspecialidade");
+            var form2 = document.getElementById("inputName");
+            //show speciality input
+            if (form.style.display == 'none') {
+                 form.style.display = 'inline';
+             }
+            //hide name input
+            if (form2.style.display == 'inline') {
+                form2.style.display = 'none';
+                form2.value = '';
+            }
+         }
+         else //Selected value = NOME
+         {
+              //get name and speciality inputs
+             var form = document.getElementById("inputEspecialidade");
+             var form2 = document.getElementById("inputName");
+             //hide speciality input
+             if (form.style.display == 'inline') {
+                 form.style.display = 'none';
+                 form.value = '';
+             }
+             //show name input
+             if (form2.style.display == 'none') {
+                 form2.style.display = 'inline';
+             }
+         }
+    }
+
+    //Delete the speciality input field when the user clicks on name input
+    function deleteSpecialityField() {
+        var form = document.getElementById("inputEspecialidade");
+        form.value = '';
+    }
 </script>
 
 <h2>Lista de Enfermeiros</h2>
 
 <form asp-action="Index">
-    <p>
-        Pesquisar por nome: <input style="width: 200px;" asp-for="CurrentNome" placeholder="Insira o nome a pesquisar" />
-        <input type="submit" value="Pesquisar" class="btn btn-info" />
-    </p>
+    Pesquisar por:
+    <select class="input-group-prepend" id="inputGroupSelect01" onchange="searchBy()">
+        <option selected value="Nome">Nome</option>
+        <option value="Especialidade">Especialidade</option>
+    </select>
+    <input id="inputName" style="width: 200px; display: inline;" asp-for="CurrentNome" placeholder="Insira o nome a pesquisar"  onclick="deleteSpecialityField()">    
+    <input id="inputEspecialidade" style="width: 250px; display: none;" asp-for="CurrentEspecialidade" placeholder="Insira a especialidade a pesquisar">  
+    <button class="btn btn-info" type="submit" value="Pesquisar"><span class="glyphicon glyphicon-search"></span> Pesquisar</button>
 </form>
+
+<p></p>
 
 <!--<div style="background-color:#17A5D4; padding: 30px; border-radius: 25px;">-->
 

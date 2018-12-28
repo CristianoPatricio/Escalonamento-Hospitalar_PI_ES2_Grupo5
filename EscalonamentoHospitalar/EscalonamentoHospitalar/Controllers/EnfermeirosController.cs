@@ -20,33 +20,69 @@ namespace EscalonamentoHospitalar.Controllers
         }
 
         // GET: Enfermeiros
-        public async Task<IActionResult> Index(ListaEnfermeirosViewModel model = null, int page = 1)
+        public async Task<IActionResult> Index(ListaEnfermeirosViewModel model = null, int page = 1, string nome = null, string especialidade = null)
         {
-            string nome = null;
 
-            if (model != null && model.CurrentNome != null)
+            if (model != null && model.CurrentEspecialidade != null || model.CurrentNome != null)
             {
-                nome = model.CurrentNome.Trim();
+                nome = model.CurrentNome;
+                especialidade = model.CurrentEspecialidade;
                 page = 1;
             }
 
-            var enfermeiros = _context.Enfermeiros
-                .Where(e => nome == null || e.Nome.Contains(nome));
+            IQueryable<Enfermeiro> enfermeiro;
+            int numEnfermeiros;
+            IEnumerable<Enfermeiro> listaEnfermeiro;
 
-            int numEnfermeiros = await enfermeiros.CountAsync();
+            if (!string.IsNullOrEmpty(nome) && string.IsNullOrEmpty(especialidade)) //Pesquisa por nome
+            {
+                enfermeiro = _context.Enfermeiros
+                    .Where(e => e.Nome.Contains(nome.Trim()));
 
+                numEnfermeiros = await enfermeiro.CountAsync();
+
+                listaEnfermeiro = await enfermeiro
+                    .Include(e => e.EspecialidadeEnfermeiro)
+                    .OrderBy(e => e.Nome)
+                    .Skip(PAGE_SIZE * (page - 1))
+                    .Take(PAGE_SIZE)
+                    .ToListAsync();
+            }
+            else if (!string.IsNullOrEmpty(especialidade) && string.IsNullOrEmpty(nome)) //Pesquisa por especialidade
+            {
+                enfermeiro = _context.Enfermeiros
+                  .Where(e => e.EspecialidadeEnfermeiro.Especialidade.Contains(especialidade.Trim()));
+
+                numEnfermeiros = await enfermeiro.CountAsync();
+
+                listaEnfermeiro = await enfermeiro
+                    .Include(e => e.EspecialidadeEnfermeiro)
+                    .OrderBy(e => e.Nome)
+                    .Skip(PAGE_SIZE * (page - 1))
+                    .Take(PAGE_SIZE)
+                    .ToListAsync();
+            }
+            else
+            {
+
+                enfermeiro = _context.Enfermeiros;
+
+                numEnfermeiros = await enfermeiro.CountAsync();
+
+                listaEnfermeiro = await enfermeiro
+                    .Include(e => e.EspecialidadeEnfermeiro)
+                    .OrderBy(e => e.Nome)
+                    .Skip(PAGE_SIZE * (page - 1))
+                    .Take(PAGE_SIZE)
+                    .ToListAsync();
+            }      
+
+            
             if (page > (numEnfermeiros / PAGE_SIZE) + 1)
             {
                 page = 1;
             }
-
-            var listaEnfermeiro = await enfermeiros
-                .Include(e => e.EspecialidadeEnfermeiro)
-                .OrderBy(e => e.Nome)
-                .Skip(PAGE_SIZE * (page - 1))
-                .Take(PAGE_SIZE)
-                .ToListAsync();
-
+        
             return View(
                 new ListaEnfermeirosViewModel
                 {
@@ -55,9 +91,12 @@ namespace EscalonamentoHospitalar.Controllers
                     {
                         CurrentPage = page,
                         PageSize = PAGE_SIZE,          
-                        TotalItems = numEnfermeiros
+                        TotalItems = numEnfermeiros,
+                        Nome = nome,
+                        Especialidade = especialidade
                     },
-                    CurrentNome = nome
+                    CurrentNome = nome,
+                    CurrentEspecialidade = especialidade
                 }
             );
         }
@@ -96,6 +135,8 @@ namespace EscalonamentoHospitalar.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("EnfermeiroId,NumeroMecanografico,Nome,EspecialidadeEnfermeiroId,Contacto,Email,Data_Nascimento,CC,Filhos,Data_Nascimento_Filho")] Enfermeiro enfermeiro)
         {
+
+            enfermeiro.NumeroMecanografico = "E" + enfermeiro.NumeroMecanografico;
 
             /********************************/
             DateTime dateNow = DateTime.Now;
