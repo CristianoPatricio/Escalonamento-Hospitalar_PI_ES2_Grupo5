@@ -145,6 +145,73 @@ namespace EscalonamentoHospitalar.Controllers
             return View(pedidoTrocaTurnosEnfermeiro);
         }
 
+        // GET: PedidoTrocaTurnosEnfermeiros/NaoValidar/5
+        public async Task<IActionResult> NaoValidar(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var pedidoTrocaTurnosEnfermeiro = await _context.PedidoTrocaTurnosEnfermeiros
+                .Include(p => p.Enfermeiro)
+                .Include(p => p.EstadoPedidoTroca)
+                .Include(p => p.HorarioATrocarEnfermeiro.HorarioEnfermeiro.Enfermeiro)
+                .Include(p => p.HorarioParaTrocaEnfermeiro.HorarioEnfermeiro.Enfermeiro)
+                .FirstOrDefaultAsync(m => m.PedidoTrocaTurnosEnfermeiroId == id);
+
+            if (pedidoTrocaTurnosEnfermeiro == null)
+            {
+                return NotFound();
+            }
+
+            return View(pedidoTrocaTurnosEnfermeiro);
+        }
+
+        // POST: PedidoTrocaTurnosEnfermeiros/NaoValidar/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> NaoValidar(int id)
+        {
+            var pedidoTrocaTurnosEnfermeiro = await _context.PedidoTrocaTurnosEnfermeiros.FindAsync(id);
+
+            if (id != pedidoTrocaTurnosEnfermeiro.PedidoTrocaTurnosEnfermeiroId)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+
+                EstadoPedidoTroca idEstadoAprovado = _context.EstadoPedidoTrocas.SingleOrDefault(e => e.Nome == "Não Aprovado");
+
+                pedidoTrocaTurnosEnfermeiro.EstadoPedidoTrocaId = idEstadoAprovado.EstadoPedidoTrocaId; //Estado_Não Aprovado
+
+                try
+                {
+                    _context.Update(pedidoTrocaTurnosEnfermeiro);
+                    await _context.SaveChangesAsync();
+                    TempData["NotAproved"] = "O pedido foi arquivado!";
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!PedidoTrocaTurnosEnfermeiroExists(pedidoTrocaTurnosEnfermeiro.PedidoTrocaTurnosEnfermeiroId))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(pedidoTrocaTurnosEnfermeiro);
+        }
+
         // GET: PedidoTrocaTurnosEnfermeiros/Edit/5
         public async Task<IActionResult> Aprovar(int? id)
         {
@@ -249,7 +316,8 @@ namespace EscalonamentoHospitalar.Controllers
             try
             {
                 UpdateHorario(_context, horarioATrocar);
-                UpdateHorario(_context, horarioParaTroca);               
+                UpdateHorario(_context, horarioParaTroca);
+                TempData["UpdatedSuccess"] = "Pedido aprovado com sucesso";
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -259,10 +327,85 @@ namespace EscalonamentoHospitalar.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+
+        /*
+         * @param db 
+         * @param horario
+         * @insert into HorariosEnfermeiro table the horario passed as the parameter
+         */
         private void UpdateHorario(HospitalDbContext db, HorarioEnfermeiro horario)
         {
             db.HorariosEnfermeiro.Update(horario);
             db.SaveChanges();
+        }
+
+        // GET: PedidoTrocaTurnosEnfermeiros/NaoValidar/5
+        public async Task<IActionResult> NaoAprovar(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var pedidoTrocaTurnosEnfermeiro = await _context.PedidoTrocaTurnosEnfermeiros
+                .Include(p => p.Enfermeiro)
+                .Include(p => p.EstadoPedidoTroca)
+                .Include(p => p.HorarioATrocarEnfermeiro.HorarioEnfermeiro.Enfermeiro)
+                .Include(p => p.HorarioParaTrocaEnfermeiro.HorarioEnfermeiro.Enfermeiro)
+                .Include(p => p.HorarioATrocarEnfermeiro.HorarioEnfermeiro.Turno)
+                .Include(p => p.HorarioParaTrocaEnfermeiro.HorarioEnfermeiro.Turno)
+                .FirstOrDefaultAsync(m => m.PedidoTrocaTurnosEnfermeiroId == id);
+
+            if (pedidoTrocaTurnosEnfermeiro == null)
+            {
+                return NotFound();
+            }
+
+            return View(pedidoTrocaTurnosEnfermeiro);
+        }
+
+        // POST: PedidoTrocaTurnosEnfermeiros/NaoValidar/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> NaoAprovar(int id)
+        {
+            var pedidoTrocaTurnosEnfermeiro = await _context.PedidoTrocaTurnosEnfermeiros.FindAsync(id);
+
+            if (id != pedidoTrocaTurnosEnfermeiro.PedidoTrocaTurnosEnfermeiroId)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+
+                EstadoPedidoTroca idEstadoAprovado = _context.EstadoPedidoTrocas.SingleOrDefault(e => e.Nome == "Não Aprovado");
+
+                pedidoTrocaTurnosEnfermeiro.EstadoPedidoTrocaId = idEstadoAprovado.EstadoPedidoTrocaId; //Estado_Não Aprovado
+
+                try
+                {
+                    _context.Update(pedidoTrocaTurnosEnfermeiro);
+                    await _context.SaveChangesAsync();
+                    TempData["NotAproved"] = "O pedido foi arquivado!";
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!PedidoTrocaTurnosEnfermeiroExists(pedidoTrocaTurnosEnfermeiro.PedidoTrocaTurnosEnfermeiroId))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(pedidoTrocaTurnosEnfermeiro);
         }
 
         // GET: PedidoTrocaTurnosEnfermeiros/Delete/5

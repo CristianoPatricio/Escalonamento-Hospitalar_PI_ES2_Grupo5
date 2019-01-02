@@ -1,10 +1,10 @@
 ﻿@model EscalonamentoHospitalar.Models.PedidoTrocaTurnosEnfermeiro
 
 @{
-    ViewData["Title"] = "Validar Pedido de Troca de Turno";
+    ViewData["Title"] = "Pedido de Troca de Turno";
 }
 
-<h2>Pretende validar o pedido de troca requerido pelo Enfermeiro/a <b>@Html.DisplayFor(model => model.Enfermeiro.Nome)</b>?</h2>
+<h2>Tem a certeza de que <b>não</b> pretende validar o pedido de troca requerido pelo Enfermeiro/a <b>@Html.DisplayFor(model => model.Enfermeiro.Nome)</b>?</h2>
 
 <hr />
 
@@ -42,14 +42,13 @@
 
     <hr />
 
-    <form asp-action="Edit">
+    <form asp-action="NaoValidar">
         <input type="hidden" asp-for="PedidoTrocaTurnosEnfermeiroId" />
 
-        <button type="submit" class="btn btn-success"><i class="fas fa-check" style="color:white;"></i> Validar</button>
+        <button type="submit" class="btn btn-danger"><i class="fas fa-times" style="color:white;"></i> Não Validar</button>
         <a asp-action="Index" class="btn btn-default">
             <span class="fas fa-undo" style="color:dodgerblue;"></span> Voltar à lista
         </a>
 
     </form>
 </div>
-
