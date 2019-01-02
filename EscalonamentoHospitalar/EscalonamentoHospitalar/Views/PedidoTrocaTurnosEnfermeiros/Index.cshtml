@@ -1,13 +1,14 @@
 ﻿@model IEnumerable<EscalonamentoHospitalar.Models.PedidoTrocaTurnosEnfermeiro>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Lista de Pedidos";
 }
 
-<h2>Index</h2>
+
+<h2>Lista de Pedidos de troca de turnos - Enfermeiros</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    @*<a asp-action="Create">Create New</a>*@
 </p>
 <table class="table">
     <thead>
@@ -18,42 +19,64 @@
             <th>
                 Enfermeiro Requerente
             </th>
-            <th>
-                Data do Horário a trocar
-            </th>
-            <th>
-                Data do Horário para troca
-            </th>
-            <th>
-                Estado
-            </th>
-            <th></th>
+            @*
+                <th>
+                    Data do Horário a trocar
+                </th>
+                <th>
+                    Data do Horário para troca
+                </th>
+                <th>
+                    Estado
+                </th>
+                <th></th>
+            *@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.DataPedido)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Enfermeiro.Nome)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.HorarioATrocarEnfermeiro.HorarioEnfermeiro.DataInicioTurno)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.HorarioParaTrocaEnfermeiro.HorarioEnfermeiro.DataInicioTurno)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EstadoPedidoTroca.Nome)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.PedidoTrocaTurnosEnfermeiroId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.PedidoTrocaTurnosEnfermeiroId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.PedidoTrocaTurnosEnfermeiroId">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DataPedido)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Enfermeiro.Nome)
+                </td>
+                @*
+                    <td>
+                        @Html.DisplayFor(modelItem => item.HorarioATrocarEnfermeiro.HorarioEnfermeiro.DataInicioTurno)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.HorarioParaTrocaEnfermeiro.HorarioEnfermeiro.DataInicioTurno)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EstadoPedidoTroca.Nome)
+                    </td>
+                *@
+                <td>
+                    @*<a asp-action="Edit" asp-route-id="@item.PedidoTrocaTurnosEnfermeiroId">Edit</a> |*@
+
+                    <a asp-action="Details" asp-route-id="@item.PedidoTrocaTurnosEnfermeiroId"><input type="button" value="Detalhes" class="btn btn-info" /></a>
+                    @if (item.EstadoPedidoTroca.Nome == "Pendente")
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.PedidoTrocaTurnosEnfermeiroId">
+                            <input type="submit" value="Validar" class="btn btn-success" />
+                        </a>
+                    }
+                    else if (item.EstadoPedidoTroca.Nome == "Validado")
+                    {
+                        <a asp-action="Aprovar" asp-route-id="@item.PedidoTrocaTurnosEnfermeiroId">
+                            <i class="fas fa-check" style="color:white;"></i><input type="submit" value="Aprovar" class="btn btn-success" />
+                        </a>
+
+                    }
+                    else
+                    {
+
+                    }
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

@@ -4,45 +4,56 @@
     ViewData["Title"] = "Details";
 }
 
-<h2>Details</h2>
+<h2>Detalhes</h2>
 
 <div>
-    <h4>PedidoTrocaTurnosEnfermeiro</h4>
+    <h4>Pedido de troca de turno</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.DataPedido)
+            Data do Pedido:
         </dt>
         <dd>
             @Html.DisplayFor(model => model.DataPedido)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Enfermeiro)
+            Enfermeiro Requerente:
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Enfermeiro.CC)
+            @Html.DisplayFor(model => model.Enfermeiro.Nome)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.HorarioATrocarEnfermeiro)
+            Data do Horário a trocar:
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.HorarioATrocarEnfermeiro.HorarioEnfermeiro.Enfermeiro.Nome)
+            @Html.DisplayFor(model => model.HorarioATrocarEnfermeiro.HorarioEnfermeiro.DataInicioTurno)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.HorarioParaTrocaEnfermeiro)
+            Data do Horário para troca:
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.HorarioParaTrocaEnfermeiro.HorarioEnfermeiro.Enfermeiro.Nome)
+            @Html.DisplayFor(model => model.HorarioParaTrocaEnfermeiro.HorarioEnfermeiro.DataInicioTurno)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.EstadoPedidoTroca)
+            Estado:
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.EstadoPedidoTroca.EstadoPedidoTrocaId)
+            @Html.DisplayFor(model => model.EstadoPedidoTroca.Nome)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.PedidoTrocaTurnosEnfermeiroId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    @if (Model.EstadoPedidoTroca.Nome == "Pendente")
+    {
+        <a asp-action="Edit" asp-route-id="@Model.PedidoTrocaTurnosEnfermeiroId"><input type="button" value="Validar" class="btn btn-success" /></a>
+    }
+    else if (Model.EstadoPedidoTroca.Nome == "Validado")
+    {
+        <a asp-action="Edit" asp-route-id="@Model.PedidoTrocaTurnosEnfermeiroId"><input type="button" value="Aprovar" class="btn btn-success" /></a>
+    }
+    else
+    {
+
+    }
+    <a asp-action="Index"><input type="button" value="Voltar à lista" class="btn btn-default" /></a>
 </div>
