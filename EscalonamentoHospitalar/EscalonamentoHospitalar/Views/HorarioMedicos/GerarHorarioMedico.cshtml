@@ -1,0 +1,45 @@
+﻿@model GerarHorarioMedico
+
+@{
+    ViewData["Title"] = "Gerar Horário Médico";
+}
+
+<h2>Gerar Horário Médico</h2>
+
+<p></p>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="GerarHorarioMedico">
+            <div class="form-group">
+                <label asp-for="NumeroPessoasTurno1" class="control-label">Nº de pessoas Turno MANHÃ</label>
+                <input asp-for="NumeroPessoasTurno1" class="form-control input-sm pull-right" style="width: 80px" />
+                <span asp-validation-for="NumeroPessoasTurno1" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NumeroPessoasTurno2" class="control-label">Nº de pessoas Turno TARDE</label>
+                <input asp-for="NumeroPessoasTurno2" class="form-control input-sm pull-right" style="width: 80px" />
+                <span asp-validation-for="NumeroPessoasTurno2" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DataInicioSemana" class="control-label">Data Início da Semana</label>
+                <input asp-for="DataInicioSemana " class="form-control" />
+                <span asp-validation-for="DataInicioSemana" class="text-danger"></span>
+            </div>
+            <hr />
+            <div class="form-group">
+                <input type="submit" value="Gerar" class="btn btn-success" />
+            </div>
+            <hr />
+            <div>
+                <a href='@Url.Action("GestaoHospitalar", "DiretorServico")'>
+                    <input type="button" class="btn btn-default" value="Voltar" />
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

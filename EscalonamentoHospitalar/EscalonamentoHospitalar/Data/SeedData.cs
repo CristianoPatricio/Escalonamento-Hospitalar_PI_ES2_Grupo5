@@ -1,4 +1,5 @@
-﻿using EscalonamentoHospitalar.Models;
+﻿
+using EscalonamentoHospitalar.Models;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -19,7 +20,7 @@ namespace EscalonamentoHospitalar.Data
                 SeedEspecialidadeEnfermeiros(db);
                 SeedEstadoPedidoTrocas(db);
                 SeedEnfermeiros(db);
-                SeedDiretorServico(db);                         
+                SeedDiretorServico(db);
                 SeedEnfermeiroEspecialidade(db);
                 SeedTurnos(db);
                 SeedHorarioEnfermeiros(db);
@@ -41,12 +42,12 @@ namespace EscalonamentoHospitalar.Data
             if (db.EstadoPedidoTrocas.Any()) return;
 
             db.EstadoPedidoTrocas.AddRange(
-                
-                new EstadoPedidoTroca { Nome = "Aprovado"},
-                new EstadoPedidoTroca { Nome = "Não Aprovado"},
-                new EstadoPedidoTroca { Nome = "Pendente"},
-                new EstadoPedidoTroca { Nome = "Validado"}
-                
+
+                new EstadoPedidoTroca { Nome = "Aprovado" },
+                new EstadoPedidoTroca { Nome = "Não Aprovado" },
+                new EstadoPedidoTroca { Nome = "Pendente" },
+                new EstadoPedidoTroca { Nome = "Validado" }
+
                 );
 
             db.SaveChanges();
@@ -55,7 +56,7 @@ namespace EscalonamentoHospitalar.Data
         private static void SeedEspecialidadeMedicos(HospitalDbContext db)
         {
 
-            if(db.EspecialidadeMedicos.Any()) return;
+            if (db.EspecialidadeMedicos.Any()) return;
             db.EspecialidadeMedicos.AddRange(
                     new EspecialidadeMedico
                     {
@@ -79,66 +80,66 @@ namespace EscalonamentoHospitalar.Data
 
         }
 
-       private static void SeedRegras(HospitalDbContext db)
+        private static void SeedRegras(HospitalDbContext db)
         {
-         if (db.Regras.Any()) return;
-         db.Regras.AddRange(
+            if (db.Regras.Any()) return;
+            db.Regras.AddRange(
 
-             new Regra
+                new Regra
                 {
 
-                    RegrasEscalonamento ="HorasEnfermeirosDia",
+                    RegrasEscalonamento = "HorasEnfermeirosDia",
                     Numero = 8,
 
                 },
 
-                 new Regra
-                 {
+                    new Regra
+                    {
 
 
-                     RegrasEscalonamento = "HorasEnfermeirosSemana",
-                     Numero = 35,
-                 },
-                 new Regra
-                 {
+                        RegrasEscalonamento = "HorasEnfermeirosSemana",
+                        Numero = 35,
+                    },
+                    new Regra
+                    {
 
-                     RegrasEscalonamento = "HorasMedicosDia",
-                     Numero = 8,
+                        RegrasEscalonamento = "HorasMedicosDia",
+                        Numero = 8,
 
-                 },
-                 new Regra
-                 {
-
-
-                     RegrasEscalonamento = "HorasMedicosSemana",
-                     Numero = 40,
-                 },
-                 new Regra
-                 {
+                    },
+                    new Regra
+                    {
 
 
-                     RegrasEscalonamento = "Folga Enfermeiro",
-                     Numero = 1,
-                 },
-                 new Regra
-                 {
+                        RegrasEscalonamento = "HorasMedicosSemana",
+                        Numero = 40,
+                    },
+                    new Regra
+                    {
 
 
-                     RegrasEscalonamento = "Folga Medico",
-                     Numero = 1,
-                 },
-                 new Regra
-                 {
+                        RegrasEscalonamento = "Folga Enfermeiro",
+                        Numero = 1,
+                    },
+                    new Regra
+                    {
 
 
-                     RegrasEscalonamento = "Idade Filho",
-                     Numero = 3,
-                 }
-            );
+                        RegrasEscalonamento = "Folga Medico",
+                        Numero = 1,
+                    },
+                    new Regra
+                    {
+
+
+                        RegrasEscalonamento = "Idade Filho",
+                        Numero = 3,
+                    }
+               );
 
             db.SaveChanges();
         }
-    
+
 
         private static void SeedEstado(HospitalDbContext db)
         {
@@ -176,27 +177,27 @@ namespace EscalonamentoHospitalar.Data
                           new Regime
                           {
                               TipoRegime = "Trimestral"
-                             
+
                           }
                );
 
             db.SaveChanges();
         }
-    
+
 
         private static void SeedGrau(HospitalDbContext db)
         {
-         if (db.Grau.Any()) return;
-         db.Grau.AddRange(
-                    new Grau
-                       {
-                          TipoGrau = "1"
-                       },
+            if (db.Grau.Any()) return;
+            db.Grau.AddRange(
                        new Grau
                        {
-                           TipoGrau = "2"
-                       }
-            );
+                           TipoGrau = "1"
+                       },
+                          new Grau
+                          {
+                              TipoGrau = "2"
+                          }
+               );
 
             db.SaveChanges();
         }
@@ -204,16 +205,16 @@ namespace EscalonamentoHospitalar.Data
         private static void SeedPatologia(HospitalDbContext db)
         {
             if (db.Patologia.Any()) return;
-         db.Patologia.AddRange(
-                    new Patologia
-                       {
-                          Nome = "Pulmonar"
-                       },
+            db.Patologia.AddRange(
                        new Patologia
                        {
-                           Nome = "Intestinal"
-                       }
-            );
+                           Nome = "Pulmonar"
+                       },
+                          new Patologia
+                          {
+                              Nome = "Intestinal"
+                          }
+               );
         }
 
 
@@ -221,11 +222,11 @@ namespace EscalonamentoHospitalar.Data
 
 
         private static void SeedTratamentos(HospitalDbContext db)
-            {
-                if (db.Tratamentos.Any()) return;
+        {
+            if (db.Tratamentos.Any()) return;
 
-                Patologia Pulmonar = db.Patologia.SingleOrDefault(e => e.Nome == "Pulmonar");
-                Patologia Intestinal = db.Patologia.SingleOrDefault(e => e.Nome == "Instetinal ");
+            Patologia Pulmonar = db.Patologia.SingleOrDefault(e => e.Nome == "Pulmonar");
+            Patologia Intestinal = db.Patologia.SingleOrDefault(e => e.Nome == "Instetinal ");
 
             Paciente Barbara = db.Pacientes.SingleOrDefault(e => e.Nome == "Barbara ");
             Paciente Andre = db.Pacientes.SingleOrDefault(e => e.Nome == "Andre ");
@@ -236,8 +237,8 @@ namespace EscalonamentoHospitalar.Data
             Regime Semanal = db.Regime.SingleOrDefault(e => e.TipoRegime == "Semanal ");
             Regime Mensal = db.Regime.SingleOrDefault(e => e.TipoRegime == "Mensal ");
 
-            Medico Manuel   = db.Medicos.SingleOrDefault(e => e.Nome == "Manuel Santos");
-            Medico Elisabete  = db.Medicos.SingleOrDefault(e => e.Nome == "Elisabete Eiras");
+            Medico Manuel = db.Medicos.SingleOrDefault(e => e.Nome == "Manuel Santos");
+            Medico Elisabete = db.Medicos.SingleOrDefault(e => e.Nome == "Elisabete Eiras");
 
             Estado Decorrer = db.Estado.SingleOrDefault(e => e.Nome == "Decorrer");
             Estado Concluido = db.Estado.SingleOrDefault(e => e.Nome == "Concluido");
@@ -247,10 +248,10 @@ namespace EscalonamentoHospitalar.Data
             db.Tratamentos.AddRange(
 
 
-                    
+
                     new Tratamento
                     {
-                        PatologiaId= Pulmonar.PatologiaId,
+                        PatologiaId = Pulmonar.PatologiaId,
                         PacienteId = Barbara.PacienteId,
                         GrauId = Grau1.GrauId,
                         RegimeId = Semanal.RegimeId,
@@ -259,7 +260,7 @@ namespace EscalonamentoHospitalar.Data
                         DuracaoCiclo = "00:30",
                         MedicoId = Manuel.MedicoId,
                         EstadoId = Decorrer.EstadoId,
-                        
+
                     },
                     new Tratamento
                     {
@@ -278,18 +279,19 @@ namespace EscalonamentoHospitalar.Data
 
 
 
-                    
 
-                db.SaveChanges();
-            }
-                 
-            
+
+            db.SaveChanges();
+        }
+
+
         private static void SeedPacientes(HospitalDbContext db)
         {
             if (db.Pacientes.Any()) return;
-               db.Pacientes.AddRange(
-                
-                   new Paciente { 
+            db.Pacientes.AddRange(
+
+                new Paciente
+                {
 
 
                     Nome = "Rita",
@@ -302,54 +304,58 @@ namespace EscalonamentoHospitalar.Data
                     Contacto = "210257416",
                 },
 
-                    new Paciente { 
-         
+                 new Paciente
+                 {
 
-                    Nome = "Barbara",
-                    Morada = "Rua Francisco Sa Carneiro",
-                    Cod_Postal = "6300-225",
-                    Email = "barbara_R@sapo.pt",
-                    CC = "147187301",
-                    Data_Nascimento = new DateTime(1995, 06, 12),
-                    Numero_Utente = "135756789",
-                    Contacto = "912378563",
-               },
-           
-        new Paciente { 
 
-                    Nome = "Andre",
-                    Morada = "Rua 25 de Abril",
-                    Cod_Postal = "6000-710",
-                    Email = "andre@mail.pt",
-                    CC = "177858705",
-                    Data_Nascimento = new DateTime(1968, 08, 08),
-                    Numero_Utente = "198736789",
-                    Contacto = "912345678",
-                },
+                     Nome = "Barbara",
+                     Morada = "Rua Francisco Sa Carneiro",
+                     Cod_Postal = "6300-225",
+                     Email = "barbara_R@sapo.pt",
+                     CC = "147187301",
+                     Data_Nascimento = new DateTime(1995, 06, 12),
+                     Numero_Utente = "135756789",
+                     Contacto = "912378563",
+                 },
 
-             new Paciente { 
-                    Nome = "Leandro",
-                    Morada = "Rua da Boa Vista",
-                    Cod_Postal = "3000-105",
-                    Email = "leandro@mail.pt",
-                    CC = "123858703",
-                    Data_Nascimento = new DateTime(1975, 4, 25),
-                    Numero_Utente = "123475632",
-                    Contacto = "969525305",
-             },
-                
-            new Paciente { 
+     new Paciente
+     {
 
-                    Nome = "Tiago",
-                    Morada = "Rua dos Combatentes",
-                    Cod_Postal = "1000-025",
-                    Email = "tiago@mail.pt",
-                    CC = "198235870",
-                    Data_Nascimento = new DateTime(1940, 12, 25),
-                    Numero_Utente = "195304678",
-                    Contacto = "270284532",
-            }
-            );
+         Nome = "Andre",
+         Morada = "Rua 25 de Abril",
+         Cod_Postal = "6000-710",
+         Email = "andre@mail.pt",
+         CC = "177858705",
+         Data_Nascimento = new DateTime(1968, 08, 08),
+         Numero_Utente = "198736789",
+         Contacto = "912345678",
+     },
+
+          new Paciente
+          {
+              Nome = "Leandro",
+              Morada = "Rua da Boa Vista",
+              Cod_Postal = "3000-105",
+              Email = "leandro@mail.pt",
+              CC = "123858703",
+              Data_Nascimento = new DateTime(1975, 4, 25),
+              Numero_Utente = "123475632",
+              Contacto = "969525305",
+          },
+
+         new Paciente
+         {
+
+             Nome = "Tiago",
+             Morada = "Rua dos Combatentes",
+             Cod_Postal = "1000-025",
+             Email = "tiago@mail.pt",
+             CC = "198235870",
+             Data_Nascimento = new DateTime(1940, 12, 25),
+             Numero_Utente = "195304678",
+             Contacto = "270284532",
+         }
+         );
 
             db.SaveChanges();
         }
@@ -363,6 +369,8 @@ namespace EscalonamentoHospitalar.Data
 
             Medico manuel = db.Medicos.SingleOrDefault(e => e.Nome == "Manuel Santos");
             Medico elisabete = db.Medicos.SingleOrDefault(e => e.Nome == "Elisabete Eiras");
+            Medico ildefonso = db.Medicos.SingleOrDefault(e => e.Nome == "Ildefonso Saraiva");
+            Medico carlos = db.Medicos.SingleOrDefault(e => e.Nome == "Carlos Alberto");
 
             db.MedicoEspecialidades.AddRange(
 
@@ -377,7 +385,19 @@ namespace EscalonamentoHospitalar.Data
                     MedicoId = elisabete.MedicoId,
                     EspecialidadeMedicoId = cardiologia.EspecialidadeMedicoId,
                     Data_Registo = new DateTime(2018, 11, 20)
-                }
+                },
+                  new MedicoEspecialidade
+                  {
+                      MedicoId = ildefonso.MedicoId,
+                      EspecialidadeMedicoId = cardiologia.EspecialidadeMedicoId,
+                      Data_Registo = new DateTime(2019, 1, 3)
+                  },
+                    new MedicoEspecialidade
+                    {
+                        MedicoId = carlos.MedicoId,
+                        EspecialidadeMedicoId = cardiologia.EspecialidadeMedicoId,
+                        Data_Registo = new DateTime(2019, 1, 3)
+                    }
                 );
 
             db.SaveChanges();
@@ -412,11 +432,35 @@ namespace EscalonamentoHospitalar.Data
                            Data_Nascimento = new DateTime(1985, 4, 2),
                            EspecialidadeMedicoId = cardiologia.EspecialidadeMedicoId,
                            Data_Inicio_Servico = new DateTime(2008, 12, 14),
-                       }
+                       },
+                           new Medico
+                           {
+                               NumeroMecanografico = "M003",
+                               Nome = "Ildefonso Saraiva",
+                               Email = "ildefonsosaraiva@uls.guarda.com",
+                               Contacto = "965949837",
+                               CC = "15247832",
+                               Data_Nascimento = new DateTime(1975, 6, 2),
+                               EspecialidadeMedicoId = cardiologia.EspecialidadeMedicoId,
+                               Data_Inicio_Servico = new DateTime(1997, 11, 18),
+                           },
+                               new Medico
+                               {
+                                   NumeroMecanografico = "M052",
+                                   Nome = "Carlos Alberto",
+                                   Email = "carlosalberto@uls.guarda.com",
+                                   Contacto = "936547852",
+                                   CC = "12645789",
+                                   Data_Nascimento = new DateTime(1965, 4, 2),
+                                   EspecialidadeMedicoId = cardiologia.EspecialidadeMedicoId,
+                                   Data_Inicio_Servico = new DateTime(1988, 12, 24),
+                               }
                    );
             db.SaveChanges();
 
         }
+
+
         private static EspecialidadeMedico GetEspecialidadeMedicoCreatingIfNeed(HospitalDbContext db, string Nome)
         {
             EspecialidadeMedico especialidademedico = db.EspecialidadeMedicos.SingleOrDefault(e => e.NomeEspecialidade == Nome);
@@ -444,7 +488,7 @@ namespace EscalonamentoHospitalar.Data
             DateTime dataInicioT2 = new DateTime(2018, 11, 21, 16, 0, 0);
             DateTime dataInicioT3 = new DateTime(2018, 11, 22, 0, 0, 0);
 
-            Enfermeiro enfermeiro1 = db.Enfermeiros.SingleOrDefault(e => e.Nome == "Marisa Reduto");    
+            Enfermeiro enfermeiro1 = db.Enfermeiros.SingleOrDefault(e => e.Nome == "Marisa Reduto");
             Enfermeiro enfermeiro2 = db.Enfermeiros.SingleOrDefault(e => e.Nome == "João Silva"); //Com Filho
             Enfermeiro enfermeiro3 = db.Enfermeiros.SingleOrDefault(e => e.Nome == "Armando Manso"); //Com Filho
             Enfermeiro enfermeiro4 = db.Enfermeiros.SingleOrDefault(e => e.Nome == "Andreia Cunha");
@@ -458,9 +502,9 @@ namespace EscalonamentoHospitalar.Data
             Enfermeiro enfermeiro12 = db.Enfermeiros.SingleOrDefault(e => e.Nome == "Fábio Castro"); //Com Filho
 
             //2 feira
-            db.HorariosEnfermeiro.Add(new HorarioEnfermeiro { DataInicioTurno = dataInicioT1CFilhos, Duracao = 8, DataFimTurno = dataInicioT1CFilhos.AddHours(8) ,TurnoId = turno1a.TurnoId, EnfermeiroId = enfermeiro12.EnfermeiroId});           
-            db.HorariosEnfermeiro.Add(new HorarioEnfermeiro { DataInicioTurno = dataInicioT1, Duracao = 8, DataFimTurno = dataInicioT1.AddHours(8), TurnoId = turno1.TurnoId, EnfermeiroId = enfermeiro8.EnfermeiroId });                   
-            db.HorariosEnfermeiro.Add(new HorarioEnfermeiro { DataInicioTurno = dataInicioT1CFilhos, Duracao = 8, DataFimTurno = dataInicioT1CFilhos.AddHours(8), TurnoId = turno1a.TurnoId, EnfermeiroId = enfermeiro2.EnfermeiroId });           
+            db.HorariosEnfermeiro.Add(new HorarioEnfermeiro { DataInicioTurno = dataInicioT1CFilhos, Duracao = 8, DataFimTurno = dataInicioT1CFilhos.AddHours(8), TurnoId = turno1a.TurnoId, EnfermeiroId = enfermeiro12.EnfermeiroId });
+            db.HorariosEnfermeiro.Add(new HorarioEnfermeiro { DataInicioTurno = dataInicioT1, Duracao = 8, DataFimTurno = dataInicioT1.AddHours(8), TurnoId = turno1.TurnoId, EnfermeiroId = enfermeiro8.EnfermeiroId });
+            db.HorariosEnfermeiro.Add(new HorarioEnfermeiro { DataInicioTurno = dataInicioT1CFilhos, Duracao = 8, DataFimTurno = dataInicioT1CFilhos.AddHours(8), TurnoId = turno1a.TurnoId, EnfermeiroId = enfermeiro2.EnfermeiroId });
             db.HorariosEnfermeiro.Add(new HorarioEnfermeiro { DataInicioTurno = dataInicioT1, Duracao = 8, DataFimTurno = dataInicioT1.AddHours(8), TurnoId = turno1.TurnoId, EnfermeiroId = enfermeiro6.EnfermeiroId });
             db.HorariosEnfermeiro.Add(new HorarioEnfermeiro { DataInicioTurno = dataInicioT1CFilhos, Duracao = 8, DataFimTurno = dataInicioT1CFilhos.AddHours(8), TurnoId = turno1a.TurnoId, EnfermeiroId = enfermeiro3.EnfermeiroId });
             db.HorariosEnfermeiro.Add(new HorarioEnfermeiro { DataInicioTurno = dataInicioT2, Duracao = 8, DataFimTurno = dataInicioT2.AddHours(8), TurnoId = turno2.TurnoId, EnfermeiroId = enfermeiro11.EnfermeiroId });
@@ -529,7 +573,7 @@ namespace EscalonamentoHospitalar.Data
             db.HorariosEnfermeiro.Add(new HorarioEnfermeiro { DataInicioTurno = dataInicioT1, Duracao = 8, DataFimTurno = dataInicioT1.AddHours(8), TurnoId = turno1.TurnoId, EnfermeiroId = enfermeiro6.EnfermeiroId });
             db.HorariosEnfermeiro.Add(new HorarioEnfermeiro { DataInicioTurno = dataInicioT1CFilhos, Duracao = 8, DataFimTurno = dataInicioT1CFilhos.AddHours(8), TurnoId = turno1a.TurnoId, EnfermeiroId = enfermeiro12.EnfermeiroId });
             db.HorariosEnfermeiro.Add(new HorarioEnfermeiro { DataInicioTurno = dataInicioT1, Duracao = 8, DataFimTurno = dataInicioT1.AddHours(8), TurnoId = turno1.TurnoId, EnfermeiroId = enfermeiro5.EnfermeiroId });
-            db.HorariosEnfermeiro.Add(new HorarioEnfermeiro { DataInicioTurno = dataInicioT1CFilhos, Duracao = 8, DataFimTurno = dataInicioT1CFilhos.AddHours(8), TurnoId = turno1a.TurnoId, EnfermeiroId = enfermeiro10.EnfermeiroId });                
+            db.HorariosEnfermeiro.Add(new HorarioEnfermeiro { DataInicioTurno = dataInicioT1CFilhos, Duracao = 8, DataFimTurno = dataInicioT1CFilhos.AddHours(8), TurnoId = turno1a.TurnoId, EnfermeiroId = enfermeiro10.EnfermeiroId });
 
             db.SaveChanges();
         }
@@ -539,12 +583,12 @@ namespace EscalonamentoHospitalar.Data
             if (db.Turnos.Any()) return;
 
             db.Turnos.AddRange(
-                
-                new Turno { Nome = "MANHÃ-1", HoraInicio = new DateTime(1, 1, 1, 8, 0, 0) , HoraFim = new DateTime(1, 1, 1, 16, 0, 0) },
+
+                new Turno { Nome = "MANHÃ-1", HoraInicio = new DateTime(1, 1, 1, 8, 0, 0), HoraFim = new DateTime(1, 1, 1, 16, 0, 0) },
                 new Turno { Nome = "MANHÃ-2", HoraInicio = new DateTime(1, 1, 1, 9, 0, 0), HoraFim = new DateTime(1, 1, 1, 17, 0, 0) },
                 new Turno { Nome = "TARDE", HoraInicio = new DateTime(1, 1, 1, 16, 0, 0), HoraFim = new DateTime(1, 1, 1, 0, 0, 0) },
-                new Turno { Nome = "NOITE", HoraInicio = new DateTime(1, 1, 1, 0, 0, 0), HoraFim = new DateTime(1, 1, 1, 8, 0, 0) }      
-                
+                new Turno { Nome = "NOITE", HoraInicio = new DateTime(1, 1, 1, 0, 0, 0), HoraFim = new DateTime(1, 1, 1, 8, 0, 0) }
+
                 );
 
             db.SaveChanges();
@@ -555,8 +599,8 @@ namespace EscalonamentoHospitalar.Data
             if (db.EspecialidadesEnfermeiros.Any()) return;
 
             db.EspecialidadesEnfermeiros.AddRange(
-                
-                new EspecialidadeEnfermeiro { Especialidade = "Enfermagem Comunitária"},
+
+                new EspecialidadeEnfermeiro { Especialidade = "Enfermagem Comunitária" },
                 new EspecialidadeEnfermeiro { Especialidade = "Enfermagem Médico-Cirúrgica" },
                 new EspecialidadeEnfermeiro { Especialidade = "Enfermagem de Reabilitação" },
                 new EspecialidadeEnfermeiro { Especialidade = "Enfermagem de Saúde Infantil e Pediátrica" },
@@ -567,7 +611,7 @@ namespace EscalonamentoHospitalar.Data
 
             db.SaveChanges();
         }
-        
+
         private static void SeedEnfermeiroEspecialidade(HospitalDbContext db)
         {
             if (db.EnfermeirosEspecialidades.Any()) return;
@@ -586,48 +630,48 @@ namespace EscalonamentoHospitalar.Data
 
             enfermeiro = db.Enfermeiros.SingleOrDefault(e => e.Nome == "Andreia Cunha");
             db.EnfermeirosEspecialidades.Add(new EnfermeiroEspecialidade { EspecialidadeEnfermeiroId = especialidade.EspecialidadeEnfermeiroId, EnfermeiroId = enfermeiro.EnfermeiroId, Data_Registo = new DateTime(2018, 11, 16) });
-        
+
             enfermeiro = db.Enfermeiros.SingleOrDefault(e => e.Nome == "Joana Albuquerque");
             db.EnfermeirosEspecialidades.Add(new EnfermeiroEspecialidade { EspecialidadeEnfermeiroId = especialidade.EspecialidadeEnfermeiroId, EnfermeiroId = enfermeiro.EnfermeiroId, Data_Registo = new DateTime(2018, 11, 16) });
-            
+
             enfermeiro = db.Enfermeiros.SingleOrDefault(e => e.Nome == "João Tomás");
             db.EnfermeirosEspecialidades.Add(new EnfermeiroEspecialidade { EspecialidadeEnfermeiroId = especialidade.EspecialidadeEnfermeiroId, EnfermeiroId = enfermeiro.EnfermeiroId, Data_Registo = new DateTime(2018, 11, 16) });
-   
+
             enfermeiro = db.Enfermeiros.SingleOrDefault(e => e.Nome == "Carlos Manso");
             db.EnfermeirosEspecialidades.Add(new EnfermeiroEspecialidade { EspecialidadeEnfermeiroId = especialidade.EspecialidadeEnfermeiroId, EnfermeiroId = enfermeiro.EnfermeiroId, Data_Registo = new DateTime(2018, 11, 16) });
 
             enfermeiro = db.Enfermeiros.SingleOrDefault(e => e.Nome == "Bruno Martins");
             db.EnfermeirosEspecialidades.Add(new EnfermeiroEspecialidade { EspecialidadeEnfermeiroId = especialidade.EspecialidadeEnfermeiroId, EnfermeiroId = enfermeiro.EnfermeiroId, Data_Registo = new DateTime(2018, 11, 16) });
-           
+
             enfermeiro = db.Enfermeiros.SingleOrDefault(e => e.Nome == "Ariana Gonçalves");
             db.EnfermeirosEspecialidades.Add(new EnfermeiroEspecialidade { EspecialidadeEnfermeiroId = especialidade.EspecialidadeEnfermeiroId, EnfermeiroId = enfermeiro.EnfermeiroId, Data_Registo = new DateTime(2018, 11, 16) });
 
             enfermeiro = db.Enfermeiros.SingleOrDefault(e => e.Nome == "André Silva");
             db.EnfermeirosEspecialidades.Add(new EnfermeiroEspecialidade { EspecialidadeEnfermeiroId = especialidade.EspecialidadeEnfermeiroId, EnfermeiroId = enfermeiro.EnfermeiroId, Data_Registo = new DateTime(2018, 11, 16) });
-        
+
             enfermeiro = db.Enfermeiros.SingleOrDefault(e => e.Nome == "Carlos Almeida");
             db.EnfermeirosEspecialidades.Add(new EnfermeiroEspecialidade { EspecialidadeEnfermeiroId = especialidade.EspecialidadeEnfermeiroId, EnfermeiroId = enfermeiro.EnfermeiroId, Data_Registo = new DateTime(2018, 11, 16) });
 
             enfermeiro = db.Enfermeiros.SingleOrDefault(e => e.Nome == "Fábio Castro");
             db.EnfermeirosEspecialidades.Add(new EnfermeiroEspecialidade { EspecialidadeEnfermeiroId = especialidade.EspecialidadeEnfermeiroId, EnfermeiroId = enfermeiro.EnfermeiroId, Data_Registo = new DateTime(2018, 11, 16) });
-         
+
             db.SaveChanges();
         }
-      
+
         private static void SeedDiretorServico(HospitalDbContext db)
         {
             if (db.DiretoresServico.Any()) return;
 
             db.DiretoresServico.AddRange(
 
-                new DiretorServico { Nome = "António Barata", Codigo = "D001", Contacto = "965417847", Email = "antoniobarata@uls.guarda", CC = "12547845"}
+                new DiretorServico { Nome = "António Barata", Codigo = "D001", Contacto = "965417847", Email = "antoniobarata@uls.guarda", CC = "12547845" }
 
                 );
 
             db.SaveChanges();
         }
 
-        
+
         private static void SeedEnfermeiros(HospitalDbContext db)
         {
             if (db.Enfermeiros.Any()) return;
@@ -638,13 +682,13 @@ namespace EscalonamentoHospitalar.Data
             EspecialidadeEnfermeiro saudeMaterna = GetEspecialidadeCreatingIfNeed(db, "Enfermagem de Saúde Materna e Obstétrica");
             EspecialidadeEnfermeiro saudeMental = GetEspecialidadeCreatingIfNeed(db, "Enfermagem de Saúde Mental e Psiquiátrica");
             EspecialidadeEnfermeiro medicoCirurgica = GetEspecialidadeCreatingIfNeed(db, "Enfermagem Médico-Cirúrgica");
-       
+
             db.Enfermeiros.AddRange(
-                
-                new Enfermeiro { NumeroMecanografico = "E001", Nome = "Marisa Reduto", EspecialidadeEnfermeiroId = comunitaria.EspecialidadeEnfermeiroId,  Contacto = "966333222", Email = "marisareduto@uls.guarda", Data_Nascimento = new DateTime(1998,6,6) , CC = "15823256", Filhos = false, Data_Nascimento_Filho = null },
-                new Enfermeiro { NumeroMecanografico = "E002", Nome = "João Silva", EspecialidadeEnfermeiroId = medicoCirurgica.EspecialidadeEnfermeiroId, Contacto = "965241232", Email = "joaosilva@uls.guarda", Data_Nascimento = new DateTime(1989,8,16), CC = "15852556", Filhos = true, Data_Nascimento_Filho = new DateTime(2016, 7, 10) },
-                new Enfermeiro { NumeroMecanografico = "E003", Nome = "Armando Manso", EspecialidadeEnfermeiroId = reabilitacao.EspecialidadeEnfermeiroId, Contacto = "964521121", Email = "armandomanso@uls.guarda", Data_Nascimento = new DateTime(1987,7,1), CC = "13652544", Filhos = true, Data_Nascimento_Filho = new DateTime(2018, 8, 23) },
-                new Enfermeiro { NumeroMecanografico = "E004", Nome = "Andreia Cunha", EspecialidadeEnfermeiroId = reabilitacao.EspecialidadeEnfermeiroId, Contacto = "923654152", Email = "andreiacunha@uls.guarda", Data_Nascimento = new DateTime(1978,10,25), CC = "14245485", Filhos = false, Data_Nascimento_Filho = null },
+
+                new Enfermeiro { NumeroMecanografico = "E001", Nome = "Marisa Reduto", EspecialidadeEnfermeiroId = comunitaria.EspecialidadeEnfermeiroId, Contacto = "966333222", Email = "marisareduto@uls.guarda", Data_Nascimento = new DateTime(1998, 6, 6), CC = "15823256", Filhos = false, Data_Nascimento_Filho = null },
+                new Enfermeiro { NumeroMecanografico = "E002", Nome = "João Silva", EspecialidadeEnfermeiroId = medicoCirurgica.EspecialidadeEnfermeiroId, Contacto = "965241232", Email = "joaosilva@uls.guarda", Data_Nascimento = new DateTime(1989, 8, 16), CC = "15852556", Filhos = true, Data_Nascimento_Filho = new DateTime(2016, 7, 10) },
+                new Enfermeiro { NumeroMecanografico = "E003", Nome = "Armando Manso", EspecialidadeEnfermeiroId = reabilitacao.EspecialidadeEnfermeiroId, Contacto = "964521121", Email = "armandomanso@uls.guarda", Data_Nascimento = new DateTime(1987, 7, 1), CC = "13652544", Filhos = true, Data_Nascimento_Filho = new DateTime(2018, 8, 23) },
+                new Enfermeiro { NumeroMecanografico = "E004", Nome = "Andreia Cunha", EspecialidadeEnfermeiroId = reabilitacao.EspecialidadeEnfermeiroId, Contacto = "923654152", Email = "andreiacunha@uls.guarda", Data_Nascimento = new DateTime(1978, 10, 25), CC = "14245485", Filhos = false, Data_Nascimento_Filho = null },
                 new Enfermeiro { NumeroMecanografico = "E342", Nome = "Joana Albuquerque", EspecialidadeEnfermeiroId = comunitaria.EspecialidadeEnfermeiroId, Contacto = "968951742", Email = "joanaalbuquerque@uls.guarda", Data_Nascimento = new DateTime(1998, 6, 6), CC = "15823256", Filhos = false, Data_Nascimento_Filho = null },
                 new Enfermeiro { NumeroMecanografico = "E392", Nome = "João Tomás", EspecialidadeEnfermeiroId = medicoCirurgica.EspecialidadeEnfermeiroId, Contacto = "965254874", Email = "joaotomas@uls.guarda", Data_Nascimento = new DateTime(1989, 8, 16), CC = "15852556", Filhos = false, Data_Nascimento_Filho = null },
                 new Enfermeiro { NumeroMecanografico = "E783", Nome = "Carlos Manso", EspecialidadeEnfermeiroId = reabilitacao.EspecialidadeEnfermeiroId, Contacto = "964521741", Email = "carlosmanso@uls.guarda", Data_Nascimento = new DateTime(1987, 7, 1), CC = "13652544", Filhos = false, Data_Nascimento_Filho = null },
@@ -653,7 +697,7 @@ namespace EscalonamentoHospitalar.Data
                 new Enfermeiro { NumeroMecanografico = "E762", Nome = "André Silva", EspecialidadeEnfermeiroId = medicoCirurgica.EspecialidadeEnfermeiroId, Contacto = "968745232", Email = "andresilva@uls.guarda", Data_Nascimento = new DateTime(1989, 8, 16), CC = "15852556", Filhos = false, Data_Nascimento_Filho = null },
                 new Enfermeiro { NumeroMecanografico = "E983", Nome = "Carlos Almeida", EspecialidadeEnfermeiroId = reabilitacao.EspecialidadeEnfermeiroId, Contacto = "967845621", Email = "carlosalmeida@uls.guarda", Data_Nascimento = new DateTime(1987, 7, 1), CC = "13652544", Filhos = true, Data_Nascimento_Filho = new DateTime(2018, 8, 23) },
                 new Enfermeiro { NumeroMecanografico = "E125", Nome = "Fábio Castro", EspecialidadeEnfermeiroId = reabilitacao.EspecialidadeEnfermeiroId, Contacto = "923256452", Email = "fabiocastro@uls.guarda", Data_Nascimento = new DateTime(1978, 10, 25), CC = "14245485", Filhos = true, Data_Nascimento_Filho = new DateTime(2018, 8, 23) }
-                
+
                 );
 
             db.SaveChanges();

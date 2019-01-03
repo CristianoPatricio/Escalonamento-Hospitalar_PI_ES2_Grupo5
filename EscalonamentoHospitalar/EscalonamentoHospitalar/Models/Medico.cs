@@ -45,7 +45,7 @@ namespace EscalonamentoHospitalar.Models
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = false)]
         public DateTime Data_Inicio_Servico { get; set; }
 
-
+        public ICollection<HorarioMedico> HorariosMedico { get; set; }
 
     }
 }

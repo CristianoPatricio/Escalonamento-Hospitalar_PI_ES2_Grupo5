@@ -1,0 +1,58 @@
+﻿@model IEnumerable<EscalonamentoHospitalar.Models.HorarioMedico>
+
+@{
+    ViewData["Title"] = "Horários Médicos";
+}
+
+<h2>Horário dos Médicos</h2>
+
+@*
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+*@
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Data de início do Turno
+            </th>
+            <th>
+                Data de fim do Turno
+            </th>
+            <th>
+                Turno
+            </th>
+            <th>
+                Médico
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataInicioTurno)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataFimTurno)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Turno.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Medico.Nome)
+            </td>
+            @*
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.HorarioMedicoId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.HorarioMedicoId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.HorarioMedicoId">Delete</a>
+            </td>
+                *@
+        </tr>
+}
+    </tbody>
+</table>

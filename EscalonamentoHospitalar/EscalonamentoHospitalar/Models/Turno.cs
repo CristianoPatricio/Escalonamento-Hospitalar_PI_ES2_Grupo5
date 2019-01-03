@@ -20,5 +20,6 @@ namespace EscalonamentoHospitalar.Models
         public DateTime HoraFim { get; set; }
 
         public ICollection<HorarioEnfermeiro> HorariosEnfermeiro { get; set; }
+        public ICollection<HorarioMedico> HorariosMedico { get; set; }
     }
 }
