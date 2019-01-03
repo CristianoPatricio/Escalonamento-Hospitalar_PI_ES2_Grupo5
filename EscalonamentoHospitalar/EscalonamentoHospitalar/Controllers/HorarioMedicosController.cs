@@ -11,6 +11,7 @@ namespace EscalonamentoHospitalar.Controllers
 {
     public class HorarioMedicosController : Controller
     {
+        private const int PAGE_SIZE = 12;
         private readonly HospitalDbContext _context;
 
         public HorarioMedicosController(HospitalDbContext context)
@@ -19,10 +20,115 @@ namespace EscalonamentoHospitalar.Controllers
         }
 
         // GET: HorarioMedicos
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(HorariosMedicosViewModel model = null, int page = 1)
         {
-            var hospitalDbContext = _context.HorariosMedicos.Include(h => h.Medico).Include(h => h.Turno);
-            return View(await hospitalDbContext.ToListAsync());
+            string nome = null;
+            DateTime? data = null;
+
+            if (model != null && model.DataInicio != null || model.CurrentNome != null)
+            {
+                nome = model.CurrentNome;
+                data = model.DataInicio;
+                page = 1;
+            }
+
+            IQueryable<HorarioMedico> horario;
+            int numHorario;
+            IEnumerable<HorarioMedico> listaHorario;
+
+            if (data.HasValue && string.IsNullOrEmpty(nome)) //Pesquisa por data
+            {
+                int ano = data.Value.Year;
+                int mes = data.Value.Month;
+                int dia = data.Value.Day;
+
+                horario = _context.HorariosMedicos
+                   .Where(h => h.DataInicioTurno.Year.Equals(ano) && h.DataInicioTurno.Month.Equals(mes) && h.DataInicioTurno.Day.Equals(dia));
+
+                numHorario = await horario.CountAsync();
+
+                listaHorario = await horario
+                    .Include(h => h.Medico)
+                    .Include(h => h.Turno)
+                    .OrderBy(h => h.DataInicioTurno)
+                    .Skip(PAGE_SIZE * (page - 1))
+                    .Take(PAGE_SIZE)
+                    .ToListAsync();
+            }
+            else if (!string.IsNullOrEmpty(nome) && !data.HasValue) //Pesquisa por Nome
+            {
+                horario = _context.HorariosMedicos
+                    .Where(h => h.Medico.Nome.Contains(nome.Trim()));
+
+                numHorario = await horario.CountAsync();
+
+                listaHorario = await horario
+                    .Include(h => h.Medico)
+                    .Include(h => h.Turno)
+                    .OrderBy(h => h.DataInicioTurno)
+                    .Skip(PAGE_SIZE * (page - 1))
+                    .Take(PAGE_SIZE)
+                    .ToListAsync();
+            }
+            else if (!string.IsNullOrEmpty(nome) && data.HasValue) //Pesquisa por nome e data
+            {
+                int ano = data.Value.Year;
+                int mes = data.Value.Month;
+                int dia = data.Value.Day;
+
+                horario = _context.HorariosMedicos
+                    .Where(h => h.Medico.Nome.Contains(nome.Trim()) && h.DataInicioTurno.Year.Equals(ano) && h.DataInicioTurno.Month.Equals(mes) && h.DataInicioTurno.Day.Equals(dia));
+
+                numHorario = await horario.CountAsync();
+
+                listaHorario = await horario
+                  .Include(h => h.Medico)
+                  .Include(h => h.Turno)
+                  .OrderBy(h => h.DataInicioTurno)
+                  .Skip(PAGE_SIZE * (page - 1))
+                  .Take(PAGE_SIZE)
+                  .ToListAsync();
+            }
+            else
+            {
+                horario = _context.HorariosMedicos;
+
+                numHorario = await horario.CountAsync();
+
+                listaHorario = await horario
+                  .Include(h => h.Medico)
+                  .Include(h => h.Turno)
+                  .OrderBy(h => h.DataInicioTurno)
+                  .Skip(PAGE_SIZE * (page - 1))
+                  .Take(PAGE_SIZE)
+                  .ToListAsync();
+            }
+
+            if (page > (numHorario / PAGE_SIZE) + 1)
+            {
+                page = 1;
+            }
+
+            if (listaHorario.Count() == 0)
+            {
+                TempData["NoItemsFound"] = "Não foram encontrados resultados para a sua pesquisa";
+            }
+
+
+            return View(
+                new HorariosMedicosViewModel
+                {
+                    HorariosMedicos = listaHorario,
+                    Pagination = new PagingViewModel
+                    {
+                        CurrentPage = page,
+                        PageSize = PAGE_SIZE,
+                        TotalItems = numHorario
+                    },
+                    CurrentNome = nome,
+                    DataInicio = data
+                }
+            );
         }
 
         // GET: HorarioMedicos/Details/5

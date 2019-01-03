@@ -1,4 +1,4 @@
-﻿@model IEnumerable<EscalonamentoHospitalar.Models.HorarioMedico>
+﻿@model HorariosMedicosViewModel
 
 @{
     ViewData["Title"] = "Horários Médicos";
@@ -7,52 +7,120 @@
 <h2>Horário dos Médicos</h2>
 
 @*
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
 *@
+
+<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.5.0/css/all.css' integrity='sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU' crossorigin='anonymous'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    //Passados 5 segundos a mensagem desaparece
+    $(document).ready(function () {
+        $("#suc_form").hide(10000);
+    });
+</script>
+
+@if (TempData["Success"] != null)
+{
+    <!--Mensagem de sucesso quando gera horário-->
+    <div id="suc_form" class="alert alert-success">
+        <strong>Sucesso!</strong> O horário foi gerado com sucesso.
+    </div>
+}
+
+<form asp-action="Index">
+    <p>
+        Pesquisar por nome: <input style="width: 200px;" asp-for="CurrentNome" placeholder="Insira o nome a pesquisar" />
+        Pesquisar por data: <input style="width: 200px;" asp-for="DataInicio" />
+        <button type="submit" value="Pesquisar" class="btn btn-info"><span class="glyphicon glyphicon-search"></span> Pesquisar</button>
+    </p>
+</form>
 
 <table class="table">
     <thead>
         <tr>
             <th>
-                Data de início do Turno
+                <i class="far fa-clock"></i> Data de início do Turno
             </th>
             <th>
-                Data de fim do Turno
+                <i class="far fa-clock"></i> Data de fim do Turno
             </th>
             <th>
-                Turno
+                <i class="glyphicon glyphicon-calendar"></i> Turno
             </th>
             <th>
-                Médico
+                <i class="fas fa-user-md"></i> Médico
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.DataInicioTurno)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DataFimTurno)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Turno.Nome)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Medico.Nome)
-            </td>
-            @*
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.HorarioMedicoId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.HorarioMedicoId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.HorarioMedicoId">Delete</a>
-            </td>
+        @foreach (var item in Model.HorariosMedicos)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DataInicioTurno)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DataFimTurno)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Turno.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Medico.Nome)
+                </td>
+                @*
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.HorarioMedicoId">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.HorarioMedicoId">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.HorarioMedicoId">Delete</a>
+                    </td>
                 *@
-        </tr>
-}
+            </tr>
+        }
     </tbody>
 </table>
+
+@if (TempData["NoItemsFound"] != null)
+{
+    <script>
+        //Show #myModal when there aren't records founded of search by date or name
+        $(document).ready(function () {
+            $("#myModal").modal();
+        });
+    </script>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title" style="color:dodgerblue;"><strong>Ops!</strong></h4>
+                </div>
+                <div class="modal-body">
+                    <p> Não foram encontrados resultados para a sua pesquisa :(</p>
+                </div>
+                <div class="modal-footer">
+                    <a asp-action="Index"><input type="hidden" /><input type="button" class="btn btn-default" value="Ok" /></a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+}
+
+<div page-model="@Model.Pagination"
+     page-action="Index"
+     page-classes-enabled="true"
+     page-class="btn"
+     page-class-normal="btn-default"
+     page-class-selected="btn-primary"
+     class="btn-group pull-right">
+</div>
