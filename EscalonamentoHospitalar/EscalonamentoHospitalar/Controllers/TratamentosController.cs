@@ -11,6 +11,7 @@ namespace EscalonamentoHospitalar.Controllers
 {
     public class TratamentosController : Controller
     {
+        private const int PAGE_SIZE = 5;
         private readonly HospitalDbContext _context;
 
         public TratamentosController(HospitalDbContext context)
@@ -19,13 +20,51 @@ namespace EscalonamentoHospitalar.Controllers
         }
 
         // GET: Tratamentos
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(ListaTratamentosViewModel model = null, int page = 1)
         {
+            string nome = null;
 
-            var hospitalDbContext = _context.Tratamentos.Include(t => t.Grau).Include(t => t.Medico).Include(t => t.Paciente).Include(t => t.Patologia).Include(t => t.Regime).Include(t =>t.Estado);
+            if (model != null && model.CurrentNome != null)
+            {
+                nome = model.CurrentNome;
+                page = 1;
+            }
 
-            return View(await hospitalDbContext.ToListAsync());
+            var medicos = _context.Medicos
+                .Where(e => nome == null || e.Nome.Contains(nome));
+
+            int numMedicos = await medicos.CountAsync();
+
+            if (page > (numMedicos / PAGE_SIZE) + 1)
+            {
+                page = 1;
+            }
+
+            var listaMedico = await medicos
+                .Include(e => e.EspecialidadeMedico)
+                .OrderBy(e => e.Nome)
+                .Skip(PAGE_SIZE * (page - 1))
+                .Take(PAGE_SIZE)
+                .ToListAsync();
+
+            return View(
+                new ListaMedicosViewModel
+                {
+                    Medicos = listaMedico,
+                    Pagination = new PagingViewModel
+                    {
+                        CurrentPage = page,
+                        PageSize = PAGE_SIZE,
+                        TotalItems = numMedicos
+                    },
+                    CurrentNome = nome
+                }
+            );
+
         }
+
+       
+        
 
         // GET: Tratamentos/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -86,7 +125,7 @@ namespace EscalonamentoHospitalar.Controllers
             int RegimeId = tratamento.RegimeId;
             int MedicoId = tratamento.MedicoId;
 
-            string estado = EstadoTratamento(dateNow, DataInicio);
+            string estado = EstadoTratamento(dateNow, DataInicio);          
 
             Estado estadoTratamento = _context.Estado.SingleOrDefault(e => e.Nome == estado);
 
