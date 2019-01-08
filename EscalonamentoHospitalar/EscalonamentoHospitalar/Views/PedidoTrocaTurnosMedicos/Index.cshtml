@@ -1,0 +1,93 @@
+﻿@model IEnumerable<EscalonamentoHospitalar.Models.PedidoTrocaTurnosMedico>
+
+@{
+    ViewData["Title"] = "Lista de Pedidos";
+}
+
+<h2>Lista de Pedidos de troca de turnos - Médicos</h2>
+
+<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.5.0/css/all.css' integrity='sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU' crossorigin='anonymous'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    //Passados 5 segundos a mensagem desaparece
+    $(document).ready(function () {
+        $("#suc_form").hide(10000);
+    });
+</script>
+
+@if (TempData["UpdatedSuccess"] != null)
+{
+    <!--Mensagem de sucesso quando é aprovado pedido do horário-->
+    <div id="suc_form" class="alert alert-success">
+        <strong>Sucesso!</strong> O pedido de troca de turno foi aprovado com sucesso!
+    </div>
+}
+
+@if (TempData["NotAproved"] != null)
+{
+    <!--Mensagem de sucesso quando é rejeitado um pedido do horário-->
+    <div id="suc_form" class="alert alert-success">
+        <strong>Sucesso!</strong> O pedido de troca de turno foi arquivado!
+    </div>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <i style='font-size:24px' class='far'>&#xf073;</i> Data do Pedido
+            </th>
+            <th>
+                <i style='font-size:24px' class='fas'>&#xf0f0;</i> Médico Requerente
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DataPedido)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Medico.Nome)
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.PedidoTrocaTurnosMedicoId" class="btn btn-info">
+                        <span class="fas fa-info" style="color:white;"></span> Detalhes
+                    </a>
+
+                    @if (item.EstadoPedidoTroca.Nome == "Pendente")
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.PedidoTrocaTurnosMedicoId" class="btn btn-success">
+                            <span class="fas fa-check" style="color:white;"></span> Validar
+                        </a>
+
+                        <a asp-action="NaoValidar" asp-route-id="@item.PedidoTrocaTurnosMedicoId" class="btn btn-danger">
+                            <span class="fas fa-times" style="color:white;"></span> Não Validar
+                        </a>
+
+                    }
+                    else if (item.EstadoPedidoTroca.Nome == "Validado")
+                    {
+                        <a asp-action="Aprovar" asp-route-id="@item.PedidoTrocaTurnosMedicoId" class="btn btn-success">
+                            <span class="fas fa-check" style="color:white;"></span> Aprovar
+                        </a>
+
+                        <a asp-action="NaoAprovar" asp-route-id="@item.PedidoTrocaTurnosMedicoId" class="btn btn-danger">
+                            <span class="fas fa-times" style="color:white;"></span> Não Aprovar
+                        </a>
+
+                    }
+                    else
+                    {
+
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

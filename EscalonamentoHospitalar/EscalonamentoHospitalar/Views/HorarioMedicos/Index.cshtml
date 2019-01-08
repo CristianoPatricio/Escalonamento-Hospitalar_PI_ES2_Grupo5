@@ -23,6 +23,22 @@
     });
 </script>
 
+@if (TempData["PedidoAlreadyDone"] != null)
+{
+    <!--Mensagem de sucesso quando insere pedido de troca de turno-->
+    <div id="suc_form" class="alert alert-warning">
+        <strong>Atenção!</strong> Já existe um pedido feito para a troca dos horários selecionados!
+    </div>
+}
+
+@if (TempData["SuccessRequired"] != null)
+{
+    <!--Mensagem de sucesso quando insere pedido de troca de turno-->
+    <div id="suc_form" class="alert alert-success">
+        <strong>Sucesso!</strong> O pedido foi registado com sucesso.
+    </div>
+}
+
 @if (TempData["Success"] != null)
 {
     <!--Mensagem de sucesso quando gera horário-->
@@ -72,6 +88,9 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Medico.Nome)
+                </td>
+                <td>
+                    <a asp-action="PedidoTrocaTurnoMedico" asp-route-idHorario1="@item.HorarioMedicoId"><input type="button" value="Trocar" class="btn btn-info" /></a>
                 </td>
                 @*
                     <td>

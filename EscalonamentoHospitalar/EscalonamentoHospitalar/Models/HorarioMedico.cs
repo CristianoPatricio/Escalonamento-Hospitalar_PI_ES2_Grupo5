@@ -17,5 +17,8 @@ namespace EscalonamentoHospitalar.Models
 
         public int MedicoId { get; set; }
         public Medico Medico { get; set; }
+
+        public ICollection<HorarioATrocarMedico> HorarioATrocarMedicos { get; set; }
+        public ICollection<HorarioParaTrocaMedico> HorarioParaTrocaMedicos { get; set; }
     }
 }

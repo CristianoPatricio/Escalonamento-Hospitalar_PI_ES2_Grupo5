@@ -1,0 +1,55 @@
+﻿@model EscalonamentoHospitalar.Models.PedidoTrocaTurnosMedico
+
+@{
+    ViewData["Title"] = "Validar Pedido de Troca de Turno";
+}
+
+<h2>Pretende validar o pedido de troca requerido pelo Médico/a <b>@Html.DisplayFor(model => model.Medico.Nome)</b>?</h2>
+
+<hr />
+
+<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.5.0/css/all.css' integrity='sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU' crossorigin='anonymous'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<h4>Sumário - Pedido de Troca de Turno - Médicos</h4>
+<p></p>
+<div class="col-md-4">
+    <div class="panel panel-danger">
+        <div class="panel-heading"><b>Horário a Trocar</b></div>
+        <div class="panel-body">
+            <i style='font-size:24px' class='far'>&#xf073;</i> Data de início do turno
+            <b>@Html.DisplayFor(model => model.HorarioATrocarMedico.HorarioMedico.DataInicioTurno)</b><br /><br />
+            <i style='font-size:24px' class='fas'>&#xf0f0;</i> Médico:
+            <b>@Html.DisplayFor(model => model.HorarioATrocarMedico.HorarioMedico.Medico.Nome)</b>
+        </div>
+    </div>
+
+    <p></p>
+    <i class="fa fa-long-arrow-up" style="font-size:48px;color:black"></i>
+    <i class="fa fa-long-arrow-down" style="font-size:48px;color:black"></i>
+    <p></p>
+
+    <div class="panel panel-success">
+        <div class="panel-heading"><b>Horário para Troca</b></div>
+        <div class="panel-body">
+            <i style='font-size:24px' class='far'>&#xf073;</i> Data de início do turno:
+            <b>@Html.DisplayFor(model => model.HorarioParaTrocaMedico.HorarioMedico.DataInicioTurno)</b><br /><br />
+            <i style='font-size:24px' class='fas'>&#xf0f0;</i> Médico:
+            <b>@Html.DisplayFor(model => model.HorarioParaTrocaMedico.HorarioMedico.Medico.Nome)</b>
+        </div>
+    </div>
+
+
+    <hr />
+
+    <form asp-action="Edit">
+        <input type="hidden" asp-for="PedidoTrocaTurnosMedicoId" />
+
+        <button type="submit" class="btn btn-success"><i class="fas fa-check" style="color:white;"></i> Validar</button>
+        <a asp-action="Index" class="btn btn-default">
+            <span class="fas fa-undo" style="color:dodgerblue;"></span> Voltar à lista
+        </a>
+
+    </form>
+</div>
+

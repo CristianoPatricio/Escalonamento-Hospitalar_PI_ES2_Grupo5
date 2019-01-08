@@ -11,7 +11,7 @@ namespace EscalonamentoHospitalar.Controllers
 {
     public class HorarioMedicosController : Controller
     {
-        private const int PAGE_SIZE = 12;
+        private const int PAGE_SIZE = 10;
         private readonly HospitalDbContext _context;
 
         public HorarioMedicosController(HospitalDbContext context)
@@ -318,6 +318,228 @@ namespace EscalonamentoHospitalar.Controllers
             return View(gerarHorarioMedico);
         }
 
+        // GET: HorarioMedico/PedidoTrocaTurnoMedico
+        public async Task<IActionResult> PedidoTrocaTurnoMedico(int? idHorario1, HorariosMedicosViewModel model = null, int page = 1)
+        {
+            ViewBag.HorarioATrocar = idHorario1;
+
+            if (idHorario1 == null)
+            {
+                return NotFound();
+            }
+
+            //Select MedicoID Where HorarioMedicoId = idHorario1
+            var idMed = from h in _context.HorariosMedicos
+                        where h.HorarioMedicoId == idHorario1
+                        select h.MedicoId;
+
+            var dataInicio = from h in _context.HorariosMedicos
+                             where h.HorarioMedicoId == idHorario1
+                             select h.DataInicioTurno;
+
+            string nome = null;
+            DateTime? data = null;
+
+            if (model != null && model.DataInicio != null || model.CurrentNome != null)
+            {
+                nome = model.CurrentNome;
+                data = model.DataInicio;
+                page = 1;
+            }
+
+            IQueryable<HorarioMedico> horario;
+            int numHorario;
+            IEnumerable<HorarioMedico> listaHorario;
+
+            if (data.HasValue && string.IsNullOrEmpty(nome)) //Pesquisa por data
+            {
+                int ano = data.Value.Year;
+                int mes = data.Value.Month;
+                int dia = data.Value.Day;
+
+                horario = _context.HorariosMedicos
+                   .Where(h => h.DataInicioTurno.Year.Equals(ano) && h.DataInicioTurno.Month.Equals(mes) && h.DataInicioTurno.Day.Equals(dia) && h.HorarioMedicoId != idHorario1 && h.MedicoId != idMed.Single() && h.DataInicioTurno >= dataInicio.Single());
+
+                numHorario = await horario.CountAsync();
+
+                listaHorario = await horario
+                    .Include(h => h.Medico)
+                    .Include(h => h.Turno)
+                    .OrderBy(h => h.DataInicioTurno)
+                    .Skip(PAGE_SIZE * (page - 1))
+                    .Take(PAGE_SIZE)
+                    .ToListAsync();
+            }
+            else if (!string.IsNullOrEmpty(nome) && !data.HasValue) //Pesquisa por Nome
+            {
+                horario = _context.HorariosMedicos
+                    .Where(h => h.Medico.Nome.Contains(nome.Trim()) && h.HorarioMedicoId != idHorario1 && h.MedicoId != idMed.Single() && h.DataInicioTurno >= dataInicio.Single());
+
+                numHorario = await horario.CountAsync();
+
+                listaHorario = await horario
+                    .Include(h => h.Medico)
+                    .Include(h => h.Turno)
+                    .OrderBy(h => h.DataInicioTurno)
+                    .Skip(PAGE_SIZE * (page - 1))
+                    .Take(PAGE_SIZE)
+                    .ToListAsync();
+            }
+            else if (!string.IsNullOrEmpty(nome) && data.HasValue) //Pesquisa por nome e data
+            {
+                int ano = data.Value.Year;
+                int mes = data.Value.Month;
+                int dia = data.Value.Day;
+
+                horario = _context.HorariosMedicos
+                    .Where(h => h.Medico.Nome.Contains(nome.Trim()) && h.DataInicioTurno.Year.Equals(ano) && h.DataInicioTurno.Month.Equals(mes) && h.DataInicioTurno.Day.Equals(dia) && h.HorarioMedicoId != idHorario1 && h.MedicoId != idMed.Single() && h.DataInicioTurno >= dataInicio.Single());
+
+                numHorario = await horario.CountAsync();
+
+                listaHorario = await horario
+                  .Include(h => h.Medico)
+                  .Include(h => h.Turno)
+                  .OrderBy(h => h.DataInicioTurno)
+                  .Skip(PAGE_SIZE * (page - 1))
+                  .Take(PAGE_SIZE)
+                  .ToListAsync();
+            }
+            else
+            {
+                horario = _context.HorariosMedicos
+                     .Where(h => h.HorarioMedicoId != idHorario1 && h.MedicoId != idMed.Single() && h.DataInicioTurno >= dataInicio.Single());
+
+                numHorario = await horario.CountAsync();
+
+                listaHorario = await horario
+                  .Include(h => h.Medico)
+                  .Include(h => h.Turno)
+                  .OrderBy(h => h.DataInicioTurno)
+                  .Skip(PAGE_SIZE * (page - 1))
+                  .Take(PAGE_SIZE)
+                  .ToListAsync();
+            }
+
+            if (page > (numHorario / PAGE_SIZE) + 1)
+            {
+                page = 1;
+            }
+
+            return View(
+                new HorariosMedicosViewModel
+                {
+                    HorariosMedicos = listaHorario,
+                    Pagination = new PagingViewModel
+                    {
+                        CurrentPage = page,
+                        PageSize = PAGE_SIZE,
+                        TotalItems = numHorario
+                    },
+                    CurrentNome = nome,
+                    DataInicio = data
+                });
+        }
+
+        //GET: HorarioMedico/SolicitarPedidoTrocaTurnoMedico
+        public async Task<IActionResult> SolicitarPedidoTrocaTurnoMedico(int? idHorario1, int? idHorario2)
+        {
+            if (idHorario1 == null || idHorario2 == null)
+            {
+                return NotFound();
+            }
+
+            var horarioMedico1 = await _context.HorariosMedicos
+                .Include(h => h.Medico)
+                .Include(h => h.Turno)
+                .FirstOrDefaultAsync(m => m.HorarioMedicoId == idHorario1);
+
+            var horarioMedico2 = await _context.HorariosMedicos
+                .Include(h => h.Medico)
+                .Include(h => h.Turno)
+                .FirstOrDefaultAsync(m => m.HorarioMedicoId == idHorario2);
+
+            if (horarioMedico1 == null || horarioMedico2 == null)
+            {
+                return NotFound();
+            }
+
+            ViewBag.HorarioATrocar = idHorario1;
+            ViewBag.HorarioParaTroca = idHorario2;
+
+            return View(
+
+                new PedidoTrocaTurnosMedicoViewModel
+                {
+                    horarioMedicoATrocar = horarioMedico1,
+                    horarioMedicoParaTroca = horarioMedico2
+                }
+
+                );
+        }
+
+        //POST:HorarioEnfermeiro/SolicitarPedidoTrocaTurnoMedico
+        [HttpPost, ActionName("SolicitarPedidoTrocaTurnoMedico")]
+        [ValidateAntiForgeryToken]
+        public IActionResult SolicitarPedidoTrocaTurnoMedicoConfirmed(int idHor1, int idHor2)
+        {
+            DateTime dataPedido = DateTime.Now;
+
+            // Verifica se já existe um pedido feito com os id's dos horários
+            if (PedidoTrocaTurnoJaFoiEfetudado(idHor1, idHor2) == true)
+            {
+                TempData["PedidoAlreadyDone"] = "Já existe um pedido feito para a troca destes horários";
+                return RedirectToAction(nameof(Index));
+            }
+
+            //Select MedicoID Where HorarioMedicoId = idHorario1
+            var idMedRequerente = from h in _context.HorariosMedicos
+                                  where h.HorarioMedicoId == idHor1
+                                  select h.MedicoId;
+
+            HorarioMedico horarioATrocar = _context.HorariosMedicos.SingleOrDefault(h => h.HorarioMedicoId == idHor1);
+            HorarioMedico horarioParaTroca = _context.HorariosMedicos.SingleOrDefault(h => h.HorarioMedicoId == idHor2);
+
+            try
+            {
+                //Insert into HorarioATrocarMedico
+                InsertDataIntoHorarioATrocarMedico(_context, horarioATrocar);
+
+                //Insert into HorarioParaTrocaMedico
+                InsertDataIntoHorarioParaTrocaMedico(_context, horarioParaTroca);
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                TempData["ErrorRequired"] = "Erro ao inserir pedido!";
+                return RedirectToAction(nameof(Index));
+            }
+
+            HorarioATrocarMedico horarioATrocarId = _context.HorarioATrocarMedico.LastOrDefault(h => h.HorarioMedicoId == idHor1);
+            HorarioParaTrocaMedico horarioParaTrocaId = _context.HorarioParaTrocaMedico.LastOrDefault(h => h.HorarioMedicoId == idHor2);
+
+            Medico medicoRequerenteId = _context.Medicos.SingleOrDefault(e => e.MedicoId == idMedRequerente.Single());
+
+            EstadoPedidoTroca estadoPedidoTrocaId = _context.EstadoPedidoTrocas.SingleOrDefault(e => e.Nome == "Pendente");
+
+            //Insert into PedidoTrocaTurnos Table
+            try
+            {
+                if (!PedidoTrocaTurnoJaFoiEfetudado(idHor1, idHor2))
+                {
+                    InsertDataIntoPedidoTrocaTurnoMedico(_context, dataPedido, medicoRequerenteId, horarioATrocarId, horarioParaTrocaId, estadoPedidoTrocaId);
+                    TempData["SuccessRequired"] = "Pedido realizado com sucesso!";
+                    return RedirectToAction(nameof(Index));
+                }
+
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                TempData["ErrorRequired"] = "Erro ao inserir pedido!";
+                return RedirectToAction(nameof(Index));
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+
         /************************Funções Auxiliares*************************/
 
         /**
@@ -461,6 +683,79 @@ namespace EscalonamentoHospitalar.Controllers
             }
 
             return IsInvalid;
+        }
+
+        /**
+       * @param idHorarioATrocar
+       * @param idHorarioParaTroca
+       * @return true if a request with above parameters was already done.
+       */
+        private bool PedidoTrocaTurnoJaFoiEfetudado(int idHorarioATrocar, int idHorarioParaTroca)
+        {
+            bool pedidoEfetuado = false;
+
+            var pedido = from p in _context.PedidoTrocaTurnosMedico
+                         where p.HorarioATrocarMedico.HorarioMedicoId == idHorarioATrocar || p.HorarioParaTrocaMedico.HorarioMedicoId == idHorarioParaTroca
+                         select p;
+
+            if (pedido.Count() != 0)
+            {
+                pedidoEfetuado = true;
+            }
+
+            return pedidoEfetuado;
+        }
+
+        /**
+        * @param db
+        * @param horarioATrocar
+        * @insert in the HorarioATrocarMedico table a record with the above parameters
+        */
+        private void InsertDataIntoHorarioATrocarMedico(HospitalDbContext db, HorarioMedico horarioATrocar)
+        {
+            db.HorarioATrocarMedico.Add(
+
+                new HorarioATrocarMedico { HorarioMedicoId = horarioATrocar.HorarioMedicoId }
+
+                );
+
+            db.SaveChanges();
+        }
+
+        /**
+        * @param db
+        * @param horarioParaTroca
+        * @insert in the HorarioParaTrocaMedico table a record with the above parameters
+        */
+        private void InsertDataIntoHorarioParaTrocaMedico(HospitalDbContext db, HorarioMedico horarioParaTroca)
+        {
+            db.HorarioParaTrocaMedico.Add(
+
+                new HorarioParaTrocaMedico { HorarioMedicoId = horarioParaTroca.HorarioMedicoId }
+
+                );
+
+            db.SaveChanges();
+        }
+
+        /**
+        * @param db
+        * @param dataPedido
+        * @param medicoRequerente
+        * @param horarioATrocarId
+        * @param horarioParaTrocaId
+        * @param estadoPedidoTrocaId
+        * @insert in the PedidoTrocaTurnoMedico table a record with the above parameters
+        */
+        private void InsertDataIntoPedidoTrocaTurnoMedico(HospitalDbContext db, DateTime dataPedido, Medico medicoRequerenteId, HorarioATrocarMedico horarioATrocarId, HorarioParaTrocaMedico horarioParaTrocaId, EstadoPedidoTroca estadoPedidoTrocaId)
+        {
+            db.PedidoTrocaTurnosMedico.Add(
+
+                new PedidoTrocaTurnosMedico { DataPedido = dataPedido, MedicoId = medicoRequerenteId.MedicoId, HorarioATrocarMedicoId = horarioATrocarId.HorarioATrocarMedicoId, HorarioParaTrocaMedicoId = horarioParaTrocaId.HorarioParaTrocaMedicoId, EstadoPedidoTrocaId = estadoPedidoTrocaId.EstadoPedidoTrocaId }
+
+               );
+
+            db.SaveChanges();
         }
 
 

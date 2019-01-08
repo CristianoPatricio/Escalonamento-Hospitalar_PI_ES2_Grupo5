@@ -1,0 +1,70 @@
+﻿@model HorariosMedicosViewModel
+
+@{
+    ViewData["Title"] = "Pedido Troca Turnos Médico";
+}
+
+<h2>Solicitar pedido de troca de turnos - Médicos</h2>
+
+<p></p>
+
+<form asp-controller="HorarioMedicos" asp-action="PedidoTrocaTurnoMedico" asp-route-idHorario1="@ViewBag.HorarioATrocar">
+    <p>
+        Pesquisar por nome: <input style="width: 200px;" asp-for="CurrentNome" placeholder="Insira o nome a pesquisar" />
+        Pesquisar por data: <input style="width: 200px;" asp-for="DataInicio" />
+        <button type="submit" value="Pesquisar" class="btn btn-info"><span class="glyphicon glyphicon-search"></span> Pesquisar</button>
+    </p>
+</form>
+
+<h3>Selecione um turno para troca</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Data de início do Turno
+            </th>
+            <th>
+                Data de fim do Turno
+            </th>
+            <th>
+                Turno
+            </th>
+            <th>
+                Médico
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.HorariosMedicos)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DataInicioTurno)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DataFimTurno)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Turno.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Medico.Nome)
+                </td>
+                <td>
+                    <a asp-action="SolicitarPedidoTrocaTurnoMedico" asp-route-idHorario1="@ViewBag.HorarioATrocar" asp-route-idHorario2="@item.HorarioMedicoId"><input type="hidden" /><input type="button" value="Trocar" class="btn btn-info" /></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div page-model="@Model.Pagination"
+     page-action="Index"
+     page-classes-enabled="true"
+     page-class="btn"
+     page-class-normal="btn-default"
+     page-class-selected="btn-primary"
+     class="btn-group pull-right">
+</div>

@@ -1,0 +1,60 @@
+﻿@model EscalonamentoHospitalar.Models.PedidoTrocaTurnosMedico
+
+@{
+    ViewData["Title"] = "Detalhes Pedido Troca Turno Médico";
+}
+
+<h2>Detalhes</h2>
+
+<div>
+    <h4>Pedido de troca de turno</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Data do pedido:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DataPedido)
+        </dd>
+        <dt>
+            Médico requerente:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Medico.Nome)
+        </dd>
+        <dt>
+            Data do Horário a trocar:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.HorarioATrocarMedico.HorarioMedico.DataInicioTurno)
+        </dd>
+        <dt>
+            Data do Horário para troca:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.HorarioParaTrocaMedico.HorarioMedico.DataInicioTurno)
+        </dd>
+        <dt>
+            Estado:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EstadoPedidoTroca.Nome)
+        </dd>
+    </dl>
+</div>
+<div>
+    @if (Model.EstadoPedidoTroca.Nome == "Pendente")
+    {
+        <a asp-action="Edit" asp-route-id="@Model.PedidoTrocaTurnosMedicoId"><input type="button" value="Validar" class="btn btn-success" /></a>
+    }
+    else if (Model.EstadoPedidoTroca.Nome == "Validado")
+    {
+        <a asp-action="Edit" asp-route-id="@Model.PedidoTrocaTurnosMedicoId"><input type="button" value="Aprovar" class="btn btn-success" /></a>
+    }
+    else
+    {
+
+    }
+    <a asp-action="Index"><input type="button" value="Voltar à lista" class="btn btn-default" /></a>
+</div>
+

@@ -1,0 +1,47 @@
+﻿@model PedidoTrocaTurnosMedicoViewModel
+
+@{
+    ViewData["Title"] = "Solicitar Pedido Troca de Turnos - Médicos";
+}
+
+<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.5.0/css/all.css' integrity='sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU' crossorigin='anonymous'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<h2>Sumário - Pedido de Troca de Turno - Médicos</h2>
+
+<p></p>
+<div class="col-md-4">
+    <div class="panel panel-danger">
+        <div class="panel-heading"><b>Horário a Trocar</b></div>
+        <div class="panel-body">
+            <i style='font-size:24px' class='far'>&#xf073;</i> Data de início do turno
+            <b>@Html.DisplayFor(model => model.horarioMedicoATrocar.DataInicioTurno)</b><br /><br />
+            <i style='font-size:24px' class='fas'>&#xf0f0;</i> Médico:
+            <b>@Html.DisplayFor(model => model.horarioMedicoATrocar.Medico.Nome)</b>
+        </div>
+    </div>
+
+    <p></p>
+    <i class="fa fa-long-arrow-up" style="font-size:48px;color:black"></i>
+    <i class="fa fa-long-arrow-down" style="font-size:48px;color:black"></i>
+    <p></p>
+
+    <div class="panel panel-success">
+        <div class="panel-heading"><b>Horário para Troca</b></div>
+        <div class="panel-body">
+            <i style='font-size:24px' class='far'>&#xf073;</i> Data de início do turno:
+            <b>@Html.DisplayFor(model => model.horarioMedicoParaTroca.DataInicioTurno)</b><br /><br />
+            <i style='font-size:24px' class='fas'>&#xf0f0;</i> Médico:
+            <b>@Html.DisplayFor(model => model.horarioMedicoParaTroca.Medico.Nome)</b>
+        </div>
+    </div>
+
+    <p></p>
+
+    <form asp-action="SolicitarPedidoTrocaTurnoMedico">
+        <input type="hidden" asp-for="horarioMedicoATrocar.HorarioMedicoId" name="idHor1" />
+        <input type="hidden" asp-for="horarioMedicoParaTroca.HorarioMedicoId" name="idHor2" />
+        <input type="submit" value="Solicitar Pedido" class="btn btn-success" />
+        <a asp-action="Index"><input type="button" value="Cancelar" class="btn btn-default" /></a>
+    </form>
+</div>

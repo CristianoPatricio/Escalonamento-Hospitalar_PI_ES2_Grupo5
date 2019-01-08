@@ -1,0 +1,51 @@
+﻿@model EscalonamentoHospitalar.Models.PedidoTrocaTurnosMedico
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>PedidoTrocaTurnosMedico</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DataPedido)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DataPedido)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Medico)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Medico.CC)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.HorarioATrocarMedico)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.HorarioATrocarMedico.HorarioATrocarMedicoId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.HorarioParaTrocaMedico)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.HorarioParaTrocaMedico.HorarioParaTrocaMedicoId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.EstadoPedidoTroca)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EstadoPedidoTroca.EstadoPedidoTrocaId)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="PedidoTrocaTurnosMedicoId" />
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>
