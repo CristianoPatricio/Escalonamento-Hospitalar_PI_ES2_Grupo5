@@ -9,20 +9,36 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using EscalonamentoHospitalar.Models;
+using EscalonamentoHospitalar.Data;
+using EscalonamentoHospitalar.Controllers;
 
 namespace EscalonamentoHospitalar.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
     public class LoginModel : PageModel
     {
+        private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
-             
 
-        public LoginModel(SignInManager<IdentityUser> signInManager, ILogger<LoginModel> logger)
+        private readonly HospitalDbContext _context;
+
+        public LoginModel(UserManager<IdentityUser> userManager, 
+                            RoleManager<IdentityRole> roleManager, 
+                            SignInManager<IdentityUser> signInManager, 
+                            ILogger<LoginModel> logger,
+                            HospitalDbContext context)
         {
+            _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
+            _context = context;
+
+            SeedData.CreateRolesAndUsersAsync(userManager, roleManager).Wait();
+            SeedData.CreateDiretorServicoUsersAsync(userManager, roleManager).Wait();
+            SeedData.CreateMedicoUsersAsync(userManager, roleManager).Wait();
+            SeedData.CreateEnfermeiroUsersAsync(userManager, roleManager).Wait();
         }
 
         [BindProperty]

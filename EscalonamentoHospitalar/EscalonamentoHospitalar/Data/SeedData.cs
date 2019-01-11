@@ -10,14 +10,6 @@ namespace EscalonamentoHospitalar.Data
 {
     public static class SeedData
     {
-        
-        private const string ROLE_ADMINISTRADOR = "Administrador";
-
-        // Criação dos Utilizadores: Diretor de serviço / Médico / Enfermeiro
-        private const string ROLE_DIRETORSERVICO = "DiretorServico";
-        private const string ROLE_MEDICO = "Medico";
-        private const string ROLE_ENFERMEIRO = "Enfermeiro";
-
         public static void Populate(HospitalDbContext db)
         {
                 SeedEspecialidadeEnfermeiros(db);
@@ -39,50 +31,15 @@ namespace EscalonamentoHospitalar.Data
             
         }
 
-        /*  internal static void Populate(IServiceProvider applicationServices)
-          {
-              using (var serviceScope = applicationServices.CreateScope())
-              {
-
-                  var db = serviceScope.ServiceProvider.GetService<HospitalDbContext>();
-
-                  SeedEspecialidadeEnfermeiros(db);
-                  SeedEnfermeiros(db);
-                  SeedDiretorServico(db);                         
-                  SeedEnfermeiroEspecialidade(db);
-                  SeedTurnos(db);
-                  SeedHorarioEnfermeiros(db);
-                  SeedMedicos(db);
-                  SeedPacientes(db);
-                  SeedGrau(db);
-                  SeedPatologia(db);
-                  SeedRegime(db);
-                  SeedEstado(db);
-                  SeedTratamentos(db);
-                  SeedRegras(db);
-                  SeedMedicoEspecialidades(db);
-                  SeedEspecialidadeMedicos(db);
-              }
-          }*/
-
-        private static async void MakeSureRoleExistsAsync(RoleManager<IdentityRole> roleManager, string role)
-        {
-            if (!await roleManager.RoleExistsAsync(role))
-            {
-                await roleManager.CreateAsync(new IdentityRole(role));
-            }
-        }
-
         public static async Task CreateRolesAndUsersAsync(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             const string ADMIN_USER = "A001";
             const string ADMIN_PASSWORD = "1234";
 
-            MakeSureRoleExistsAsync(roleManager, ROLE_ADMINISTRADOR);
-            MakeSureRoleExistsAsync(roleManager, ROLE_DIRETORSERVICO);
-            MakeSureRoleExistsAsync(roleManager, ROLE_MEDICO);
-            MakeSureRoleExistsAsync(roleManager, ROLE_ENFERMEIRO);
-                
+            //if (!await roleManager.RoleExistsAsync("Administrador"))
+            //{
+                await roleManager.CreateAsync(new IdentityRole("Administrador"));
+            //}
 
             IdentityUser admin = await userManager.FindByNameAsync(ADMIN_USER);
             if (admin == null)
@@ -91,18 +48,22 @@ namespace EscalonamentoHospitalar.Data
                 await userManager.CreateAsync(admin, ADMIN_PASSWORD);
             }
 
-            if (!await userManager.IsInRoleAsync(admin, ROLE_ADMINISTRADOR))
+            if (!await userManager.IsInRoleAsync(admin, "Administrador"))
             {
-                await userManager.AddToRoleAsync(admin, ROLE_ADMINISTRADOR);
+                await userManager.AddToRoleAsync(admin, "Administrador");
             }
         }
-
 
         // Criação do utilizador: Diretor de Serviço
         public static async Task CreateDiretorServicoUsersAsync(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             const string DIRETORSERVICO_USER = "D001";
             const string DIRETORSERVICO_PASSWORD = "1234";
+
+            if (!await roleManager.RoleExistsAsync("DiretorServico"))
+            {
+                await roleManager.CreateAsync(new IdentityRole("DiretorServico"));
+            }
 
             IdentityUser diretorServicoUser = await userManager.FindByNameAsync(DIRETORSERVICO_USER);
             if (diretorServicoUser == null)
@@ -111,9 +72,9 @@ namespace EscalonamentoHospitalar.Data
                 await userManager.CreateAsync(diretorServicoUser, DIRETORSERVICO_PASSWORD);
             }
 
-            if (!await userManager.IsInRoleAsync(diretorServicoUser, DIRETORSERVICO_USER))
+            if (!await userManager.IsInRoleAsync(diretorServicoUser, "DiretorServico"))
             {
-                await userManager.AddToRoleAsync(diretorServicoUser, DIRETORSERVICO_USER);
+                await userManager.AddToRoleAsync(diretorServicoUser, "DiretorServico");
             }
 
         }
@@ -124,6 +85,11 @@ namespace EscalonamentoHospitalar.Data
             const string MEDICO_USER = "M001";
             const string MEDICO_PASSWORD = "1234";
 
+            if (!await roleManager.RoleExistsAsync("Medico"))
+            {
+                await roleManager.CreateAsync(new IdentityRole("Medico"));
+            }
+
             IdentityUser medicoUser = await userManager.FindByNameAsync(MEDICO_USER);
             if(medicoUser == null )
             {
@@ -131,17 +97,23 @@ namespace EscalonamentoHospitalar.Data
                 await userManager.CreateAsync(medicoUser, MEDICO_PASSWORD);
             }
 
-            if(!await userManager.IsInRoleAsync(medicoUser, MEDICO_USER))
+            if(!await userManager.IsInRoleAsync(medicoUser, "Medico"))
             {
-                await userManager.AddToRoleAsync(medicoUser, MEDICO_USER);
+                await userManager.AddToRoleAsync(medicoUser, "Medico");
             }
+
         }
-     
+
         // Criação do utilizador enfermeiro
         public static async Task CreateEnfermeiroUsersAsync(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             const string ENFERMEIRO_USER = "E001";
             const string ENFERMEIRO_PASSWORD = "1234";
+
+            if (!await roleManager.RoleExistsAsync("Enfermeiro"))
+            {
+                await roleManager.CreateAsync(new IdentityRole("Enfermeiro"));
+            }
 
             IdentityUser enfermeiroUser = await userManager.FindByNameAsync(ENFERMEIRO_USER);
             if (enfermeiroUser == null)
@@ -150,11 +122,14 @@ namespace EscalonamentoHospitalar.Data
                 await userManager.CreateAsync(enfermeiroUser, ENFERMEIRO_PASSWORD);
             }
 
-            if (!await userManager.IsInRoleAsync(enfermeiroUser, ENFERMEIRO_USER))
+            if (!await userManager.IsInRoleAsync(enfermeiroUser, "Enfermeiro"))
             {
-                await userManager.AddToRoleAsync(enfermeiroUser, ENFERMEIRO_USER);
+                await userManager.AddToRoleAsync(enfermeiroUser, "Enfermeiro");
             }
         }
+
+
+
         private static void SeedEspecialidadeMedicos(HospitalDbContext db)
         {
 

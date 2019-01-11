@@ -87,6 +87,7 @@ namespace EscalonamentoHospitalar
                     // Definições de lockout
                     options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(2);
                     options.Lockout.MaxFailedAccessAttempts = 3;
+                    options.Lockout.AllowedForNewUsers = true;
 
                 }
                 
@@ -106,7 +107,7 @@ namespace EscalonamentoHospitalar
 
             if (env.IsDevelopment())
             {
-                //SeedData.CreateRolesAndUsersAsync(userManager, roleManager).Wait();
+               // SeedData.CreateRolesAndUsersAsync(userManager, roleManager).Wait();
                 SeedData.Populate(db);
 
                 app.UseDeveloperExceptionPage();
