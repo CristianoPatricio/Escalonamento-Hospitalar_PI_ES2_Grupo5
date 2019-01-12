@@ -20,51 +20,30 @@ namespace EscalonamentoHospitalar.Controllers
         }
 
         // GET: Tratamentos
-        public async Task<IActionResult> Index(ListaTratamentosViewModel model = null, int page = 1)
+        public async Task<IActionResult> Index()
         {
-            string nome = null;
-
-            if (model != null && model.CurrentNome != null)
-            {
-                nome = model.CurrentNome;
-                page = 1;
-            }
-
-            var medicos = _context.Medicos
-                .Where(e => nome == null || e.Nome.Contains(nome));
-
-            int numMedicos = await medicos.CountAsync();
-
-            if (page > (numMedicos / PAGE_SIZE) + 1)
-            {
-                page = 1;
-            }
-
-            var listaMedico = await medicos
-                .Include(e => e.EspecialidadeMedico)
-                .OrderBy(e => e.Nome)
-                .Skip(PAGE_SIZE * (page - 1))
-                .Take(PAGE_SIZE)
-                .ToListAsync();
-
-            return View(
-                new ListaMedicosViewModel
-                {
-                    Medicos = listaMedico,
-                    Pagination = new PagingViewModel
-                    {
-                        CurrentPage = page,
-                        PageSize = PAGE_SIZE,
-                        TotalItems = numMedicos
-                    },
-                    CurrentNome = nome
-                }
-            );
+                    
+            return View(await _context.Tratamentos.ToListAsync());
 
         }
 
-       
-        
+
+        // GET: PesquisaPaciente
+        public async Task<IActionResult> PesquisaPaciente()
+        {
+            var pacientes = await _context.Pacientes.ToListAsync();
+            var tratamentos = await _context.Tratamentos.ToListAsync();
+
+            return View(
+                new PacienteTratamentosViewModel
+                {
+                    Pacientes = pacientes,
+                    Tratamentos = tratamentos
+                }
+             );
+
+        }
+
 
         // GET: Tratamentos/Details/5
         public async Task<IActionResult> Details(int? id)

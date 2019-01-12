@@ -9,10 +9,5 @@ namespace EscalonamentoHospitalar.Models
     {
         public IEnumerable<Paciente> Pacientes { get; set; }
         public IEnumerable<Tratamento> Tratamentos { get; set; }
-
-
-        public PagingViewModel Pagination { get; set; }
-
-        public string CurrentNome { get; set; }
     }
 }

@@ -4,9 +4,9 @@
     ViewData["Title"] = "Pesquisa Paciente";
 }
 
-<form asp-action="Index">
+<form asp-action="PesquisaPaciente">
     <p style="float: right">
-        Pesquisar por NumeroUtente: <input style="width: 200px;" asp-for="CurrentNome" placeholder="Insira o numero de utente a pesquisar" />
+        Pesquisar por NumeroUtente: <input style="width: 200px;" placeholder="Insira o numero de utente a pesquisar" />
         <input type="submit" value="Pesquisar" class="btn btn-info" />
     </p>
 </form>
@@ -40,21 +40,4 @@
     </tbody>
 </table>
 
-<div page-model="@Model.Pagination"
-     page-action="Index"
-     page-classes-enabled="true"
-     page-class="btn"
-     page-class-normal="btn-default"
-     page-class-selected="btn-primary"
-     class="btn-group pull-right">
-</div>
 
-
-
-                
-
-                @*
-                    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-                *@
-                @{
-                }
