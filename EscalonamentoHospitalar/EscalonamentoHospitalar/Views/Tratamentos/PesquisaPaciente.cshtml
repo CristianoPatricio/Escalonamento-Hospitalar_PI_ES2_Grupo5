@@ -1,32 +1,60 @@
-﻿@model EscalonamentoHospitalar.Models.Paciente
+﻿@model EscalonamentoHospitalar.Models.PacienteTratamentosViewModel
 
 @{
     ViewData["Title"] = "Pesquisa Paciente";
 }
 
+<form asp-action="Index">
+    <p style="float: right">
+        Pesquisar por NumeroUtente: <input style="width: 200px;" asp-for="CurrentNome" placeholder="Insira o numero de utente a pesquisar" />
+        <input type="submit" value="Pesquisar" class="btn btn-info" />
+    </p>
+</form>
 
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Nome" class="control-label">Nome</label>
-                <input asp-for="Nome" class="form-control" />
-                <span asp-validation-for="Nome" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Numero_Utente" class="control-label">Número de Utente</label>
-                <input asp-for="Numero_Utente" class="form-control" />
-                <span asp-validation-for="Numero_Utente" class="text-danger"></span>
-            </div>
-        </form>
-    </div>
-    
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Nome
+            </th>
+            <th>
+               Numero Utente
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Pacientes)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Numero_Utente)
+                </td>
+               
+                
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div page-model="@Model.Pagination"
+     page-action="Index"
+     page-classes-enabled="true"
+     page-class="btn"
+     page-class-normal="btn-default"
+     page-class-selected="btn-primary"
+     class="btn-group pull-right">
 </div>
 
-@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+
+
+                
+
+                @*
+                    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+                *@
+                @{
+                }
