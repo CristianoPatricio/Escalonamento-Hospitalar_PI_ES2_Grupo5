@@ -11,6 +11,7 @@ namespace EscalonamentoHospitalar.Controllers
 {
     public class PedidoTrocaTurnosEnfermeirosController : Controller
     {
+        private const int PAGE_SIZE = 10;
         private readonly HospitalDbContext _context;
 
         public PedidoTrocaTurnosEnfermeirosController(HospitalDbContext context)
@@ -19,14 +20,123 @@ namespace EscalonamentoHospitalar.Controllers
         }
 
         // GET: PedidoTrocaTurnosEnfermeiros
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(ListaPedidoTrocaTurnosEnfermeiroViewModel model = null, int page = 1)
         {
-            var hospitalDbContext = _context.PedidoTrocaTurnosEnfermeiros
-                .Include(p => p.Enfermeiro)
-                .Include(p => p.EstadoPedidoTroca)
-                .Include(p => p.HorarioATrocarEnfermeiro.HorarioEnfermeiro)
-                .Include(p => p.HorarioParaTrocaEnfermeiro.HorarioEnfermeiro);
-            return View(await hospitalDbContext.ToListAsync());
+            string nome = null;
+            DateTime? data = null;
+
+            if (model != null && model.DataInicio != null || model.CurrentNome != null)
+            {
+                nome = model.CurrentNome;
+                data = model.DataInicio;
+                page = 1;
+            }
+
+            IQueryable<PedidoTrocaTurnosEnfermeiro> pedidoTrocaTurnosEnfermeiro;
+            int numHorario;
+            IEnumerable<PedidoTrocaTurnosEnfermeiro> listaPedidosTrocaTurnoEnfermeiros;
+
+            if (data.HasValue && string.IsNullOrEmpty(nome)) //Pesquisa por data
+            {
+                int ano = data.Value.Year;
+                int mes = data.Value.Month;
+                int dia = data.Value.Day;
+
+                pedidoTrocaTurnosEnfermeiro = _context.PedidoTrocaTurnosEnfermeiros
+                   .Where(h => h.DataPedido.Year.Equals(ano) && h.DataPedido.Month.Equals(mes) && h.DataPedido.Day.Equals(dia));
+
+                numHorario = await pedidoTrocaTurnosEnfermeiro.CountAsync();
+
+                listaPedidosTrocaTurnoEnfermeiros = await pedidoTrocaTurnosEnfermeiro
+                    .Include(h => h.Enfermeiro)
+                    .Include(h => h.EstadoPedidoTroca)
+                    .Include(h => h.HorarioATrocarEnfermeiro)
+                    .Include(h => h.HorarioParaTrocaEnfermeiro)
+                    .OrderByDescending(h => h.DataPedido)
+                    .Skip(PAGE_SIZE * (page - 1))
+                    .Take(PAGE_SIZE)
+                    .ToListAsync();
+            }
+            else if (!string.IsNullOrEmpty(nome) && !data.HasValue) //Pesquisa por Nome
+            {
+                pedidoTrocaTurnosEnfermeiro = _context.PedidoTrocaTurnosEnfermeiros
+                    .Where(h => h.Enfermeiro.Nome.Contains(nome.Trim()));
+
+                numHorario = await pedidoTrocaTurnosEnfermeiro.CountAsync();
+
+                listaPedidosTrocaTurnoEnfermeiros = await pedidoTrocaTurnosEnfermeiro
+                    .Include(h => h.Enfermeiro)
+                    .Include(h => h.EstadoPedidoTroca)
+                    .Include(h => h.HorarioATrocarEnfermeiro)
+                    .Include(h => h.HorarioParaTrocaEnfermeiro)
+                    .OrderByDescending(h => h.DataPedido)
+                    .Skip(PAGE_SIZE * (page - 1))
+                    .Take(PAGE_SIZE)
+                    .ToListAsync();
+            }
+            else if (!string.IsNullOrEmpty(nome) && data.HasValue) //Pesquisa por nome e data
+            {
+                int ano = data.Value.Year;
+                int mes = data.Value.Month;
+                int dia = data.Value.Day;
+
+                pedidoTrocaTurnosEnfermeiro = _context.PedidoTrocaTurnosEnfermeiros
+                    .Where(h => h.Enfermeiro.Nome.Contains(nome.Trim()) && h.DataPedido.Year.Equals(ano) && h.DataPedido.Month.Equals(mes) && h.DataPedido.Day.Equals(dia));
+
+                numHorario = await pedidoTrocaTurnosEnfermeiro.CountAsync();
+
+                listaPedidosTrocaTurnoEnfermeiros = await pedidoTrocaTurnosEnfermeiro
+                  .Include(h => h.Enfermeiro)
+                  .Include(h => h.EstadoPedidoTroca)
+                  .Include(h => h.HorarioATrocarEnfermeiro)
+                  .Include(h => h.HorarioParaTrocaEnfermeiro)
+                  .OrderByDescending(h => h.DataPedido)
+                  .Skip(PAGE_SIZE * (page - 1))
+                  .Take(PAGE_SIZE)
+                  .ToListAsync();
+            }
+            else
+            {
+                pedidoTrocaTurnosEnfermeiro = _context.PedidoTrocaTurnosEnfermeiros;
+
+                numHorario = await pedidoTrocaTurnosEnfermeiro.CountAsync();
+
+                listaPedidosTrocaTurnoEnfermeiros = await pedidoTrocaTurnosEnfermeiro
+                  .Include(h => h.Enfermeiro)
+                    .Include(h => h.EstadoPedidoTroca)
+                    .Include(h => h.HorarioATrocarEnfermeiro)
+                    .Include(h => h.HorarioParaTrocaEnfermeiro)
+                    .OrderByDescending(h => h.DataPedido)
+                  .Skip(PAGE_SIZE * (page - 1))
+                  .Take(PAGE_SIZE)
+                  .ToListAsync();
+            }
+
+            if (page > (numHorario / PAGE_SIZE) + 1)
+            {
+                page = 1;
+            }
+
+            if (listaPedidosTrocaTurnoEnfermeiros.Count() == 0)
+            {
+                TempData["NoItemsFound"] = "Não foram encontrados resultados para a sua pesquisa";
+            }
+
+
+            return View(
+                new ListaPedidoTrocaTurnosEnfermeiroViewModel
+                {
+                    PedidoTrocaTurnosEnfermeiros = listaPedidosTrocaTurnoEnfermeiros,
+                    Pagination = new PagingViewModel
+                    {
+                        CurrentPage = page,
+                        PageSize = PAGE_SIZE,
+                        TotalItems = numHorario
+                    },
+                    CurrentNome = nome,
+                    DataInicio = data
+                }
+            );           
         }
 
         // GET: PedidoTrocaTurnosEnfermeiros/Details/5

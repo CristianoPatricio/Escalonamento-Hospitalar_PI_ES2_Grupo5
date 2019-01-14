@@ -1,4 +1,4 @@
-﻿@model IEnumerable<EscalonamentoHospitalar.Models.PedidoTrocaTurnosEnfermeiro>
+﻿@model ListaPedidoTrocaTurnosEnfermeiroViewModel
 
 @{
     ViewData["Title"] = "Lista de Pedidos";
@@ -33,9 +33,15 @@
         <strong>Sucesso!</strong> O pedido de troca de turno foi arquivado!
     </div>
 }
-<p>
-    @*<a asp-action="Create">Create New</a>*@
-</p>
+
+<form asp-action="Index">
+    <p>
+        Pesquisar por Enfermeiro Requerente: <input style="width: 200px;" asp-for="CurrentNome" placeholder="Insira o nome a pesquisar" />
+        Pesquisar por Data do Pedido: <input style="width: 200px;" asp-for="DataInicio" />
+        <button type="submit" value="Pesquisar" class="btn btn-info"><span class="glyphicon glyphicon-search"></span> Pesquisar</button>
+    </p>
+</form>
+
 <table class="table">
     <thead class="thead-dark">
         <tr>
@@ -45,22 +51,10 @@
             <th>
                 <i style='font-size:24px' class='fas'>&#xf0f0;</i> Enfermeiro Requerente
             </th>
-            @*
-                <th>
-                    Data do Horário a trocar
-                </th>
-                <th>
-                    Data do Horário para troca
-                </th>
-                <th>
-                    Estado
-                </th>
-                <th></th>
-            *@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var item in Model.PedidoTrocaTurnosEnfermeiros)
         {
             <tr>
                 <td>
@@ -69,20 +63,7 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Enfermeiro.Nome)
                 </td>
-                @*
-                    <td>
-                        @Html.DisplayFor(modelItem => item.HorarioATrocarEnfermeiro.HorarioEnfermeiro.DataInicioTurno)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.HorarioParaTrocaEnfermeiro.HorarioEnfermeiro.DataInicioTurno)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.EstadoPedidoTroca.Nome)
-                    </td>
-                *@
-                <td>
-                    @*<a asp-action="Edit" asp-route-id="@item.PedidoTrocaTurnosEnfermeiroId">Edit</a> |*@
-
+                <td>                 
                     <a asp-action="Details" asp-route-id="@item.PedidoTrocaTurnosEnfermeiroId" class="btn btn-info">
                         <span class="fas fa-info" style="color:white;"></span> Detalhes
                     </a>
@@ -118,3 +99,43 @@
         }
     </tbody>
 </table>
+
+@if (TempData["NoItemsFound"] != null)
+{
+    <script>
+        //Show #myModal when there aren't records founded of search by date or name
+        $(document).ready(function () {
+            $("#myModal").modal();
+        });
+    </script>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title" style="color:dodgerblue;"><strong>Ops!</strong></h4>
+                </div>
+                <div class="modal-body">
+                    <p> Não foram encontrados resultados para a sua pesquisa :(</p>
+                </div>
+                <div class="modal-footer">
+                    <a asp-action="Index"><input type="hidden" /><input type="button" class="btn btn-default" value="Ok" /></a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+}
+
+<div page-model="@Model.Pagination"
+     page-action="Index"
+     page-classes-enabled="true"
+     page-class="btn"
+     page-class-normal="btn-default"
+     page-class-selected="btn-primary"
+     class="btn-group pull-right">
+</div>

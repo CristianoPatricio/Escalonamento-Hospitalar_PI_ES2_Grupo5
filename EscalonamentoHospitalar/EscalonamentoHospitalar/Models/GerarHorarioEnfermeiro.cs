@@ -8,13 +8,13 @@ namespace EscalonamentoHospitalar.Models
 {
     public class GerarHorarioEnfermeiro
     {
-        [Required(ErrorMessage = "Por favor, introduza o número de pessoas para o turno 1")]
+        [Required(ErrorMessage = "Por favor, introduza o número de pessoas para o turno da manhã")]
         public int NumeroPessoasTurno1 { get; set; }
 
-        [Required(ErrorMessage = "Por favor, introduza o número de pessoas para o turno 2")]
+        [Required(ErrorMessage = "Por favor, introduza o número de pessoas para o turno da tarde")]
         public int NumeroPessoasTurno2 { get; set; }
 
-        [Required(ErrorMessage = "Por favor, introduza o número de pessoas para o turno 3")]
+        [Required(ErrorMessage = "Por favor, introduza o número de pessoas para o turno da noite")]
         public int NumeroPessoasTurno3 { get; set; }
 
         [Required(ErrorMessage = "Por favor, introduza a data de ínicio da semana")]

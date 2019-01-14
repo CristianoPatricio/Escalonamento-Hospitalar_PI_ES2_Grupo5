@@ -11,6 +11,7 @@ namespace EscalonamentoHospitalar.Controllers
 {
     public class PedidoTrocaTurnosMedicosController : Controller
     {
+        private const int PAGE_SIZE = 10;
         private readonly HospitalDbContext _context;
 
         public PedidoTrocaTurnosMedicosController(HospitalDbContext context)
@@ -19,10 +20,124 @@ namespace EscalonamentoHospitalar.Controllers
         }
 
         // GET: PedidoTrocaTurnosMedicos
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(ListaPedidoTrocaTurnoMedicoViewModel model = null, int page = 1)
         {
-            var hospitalDbContext = _context.PedidoTrocaTurnosMedico.Include(p => p.EstadoPedidoTroca).Include(p => p.HorarioATrocarMedico).Include(p => p.HorarioParaTrocaMedico).Include(p => p.Medico);
-            return View(await hospitalDbContext.ToListAsync());
+            string nome = null;
+            DateTime? data = null;
+
+            if (model != null && model.DataInicio != null || model.CurrentNome != null)
+            {
+                nome = model.CurrentNome;
+                data = model.DataInicio;
+                page = 1;
+            }
+
+            IQueryable<PedidoTrocaTurnosMedico> pedidoTrocaTurnosMedico;
+            int numHorario;
+            IEnumerable<PedidoTrocaTurnosMedico> listaPedidosTrocaTurnoMedicos;
+
+            if (data.HasValue && string.IsNullOrEmpty(nome)) //Pesquisa por data
+            {
+                int ano = data.Value.Year;
+                int mes = data.Value.Month;
+                int dia = data.Value.Day;
+
+                pedidoTrocaTurnosMedico = _context.PedidoTrocaTurnosMedico
+                   .Where(h => h.DataPedido.Year.Equals(ano) && h.DataPedido.Month.Equals(mes) && h.DataPedido.Day.Equals(dia));
+
+                numHorario = await pedidoTrocaTurnosMedico.CountAsync();
+
+                listaPedidosTrocaTurnoMedicos = await pedidoTrocaTurnosMedico
+                    .Include(h => h.Medico)
+                    .Include(h => h.EstadoPedidoTroca)
+                    .Include(h => h.HorarioATrocarMedico)
+                    .Include(h => h.HorarioParaTrocaMedico)
+                    .OrderByDescending(h => h.DataPedido)
+                    .Skip(PAGE_SIZE * (page - 1))
+                    .Take(PAGE_SIZE)
+                    .ToListAsync();
+            }
+            else if (!string.IsNullOrEmpty(nome) && !data.HasValue) //Pesquisa por Nome
+            {
+                pedidoTrocaTurnosMedico = _context.PedidoTrocaTurnosMedico
+                    .Where(h => h.Medico.Nome.Contains(nome.Trim()));
+
+                numHorario = await pedidoTrocaTurnosMedico.CountAsync();
+
+                listaPedidosTrocaTurnoMedicos = await pedidoTrocaTurnosMedico
+                    .Include(h => h.Medico)
+                    .Include(h => h.EstadoPedidoTroca)
+                    .Include(h => h.HorarioATrocarMedico)
+                    .Include(h => h.HorarioParaTrocaMedico)
+                    .OrderByDescending(h => h.DataPedido)
+                    .Skip(PAGE_SIZE * (page - 1))
+                    .Take(PAGE_SIZE)
+                    .ToListAsync();
+            }
+            else if (!string.IsNullOrEmpty(nome) && data.HasValue) //Pesquisa por nome e data
+            {
+                int ano = data.Value.Year;
+                int mes = data.Value.Month;
+                int dia = data.Value.Day;
+
+                pedidoTrocaTurnosMedico = _context.PedidoTrocaTurnosMedico
+                    .Where(h => h.Medico.Nome.Contains(nome.Trim()) && h.DataPedido.Year.Equals(ano) && h.DataPedido.Month.Equals(mes) && h.DataPedido.Day.Equals(dia));
+
+                numHorario = await pedidoTrocaTurnosMedico.CountAsync();
+
+                listaPedidosTrocaTurnoMedicos = await pedidoTrocaTurnosMedico
+                  .Include(h => h.Medico)
+                  .Include(h => h.EstadoPedidoTroca)
+                  .Include(h => h.HorarioATrocarMedico)
+                  .Include(h => h.HorarioParaTrocaMedico)
+                  .OrderByDescending(h => h.DataPedido)
+                  .Skip(PAGE_SIZE * (page - 1))
+                  .Take(PAGE_SIZE)
+                  .ToListAsync();
+            }
+            else
+            {
+                pedidoTrocaTurnosMedico = _context.PedidoTrocaTurnosMedico;
+
+                numHorario = await pedidoTrocaTurnosMedico.CountAsync();
+
+                listaPedidosTrocaTurnoMedicos = await pedidoTrocaTurnosMedico
+                  .Include(h => h.Medico)
+                    .Include(h => h.EstadoPedidoTroca)
+                    .Include(h => h.HorarioATrocarMedico)
+                    .Include(h => h.HorarioParaTrocaMedico)
+                    .OrderByDescending(h => h.DataPedido)
+                  .Skip(PAGE_SIZE * (page - 1))
+                  .Take(PAGE_SIZE)
+                  .ToListAsync();
+            }
+
+            if (page > (numHorario / PAGE_SIZE) + 1)
+            {
+                page = 1;
+            }
+
+            if (listaPedidosTrocaTurnoMedicos.Count() == 0)
+            {
+                TempData["NoItemsFound"] = "Não foram encontrados resultados para a sua pesquisa";
+            }
+
+
+            return View(
+                new ListaPedidoTrocaTurnoMedicoViewModel
+                {
+                    PedidoTrocaTurnosMedicos = listaPedidosTrocaTurnoMedicos,
+                    Pagination = new PagingViewModel
+                    {
+                        CurrentPage = page,
+                        PageSize = PAGE_SIZE,
+                        TotalItems = numHorario
+                    },
+                    CurrentNome = nome,
+                    DataInicio = data
+                }
+            );
+
         }
 
         // GET: PedidoTrocaTurnosMedicos/Details/5
