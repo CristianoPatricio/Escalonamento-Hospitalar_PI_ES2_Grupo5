@@ -87,7 +87,7 @@ namespace EscalonamentoHospitalar.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("TratamentoId,PatologiaId,PacienteId,GrauId,DataInicio,DataFim,DuracaoCiclo,RegimeId,MedicoId")] Tratamento tratamento)
+        public async Task<IActionResult> Create([Bind("TratamentoId,PatologiaId,PacienteId,GrauId,DataInicio,DataFim,DuracaoCiclo,RegimeId,MedicoId")] Tratamento tratamento, int id1)
         {
             /*********Validações***********/
 
@@ -96,7 +96,7 @@ namespace EscalonamentoHospitalar.Controllers
             DateTime fimTratamento = tratamento.DataFim;
             int tratamentoId = tratamento.TratamentoId;
             int patologiaId = tratamento.PatologiaId;
-            int pacienteId = tratamento.PacienteId;
+            int pacienteId = id1;
             int grauId = tratamento.GrauId;
             DateTime DataInicio = tratamento.DataInicio;
             DateTime DataFim = tratamento.DataFim;
@@ -122,7 +122,7 @@ namespace EscalonamentoHospitalar.Controllers
             {
                 _context.Add(
                     
-                    new Tratamento {TratamentoId = tratamentoId,PatologiaId = patologiaId, PacienteId = pacienteId,GrauId = grauId,DataInicio = DataInicio, DataFim = DataFim ,RegimeId = RegimeId,EstadoId = estadoTratamento.EstadoId, MedicoId = MedicoId  }
+                    new Tratamento {TratamentoId = tratamentoId,PatologiaId = patologiaId, PacienteId = id1,GrauId = grauId,DataInicio = DataInicio, DataFim = DataFim ,RegimeId = RegimeId,EstadoId = estadoTratamento.EstadoId, MedicoId = MedicoId  }
                     
                     );
                 await _context.SaveChangesAsync();
@@ -131,7 +131,7 @@ namespace EscalonamentoHospitalar.Controllers
             }
             ViewData["GrauId"] = new SelectList(_context.Grau, "GrauId", "TipoGrau", tratamento.GrauId);
             ViewData["MedicoId"] = new SelectList(_context.Medicos, "MedicoId", "Nome", tratamento.MedicoId);
-            ViewData["PacienteId"] = new SelectList(_context.Pacientes, "PacienteId", "Nome", tratamento.PacienteId);
+            ViewBag.Paciente = id1;
             ViewData["PatologiaId"] = new SelectList(_context.Patologia, "PatologiaId", "Nome", tratamento.PatologiaId);
             return View(tratamento);
         }
