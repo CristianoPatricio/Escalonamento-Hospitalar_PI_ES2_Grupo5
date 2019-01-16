@@ -5,6 +5,9 @@
     ViewData["Title"] = "Index";
 }
 
+<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.5.0/css/all.css' integrity='sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU' crossorigin='anonymous'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 <h2>Horário dos Enfermeiros</h2>
 
 @*
@@ -56,16 +59,16 @@
     <thead>
         <tr>
             <th>
-                Data de início do Turno
+                <i class="far fa-clock"></i> Data de início do Turno
             </th>
             <th>
-                Data de fim do Turno
+                <i class="far fa-clock"></i> Data de fim do Turno
             </th>
             <th>
-                Turno
+                <i class="glyphicon glyphicon-calendar"></i> Turno
             </th>
             <th>
-                Enfermeiro
+                <i class='fas'>&#xf0f0;</i> Enfermeiro
             </th>
             <th></th>
         </tr>
@@ -87,7 +90,12 @@
                     @Html.DisplayFor(modelItem => item.Enfermeiro.Nome)
                 </td>
                 <td>
-                    <a asp-action="PedidoTrocaTurnoEnfermeiro" asp-route-idHorario1="@item.HorarioEnfermeiroId"><input type="button" value="Trocar" class="btn btn-info" /></a>
+                    @if (!(item.DataInicioTurno < DateTime.Now))
+                    {
+                        <a asp-action="PedidoTrocaTurnoEnfermeiro" asp-route-idHorario1="@item.HorarioEnfermeiroId" class="btn btn-info">
+                            <span class="glyphicon glyphicon-refresh" style="color:white;"></span> Trocar
+                        </a>
+                    }
                 </td>
             </tr>
         }

@@ -22,6 +22,7 @@
     </div>
 }
 
+
 @if (TempData["successEdit"] != null)
 {
     <!--Mensagem de sucesso quando edita enfermeiro-->
@@ -31,6 +32,9 @@
 }
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.5.0/css/all.css' integrity='sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU' crossorigin='anonymous'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <script>
     //Passados 5 segundos a mensagem desaparece
@@ -101,13 +105,13 @@
     <thead>
         <tr>
             <th>
-                Número Mecanográfico
+                <i class="fa fa-id-card"></i> Número Mecanográfico
             </th>
             <th>
-                Nome
+                <i class="glyphicon glyphicon-user"></i> Nome
             </th>
             <th>
-                Especialidade
+                <i class="fa fa-stethoscope"></i> Especialidade
             </th>
             <th></th>
         </tr>
@@ -126,9 +130,15 @@
                     @Html.DisplayFor(modelItem => item.EspecialidadeEnfermeiro.Especialidade)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.EnfermeiroId"><input type="button" value="Alterar" class="btn btn-warning" /></a>
-                    <a asp-action="Details" asp-route-id="@item.EnfermeiroId"><input type="button" value="Detalhes" class="btn btn-info" /></a>
-                    <a asp-action="Delete" asp-route-id="@item.EnfermeiroId"><input type="button" value="Eliminar" class="btn btn-danger" /></a>
+                    <a asp-action="Edit" asp-route-id="@item.EnfermeiroId" class="btn btn-warning">
+                        <span class="glyphicon glyphicon-edit"></span> Alterar
+                    </a>
+                    <a asp-action="Details" asp-route-id="@item.EnfermeiroId" class="btn btn-info">
+                        <span class="fas fa-info" style="color:white;"></span> Detalhes
+                    </a>
+                    <a asp-action="Delete" asp-route-id="@item.EnfermeiroId" class="btn btn-danger">
+                        <span class="glyphicon glyphicon-trash"></span> Eliminar
+                    </a>
                 </td>
             </tr>
         }
@@ -178,11 +188,13 @@
 <br />
 <hr />
 <p>
-    <a asp-action="Create"><input type="button" value="Inserir Novo Enfermeiro" class="btn btn-primary" /></a>
+    <a asp-action="Create" class="btn btn-primary">
+        <span class="fas fa-file" style="color:white;"></span> Inserir Novo Enfermeiro
+    </a>
 </p>
 <hr />
 <div>
-    <a href='@Url.Action("GestaoHospitalar", "DiretorServico")'>
-        <input type="button" class="btn btn-default" value="Voltar à página inicial" />
+    <a href='@Url.Action("GestaoHospitalar", "DiretorServico")' class="btn btn-default">
+        <span class="glyphicon glyphicon-home"></span> Voltar à página inicial
     </a>
 </div>

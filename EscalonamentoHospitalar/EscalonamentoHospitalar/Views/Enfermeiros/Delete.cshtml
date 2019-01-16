@@ -4,6 +4,25 @@
     ViewData["Title"] = "Eliminar";
 }
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.5.0/css/all.css' integrity='sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU' crossorigin='anonymous'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<script>
+    //Passados 5 segundos a mensagem desaparece
+    $(document).ready(function () {
+        $("#suc_form").hide(10000);
+    });
+</script>
+
+@if (TempData["enfermeiroHasSchedule"] != null)
+{
+    <!--Mensagem de erro quando um enfermeiro já tem um horário-->
+    <div id="suc_form" class="alert alert-danger">
+        <strong>Erro!</strong> O enfermeiro ainda tem horários atribuídos!
+    </div>
+}
+
 <head>
     <!--icon-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -114,86 +133,90 @@
     </style>
 </head>
 
-<h2>Está a eliminar o/a Enfermeiro/a <b>@Html.DisplayFor(model => model.Nome)</b></h2>
+<body>
+    <h2>Está a eliminar o/a Enfermeiro/a <b>@Html.DisplayFor(model => model.Nome)</b></h2>
 
-<h3>Tem a certeza de que o pretende eliminar?</h3>
-<div>
-    <h4>Enfermeiro</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            Número Mecanográfico
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.NumeroMecanografico)
-        </dd>
-        <dt>
-            Nome
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Nome)
-        </dd>
-        <dt>
-            Especialidade
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.EspecialidadeEnfermeiro.Especialidade)
-        </dd>
-        <dt>
-            Contacto
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Contacto)
-        </dd>
-        <dt>
-            Email
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-        <dt>
-            Data de Nascimento
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Data_Nascimento)
-        </dd>
-        <dt>
-            Nº Cartão Cidadão
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.CC)
-        </dd>
-        <dt>
-            Filhos
-        </dt>
-        @*Se tiver FILHOS escrever 'SIM' Senão escrever 'NÃO'*@
-        @if (Model.Filhos == true)
-        {
-            <dd>SIM</dd>
-        }
-        else
-        {
-            <dd>NÃO</dd>
-        }
-
-        @if (Model.Filhos == true)
-        {
+    <h3>Tem a certeza de que o pretende eliminar?</h3>
+    <div>
+        <h4>Enfermeiro</h4>
+        <hr />
+        <dl class="dl-horizontal">
             <dt>
-                Data de Nascimento do filho mais novo
+                Número Mecanográfico
             </dt>
             <dd>
-                @Html.DisplayFor(model => model.Data_Nascimento_Filho)
+                @Html.DisplayFor(model => model.NumeroMecanografico)
             </dd>
-        }
-    </dl>
+            <dt>
+                Nome
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Nome)
+            </dd>
+            <dt>
+                Especialidade
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.EspecialidadeEnfermeiro.Especialidade)
+            </dd>
+            <dt>
+                Contacto
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Contacto)
+            </dd>
+            <dt>
+                Email
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Email)
+            </dd>
+            <dt>
+                Data de Nascimento
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Data_Nascimento)
+            </dd>
+            <dt>
+                Nº Cartão Cidadão
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.CC)
+            </dd>
+            <dt>
+                Filhos
+            </dt>
+            @*Se tiver FILHOS escrever 'SIM' Senão escrever 'NÃO'*@
+            @if (Model.Filhos == true)
+            {
+                <dd>SIM</dd>
+            }
+            else
+            {
+                <dd>NÃO</dd>
+            }
 
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="EnfermeiroId" />
-        <a href="#myDeleteModal" class="trigger-btn" data-toggle="modal">
-            <input type="submit" value="Eliminar" class="btn btn-danger" />
-        </a>
-        <a asp-action="Index"><input type="button" value="Voltar à lista" class="btn btn-default" /></a>
-    </form>
+            @if (Model.Filhos == true)
+            {
+                <dt>
+                    Data de Nascimento do filho mais novo
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Data_Nascimento_Filho)
+                </dd>
+            }
+        </dl>
+
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="EnfermeiroId" />
+            <a href="#myDeleteModal" data-toggle="modal" class="btn btn-danger" >
+                <span class="glyphicon glyphicon-trash"></span> Eliminar
+            </a>
+            <a asp-action="Index" class="btn btn-default">
+                <span class="fas fa-undo" style="color:dodgerblue;"></span> Voltar à lista
+            </a>
+        </form>
+    </div>
 
     <!-- Modal HTML Delete | Confirmar a eliminação permanente de um enfermeiro-->
     <div id="myDeleteModal" class="modal fade">
@@ -219,4 +242,4 @@
             </div>
         </div>
     </div>
-</div>
+</body>

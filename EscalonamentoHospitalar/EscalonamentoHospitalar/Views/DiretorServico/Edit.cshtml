@@ -3,6 +3,10 @@
 @{
     ViewData["Title"] = "Alterar";
 }
+<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.5.0/css/all.css' integrity='sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU' crossorigin='anonymous'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
 
 <h2>Alterar</h2>
 
@@ -14,7 +18,10 @@
             <input type="hidden" asp-for="DiretorServicoID" />
             <div class="form-group">
                 <label asp-for="Codigo" class="control-label">Código</label>
-                <input asp-for="Codigo" class="form-control" />
+                <div class="input-group">
+                    <span class="input-group-addon">D</span>
+                    <input asp-for="Codigo" class="form-control" placeholder="p. ex. 12345" />
+                </div>
                 <span asp-validation-for="Codigo" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -38,14 +45,18 @@
                 <span asp-validation-for="CC" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Guardar alterações" class="btn btn-success" />
+                <button class="btn btn-success" type="submit">
+                    <i class="fas fa-save" style="color:white;"></i> Guardar alterações
+                </button>
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index"><input type="button" value="Voltar à lista" class="btn btn-default" /></a>
+    <a asp-action="Index" class="btn btn-default">
+        <span class="fas fa-undo" style="color:dodgerblue;"></span> Voltar à lista
+    </a>
 </div>
 
 @section Scripts {

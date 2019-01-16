@@ -34,6 +34,14 @@
     </div>
 }
 
+@if (TempData["Validated"] != null)
+{
+    <!--Mensagem de sucesso quando é validado um pedido do horário-->
+    <div id="suc_form" class="alert alert-success">
+        <strong>Sucesso!</strong> O pedido de troca de turno foi validado com sucesso!
+    </div>
+}
+
 <form asp-action="Index">
     <p>
         Pesquisar por Enfermeiro Requerente: <input style="width: 200px;" asp-for="CurrentNome" placeholder="Insira o nome a pesquisar" />
@@ -63,7 +71,7 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Enfermeiro.Nome)
                 </td>
-                <td>                 
+                <td>
                     <a asp-action="Details" asp-route-id="@item.PedidoTrocaTurnosEnfermeiroId" class="btn btn-info">
                         <span class="fas fa-info" style="color:white;"></span> Detalhes
                     </a>
@@ -93,6 +101,15 @@
                     else
                     {
 
+                    }
+                </td>
+                <td>
+                    
+                </td>
+                <td>
+                    @if (item.EstadoPedidoTroca.Equals("Pendente"))
+                    {
+                        <a asp-action="Delete" asp-route-id="@item.PedidoTrocaTurnosEnfermeiroId" class="btn btn-danger">Eliminar</a>
                     }
                 </td>
             </tr>

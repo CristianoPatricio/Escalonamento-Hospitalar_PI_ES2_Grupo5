@@ -4,6 +4,11 @@
     ViewData["Title"] = "Lista de Especialidades dos Enfermeiros";
 }
 
+<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.5.0/css/all.css' integrity='sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU' crossorigin='anonymous'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+
 @if (TempData["successInsertEspecialidade"] != null)
 {
     <!--Mensagem de sucesso quandi insere especialidade-->
@@ -38,13 +43,16 @@
 <h2>Lista de Especialidades dos Enfermeiros</h2>
 
 <p>
-    <a asp-action="Create"><input type="button" value="Inserir Nova Especialidade de Enfermeiros" class="btn btn-primary" /></a>
+    <a asp-action="Create" class="btn btn-primary">
+        <span class="fas fa-file" style="color:white;"></span> Inserir Nova Especialidade de Enfermeiros
+    </a>
 </p>
+
 <table class="table">
     <thead>
         <tr>
             <th>
-                Nome
+                <i class="fa fa-stethoscope"></i> Nome
             </th>
             <th></th>
         </tr>
@@ -57,11 +65,15 @@
                     @Html.DisplayFor(modelItem => item.Especialidade)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.EspecialidadeEnfermeiroId"><input type="button" value="Alterar" class="btn btn-warning" /></a>
+                    <a asp-action="Edit" asp-route-id="@item.EspecialidadeEnfermeiroId" class="btn btn-warning"> 
+                        <span class="glyphicon glyphicon-edit"></span> Alterar
+                    </a>
                     <!--<a asp-action="Details" asp-route-id="@item.EspecialidadeEnfermeiroId">Details</a> |-->
-                    <a asp-action="Delete" asp-route-id="@item.EspecialidadeEnfermeiroId"><input type="button" value="Eliminar" class="btn btn-danger" /></a>
+                    <a asp-action="Delete" asp-route-id="@item.EspecialidadeEnfermeiroId" class="btn btn-danger">
+                        <span class="glyphicon glyphicon-trash"></span> Eliminar
+                    </a>
                 </td>
             </tr>
-        }
-    </tbody>
-</table>
+            }
+        </tbody>
+    </table>

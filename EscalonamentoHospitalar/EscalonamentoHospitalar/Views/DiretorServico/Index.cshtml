@@ -29,6 +29,9 @@
 }
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.5.0/css/all.css' integrity='sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU' crossorigin='anonymous'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 <script>
     //Passados 5 segundos a mensagem desaparece
     $(document).ready(function () {
@@ -42,10 +45,10 @@
     <thead>
         <tr>
             <th>
-                Código
+                <i class="fa fa-id-card"></i> Código
             </th>
             <th>
-                Nome
+                <span class="glyphicon glyphicon-user"></span> Nome
             </th>
             <th></th>
         </tr>
@@ -61,9 +64,16 @@
                     @Html.DisplayFor(modelItem => item.Nome)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.DiretorServicoID"><input type="button" value="Alterar" class="btn btn-warning" /></a>
-                    <a asp-action="Details" asp-route-id="@item.DiretorServicoID"><input type="button" value="Detalhes" class="btn btn-info" /></a>
-                    <a asp-action="Delete" asp-route-id="@item.DiretorServicoID"><input type="button" value="Eliminar" class="btn btn-danger" /></a>
+                    <a asp-action="Edit" asp-route-id="@item.DiretorServicoID" class="btn btn-warning">
+                        <span class="glyphicon glyphicon-edit"></span> Alterar
+                    </a>
+                    <a asp-action="Details" asp-route-id="@item.DiretorServicoID" class="btn btn-info">
+                        <span class="fas fa-info" style="color:white;"></span> Detalhes
+                    </a>
+                    <a asp-action="Delete" asp-route-id="@item.DiretorServicoID" class="btn btn-danger">
+                        <span class="glyphicon glyphicon-trash"></span> Eliminar
+                    </a>
+
                 </td>
             </tr>
         }
@@ -73,5 +83,7 @@
 <br />
 <hr />
 <p>
-    <a asp-action="Create"><input type="button" value="Inserir Novo Diretor Serviço" class="btn btn-primary" /></a>
+    <a asp-action="Create" class="btn btn-primary">
+        <span class="fas fa-file" style="color:white;"></span> Inserir Novo Diretor Serviço
+    </a>
 </p>

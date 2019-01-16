@@ -6,6 +6,8 @@
 
 <body onload="showForm()">
 </body> @*onload="showForm()" : Verifica se o campo Data_Nascimento_Filho está a true. Se estiver mostra a div da data*@
+<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.5.0/css/all.css' integrity='sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU' crossorigin='anonymous'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <h2>Alterar o/a Enfermeiro/a <b>@Html.DisplayFor(model => model.Nome)</b></h2>
 
@@ -16,7 +18,10 @@
             <input type="hidden" asp-for="EnfermeiroId" />
             <div class="form-group">
                 <label asp-for="NumeroMecanografico" class="control-label">Número Mecanográfico</label>
-                <input asp-for="NumeroMecanografico" class="form-control" placeholder="p. ex. E12345" />
+                <div class="input-group">
+                    <span class="input-group-addon">E</span>
+                    <input asp-for="NumeroMecanografico" class="form-control" placeholder="p. ex. 12345" />
+                </div>
                 <span asp-validation-for="NumeroMecanografico" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -85,14 +90,18 @@
             </div>
 
             <div class="form-group">
-                <input type="submit" value="Guardar alterações" class="btn btn-success" />
+                <button class="btn btn-success" type="submit">
+                    <i class="fas fa-save" style="color:white;"></i> Guardar alterações
+                </button>
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index"><input type="button" value="Voltar à lista" class="btn btn-default" /></a>
+    <a asp-action="Index" class="btn btn-default">
+        <span class="fas fa-undo" style="color:dodgerblue;"></span> Voltar à lista
+    </a>
 </div>
 
 @section Scripts {

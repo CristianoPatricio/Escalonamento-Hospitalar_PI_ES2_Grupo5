@@ -304,9 +304,16 @@ namespace EscalonamentoHospitalar.Controllers
                 ModelState.AddModelError("NumeroPessoasTurno3", "Não tem médicos suficientes para todos os turnos. Por favor, verifique os campos e tente novamente");
             }
 
+            // Validar se já existem horários gerados para a data selecionada
+            if (HorarioMedicoJaFoiGerado(dataInicio) == true)
+            {
+                //Mensagem de erro caso o diretor de serviço gere um horário para uma data já existente
+                ModelState.AddModelError("DataInicioSemana", "Já existe um horário gerado para a semana de " + dataInicio.Day + " a " + dataInicio.AddDays(4).ToLongDateString());
+            }
+
             if (ModelState.IsValid)
             {
-                if (!DataInicioSemanaIsNotAMonday(dataInicio) || !NumMedicosPorTurnoIsInvalid(numPessoasT1, numPessoasT2))
+                if (!DataInicioSemanaIsNotAMonday(dataInicio) || !NumMedicosPorTurnoIsInvalid(numPessoasT1, numPessoasT2) || !HorarioMedicoJaFoiGerado(dataInicio))
                 {
                     //Função que insere registo na BD
                     GenerateHorarioMedico(_context, numPessoasT1, numPessoasT2, ano, mes, dia);
@@ -756,6 +763,27 @@ namespace EscalonamentoHospitalar.Controllers
                );
 
             db.SaveChanges();
+        }
+
+        /**
+         * @param date
+         * @return true if a schedule with above parameter was already generated
+         */
+        private bool HorarioMedicoJaFoiGerado(DateTime date)
+        {
+
+            bool horarioGerado = false;
+
+            var horario = from h in _context.HorariosMedicos
+                          where h.DataInicioTurno.Day == date.Day && h.DataInicioTurno.Month == date.Month && h.DataInicioTurno.Year == date.Year
+                          select h;
+
+            if (horario.Count() != 0)
+            {
+                horarioGerado = true;
+            }
+
+            return horarioGerado;
         }
 
 

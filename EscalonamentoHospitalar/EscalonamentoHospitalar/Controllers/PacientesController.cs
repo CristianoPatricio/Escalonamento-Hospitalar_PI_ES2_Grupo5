@@ -29,14 +29,14 @@ namespace EscalonamentoHospitalar.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error)); 
             }
 
             var paciente = await _context.Pacientes
                 .FirstOrDefaultAsync(m => m.PacienteId == id);
             if (paciente == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error));
             }
 
             return View(paciente);
@@ -208,6 +208,11 @@ namespace EscalonamentoHospitalar.Controllers
             _context.Pacientes.Remove(paciente);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult Error()
+        {
+            return View();
         }
 
         /**********************Funções auxiliares**************************/

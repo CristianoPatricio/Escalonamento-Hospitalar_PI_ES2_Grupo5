@@ -101,6 +101,7 @@ namespace EscalonamentoHospitalar.Controllers
             {
                 if (!contactoIsInvalid(contacto) || !numMecIsInvalid(numero) || !emailIsInvalid(email) || !ccIsInvalid(nCC) || ValidateNumeroDocumentoCC(nCC))
                 {
+                    diretorServico.Codigo = "D" + diretorServico.Codigo;
                     _context.Add(diretorServico);
                     await _context.SaveChangesAsync();
                     TempData["insertSuccess"] = "Registo inserido com sucesso!";
@@ -119,6 +120,9 @@ namespace EscalonamentoHospitalar.Controllers
             }
 
             var diretorServico = await _context.DiretoresServico.FindAsync(id);
+
+            diretorServico.Codigo = diretorServico.Codigo.Replace("D", "");
+
             if (diretorServico == null)
             {
                 return NotFound();
@@ -187,6 +191,7 @@ namespace EscalonamentoHospitalar.Controllers
                 {
                     if (!contactoIsInvalidEdit(contacto, idDir) || !ccIsInvalidEdit(nCC, idDir) || !emailIsInvalidEdit(email, idDir) || !numMecIsInvalidEdit(numero, idDir) || ValidateNumeroDocumentoCC(nCC))
                     {
+                        diretorServico.Codigo = "D" + diretorServico.Codigo;
                         _context.Update(diretorServico);
                         await _context.SaveChangesAsync();
                         TempData["successEdit"] = "Registo alterado com sucesso";

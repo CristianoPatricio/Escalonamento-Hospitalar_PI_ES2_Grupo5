@@ -236,6 +236,7 @@ namespace EscalonamentoHospitalar.Controllers
                 try
                 {
                     _context.Update(pedidoTrocaTurnosEnfermeiro);
+                    TempData["Validated"] = "O pedido foi validado com sucesso!";
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)

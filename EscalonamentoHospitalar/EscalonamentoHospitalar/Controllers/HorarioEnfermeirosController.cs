@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EscalonamentoHospitalar.Models;
 using System.Dynamic;
+using System.Globalization;
 
 namespace EscalonamentoHospitalar.Controllers
 {
@@ -307,9 +308,16 @@ namespace EscalonamentoHospitalar.Controllers
                 ModelState.AddModelError("NumeroPessoasTurno3", "Não tem enfermeiros suficientes para todos os turnos. Por favor, verifique os campos e tente novamente");
             }
 
+            // Validar se já existem horários gerados para a data selecionada
+            if (HorarioEnfermeiroJaFoiGerado(dataInicio) == true)
+            {
+                //Mensagem de erro caso o diretor de serviço gere um horário para uma data já existente
+                ModelState.AddModelError("DataInicioSemana", "Já existe um horário gerado para a semana de "+dataInicio.Day+" a "+dataInicio.AddDays(4).ToLongDateString());
+            }
+
             if (ModelState.IsValid)
             {
-                if (!DataInicioSemanaIsNotAMonday(dataInicio) || !NumEnfermeirosPorTurnoIsInvalid(numPessoasT1, numPessoasT2, numPessoasT3))
+                if (!DataInicioSemanaIsNotAMonday(dataInicio) || !NumEnfermeirosPorTurnoIsInvalid(numPessoasT1, numPessoasT2, numPessoasT3) || !HorarioEnfermeiroJaFoiGerado(dataInicio))
                 {
                     //Função que insere registo na BD
                     GenerateHorarioEnfermeiro(_context, numPessoasT1, numPessoasT2, numPessoasT3, ano, mes, dia);
@@ -574,10 +582,6 @@ namespace EscalonamentoHospitalar.Controllers
             int enfT2 = 0;
             int enfT3 = 0;
 
-            //int nEnfComFolgaPorDia = enfermeiros.Length - (numPessoasT1 + numPessoasT2 + numPessoasT3);
-
-            //int[] idEnfComFolga = new int[nEnfComFolgaPorDia];
-
             int[] idEnfNoite = null;
 
             //Lista enfermeiros
@@ -597,19 +601,6 @@ namespace EscalonamentoHospitalar.Controllers
             {
                 listaEnfermeirosSemFilhos = new List<int>(enfermeirosSemFilhos);
                 listaEnfermeirosComFilhos = new List<int>(enfermeirosComFilhos);
-
-                /*for (int m = 0; m < nEnfComFolgaPorDia; m++) //para cada nEnf de folga por dia
-                {
-                    //escolhe aleatoriamente um enfermeiro para folga;
-                    idEnfComFolga[m] = listaEnfermeiros[rnd.Next(0, listaEnfermeiros.Count())];
-
-                    //remover enf da lista
-                    listaEnfermeiros.Remove(idEnfComFolga[m]);
-                    //remove enf da lista
-                    listaEnfermeirosComFilhos.Remove(idEnfComFolga[m]);
-                    //remove enf da lista
-                    listaEnfermeirosSemFilhos.Remove(idEnfComFolga[m]);                  
-                }*/
 
                 //remover da lista enfermeiros que fizeram noite
                 if (idEnfNoite != null)
@@ -666,11 +657,6 @@ namespace EscalonamentoHospitalar.Controllers
                             listaEnfermeirosSemFilhos.Add(idEnfNoite[n]);
                         }
                     }
-                    /*for (int u = 0; u < nEnfComFolgaPorDia; u++)
-                    {
-                        listaEnfermeirosSemFilhos.Remove(idEnfComFolga[u]);
-                    }*/
-
                 }         
 
                 if (i != sexta)
@@ -769,7 +755,7 @@ namespace EscalonamentoHospitalar.Controllers
         private int[] EnfermeirosSemFilhosIds()
         {
             var enfermeirosSemFilhos = from e in _context.Enfermeiros
-                                       where e.Filhos == false
+                                       where e.Filhos == false 
                                        select e.EnfermeiroId;
 
             int[] arrIdEnfermeirosSemFilhos = enfermeirosSemFilhos.ToArray();
@@ -909,6 +895,45 @@ namespace EscalonamentoHospitalar.Controllers
 
             return pedidoEfetuado;
         }
+
+        /**
+         * @param date
+         * @return true if a schedule with above parameter was already generated
+         */
+         private bool HorarioEnfermeiroJaFoiGerado(DateTime date)
+        {
+           
+            bool horarioGerado = false;
+
+            var horario = from h in _context.HorariosEnfermeiro
+                          where h.DataInicioTurno.Day == date.Day && h.DataInicioTurno.Month == date.Month && h.DataInicioTurno.Year == date.Year
+                          select h;
+
+            if (horario.Count() != 0)
+            {
+                horarioGerado = true;
+            }
+
+            return horarioGerado;
+        }
+
+        /*
+        private bool TrocaJaEfetuada(int idHorario)
+        {
+            bool JaEfetuada = false;
+
+            var troca = from t in _context.HorarioATrocarEnfermeiros
+                        where t.HorarioEnfermeiroId == idHorario
+                        select t;
+
+            if (troca.Count() != 0)
+            {
+                JaEfetuada = true;
+            }
+
+            return JaEfetuada;
+        }
+        */ 
 
     }
 }

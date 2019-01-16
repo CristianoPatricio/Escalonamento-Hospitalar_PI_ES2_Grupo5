@@ -171,15 +171,24 @@ namespace EscalonamentoHospitalar.Controllers
             if (EspecialidadeContainsEnfermeiros(id))
             {
                 TempData["errorDelete"] = "IMPOSSIVEL ELIMINAR";
-                return RedirectToAction(nameof(Delete));
             }
 
-            if (!EspecialidadeContainsEnfermeiros(id))
+            try
             {
-                _context.EspecialidadesEnfermeiros.Remove(especialidadeEnfermeiro);
-                await _context.SaveChangesAsync();
-                TempData["successDelete"] = "Registo eliminado com sucesso";
-                return RedirectToAction(nameof(Index));
+                if (!EspecialidadeContainsEnfermeiros(id))
+                {
+                    _context.EspecialidadesEnfermeiros.Remove(especialidadeEnfermeiro);
+                    await _context.SaveChangesAsync();
+                    TempData["successDelete"] = "Registo eliminado com sucesso";
+                }
+                else
+                {
+                    return RedirectToAction(nameof(Delete));
+                }
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+
             }
 
             return RedirectToAction(nameof(Index));

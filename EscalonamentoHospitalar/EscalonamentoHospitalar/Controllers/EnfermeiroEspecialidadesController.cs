@@ -48,6 +48,11 @@ namespace EscalonamentoHospitalar.Controllers
                 .Take(PAGE_SIZE)
                 .ToListAsync();
 
+            if (listahistorico.Count() == 0)
+            {
+                TempData["NoItemsFound"] = "Não foram encontrados resultados para a sua pesquisa";
+            }
+
             return View(
                 new HistoricoEspecialidadesEnfermeiroViewModel
                 {

@@ -6,6 +6,10 @@
 <head>
     <!--icon-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.5.0/css/all.css' integrity='sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU' crossorigin='anonymous'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
 
     <style type="text/css">
         body {
@@ -154,9 +158,13 @@
 
         <form asp-action="Delete">
             <input type="hidden" asp-for="DiretorServicoID" />
-            <a href="#myDeleteModal" class="trigger-btn" data-toggle="modal">
-                <input type="submit" value="Eliminar" class="btn btn-danger" /></a> 
-                <a asp-action="Index"><input type="button" value="Voltar à lista" class="btn btn-default" /></a>
+            <a href="#myDeleteModal" class="btn btn-danger" data-toggle="modal">
+                <span class="glyphicon glyphicon-trash"></span> Eliminar
+            </a>
+            <a asp-action="Index" class="btn btn-default">
+                <span class="fas fa-undo" style="color:dodgerblue;"></span> Voltar à lista
+            </a>
+
         </form>
     </div>
 

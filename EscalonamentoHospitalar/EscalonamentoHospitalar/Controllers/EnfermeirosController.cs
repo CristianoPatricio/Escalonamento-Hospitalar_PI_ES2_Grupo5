@@ -239,6 +239,9 @@ namespace EscalonamentoHospitalar.Controllers
             }
 
             var enfermeiro = await _context.Enfermeiros.FindAsync(id);
+
+            enfermeiro.NumeroMecanografico = enfermeiro.NumeroMecanografico.Replace("E","");
+
             if (enfermeiro == null)
             {
                 return NotFound();
@@ -333,6 +336,7 @@ namespace EscalonamentoHospitalar.Controllers
                 {                   
                     if (!contactoIsInvalidEdit(contacto, idEnf) || !ccIsInvalidEdit(nCC, idEnf) || !emailIsInvalidEdit(email, idEnf) || !numMecIsInvalidEdit(numero, idEnf) || !enfDateIsInvalid(enfermeiroBDate) || !sonBDateIsInvalid || ValidateNumeroDocumentoCC(nCC))
                     {
+                        enfermeiro.NumeroMecanografico = "E" + enfermeiro.NumeroMecanografico;
                         _context.Update(enfermeiro);
 
                         //Verifica na tabela EnfermeiroEspecialidade se já existe o registo
@@ -387,11 +391,35 @@ namespace EscalonamentoHospitalar.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var enfermeiro = await _context.Enfermeiros.FindAsync(id);
-            _context.Enfermeiros.Remove(enfermeiro);
-            await _context.SaveChangesAsync();
-            TempData["deleteEnf"] = "Enfermeiro eliminado com sucesso!";
+
+
+            //Validação horario
+            if (enfermeiroHasSchedule(id) == true)
+            {
+                TempData["enfermeiroHasSchedule"] = "O enfermeiro tem horários";
+            }
+
+            try
+            {
+                if (!enfermeiroHasSchedule(id))
+                {
+                    _context.Enfermeiros.Remove(enfermeiro);
+                    await _context.SaveChangesAsync();
+                    TempData["deleteEnf"] = "Enfermeiro eliminado com sucesso!";
+                }
+                else
+                {
+                    return RedirectToAction(nameof(Delete));
+                }
+             
+            }catch (DbUpdateConcurrencyException) { 
+            
+            }
+
             return RedirectToAction(nameof(Index));
+
         }
+
 
         private bool EnfermeiroExists(int id)
         {
@@ -716,6 +744,26 @@ namespace EscalonamentoHospitalar.Controllers
             }
 
             return IsInvalid;
+        }
+
+        /**
+         * @param id enfermeiro
+         * @return true if exists an schedule that contains a nurse
+         */
+         private bool enfermeiroHasSchedule(int id)
+        {
+            bool hasSchedule = false;
+
+            var horarios = from h in _context.HorariosEnfermeiro
+                           where h.EnfermeiroId == id && h.DataInicioTurno.Day >= DateTime.Today.Day && h.DataInicioTurno.Month >= DateTime.Today.Month && h.DataInicioTurno.Year >= DateTime.Today.Year
+                           select h;
+
+            if (horarios.Count() != 0)
+            {
+                hasSchedule = true;
+            }
+
+            return hasSchedule;
         }
 
     }
