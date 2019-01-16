@@ -66,7 +66,7 @@ namespace EscalonamentoHospitalar.Controllers
             );
 
         }
-        [Authorize(Roles = "DiretorServico")]
+        [Authorize(Roles = "Administrador")]
         // GET: Medicos/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -87,6 +87,7 @@ namespace EscalonamentoHospitalar.Controllers
         }
 
         // GET: Medicos/Create
+       // [Authorize(Roles = "Administrador")]
         public IActionResult Create()
         {
             ViewData["EspecialidadeMedicoId"] = new SelectList(_context.Set<EspecialidadeMedico>(), "EspecialidadeMedicoId", "NomeEspecialidade");

@@ -14,6 +14,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using EscalonamentoHospitalar.Models;
 using SeedData = EscalonamentoHospitalar.Data.SeedData;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace EscalonamentoHospitalar
 {
@@ -36,14 +37,17 @@ namespace EscalonamentoHospitalar
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddDbContext<ApplicationDbContext>(options =>
+            
+            
+
+            services.AddDbContext<HospitalUsersDataBase>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
             /*   services.AddDefaultIdentity<IdentityUser>()
                    .AddEntityFrameworkStores<ApplicationDbContext>();*/
 
             services.AddIdentity<IdentityUser, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddEntityFrameworkStores<HospitalUsersDataBase>()
                 .AddDefaultUI()
                 .AddDefaultTokenProviders();
 
@@ -112,11 +116,11 @@ namespace EscalonamentoHospitalar
             RoleManager<IdentityRole> roleManager
             )
         {
-        //   SeedData.CreateRolesAndUsersAsync(userManager, roleManager).Wait();
+        //  UsersSeedData.EnsurePopulatedAsync(userManager, roleManager).Wait();
 
             if (env.IsDevelopment())
             {
-               // SeedData.CreateRolesAndUsersAsync(userManager, roleManager).Wait();
+              //  UsersSeedData.EnsurePopulatedAsync(userManager, roleManager).Wait();
                // SeedData(db);
 
                 app.UseDeveloperExceptionPage();

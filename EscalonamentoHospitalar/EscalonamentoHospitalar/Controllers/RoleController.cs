@@ -10,11 +10,11 @@ namespace EscalonamentoHospitalar.Controllers
 {
     public class RoleController : Controller
     {
-        ApplicationDbContext context;
+        HospitalUsersDataBase context;
 
         public RoleController()
         {
-            context = new ApplicationDbContext();
+            context = new HospitalUsersDataBase();
         }
 
         // Get all roles

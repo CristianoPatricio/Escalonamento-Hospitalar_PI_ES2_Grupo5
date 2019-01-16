@@ -12,8 +12,8 @@ namespace EscalonamentoHospitalar.Data
 
         public static async Task EnsurePopulatedAsync(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
         {
-            const string ADMIN_USER = "A001";
-            const string ADMIN_PASSWORD = "1234";
+            const string ADMIN_USER = "bovelheiro@hotmail.com";
+            const string ADMIN_PASSWORD = "123Qwe.";
 
             const string DIRETORSERVICO_USER = "D001";
             const string DIRETORSERVICO_PASSWORD = "1234";

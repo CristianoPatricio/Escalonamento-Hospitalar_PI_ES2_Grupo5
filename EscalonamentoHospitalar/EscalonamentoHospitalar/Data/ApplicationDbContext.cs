@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using EscalonamentoHospitalar.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace EscalonamentoHospitalar.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class HospitalUsersDataBase : IdentityDbContext
     {
-        public ApplicationDbContext()
+        public HospitalUsersDataBase()
         {
         }
 
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        public HospitalUsersDataBase(DbContextOptions<HospitalUsersDataBase> options)
             : base(options)
         {
         }

@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace EscalonamentoHospitalar.Controllers
 {
-    [Authorize] 
+    
     public class DiretorServicoController : Controller
     {
         private readonly HospitalDbContext _context;

@@ -99,7 +99,7 @@ namespace EscalonamentoHospitalar.Controllers
             {
                 HttpContext.Session.SetString("UserId", account.UserId.ToString());
                 HttpContext.Session.SetString("Codigo", account.Codigo);
-                return RedirectToAction("Welcome");
+                return RedirectToAction("GestaoHospitalar", "DiretorServico");
             }
             else
             {

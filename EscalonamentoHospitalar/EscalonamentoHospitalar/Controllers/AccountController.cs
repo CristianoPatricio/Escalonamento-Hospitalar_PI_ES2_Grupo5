@@ -36,7 +36,7 @@ namespace EscalonamentoHospitalar.Controllers
             _logger = logger;
             _context = context;
 
-            UsersSeedData.EnsurePopulatedAsync(userManager, roleManager).Wait();       
+            UsersSeedData.EnsurePopulatedAsync(userManager, roleManager).Wait();
         }
 
         //[BindProperty]
@@ -131,16 +131,87 @@ namespace EscalonamentoHospitalar.Controllers
 
         private IActionResult RedirectToLocal(string returnUrl)
         {
-           
-                if (Url.IsLocalUrl(returnUrl))
+
+            if (Url.IsLocalUrl(returnUrl))
+            {
+                return Redirect(returnUrl);
+            }
+            else
+            {
+                return RedirectToAction(nameof(HomeController.Index), "Home");
+            }
+
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult Lockout()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult Register(string returnUrl = null)
+        {
+            ViewData["ReturnUrl"] = returnUrl;
+            return View();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Register([Bind("UserId,NumeroMecanografico,Nome,Email,Codigo")] UserAccount userAccount, UserAccount model, string returnUrl = null)
+        {
+            ViewData["ReturnUrl"] = returnUrl;
+            if (ModelState.IsValid)
+            {
+
+                var user = new ApplicationUser { UserName = model.Codigo, Email = model.Email };
+                userAccount = new UserAccount
                 {
-                    return Redirect(returnUrl);
-                }
-                else
+                    NumeroMecanografico = model.NumeroMecanografico,
+                    Nome = model.Nome,
+                    Email = model.Email,
+                    Codigo = model.Codigo
+
+                };
+                var result = await _userManager.CreateAsync(user, model.Password);
+               
+                if (result.Succeeded)
                 {
-                    return RedirectToAction(nameof(HomeController.Index), "Home");
+                    _logger.LogInformation("User created a new account with password.");
+
+                    await _userManager.AddToRoleAsync(user, "Administrador"); 
+                                                                     
+
+                    _context.Add(userAccount);
+                    await _context.SaveChangesAsync();
+
+                    //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    //var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
+                    //await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
+
+                    await _signInManager.SignInAsync(user, isPersistent: false);
+                    _logger.LogInformation("User created a new account with password.");
+                    return RedirectToLocal(returnUrl);
                 }
-            
+
+              //  AddErrors(result);
+                
+            }
+
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            _logger.LogInformation("User logged out.");
+            return RedirectToAction(nameof(HomeController.Index), "Home");
         }
 
         //public async Task<IActionResult> OnPostAsync(string returnUrl = null)

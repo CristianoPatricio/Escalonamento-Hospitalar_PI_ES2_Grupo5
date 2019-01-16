@@ -29,7 +29,7 @@ namespace EscalonamentoHospitalar.Controllers
         }
 
         // GET: Tratamentos/Details/5
-        [Authorize (Roles = "M008")]
+      //  [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
