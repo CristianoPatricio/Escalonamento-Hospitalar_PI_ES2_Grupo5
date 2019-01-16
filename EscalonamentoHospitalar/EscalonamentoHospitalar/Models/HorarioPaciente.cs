@@ -15,8 +15,5 @@ namespace EscalonamentoHospitalar.Models
         public Paciente Paciente { get; set; }
         public int PacienteId { get; set; }
 
-        public Tratamento Tratamento { get; set; }
-        public int TratamentoId { get; set; }
-
     }
 }

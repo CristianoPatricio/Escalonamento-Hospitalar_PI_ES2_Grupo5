@@ -73,20 +73,21 @@ namespace EscalonamentoHospitalar.Controllers
         {
             DateTime dataInicio = tratamento.DataInicio;
             DateTime dataFim = tratamento.DataFim;
-            TimeSpan duracaoCiclo = tratamento.DuracaoCiclo;
-            Tratamento idTratamento = _context.Tratamentos.SingleOrDefault(t => t.TratamentoId == tratamento.TratamentoId);
+            TimeSpan duracaoCiclo = tratamento.DuracaoCiclo;        
             Paciente idPaciente =  _context.Pacientes.SingleOrDefault(p => p.PacienteId == tratamento.PacienteId);
             int idRegime = tratamento.RegimeId;
-
             var tipoRegime = _context.Regime.SingleOrDefault(r => r.RegimeId == idRegime);
-
             string regime = tipoRegime.TipoRegime.ToString();
+
+            Estado estado = _context.Estado.SingleOrDefault(e => e.Nome == "Decorrer");
+
+            tratamento.EstadoId = estado.EstadoId;
 
             if (ModelState.IsValid)
             {
-                _context.Add(tratamento);
-                //GenerateHorarioPaciente(_context, dataInicio, dataFim, duracaoCiclo, idTratamento, idPaciente, regime);
+                _context.Add(tratamento);              
                 await _context.SaveChangesAsync();
+                GenerateHorarioPaciente(_context, dataInicio, dataFim, duracaoCiclo,idPaciente, regime);
                 return RedirectToAction(nameof(Index));
             }
             ViewData["GrauId"] = new SelectList(_context.Grau, "GrauId", "TipoGrau", tratamento.GrauId);
@@ -217,10 +218,10 @@ namespace EscalonamentoHospitalar.Controllers
          * @param tratamentoId
          * @insert into HorarioPaciente table a record with the above parameteres
          */ 
-        private void InsertDataIntoHorarioPaciente(HospitalDbContext db, DateTime dataInicio, TimeSpan duracao, DateTime dataFim, Paciente pacienteId, Tratamento tratamentoId)
+        private void InsertDataIntoHorarioPaciente(HospitalDbContext db, DateTime dataInicio, TimeSpan duracao, DateTime dataFim, Paciente pacienteId)
         {
             db.HorariosPaciente.Add(
-                    new HorarioPaciente {DataInicio = dataInicio, Duracao = duracao, DataFim = dataFim, PacienteId = pacienteId.PacienteId, TratamentoId = tratamentoId.TratamentoId}
+                    new HorarioPaciente {DataInicio = dataInicio, Duracao = duracao, DataFim = dataFim, PacienteId = pacienteId.PacienteId}
                 );
 
             db.SaveChanges();
@@ -234,7 +235,7 @@ namespace EscalonamentoHospitalar.Controllers
          * 
          * 
          */
-         private void GenerateHorarioPaciente(HospitalDbContext db, DateTime dataInicio, DateTime dataFim, TimeSpan duracaoCiclo, Tratamento idTratamento, Paciente idPaciente, string regime)
+         private void GenerateHorarioPaciente(HospitalDbContext db, DateTime dataInicio, DateTime dataFim, TimeSpan duracaoCiclo,Paciente idPaciente, string regime)
          {
             List<DateTime> datasInicioTratamento = new List<DateTime>();
             List<DateTime> datasFimTratamento = new List<DateTime>();
@@ -264,7 +265,7 @@ namespace EscalonamentoHospitalar.Controllers
             for (int i = 0; i <= tempo; i++)
             {
 
-                InsertDataIntoHorarioPaciente(db, data, duracaoCiclo, data.AddHours(duracaoCiclo.TotalHours), idPaciente, idTratamento);
+                InsertDataIntoHorarioPaciente(db, data, duracaoCiclo, data.AddHours(duracaoCiclo.TotalHours), idPaciente);
 
                 datasInicioTratamento.Add(data);
                 datasFimTratamento.Add(data.AddHours(duracaoCiclo.TotalHours));

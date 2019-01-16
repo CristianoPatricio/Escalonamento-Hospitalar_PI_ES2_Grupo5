@@ -11,6 +11,7 @@ namespace EscalonamentoHospitalar.Controllers
 {
     public class HorarioPacientesController : Controller
     {
+        private const int PAGE_SIZE = 20;
         private readonly HospitalDbContext _context;
 
         public HorarioPacientesController(HospitalDbContext context)
@@ -19,10 +20,113 @@ namespace EscalonamentoHospitalar.Controllers
         }
 
         // GET: HorarioPacientes
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(HorarioPacienteViewModel model = null, int page = 1)
         {
-            var hospitalDbContext = _context.HorariosPaciente.Include(h => h.Paciente).Include(h => h.Tratamento);
-            return View(await hospitalDbContext.ToListAsync());
+
+            string nome = null;
+            DateTime? data = null;
+
+            if (model != null && model.DataInicio != null || model.CurrentNome != null)
+            {
+                nome = model.CurrentNome;
+                data = model.DataInicio;
+                page = 1;
+            }
+
+            IQueryable<HorarioPaciente> horario;
+            int numHorario;
+            IEnumerable<HorarioPaciente> listaHorario;
+
+            if (data.HasValue && string.IsNullOrEmpty(nome)) //Pesquisa por data
+            {
+                int ano = data.Value.Year;
+                int mes = data.Value.Month;
+                int dia = data.Value.Day;
+
+                horario = _context.HorariosPaciente
+                   .Where(h => h.DataInicio.Year.Equals(ano) && h.DataInicio.Month.Equals(mes) && h.DataInicio.Day.Equals(dia));
+
+                numHorario = await horario.CountAsync();
+
+                listaHorario = await horario
+                    .Include(h => h.Paciente)
+                    .OrderByDescending(h => h.DataInicio)
+                    .Skip(PAGE_SIZE * (page - 1))
+                    .Take(PAGE_SIZE)
+                    .ToListAsync();
+            }
+            else if (!string.IsNullOrEmpty(nome) && !data.HasValue) //Pesquisa por Nome
+            {
+                horario = _context.HorariosPaciente
+                    .Where(h => h.Paciente.Nome.Contains(nome.Trim()));
+
+                numHorario = await horario.CountAsync();
+
+                listaHorario = await horario
+                    .Include(h => h.Paciente)
+                    .OrderByDescending(h => h.DataInicio)
+                    .Skip(PAGE_SIZE * (page - 1))
+                    .Take(PAGE_SIZE)
+                    .ToListAsync();
+            }
+            else if (!string.IsNullOrEmpty(nome) && data.HasValue) //Pesquisa por nome e data
+            {
+                int ano = data.Value.Year;
+                int mes = data.Value.Month;
+                int dia = data.Value.Day;
+
+                horario = _context.HorariosPaciente
+                    .Where(h => h.Paciente.Nome.Contains(nome.Trim()) && h.DataInicio.Year.Equals(ano) && h.DataInicio.Month.Equals(mes) && h.DataInicio.Day.Equals(dia));
+
+                numHorario = await horario.CountAsync();
+
+                listaHorario = await horario
+                    .Include(h => h.Paciente)
+                    .OrderByDescending(h => h.DataInicio)
+                    .Skip(PAGE_SIZE * (page - 1))
+                    .Take(PAGE_SIZE)
+                    .ToListAsync();
+            }
+            else
+            {
+                horario = _context.HorariosPaciente;
+
+                numHorario = await horario.CountAsync();
+
+                listaHorario = await horario
+                    .Include(h => h.Paciente)
+                    .OrderByDescending(h => h.DataInicio)
+                    .Skip(PAGE_SIZE * (page - 1))
+                    .Take(PAGE_SIZE)
+                    .ToListAsync();
+            }
+
+            if (page > (numHorario / PAGE_SIZE) + 1)
+            {
+                page = 1;
+            }
+
+            if (listaHorario.Count() == 0)
+            {
+                TempData["NoItemsFound"] = "Não foram encontrados resultados para a sua pesquisa";
+            }
+
+
+            return View(
+                new HorarioPacienteViewModel
+                {
+                    HorariosPacientes = listaHorario,
+                    Pagination = new PagingViewModel
+                    {
+                        CurrentPage = page,
+                        PageSize = PAGE_SIZE,
+                        TotalItems = numHorario
+                    },
+                    CurrentNome = nome,
+                    DataInicio = data
+                }
+            );
+
         }
 
         // GET: HorarioPacientes/Details/5
@@ -35,7 +139,6 @@ namespace EscalonamentoHospitalar.Controllers
 
             var horarioPaciente = await _context.HorariosPaciente
                 .Include(h => h.Paciente)
-                .Include(h => h.Tratamento)
                 .FirstOrDefaultAsync(m => m.HorarioPacienteId == id);
             if (horarioPaciente == null)
             {
@@ -48,8 +151,7 @@ namespace EscalonamentoHospitalar.Controllers
         // GET: HorarioPacientes/Create
         public IActionResult Create()
         {
-            ViewData["PacienteId"] = new SelectList(_context.Pacientes, "PacienteId", "Nome");
-            ViewData["TratamentoId"] = new SelectList(_context.Tratamentos, "TratamentoId", "PatologiaId");
+            ViewData["PacienteId"] = new SelectList(_context.Pacientes, "PacienteId", "PacienteId");
             return View();
         }
 
@@ -58,7 +160,7 @@ namespace EscalonamentoHospitalar.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("HorarioPacienteId,DataInicio,Duracao,DataFim,PacienteId,TratamentoId")] HorarioPaciente horarioPaciente)
+        public async Task<IActionResult> Create([Bind("HorarioPacienteId,DataInicio,Duracao,DataFim,PacienteId")] HorarioPaciente horarioPaciente)
         {
             if (ModelState.IsValid)
             {
@@ -66,8 +168,7 @@ namespace EscalonamentoHospitalar.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["PacienteId"] = new SelectList(_context.Pacientes, "PacienteId", "CC", horarioPaciente.PacienteId);
-            ViewData["TratamentoId"] = new SelectList(_context.Tratamentos, "TratamentoId", "TratamentoId", horarioPaciente.TratamentoId);
+            ViewData["PacienteId"] = new SelectList(_context.Pacientes, "PacienteId", "CC", horarioPaciente.PacienteId);         
             return View(horarioPaciente);
         }
 
@@ -84,8 +185,7 @@ namespace EscalonamentoHospitalar.Controllers
             {
                 return NotFound();
             }
-            ViewData["PacienteId"] = new SelectList(_context.Pacientes, "PacienteId", "CC", horarioPaciente.PacienteId);
-            ViewData["TratamentoId"] = new SelectList(_context.Tratamentos, "TratamentoId", "TratamentoId", horarioPaciente.TratamentoId);
+            ViewData["PacienteId"] = new SelectList(_context.Pacientes, "PacienteId", "CC", horarioPaciente.PacienteId);           
             return View(horarioPaciente);
         }
 
@@ -94,7 +194,7 @@ namespace EscalonamentoHospitalar.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("HorarioPacienteId,DataInicio,Duracao,DataFim,PacienteId,TratamentoId")] HorarioPaciente horarioPaciente)
+        public async Task<IActionResult> Edit(int id, [Bind("HorarioPacienteId,DataInicio,Duracao,DataFim,PacienteId")] HorarioPaciente horarioPaciente)
         {
             if (id != horarioPaciente.HorarioPacienteId)
             {
@@ -121,8 +221,7 @@ namespace EscalonamentoHospitalar.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["PacienteId"] = new SelectList(_context.Pacientes, "PacienteId", "CC", horarioPaciente.PacienteId);
-            ViewData["TratamentoId"] = new SelectList(_context.Tratamentos, "TratamentoId", "TratamentoId", horarioPaciente.TratamentoId);
+            ViewData["PacienteId"] = new SelectList(_context.Pacientes, "PacienteId", "CC", horarioPaciente.PacienteId);         
             return View(horarioPaciente);
         }
 
@@ -136,7 +235,6 @@ namespace EscalonamentoHospitalar.Controllers
 
             var horarioPaciente = await _context.HorariosPaciente
                 .Include(h => h.Paciente)
-                .Include(h => h.Tratamento)
                 .FirstOrDefaultAsync(m => m.HorarioPacienteId == id);
             if (horarioPaciente == null)
             {

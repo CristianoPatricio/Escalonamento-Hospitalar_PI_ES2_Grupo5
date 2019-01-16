@@ -41,7 +41,10 @@
     <form asp-action="SolicitarPedidoTrocaTurnoEnfermeiro">
         <input type="hidden" asp-for="horarioEnfermeiroATrocar.HorarioEnfermeiroId" name="idHor1" />
         <input type="hidden" asp-for="horarioEnfermeiroParaTroca.HorarioEnfermeiroId" name="idHor2" />
-        <input type="submit" value="Solicitar Pedido" class="btn btn-success" />
+        @*<input type="submit" value="Solicitar Pedido" class="btn btn-success" />*@
+        <button class="btn btn-success" type="submit">
+            <i class="fas fa-check" style="color:white;"></i> Solicitar Pedido
+        </button>
         <a asp-action="Index" class="btn btn-default">
             <span class="fas fa-times" style="color:black;"></span> Cancelar
         </a>

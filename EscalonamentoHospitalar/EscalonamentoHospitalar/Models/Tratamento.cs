@@ -49,7 +49,5 @@ namespace EscalonamentoHospitalar.Models
         public Medico Medico { get; set; }
         public int MedicoId { get; set; }
 
-        public ICollection<HorarioPaciente> HorarioPacientes { get; set; }
-
     }
 }

@@ -4,6 +4,10 @@
     ViewData["Title"] = "Gerar Horário Médico";
 }
 
+<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.5.0/css/all.css' integrity='sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU' crossorigin='anonymous'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
 <h2>Gerar Horário Médico</h2>
 
 <p></p>
@@ -28,12 +32,14 @@
             </div>
             <hr />
             <div class="form-group">
-                <input type="submit" value="Gerar" class="btn btn-success" />
+                <button class="btn btn-success" type="submit">
+                    <i class="fas fa-save" style="color:white;"></i> Gerar
+                </button>
             </div>
             <hr />
             <div>
-                <a href='@Url.Action("GestaoHospitalar", "DiretorServico")'>
-                    <input type="button" class="btn btn-default" value="Voltar" />
+                <a href='@Url.Action("GestaoHospitalar", "DiretorServico")' class="btn btn-default">
+                    <span class="fas fa-undo" style="color:dodgerblue;"></span> Voltar
                 </a>
             </div>
         </form>
