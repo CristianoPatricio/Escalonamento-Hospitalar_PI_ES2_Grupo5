@@ -15,7 +15,7 @@ namespace EscalonamentoHospitalar.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
+                .HasAnnotation("ProductVersion", "2.1.3-rtm-32065")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -190,29 +190,6 @@ namespace EscalonamentoHospitalar.Migrations
                     b.HasKey("GrauId");
 
                     b.ToTable("Grau");
-                });
-
-            modelBuilder.Entity("EscalonamentoHospitalar.Models.HistoricoTratamento", b =>
-                {
-                    b.Property<int>("HistoricoTratamentoId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("DataFim");
-
-                    b.Property<DateTime>("DataInicio");
-
-                    b.Property<int>("PacienteId");
-
-                    b.Property<int>("TratamentoId");
-
-                    b.HasKey("HistoricoTratamentoId");
-
-                    b.HasIndex("PacienteId");
-
-                    b.HasIndex("TratamentoId");
-
-                    b.ToTable("HistoricoTratamento");
                 });
 
             modelBuilder.Entity("EscalonamentoHospitalar.Models.HorarioEnfermeiro", b =>
@@ -462,19 +439,6 @@ namespace EscalonamentoHospitalar.Migrations
                     b.HasOne("EscalonamentoHospitalar.Models.Turno", "Turno")
                         .WithMany()
                         .HasForeignKey("TurnoId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("EscalonamentoHospitalar.Models.HistoricoTratamento", b =>
-                {
-                    b.HasOne("EscalonamentoHospitalar.Models.Paciente", "Paciente")
-                        .WithMany()
-                        .HasForeignKey("PacienteId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("EscalonamentoHospitalar.Models.Tratamento", "Tratamento")
-                        .WithMany()
-                        .HasForeignKey("TratamentoId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

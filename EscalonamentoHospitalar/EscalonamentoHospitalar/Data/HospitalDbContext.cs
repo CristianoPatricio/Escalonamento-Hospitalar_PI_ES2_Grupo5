@@ -88,7 +88,7 @@ namespace EscalonamentoHospitalar.Models
         
         public DbSet<EscalonamentoHospitalar.Models.EscalaEnfermeiro> EscalaEnfermeiros { get; set; }
         
-        public DbSet<EscalonamentoHospitalar.Models.HistoricoTratamento> HistoricoTratamento { get; set; }
+        //public DbSet<EscalonamentoHospitalar.Models.HistoricoTratamento> HistoricoTratamento { get; set; }
 
 
 

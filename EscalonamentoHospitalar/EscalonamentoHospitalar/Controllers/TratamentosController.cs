@@ -28,21 +28,7 @@ namespace EscalonamentoHospitalar.Controllers
         }
 
 
-        // GET: PesquisaPaciente
-        public async Task<IActionResult> PesquisaPaciente()
-        {
-            var pacientes = await _context.Pacientes.ToListAsync();
-            var tratamentos = await _context.Tratamentos.ToListAsync();
-
-            return View(
-                new PacienteTratamentosViewModel
-                {
-                    Pacientes = pacientes,
-                    Tratamentos = tratamentos
-                }
-             );
-
-        }
+        
 
 
         // GET: Tratamentos/Details/5
@@ -70,16 +56,28 @@ namespace EscalonamentoHospitalar.Controllers
         }
 
         // GET: Tratamentos/Create
-        public IActionResult Create()
+        public async Task<IActionResult> CreateAsync(int? id1)
         {
+
             ViewData["GrauId"] = new SelectList(_context.Grau, "GrauId", "TipoGrau");
             ViewData["MedicoId"] = new SelectList(_context.Medicos, "MedicoId", "Nome");
             ViewData["PacienteId"] = new SelectList(_context.Pacientes, "PacienteId", "Nome");
             ViewData["PatologiaId"] = new SelectList(_context.Patologia, "PatologiaId", "Nome");
             ViewData["RegimeId"] = new SelectList(_context.Regime, "RegimeId", "TipoRegime");
-            //ViewData["EstadoId"] = new SelectList(_context.Estado, "EstadoId", "Nome");
+            ViewData["EstadoId"] = new SelectList(_context.Estado, "EstadoId", "Nome");
 
-            return View();
+
+            if (id1 == null)
+            {            
+                return View();
+            }
+            else //se for passado
+            {
+                //algoritmo
+                var paciente = await _context.Pacientes.FindAsync(id1); //atributos do paciente
+
+                return View(paciente);
+            }
         }
 
         // POST: Tratamentos/Create
@@ -131,7 +129,7 @@ namespace EscalonamentoHospitalar.Controllers
             }
             ViewData["GrauId"] = new SelectList(_context.Grau, "GrauId", "TipoGrau", tratamento.GrauId);
             ViewData["MedicoId"] = new SelectList(_context.Medicos, "MedicoId", "Nome", tratamento.MedicoId);
-            ViewBag.Paciente = id1;
+            ViewBag["PacienteId"] = new SelectList(_context.Pacientes, "PacienteId", "Nome", tratamento.PacienteId);
             ViewData["PatologiaId"] = new SelectList(_context.Patologia, "PatologiaId", "Nome", tratamento.PatologiaId);
             return View(tratamento);
         }
@@ -234,13 +232,35 @@ namespace EscalonamentoHospitalar.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var tratamento = await _context.Tratamentos.FindAsync(id);
-            _context.Tratamentos.Remove(tratamento);
-            await _context.SaveChangesAsync();
-            TempData["deleteEnf"] = "Tratamento eliminado com sucesso!";
+            //if (id == null)
+            //{
+            //    return NotFound();
+            //}
+
+            var estado = await _context.Tratamentos
+                .FirstOrDefaultAsync(m => m.EstadoId == id);
+            if (estado == null)
+            {
+                return NotFound();
+            }
 
             return RedirectToAction(nameof(Index));
         }
+
+       
+
+
+
+
+
+
+        //var tratamento = await _context.Tratamentos.FindAsync(id);
+        //    _context.Tratamentos.Remove(tratamento);
+        //    await _context.SaveChangesAsync();
+        //    TempData["deleteEnf"] = "Tratamento eliminado com sucesso!";
+
+        //    return RedirectToAction(nameof(Index));
+        //}
 
         private string EstadoTratamento(DateTime dataAtual,DateTime dataInicio)
         {

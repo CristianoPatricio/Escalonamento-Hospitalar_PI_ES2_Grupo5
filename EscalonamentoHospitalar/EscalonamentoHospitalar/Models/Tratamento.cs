@@ -32,7 +32,7 @@ namespace EscalonamentoHospitalar.Models
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = false)]
         public DateTime DataFim { get; set; }
 
-        //[Required(ErrorMessage = "Por favor introduza a Duração do Ciclo")]
+        [Required(ErrorMessage = "Por favor introduza a Duração do Ciclo")]
         [DataType(DataType.Time)]
         [DisplayFormat(DataFormatString = "{0:HH:mm}", ApplyFormatInEditMode = false)]
         public string DuracaoCiclo { get; set; }
