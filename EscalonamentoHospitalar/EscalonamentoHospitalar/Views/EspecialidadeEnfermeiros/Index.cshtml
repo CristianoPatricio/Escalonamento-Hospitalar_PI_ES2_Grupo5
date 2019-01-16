@@ -42,15 +42,6 @@
 
 <h2>Lista de especialidades dos enfermeiros</h2>
 
-<<<<<<< HEAD
-=======
-<p>
-    <a asp-action="Create" class="btn btn-primary">
-        <span class="fas fa-file" style="color:white;"></span> Inserir Nova Especialidade de Enfermeiros
-    </a>
-</p>
-
->>>>>>> CristianoPatricio_GerarHorarios
 <table class="table">
     <thead>
         <tr>
@@ -68,37 +59,33 @@
                     @Html.DisplayFor(modelItem => item.Especialidade)
                 </td>
                 <td>
-<<<<<<< HEAD
-                    <a asp-action="Edit" asp-route-id="@item.EspecialidadeEnfermeiroId"><input type="button" value="Editar" class="btn btn-warning" /></a>
-=======
+                    <!--<a asp-action="Edit" asp-route-id="@item.EspecialidadeEnfermeiroId"><input type="button" value="Editar" class="btn btn-warning" /></a>-->
                     <a asp-action="Edit" asp-route-id="@item.EspecialidadeEnfermeiroId" class="btn btn-warning"> 
                         <span class="glyphicon glyphicon-edit"></span> Alterar
                     </a>
->>>>>>> CristianoPatricio_GerarHorarios
                     <!--<a asp-action="Details" asp-route-id="@item.EspecialidadeEnfermeiroId">Details</a> |-->
                     <a asp-action="Delete" asp-route-id="@item.EspecialidadeEnfermeiroId" class="btn btn-danger">
                         <span class="glyphicon glyphicon-trash"></span> Eliminar
                     </a>
                 </td>
             </tr>
-<<<<<<< HEAD
         }
     </tbody>
 </table>
 
 <br />
+
 <hr />
 <p>
-    <a asp-action="Create" class="btn btn-primary">Inserir uma nova especialidade</a>
+    <a asp-action="Create" class="btn btn-primary">
+        <span class="fas fa-file" style="color:white;"></span> Inserir Nova Especialidade de Enfermeiros
+    </a>
 </p>
+
 <hr />
 <div>
-    <a href='@Url.Action("GestaoHospitalar", "DiretorServico")'>
-        <input type="button" class="btn btn-default" value="Voltar à página inicial" />
+    <a href='@Url.Action("GestaoHospitalar", "DiretorServico")' class="btn btn-default">
+        <span class="glyphicon glyphicon-home"></span> Voltar à página inicial
     </a>
 </div>
-=======
-            }
-        </tbody>
-    </table>
->>>>>>> CristianoPatricio_GerarHorarios
+

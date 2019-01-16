@@ -71,26 +71,18 @@ namespace EscalonamentoHospitalar.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("TratamentoId,PatologiaId,PacienteId,GrauId,DataInicio,DataFim,DuracaoCiclo,RegimeId,EstadoId,MedicoId")] Tratamento tratamento)
         {
-<<<<<<< HEAD
 
-                                        /******************Validações**********************/
+
+            /******************Validações**********************/
 
 
             DateTime dateNow = DateTime.Now;
             DateTime inicioTratamento = tratamento.DataInicio;
             DateTime fimTratamento = tratamento.DataFim;
 
-            bool inicioTratamentoIsInvalid = true;
-
-
-
+            //bool inicioTratamentoIsInvalid = true;
 
             //Validar Data de inicio do tratamento
-
-
-
-
-=======
             DateTime dataInicio = tratamento.DataInicio;
             DateTime dataFim = tratamento.DataFim;
             TimeSpan duracaoCiclo = tratamento.DuracaoCiclo;        
@@ -108,9 +100,8 @@ namespace EscalonamentoHospitalar.Controllers
             {
                 _context.Add(tratamento);              
                 await _context.SaveChangesAsync();
-<<<<<<< HEAD
+
                 TempData["notice"] = "Tratamento inserido com sucesso!";
-=======
                 GenerateHorarioPaciente(_context, dataInicio, dataFim, duracaoCiclo,idPaciente, regime);
 
                 return RedirectToAction(nameof(Index));

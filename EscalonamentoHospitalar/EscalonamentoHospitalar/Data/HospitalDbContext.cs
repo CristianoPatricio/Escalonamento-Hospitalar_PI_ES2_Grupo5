@@ -83,8 +83,6 @@ namespace EscalonamentoHospitalar.Models
 
         public DbSet<EscalonamentoHospitalar.Models.Tratamento> Tratamentos { get; set; }
 
-        public DbSet<EscalonamentoHospitalar.Models.Equipamento> Equipamento { get; set; }
-
         public DbSet<EscalonamentoHospitalar.Models.EstadoPedidoTroca> EstadoPedidoTrocas { get; set; }
         
         public DbSet<EscalonamentoHospitalar.Models.HorarioATrocarEnfermeiro> HorarioATrocarEnfermeiros { get; set; }

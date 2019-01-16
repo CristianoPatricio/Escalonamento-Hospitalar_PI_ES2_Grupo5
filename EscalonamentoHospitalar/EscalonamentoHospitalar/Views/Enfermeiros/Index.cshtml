@@ -87,12 +87,6 @@
 <h2>Lista de Enfermeiros</h2>
 
 <form asp-action="Index">
-<<<<<<< HEAD
-    <p style="float: right">
-        Pesquisar por nome: <input style="width: 200px;" asp-for="CurrentNome" placeholder="Insira o nome a pesquisar" />
-        <input type="submit" value="Pesquisar" class="btn btn-info" />
-    </p>
-=======
     Pesquisar por:
     <select class="input-group-prepend" id="inputGroupSelect01" onchange="searchBy()">
         <option selected value="Nome">Nome</option>
@@ -101,7 +95,6 @@
     <input id="inputName" style="width: 200px; display: inline;" asp-for="CurrentNome" placeholder="Insira o nome a pesquisar" onclick="deleteSpecialityField()">
     <input id="inputEspecialidade" style="width: 250px; display: none;" asp-for="CurrentEspecialidade" placeholder="Insira a especialidade a pesquisar">
     <button class="btn btn-info" type="submit" value="Pesquisar"><span class="glyphicon glyphicon-search"></span> Pesquisar</button>
->>>>>>> CristianoPatricio_GerarHorarios
 </form>
 
 <p></p>
@@ -137,11 +130,6 @@
                     @Html.DisplayFor(modelItem => item.EspecialidadeEnfermeiro.Especialidade)
                 </td>
                 <td>
-<<<<<<< HEAD
-                    <a asp-action="Edit" asp-route-id="@item.EnfermeiroId"><input type="button" value="Editar" class="btn btn-warning" /></a>
-                    <a asp-action="Details" asp-route-id="@item.EnfermeiroId"><input type="button" value="Detalhes" class="btn btn-info" /></a>
-                    <a asp-action="Delete" asp-route-id="@item.EnfermeiroId"><input type="button" value="Eliminar" class="btn btn-danger" /></a>
-=======
                     <a asp-action="Edit" asp-route-id="@item.EnfermeiroId" class="btn btn-warning">
                         <span class="glyphicon glyphicon-edit"></span> Alterar
                     </a>
@@ -151,7 +139,6 @@
                     <a asp-action="Delete" asp-route-id="@item.EnfermeiroId" class="btn btn-danger">
                         <span class="glyphicon glyphicon-trash"></span> Eliminar
                     </a>
->>>>>>> CristianoPatricio_GerarHorarios
                 </td>
             </tr>
         }
@@ -201,13 +188,9 @@
 <br />
 <hr />
 <p>
-<<<<<<< HEAD
-    <a asp-action="Create"><input type="button" value="Inserir um novo enfermeiro" class="btn btn-primary" /></a>
-=======
     <a asp-action="Create" class="btn btn-primary">
         <span class="fas fa-file" style="color:white;"></span> Inserir Novo Enfermeiro
     </a>
->>>>>>> CristianoPatricio_GerarHorarios
 </p>
 <hr />
 <div>
