@@ -46,7 +46,7 @@ namespace EscalonamentoHospitalar.Models
 
 
         public ICollection<Tratamento> Tratamentos { get; set; }
-
+        public ICollection<HorarioPaciente> HorarioPacientes { get; set; }
 
 
 

@@ -101,5 +101,7 @@ namespace EscalonamentoHospitalar.Models
 
         public DbSet<EscalonamentoHospitalar.Models.PedidoTrocaTurnosMedico> PedidoTrocaTurnosMedico { get; set; }
 
+        public DbSet<EscalonamentoHospitalar.Models.HorarioPaciente> HorariosPaciente { get; set; }
+
     }
 }

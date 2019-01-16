@@ -257,7 +257,7 @@ namespace EscalonamentoHospitalar.Data
                         RegimeId = Semanal.RegimeId,
                         DataInicio = new DateTime(2018, 11, 09),
                         DataFim = new DateTime(2018, 12, 31),
-                        DuracaoCiclo = "00:30",
+                        DuracaoCiclo = new TimeSpan(0,30,0),
                         MedicoId = Manuel.MedicoId,
                         EstadoId = Decorrer.EstadoId,
 
@@ -270,7 +270,7 @@ namespace EscalonamentoHospitalar.Data
                         RegimeId = Mensal.RegimeId,
                         DataInicio = new DateTime(2018, 11, 09),
                         DataFim = new DateTime(2018, 12, 31),
-                        DuracaoCiclo = "01:10",
+                        DuracaoCiclo = new TimeSpan(1, 10, 0),
                         MedicoId = Elisabete.MedicoId,
                         EstadoId = Concluido.EstadoId,
 

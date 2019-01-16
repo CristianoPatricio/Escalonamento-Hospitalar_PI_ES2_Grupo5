@@ -71,9 +71,21 @@ namespace EscalonamentoHospitalar.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("TratamentoId,PatologiaId,PacienteId,GrauId,DataInicio,DataFim,DuracaoCiclo,RegimeId,EstadoId,MedicoId")] Tratamento tratamento)
         {
+            DateTime dataInicio = tratamento.DataInicio;
+            DateTime dataFim = tratamento.DataFim;
+            TimeSpan duracaoCiclo = tratamento.DuracaoCiclo;
+            Tratamento idTratamento = _context.Tratamentos.SingleOrDefault(t => t.TratamentoId == tratamento.TratamentoId);
+            Paciente idPaciente =  _context.Pacientes.SingleOrDefault(p => p.PacienteId == tratamento.PacienteId);
+            int idRegime = tratamento.RegimeId;
+
+            var tipoRegime = _context.Regime.SingleOrDefault(r => r.RegimeId == idRegime);
+
+            string regime = tipoRegime.TipoRegime.ToString();
+
             if (ModelState.IsValid)
             {
                 _context.Add(tratamento);
+                //GenerateHorarioPaciente(_context, dataInicio, dataFim, duracaoCiclo, idTratamento, idPaciente, regime);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -193,5 +205,73 @@ namespace EscalonamentoHospitalar.Controllers
         {
             return _context.Tratamentos.Any(e => e.TratamentoId == id);
         }
+
+        /*****************************Funções Auxiliares*********************************/
+       
+        /**
+         * @param db
+         * @param dataInicio
+         * @param duracao
+         * @param dataFim
+         * @param pacienteId
+         * @param tratamentoId
+         * @insert into HorarioPaciente table a record with the above parameteres
+         */ 
+        private void InsertDataIntoHorarioPaciente(HospitalDbContext db, DateTime dataInicio, TimeSpan duracao, DateTime dataFim, Paciente pacienteId, Tratamento tratamentoId)
+        {
+            db.HorariosPaciente.Add(
+                    new HorarioPaciente {DataInicio = dataInicio, Duracao = duracao, DataFim = dataFim, PacienteId = pacienteId.PacienteId, TratamentoId = tratamentoId.TratamentoId}
+                );
+
+            db.SaveChanges();
+        }
+
+        /**
+         * 
+         * 
+         * 
+         * 
+         * 
+         * 
+         */
+         private void GenerateHorarioPaciente(HospitalDbContext db, DateTime dataInicio, DateTime dataFim, TimeSpan duracaoCiclo, Tratamento idTratamento, Paciente idPaciente, string regime)
+         {
+            List<DateTime> datasInicioTratamento = new List<DateTime>();
+            List<DateTime> datasFimTratamento = new List<DateTime>();
+
+            DateTime data;
+
+            int iteracao = 0;
+            if (regime == "Semanal")
+            {
+                iteracao = 7;
+            }
+            else if (regime == "Quinzenal")
+            {
+                iteracao = 14;
+            }
+            else if (regime == "Mensal")
+            {
+                iteracao = 30;
+            }
+
+            double dif = dataFim.Subtract(dataInicio).TotalDays;
+
+            double tempo = dif / iteracao;
+
+            data = dataInicio.AddHours(9);
+
+            for (int i = 0; i <= tempo; i++)
+            {
+
+                InsertDataIntoHorarioPaciente(db, data, duracaoCiclo, data.AddHours(duracaoCiclo.TotalHours), idPaciente, idTratamento);
+
+                datasInicioTratamento.Add(data);
+                datasFimTratamento.Add(data.AddHours(duracaoCiclo.TotalHours));
+
+                data = data.AddDays(iteracao);             
+            }
+        }
+
     }
 }

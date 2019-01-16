@@ -33,12 +33,14 @@
             </div>
             <hr />
             <div class="form-group">
-                <input type="submit" value="Gerar" class="btn btn-success" />
+                <button class="btn btn-success" type="submit">
+                    <i class="fas fa-save" style="color:white;"></i> Gerar
+                </button>
             </div>
             <hr />
             <div>
-                <a href='@Url.Action("GestaoHospitalar", "DiretorServico")'>
-                    <input type="button" class="btn btn-default" value="Voltar" />
+                <a href='@Url.Action("GestaoHospitalar", "DiretorServico")' class="btn btn-default">
+                    <span class="fas fa-undo" style="color:dodgerblue;"></span> Voltar
                 </a>
             </div>
         </form>
