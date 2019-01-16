@@ -12,5 +12,6 @@ namespace EscalonamentoHospitalar.Models
         public PagingViewModel Pagination { get; set; }
 
         public string CurrentNome { get; set; }
+        public string CurrentEspecialidade { get; set; }
     }
 }

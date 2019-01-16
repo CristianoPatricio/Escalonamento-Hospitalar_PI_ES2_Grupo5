@@ -19,33 +19,80 @@ namespace EscalonamentoHospitalar.Controllers
             _context = context;
         }
 
-        // GET: Enfermeiros
-        public async Task<IActionResult> Index(ListaEnfermeirosViewModel model = null, int page = 1)
+        public IActionResult Error()
         {
-            string nome = null;
+            return View();
+        }
 
-            if (model != null && model.CurrentNome != null)
+        // GET: Enfermeiros
+        public async Task<IActionResult> Index(ListaEnfermeirosViewModel model = null, int page = 1, string nome = null, string especialidade = null)
+        {
+
+            if (model != null && model.CurrentEspecialidade != null || model.CurrentNome != null)
             {
                 nome = model.CurrentNome;
+                especialidade = model.CurrentEspecialidade;
                 page = 1;
             }
 
-            var enfermeiros = _context.Enfermeiros
-                .Where(e => nome == null || e.Nome.Contains(nome));
+            IQueryable<Enfermeiro> enfermeiro;
+            int numEnfermeiros;
+            IEnumerable<Enfermeiro> listaEnfermeiro;
 
-            int numEnfermeiros = await enfermeiros.CountAsync();
+            if (!string.IsNullOrEmpty(nome) && string.IsNullOrEmpty(especialidade)) //Pesquisa por nome
+            {
+                enfermeiro = _context.Enfermeiros
+                    .Where(e => e.Nome.Contains(nome.Trim()));
 
+                numEnfermeiros = await enfermeiro.CountAsync();
+
+                listaEnfermeiro = await enfermeiro
+                    .Include(e => e.EspecialidadeEnfermeiro)
+                    .OrderBy(e => e.Nome)
+                    .Skip(PAGE_SIZE * (page - 1))
+                    .Take(PAGE_SIZE)
+                    .ToListAsync();
+            }
+            else if (!string.IsNullOrEmpty(especialidade) && string.IsNullOrEmpty(nome)) //Pesquisa por especialidade
+            {
+                enfermeiro = _context.Enfermeiros
+                  .Where(e => e.EspecialidadeEnfermeiro.Especialidade.Contains(especialidade.Trim()));
+
+                numEnfermeiros = await enfermeiro.CountAsync();
+
+                listaEnfermeiro = await enfermeiro
+                    .Include(e => e.EspecialidadeEnfermeiro)
+                    .OrderBy(e => e.Nome)
+                    .Skip(PAGE_SIZE * (page - 1))
+                    .Take(PAGE_SIZE)
+                    .ToListAsync();
+            }
+            else
+            {
+
+                enfermeiro = _context.Enfermeiros;
+
+                numEnfermeiros = await enfermeiro.CountAsync();
+
+                listaEnfermeiro = await enfermeiro
+                    .Include(e => e.EspecialidadeEnfermeiro)
+                    .OrderBy(e => e.Nome)
+                    .Skip(PAGE_SIZE * (page - 1))
+                    .Take(PAGE_SIZE)
+                    .ToListAsync();
+            }      
+
+            
             if (page > (numEnfermeiros / PAGE_SIZE) + 1)
             {
                 page = 1;
             }
 
-            var listaEnfermeiro = await enfermeiros
-                .Include(e => e.EspecialidadeEnfermeiro)
-                .OrderBy(e => e.Nome)
-                .Skip(PAGE_SIZE * (page - 1))
-                .Take(PAGE_SIZE)
-                .ToListAsync();
+
+            if (listaEnfermeiro.Count() == 0)
+            {
+                TempData["NoItemsFound"] = "Não foram encontrados resultados para a sua pesquisa";
+            }
 
             return View(
                 new ListaEnfermeirosViewModel
@@ -55,9 +102,12 @@ namespace EscalonamentoHospitalar.Controllers
                     {
                         CurrentPage = page,
                         PageSize = PAGE_SIZE,          
-                        TotalItems = numEnfermeiros
+                        TotalItems = numEnfermeiros,
+                        Nome = nome,
+                        Especialidade = especialidade
                     },
-                    CurrentNome = nome
+                    CurrentNome = nome,
+                    CurrentEspecialidade = especialidade
                 }
             );
         }
@@ -67,7 +117,7 @@ namespace EscalonamentoHospitalar.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error));
             }
 
             var enfermeiro = await _context.Enfermeiros
@@ -75,7 +125,7 @@ namespace EscalonamentoHospitalar.Controllers
                 .FirstOrDefaultAsync(m => m.EnfermeiroId == id);
             if (enfermeiro == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error));
             }
 
             return View(enfermeiro);
@@ -96,6 +146,8 @@ namespace EscalonamentoHospitalar.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("EnfermeiroId,NumeroMecanografico,Nome,EspecialidadeEnfermeiroId,Contacto,Email,Data_Nascimento,CC,Filhos,Data_Nascimento_Filho")] Enfermeiro enfermeiro)
         {
+
+            enfermeiro.NumeroMecanografico = "E" + enfermeiro.NumeroMecanografico;
 
             /********************************/
             DateTime dateNow = DateTime.Now;
@@ -188,13 +240,16 @@ namespace EscalonamentoHospitalar.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error));
             }
 
             var enfermeiro = await _context.Enfermeiros.FindAsync(id);
+
+            enfermeiro.NumeroMecanografico = enfermeiro.NumeroMecanografico.Replace("E","");
+
             if (enfermeiro == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error));
             }
             ViewData["EspecialidadeEnfermeiroId"] = new SelectList(_context.Set<EspecialidadeEnfermeiro>(), "EspecialidadeEnfermeiroId", "Especialidade", enfermeiro.EspecialidadeEnfermeiroId);
             return View(enfermeiro);
@@ -286,6 +341,7 @@ namespace EscalonamentoHospitalar.Controllers
                 {                   
                     if (!contactoIsInvalidEdit(contacto, idEnf) || !ccIsInvalidEdit(nCC, idEnf) || !emailIsInvalidEdit(email, idEnf) || !numMecIsInvalidEdit(numero, idEnf) || !enfDateIsInvalid(enfermeiroBDate) || !sonBDateIsInvalid || ValidateNumeroDocumentoCC(nCC))
                     {
+                        enfermeiro.NumeroMecanografico = "E" + enfermeiro.NumeroMecanografico;
                         _context.Update(enfermeiro);
 
                         //Verifica na tabela EnfermeiroEspecialidade se já existe o registo
@@ -302,7 +358,7 @@ namespace EscalonamentoHospitalar.Controllers
                 {
                     if (!EnfermeiroExists(enfermeiro.EnfermeiroId))
                     {
-                        return NotFound();
+                        return RedirectToAction(nameof(Error));
                     }
                     else
                     {
@@ -320,7 +376,7 @@ namespace EscalonamentoHospitalar.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error));
             }
 
             var enfermeiro = await _context.Enfermeiros
@@ -328,7 +384,7 @@ namespace EscalonamentoHospitalar.Controllers
                 .FirstOrDefaultAsync(m => m.EnfermeiroId == id);
             if (enfermeiro == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error));
             }
 
             return View(enfermeiro);
@@ -340,11 +396,35 @@ namespace EscalonamentoHospitalar.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var enfermeiro = await _context.Enfermeiros.FindAsync(id);
-            _context.Enfermeiros.Remove(enfermeiro);
-            await _context.SaveChangesAsync();
-            TempData["deleteEnf"] = "Enfermeiro eliminado com sucesso!";
+
+
+            //Validação horario
+            if (enfermeiroHasSchedule(id) == true)
+            {
+                TempData["enfermeiroHasSchedule"] = "O enfermeiro tem horários";
+            }
+
+            try
+            {
+                if (!enfermeiroHasSchedule(id))
+                {
+                    _context.Enfermeiros.Remove(enfermeiro);
+                    await _context.SaveChangesAsync();
+                    TempData["deleteEnf"] = "Enfermeiro eliminado com sucesso!";
+                }
+                else
+                {
+                    return RedirectToAction(nameof(Delete));
+                }
+             
+            }catch (DbUpdateConcurrencyException) { 
+            
+            }
+
             return RedirectToAction(nameof(Index));
+
         }
+
 
         private bool EnfermeiroExists(int id)
         {
@@ -669,6 +749,26 @@ namespace EscalonamentoHospitalar.Controllers
             }
 
             return IsInvalid;
+        }
+
+        /**
+         * @param id enfermeiro
+         * @return true if exists an schedule that contains a nurse
+         */
+         private bool enfermeiroHasSchedule(int id)
+        {
+            bool hasSchedule = false;
+
+            var horarios = from h in _context.HorariosEnfermeiro
+                           where h.EnfermeiroId == id && h.DataInicioTurno.Day >= DateTime.Today.Day && h.DataInicioTurno.Month >= DateTime.Today.Month && h.DataInicioTurno.Year >= DateTime.Today.Year
+                           select h;
+
+            if (horarios.Count() != 0)
+            {
+                hasSchedule = true;
+            }
+
+            return hasSchedule;
         }
 
     }

@@ -1,0 +1,56 @@
+﻿@model GerarHorarioEnfermeiro
+
+@{
+    ViewData["Title"] = "Gerar Horário Enfermeiro";
+}
+
+<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.5.0/css/all.css' integrity='sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU' crossorigin='anonymous'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+<h2>Gerar Horário Enfermeiro</h2>
+
+<p></p>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="GerarHorarioEnfermeiro">
+            <div class="form-group">
+                <label asp-for="NumeroPessoasTurno1" class="control-label">Nº de pessoas Turno MANHÃ</label>
+                <input asp-for="NumeroPessoasTurno1" class="form-control input-sm pull-right" style="width: 80px" />
+                <span asp-validation-for="NumeroPessoasTurno1" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NumeroPessoasTurno2" class="control-label">Nº de pessoas Turno TARDE</label>
+                <input asp-for="NumeroPessoasTurno2" class="form-control input-sm pull-right" style="width: 80px" />
+                <span asp-validation-for="NumeroPessoasTurno2" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NumeroPessoasTurno3" class="control-label">Nº de pessoas Turno NOITE</label>
+                <input asp-for="NumeroPessoasTurno3" class="form-control input-sm pull-right" style="width: 80px" />
+                <span asp-validation-for="NumeroPessoasTurno3" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DataInicioSemana" class="control-label">Data Início da Semana</label>
+                <input asp-for="DataInicioSemana " class="form-control" />
+                <span asp-validation-for="DataInicioSemana" class="text-danger"></span>
+            </div>
+            <hr />
+            <div class="form-group">
+                <button class="btn btn-success" type="submit">
+                    <i class="fas fa-save" style="color:white;"></i> Gerar
+                </button>
+            </div>
+            <hr />
+            <div>
+                <a href='@Url.Action("GestaoHospitalar", "DiretorServico")' class="btn btn-default">
+                    <span class="fas fa-undo" style="color:dodgerblue;"></span> Voltar
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

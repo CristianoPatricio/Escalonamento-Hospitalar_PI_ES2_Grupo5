@@ -1,0 +1,49 @@
+﻿@model EscalonamentoHospitalar.Models.PedidoTrocaTurnosEnfermeiro
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create</h2>
+
+<h4>PedidoTrocaTurnosEnfermeiro</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="DataPedido" class="control-label"></label>
+                <input asp-for="DataPedido" class="form-control" />
+                <span asp-validation-for="DataPedido" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EnfermeiroId" class="control-label"></label>
+                <select asp-for="EnfermeiroId" class ="form-control" asp-items="ViewBag.EnfermeiroId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="HorarioATrocarEnfermeiroId" class="control-label"></label>
+                <select asp-for="HorarioATrocarEnfermeiroId" class ="form-control" asp-items="ViewBag.HorarioATrocarEnfermeiroId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="HorarioParaTrocaEnfermeiroId" class="control-label"></label>
+                <select asp-for="HorarioParaTrocaEnfermeiroId" class ="form-control" asp-items="ViewBag.HorarioParaTrocaEnfermeiroId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="EstadoPedidoTrocaId" class="control-label"></label>
+                <select asp-for="EstadoPedidoTrocaId" class ="form-control" asp-items="ViewBag.EstadoPedidoTrocaId"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

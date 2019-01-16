@@ -18,6 +18,11 @@ namespace EscalonamentoHospitalar.Controllers
             _context = context;
         }
 
+        public IActionResult Error()
+        {
+            return View();
+        }
+
         // GET: DiretorServico
         public async Task<IActionResult> Index()
         {
@@ -29,14 +34,14 @@ namespace EscalonamentoHospitalar.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error));
             }
 
             var diretorServico = await _context.DiretoresServico
                 .FirstOrDefaultAsync(m => m.DiretorServicoID == id);
             if (diretorServico == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error));
             }
 
             return View(diretorServico);
@@ -101,6 +106,7 @@ namespace EscalonamentoHospitalar.Controllers
             {
                 if (!contactoIsInvalid(contacto) || !numMecIsInvalid(numero) || !emailIsInvalid(email) || !ccIsInvalid(nCC) || ValidateNumeroDocumentoCC(nCC))
                 {
+                    diretorServico.Codigo = "D" + diretorServico.Codigo;
                     _context.Add(diretorServico);
                     await _context.SaveChangesAsync();
                     TempData["insertSuccess"] = "Registo inserido com sucesso!";
@@ -115,13 +121,16 @@ namespace EscalonamentoHospitalar.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error));
             }
 
             var diretorServico = await _context.DiretoresServico.FindAsync(id);
+
+            diretorServico.Codigo = diretorServico.Codigo.Replace("D", "");
+
             if (diretorServico == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error));
             }
             return View(diretorServico);
         }
@@ -178,7 +187,7 @@ namespace EscalonamentoHospitalar.Controllers
 
             if (id != diretorServico.DiretorServicoID)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error));
             }
 
             if (ModelState.IsValid)
@@ -187,6 +196,7 @@ namespace EscalonamentoHospitalar.Controllers
                 {
                     if (!contactoIsInvalidEdit(contacto, idDir) || !ccIsInvalidEdit(nCC, idDir) || !emailIsInvalidEdit(email, idDir) || !numMecIsInvalidEdit(numero, idDir) || ValidateNumeroDocumentoCC(nCC))
                     {
+                        diretorServico.Codigo = "D" + diretorServico.Codigo;
                         _context.Update(diretorServico);
                         await _context.SaveChangesAsync();
                         TempData["successEdit"] = "Registo alterado com sucesso";
@@ -197,7 +207,7 @@ namespace EscalonamentoHospitalar.Controllers
                 {
                     if (!DiretorServicoExists(diretorServico.DiretorServicoID))
                     {
-                        return NotFound();
+                        return RedirectToAction(nameof(Error));
                     }
                     else
                     {
@@ -214,14 +224,14 @@ namespace EscalonamentoHospitalar.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error));
             }
 
             var diretorServico = await _context.DiretoresServico
                 .FirstOrDefaultAsync(m => m.DiretorServicoID == id);
             if (diretorServico == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error));
             }
 
             return View(diretorServico);

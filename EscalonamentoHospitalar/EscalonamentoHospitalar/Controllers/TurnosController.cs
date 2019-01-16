@@ -58,7 +58,7 @@ namespace EscalonamentoHospitalar.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]     
-        public async Task<IActionResult> Create([Bind("TurnoId,Nome")] Turno turno)
+        public async Task<IActionResult> Create([Bind("TurnoId,Nome,HoraInicio,HoraFim")] Turno turno)
         {
             if (ModelState.IsValid)
             {
@@ -98,7 +98,7 @@ namespace EscalonamentoHospitalar.Controllers
 
        
 
-        public async Task<IActionResult> Edit(int id, [Bind("TurnoId,Nome")] Turno turno)
+        public async Task<IActionResult> Edit(int id, [Bind("TurnoId,Nome,HoraInicio,HoraFim")] Turno turno)
         {
             if (id != turno.TurnoId)
             {

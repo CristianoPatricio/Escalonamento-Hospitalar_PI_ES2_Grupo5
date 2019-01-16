@@ -12,7 +12,7 @@ namespace EscalonamentoHospitalar.Models
         public int EnfermeiroId{ get; set; }
 
         [Required(ErrorMessage = "Por favor, introduza o seu número mecanográfico")]
-        [RegularExpression(@"[E]\d+", ErrorMessage = "Número errado")]
+        [RegularExpression(@"(\d+)", ErrorMessage = "Número errado")]
         public string NumeroMecanografico{ get; set; }
 
         [Required(ErrorMessage = "Por favor, introduza o nome")]
@@ -48,11 +48,9 @@ namespace EscalonamentoHospitalar.Models
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = false)]
         public DateTime? Data_Nascimento_Filho { get; set; }
 
-
         public ICollection<EnfermeiroEspecialidade> EnfermeirosEspecialidade { get; set; }
         public ICollection<HorarioEnfermeiro> HorariosEnfermeiro { get; set; }
-
-
+        public ICollection<PedidoTrocaTurnosEnfermeiro> PedidoTrocaTurnosEnfermeiros { get; set; }
     }
 }
 

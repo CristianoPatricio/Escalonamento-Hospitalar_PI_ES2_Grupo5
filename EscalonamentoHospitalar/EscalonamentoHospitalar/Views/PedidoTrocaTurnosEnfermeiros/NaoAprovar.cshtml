@@ -1,0 +1,80 @@
+﻿@model EscalonamentoHospitalar.Models.PedidoTrocaTurnosEnfermeiro
+
+@{
+    ViewData["Title"] = "Aprovar Pedido de Troca de Turno";
+}
+
+<h2>Tem a certeza de que pretende <b>não</b> aprovar o pedido de troca requerido pelo Enfermeiro/a <b>@Html.DisplayFor(model => model.Enfermeiro.Nome)</b>?</h2>
+
+<hr />
+
+<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.5.0/css/all.css' integrity='sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU' crossorigin='anonymous'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<h4>A aprovação deste pedido iria efetuar a alteração dos seguintes horários: </h4>
+
+<p></p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Data de início do Turno
+            </th>
+            <th>
+                Data de fim do Turno
+            </th>
+            <th>
+                Turno
+            </th>
+            <th>
+                Enfermeiro
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                @Html.DisplayFor(model => model.HorarioATrocarEnfermeiro.HorarioEnfermeiro.DataInicioTurno)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.HorarioATrocarEnfermeiro.HorarioEnfermeiro.DataFimTurno)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.HorarioATrocarEnfermeiro.HorarioEnfermeiro.Turno.Nome)
+            </td>
+            <td>
+                <del style="color:red;">@Html.DisplayFor(model => model.HorarioATrocarEnfermeiro.HorarioEnfermeiro.Enfermeiro.Nome)</del>
+                @Html.DisplayFor(model => model.HorarioParaTrocaEnfermeiro.HorarioEnfermeiro.Enfermeiro.Nome)
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                @Html.DisplayFor(model => model.HorarioParaTrocaEnfermeiro.HorarioEnfermeiro.DataInicioTurno)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.HorarioParaTrocaEnfermeiro.HorarioEnfermeiro.DataFimTurno)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.HorarioParaTrocaEnfermeiro.HorarioEnfermeiro.Turno.Nome)
+            </td>
+            <td>
+                <del style="color:red;">@Html.DisplayFor(model => model.HorarioParaTrocaEnfermeiro.HorarioEnfermeiro.Enfermeiro.Nome)</del>
+                @Html.DisplayFor(model => model.HorarioATrocarEnfermeiro.HorarioEnfermeiro.Enfermeiro.Nome)
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<hr />
+
+<form asp-action="NaoAprovar">
+    <input type="hidden" asp-for="PedidoTrocaTurnosEnfermeiroId" />
+
+    <button type="submit" class="btn btn-danger"><i class="fas fa-times" style="color:white;"></i> Não Aprovar</button>
+    <a asp-action="Index" class="btn btn-default">
+        <span class="fas fa-undo" style="color:dodgerblue;"></span> Voltar à lista
+    </a>
+</form>

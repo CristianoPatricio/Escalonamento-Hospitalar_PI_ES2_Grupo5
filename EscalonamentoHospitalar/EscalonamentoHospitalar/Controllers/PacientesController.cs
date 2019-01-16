@@ -67,14 +67,14 @@ namespace EscalonamentoHospitalar.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error)); 
             }
 
             var paciente = await _context.Pacientes
                 .FirstOrDefaultAsync(m => m.PacienteId == id);
             if (paciente == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error));
             }
 
             return View(paciente);
@@ -251,6 +251,11 @@ namespace EscalonamentoHospitalar.Controllers
             await _context.SaveChangesAsync();
             TempData["deleteEnf"] = "Paciente eliminado com sucesso!";
             return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult Error()
+        {
+            return View();
         }
 
         /**********************Funções auxiliares**************************/

@@ -13,17 +13,21 @@
 </div>
 
 <div>
-    <div style = "float:left; margin-top: 70px; margin-right:10px; margin-left:10px;">
+    <div style="float:left; margin-top: 70px; margin-right:10px; margin-left:10px;">
         <a href='@Url.Action("Index", "Medicos")'>
+<<<<<<< HEAD
             <input type="button"  class="btn btn-primary btn-lg btn-block" value="Lista de médicos" />
+=======
+            <input type="button" class="btn btn-primary btn-lg btn-block" value="LISTA DE MÉDICOS" />
+>>>>>>> CristianoPatricio_GerarHorarios
         </a>
     </div>
-    <div style = "float:left; margin-top: 70px; margin-right:10px; margin-left:10px;">
+    <div style="float:left; margin-top: 70px; margin-right:10px; margin-left:10px;">
         <a href='@Url.Action("Index", "Enfermeiros")'>
             <input type="button" class="btn btn-info btn-lg btn-block" value="Lista de enfermeiros" />
         </a>
     </div>
-    <div style = "float:left; margin-top: 70px; margin-right:10px; margin-left:10px;">
+    <div style="float:left; margin-top: 70px; margin-right:10px; margin-left:10px;">
         <a href='@Url.Action("Index", "Pacientes")'>
             <input type="button" class="btn btn-secundary btn-lg btn-block" value="Lista de pacientes" />
         </a>
@@ -67,6 +71,21 @@
     <div style="float:left;  margin-right:10px; margin-left:10px;">
         <a href='@Url.Action("Index", "EscalaPacientes")'>
             <input type="button" class="btn btn-secundary btn-lg btn-block" value="Gerar escala dos pacientes" />
+        </a>
+    </div>
+</div>
+
+<div style="float:left; margin-top:50px; margin-left: 100px;">
+    <h3>Gerar Horários</h3>
+    <!--Gerar Horários-->
+    <div style="float:left;  margin-right:10px; margin-left:10px;">
+        <a href='@Url.Action("GerarHorarioEnfermeiro", "HorarioEnfermeiros")'>
+            <input type="button" class="btn btn-info btn-lg btn-block" value="GERAR HORÁRIO ENFERMEIRO" />
+        </a>
+    </div>
+    <div style="float:left;  margin-right:10px; margin-left:10px;">
+        <a href='@Url.Action("GerarHorarioMedico", "HorarioMedicos")'>
+            <input type="button" class="btn btn-info btn-lg btn-block" value="GERAR HORÁRIO MÉDICO" />
         </a>
     </div>
 </div>

@@ -1,0 +1,76 @@
+﻿@model HorariosMedicosViewModel
+
+@{
+    ViewData["Title"] = "Pedido Troca Turnos Médico";
+}
+
+<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.5.0/css/all.css' integrity='sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU' crossorigin='anonymous'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+<h2>Solicitar pedido de troca de turnos - Médicos</h2>
+
+<p></p>
+
+<form asp-controller="HorarioMedicos" asp-action="PedidoTrocaTurnoMedico" asp-route-idHorario1="@ViewBag.HorarioATrocar">
+    <p>
+        Pesquisar por nome: <input style="width: 200px;" asp-for="CurrentNome" placeholder="Insira o nome a pesquisar" />
+        Pesquisar por data: <input style="width: 200px;" asp-for="DataInicio" />
+        <button type="submit" value="Pesquisar" class="btn btn-info"><span class="glyphicon glyphicon-search"></span> Pesquisar</button>
+    </p>
+</form>
+
+<h3>Selecione um turno para troca</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <i class="far fa-clock"></i> Data de início do Turno
+            </th>
+            <th>
+                <i class="far fa-clock"></i> Data de fim do Turno
+            </th>
+            <th>
+                <i class="glyphicon glyphicon-calendar"></i> Turno
+            </th>
+            <th>
+                <i class="fas fa-user-md"></i> Médico
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.HorariosMedicos)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DataInicioTurno)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DataFimTurno)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Turno.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Medico.Nome)
+                </td>
+                <td>
+                    <a asp-action="SolicitarPedidoTrocaTurnoMedico" asp-route-idHorario1="@ViewBag.HorarioATrocar" asp-route-idHorario2="@item.HorarioMedicoId" class="btn btn-info" >
+                        <span class="glyphicon glyphicon-refresh" style="color:white;"></span> Trocar
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div page-model="@Model.Pagination"
+     page-action="Index"
+     page-classes-enabled="true"
+     page-class="btn"
+     page-class-normal="btn-default"
+     page-class-selected="btn-primary"
+     class="btn-group pull-right">
+</div>

@@ -1,0 +1,49 @@
+﻿@model EscalonamentoHospitalar.Models.PedidoTrocaTurnosMedico
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create</h2>
+
+<h4>PedidoTrocaTurnosMedico</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="DataPedido" class="control-label"></label>
+                <input asp-for="DataPedido" class="form-control" />
+                <span asp-validation-for="DataPedido" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MedicoId" class="control-label"></label>
+                <select asp-for="MedicoId" class ="form-control" asp-items="ViewBag.MedicoId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="HorarioATrocarMedicoId" class="control-label"></label>
+                <select asp-for="HorarioATrocarMedicoId" class ="form-control" asp-items="ViewBag.HorarioATrocarMedicoId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="HorarioParaTrocaMedicoId" class="control-label"></label>
+                <select asp-for="HorarioParaTrocaMedicoId" class ="form-control" asp-items="ViewBag.HorarioParaTrocaMedicoId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="EstadoPedidoTrocaId" class="control-label"></label>
+                <select asp-for="EstadoPedidoTrocaId" class ="form-control" asp-items="ViewBag.EstadoPedidoTrocaId"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -71,6 +71,7 @@ namespace EscalonamentoHospitalar.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("TratamentoId,PatologiaId,PacienteId,GrauId,DataInicio,DataFim,DuracaoCiclo,RegimeId,EstadoId,MedicoId")] Tratamento tratamento)
         {
+<<<<<<< HEAD
 
                                         /******************Validações**********************/
 
@@ -89,12 +90,29 @@ namespace EscalonamentoHospitalar.Controllers
 
 
 
+=======
+            DateTime dataInicio = tratamento.DataInicio;
+            DateTime dataFim = tratamento.DataFim;
+            TimeSpan duracaoCiclo = tratamento.DuracaoCiclo;        
+            Paciente idPaciente =  _context.Pacientes.SingleOrDefault(p => p.PacienteId == tratamento.PacienteId);
+            int idRegime = tratamento.RegimeId;
+            var tipoRegime = _context.Regime.SingleOrDefault(r => r.RegimeId == idRegime);
+            string regime = tipoRegime.TipoRegime.ToString();
+
+            Estado estado = _context.Estado.SingleOrDefault(e => e.Nome == "Decorrer");
+
+            tratamento.EstadoId = estado.EstadoId;
+
 
             if (ModelState.IsValid)
             {
-                _context.Add(tratamento);
+                _context.Add(tratamento);              
                 await _context.SaveChangesAsync();
+<<<<<<< HEAD
                 TempData["notice"] = "Tratamento inserido com sucesso!";
+=======
+                GenerateHorarioPaciente(_context, dataInicio, dataFim, duracaoCiclo,idPaciente, regime);
+
                 return RedirectToAction(nameof(Index));
             }
             ViewData["GrauId"] = new SelectList(_context.Grau, "GrauId", "TipoGrau", tratamento.GrauId);
@@ -216,5 +234,106 @@ namespace EscalonamentoHospitalar.Controllers
         {
             return _context.Tratamentos.Any(e => e.TratamentoId == id);
         }
+
+        /*****************************Funções Auxiliares*********************************/
+       
+        /**
+         * @param db
+         * @param dataInicio
+         * @param duracao
+         * @param dataFim
+         * @param pacienteId
+         * @param tratamentoId
+         * @insert into HorarioPaciente table a record with the above parameteres
+         */ 
+        private void InsertDataIntoHorarioPaciente(HospitalDbContext db, DateTime dataInicio, TimeSpan duracao, DateTime dataFim, Paciente pacienteId)
+        {
+            db.HorariosPaciente.Add(
+                    new HorarioPaciente {DataInicio = dataInicio, Duracao = duracao, DataFim = dataFim, PacienteId = pacienteId.PacienteId}
+                );
+
+            db.SaveChanges();
+        }
+
+        /**
+         * @param db 
+         * @param dataInicio
+         * @param dataFim
+         * @param duracaoCiclo
+         * @param idPaciente
+         * @param regime
+         * @generate a schedule for a specific client
+         */
+        private void GenerateHorarioPaciente(HospitalDbContext db, DateTime dataInicio, DateTime dataFim, TimeSpan duracaoCiclo,Paciente idPaciente, string regime)
+         {
+            List<DateTime> datasInicioTratamento = new List<DateTime>();
+            List<DateTime> datasFimTratamento = new List<DateTime>();
+
+            DateTime data;
+
+            int iteracao = 0;
+            if (regime == "Semanal")
+            {
+                iteracao = 7;
+            }
+            else if (regime == "Quinzenal")
+            {
+                iteracao = 14;
+            }
+            else if (regime == "Mensal")
+            {
+                iteracao = 30;
+            }else if (regime == "Trimestral")
+            {
+                iteracao = 90;
+            }
+
+            double dif = dataFim.Subtract(dataInicio).TotalDays;
+
+            double tempo = dif / iteracao;
+
+            if (CheckIfThereIsMoreThanSevenClients(dataInicio.AddHours(9)) == true) { //Não há mais que sete
+                data = dataInicio.AddHours(11);
+            }
+            else if (CheckIfThereIsMoreThanSevenClients(dataInicio.AddHours(11)) == true) //Não há mais que sete
+            {
+                data = dataInicio.AddHours(13);
+            }else if (CheckIfThereIsMoreThanSevenClients(dataInicio.AddHours(13)) == true) //Não há mais que sete
+            {
+                data = dataInicio.AddHours(15);
+            }
+            else
+            {
+                data = dataInicio.AddHours(9);
+            }
+
+            for (int i = 0; i <= tempo; i++)
+            {
+
+                InsertDataIntoHorarioPaciente(db, data, duracaoCiclo, data.AddHours(duracaoCiclo.TotalHours), idPaciente);
+
+                datasInicioTratamento.Add(data);
+                datasFimTratamento.Add(data.AddHours(duracaoCiclo.TotalHours));
+
+                data = data.AddDays(iteracao);             
+            }
+        }
+
+        private bool CheckIfThereIsMoreThanSevenClients(DateTime data)
+        {
+            bool novaData = false;
+
+            var horario = from h in _context.HorariosPaciente
+                          where h.DataInicio.Day == data.Day && h.DataInicio.Month == data.Month && h.DataInicio.Year == data.Year && h.DataInicio.Hour == data.Hour
+                          select h;
+
+            if (horario.Count() >= 7)
+            {
+                novaData = true;
+            }
+
+            return novaData;
+        }
+
     }
 }

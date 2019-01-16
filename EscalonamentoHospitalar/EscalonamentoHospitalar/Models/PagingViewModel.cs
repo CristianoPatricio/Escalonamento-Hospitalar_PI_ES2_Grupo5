@@ -11,5 +11,7 @@ namespace EscalonamentoHospitalar.Models
         public int PageSize { get; set; }
         public int CurrentPage { get; set; }
         public int NumberPages => (int)Math.Ceiling((double)TotalItems / PageSize);
+        public string Nome { get; set; }
+        public string Especialidade { get; set; }
     }
 }

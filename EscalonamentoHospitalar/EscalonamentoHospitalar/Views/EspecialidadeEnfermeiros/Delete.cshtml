@@ -4,6 +4,25 @@
     ViewData["Title"] = "Eliminar";
 }
 
+<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.5.0/css/all.css' integrity='sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU' crossorigin='anonymous'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    //Passados 5 segundos a mensagem desaparece
+    $(document).ready(function () {
+        $("#suc_form").hide(10000);
+    });
+</script>
+
+@if (TempData["errorDelete"] != null)
+{
+    <div id="suc_form" class="alert alert-danger">
+        <strong>ERRO!</strong> Impossível eliminar especialidade que tenha enfermeiros atribuídos.
+    </div>
+}
+
 <head>
     <!--icon-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -132,10 +151,16 @@
 
         <form asp-action="Delete">
             <input type="hidden" asp-for="EspecialidadeEnfermeiroId" />
-            <a href="#myDeleteModal" class="trigger-btn" data-toggle="modal">
-                <input type="submit" value="Eliminar" class="btn btn-danger" />
+            <a href="#myDeleteModal" class="btn btn-danger" data-toggle="modal">
+                <span class="glyphicon glyphicon-trash"></span> Eliminar
             </a>
+            <a asp-action="Index" class="btn btn-default">
+                <span class="fas fa-undo" style="color:dodgerblue;"></span> Voltar à lista
+            </a>
+<<<<<<< HEAD
             <a asp-action="Index"> <input type="submit" value="Voltar à lista de especialidades" class="btn btn-default" /></a>
+=======
+>>>>>>> CristianoPatricio_GerarHorarios
         </form>
     </div>
 

@@ -1,0 +1,48 @@
+﻿@model EscalonamentoHospitalar.Models.HorarioMedico
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>HorarioMedico</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DataInicioTurno)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DataInicioTurno)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Duracao)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Duracao)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DataFimTurno)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DataFimTurno)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Turno)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Turno.TurnoId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Medico)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Medico.CC)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.HorarioMedicoId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

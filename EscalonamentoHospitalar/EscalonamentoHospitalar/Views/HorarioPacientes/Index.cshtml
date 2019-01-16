@@ -1,0 +1,98 @@
+﻿@model HorarioPacienteViewModel
+
+@{
+    ViewData["Title"] = "Horários dos Pacientes";
+}
+
+<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.5.0/css/all.css' integrity='sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU' crossorigin='anonymous'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<h2>Horários dos Pacientes</h2>
+
+<form asp-action="Index">
+    <p>
+        Pesquisar por nome: <input style="width: 200px;" asp-for="CurrentNome" placeholder="Insira o nome a pesquisar" />
+        Pesquisar por data: <input style="width: 200px;" asp-for="DataInicio" />
+        <button type="submit" value="Pesquisar" class="btn btn-info"><span class="glyphicon glyphicon-search"></span> Pesquisar</button>
+    </p>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <i class="glyphicon glyphicon-user"></i> Paciente
+            </th>
+            <th>
+                <i class="glyphicon glyphicon-calendar"></i> Data de Início do Tratamento
+            </th>
+            <th>
+                <i class="far fa-clock"></i> Duração do Tratamento (horas)
+            </th>
+            <th>
+                <i class="glyphicon glyphicon-calendar"></i> Data de Fim do Tratamento
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.HorariosPacientes)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Paciente.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataInicio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Duracao)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataFim)
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+
+@if (TempData["NoItemsFound"] != null)
+{
+    <script>
+        //Show #myModal when there aren't records founded of search by date or name
+        $(document).ready(function () {
+            $("#myModal").modal();
+        });
+    </script>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title" style="color:dodgerblue;"><strong>Ops!</strong></h4>
+                </div>
+                <div class="modal-body">
+                    <p> Não foram encontrados resultados para a sua pesquisa :(</p>
+                </div>
+                <div class="modal-footer">
+                    <a asp-action="Index"><input type="hidden" /><input type="button" class="btn btn-default" value="Ok" /></a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+}
+
+<div page-model="@Model.Pagination"
+     page-action="Index"
+     page-classes-enabled="true"
+     page-class="btn"
+     page-class-normal="btn-default"
+     page-class-selected="btn-primary"
+     class="btn-group pull-right">
+</div>

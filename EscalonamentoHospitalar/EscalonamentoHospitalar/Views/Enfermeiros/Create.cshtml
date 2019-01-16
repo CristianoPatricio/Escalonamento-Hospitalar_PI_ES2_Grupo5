@@ -14,7 +14,10 @@
             <form asp-action="Create">
                 <div class="form-group">
                     <label asp-for="NumeroMecanografico" class="control-label">Número Mecanográfico</label>
-                    <input asp-for="NumeroMecanografico" class="form-control" placeholder="p. ex. E12345" />
+                    <div class="input-group">
+                        <span class="input-group-addon">E</span>
+                        <input asp-for="NumeroMecanografico" class="form-control" placeholder="p. ex. 12345" />
+                    </div>
                     <span asp-validation-for="NumeroMecanografico" class="text-danger"></span>
                 </div>
                 <div class="form-group">
@@ -82,14 +85,22 @@
                 </div>
 
                 <div class="form-group">
-                    <input type="submit" value="Inserir" class="btn btn-success" />
+                    <button class="btn btn-success" type="submit">
+                        <i class="fas fa-save" style="color:white;"></i> Inserir
+                    </button>
                 </div>
             </form>
         </div>
     </div>
 
     <div>
+<<<<<<< HEAD
         <a asp-action="Index"><input type="button" value="Voltar à lista de enfermeiros" class="btn btn-default" /></a>
+=======
+        <a asp-action="Index" class="btn btn-default">
+            <span class="fas fa-undo" style="color:dodgerblue;"></span> Voltar à lista
+        </a>
+>>>>>>> CristianoPatricio_GerarHorarios
     </div>
 </body>
 

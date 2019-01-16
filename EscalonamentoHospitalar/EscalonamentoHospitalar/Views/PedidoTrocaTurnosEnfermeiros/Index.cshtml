@@ -1,0 +1,171 @@
+﻿@model ListaPedidoTrocaTurnosEnfermeiroViewModel
+
+@{
+    ViewData["Title"] = "Lista de Pedidos";
+}
+
+
+<h2>Lista de Pedidos de troca de turnos - Enfermeiros</h2>
+
+<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.5.0/css/all.css' integrity='sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU' crossorigin='anonymous'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    //Passados 5 segundos a mensagem desaparece
+    $(document).ready(function () {
+        $("#suc_form").hide(10000);
+    });
+</script>
+
+@if (TempData["UpdatedSuccess"] != null)
+{
+    <!--Mensagem de sucesso quando é aprovado pedido do horário-->
+    <div id="suc_form" class="alert alert-success">
+        <strong>Sucesso!</strong> O pedido de troca de turno foi aprovado com sucesso!
+    </div>
+}
+
+@if (TempData["NotAproved"] != null)
+{
+    <!--Mensagem de sucesso quando é rejeitado um pedido do horário-->
+    <div id="suc_form" class="alert alert-success">
+        <strong>Sucesso!</strong> O pedido de troca de turno foi arquivado!
+    </div>
+}
+
+@if (TempData["Validated"] != null)
+{
+    <!--Mensagem de sucesso quando é validado um pedido do horário-->
+    <div id="suc_form" class="alert alert-success">
+        <strong>Sucesso!</strong> O pedido de troca de turno foi validado com sucesso!
+    </div>
+}
+
+@if (TempData["DateIsUpperThanDateNoe"] != null)
+{
+    <!--Mensagem de sucesso quando é validado um pedido do horário-->
+    <div id="suc_form" class="alert alert-warning">
+        <strong>Atenção!</strong> Já não pode aprovar este pedido. A data de turno é menor que a data atual.
+    </div>
+}
+
+<form asp-action="Index">
+    <p>
+        Pesquisar por Enfermeiro Requerente: <input style="width: 200px;" asp-for="CurrentNome" placeholder="Insira o nome a pesquisar" />
+        Pesquisar por Data do Pedido: <input style="width: 200px;" asp-for="DataInicio" />
+        <button type="submit" value="Pesquisar" class="btn btn-info"><span class="glyphicon glyphicon-search"></span> Pesquisar</button>
+    </p>
+</form>
+
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th>
+                <i style='font-size:24px' class='far'>&#xf073;</i> Data do Pedido
+            </th>
+            <th>
+                <i style='font-size:24px' class='fas'>&#xf0f0;</i> Enfermeiro Requerente
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.PedidoTrocaTurnosEnfermeiros)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DataPedido)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Enfermeiro.Nome)
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.PedidoTrocaTurnosEnfermeiroId" class="btn btn-info">
+                        <span class="fas fa-info" style="color:white;"></span> Detalhes
+                    </a>
+
+                    @if (item.EstadoPedidoTroca.Nome == "Pendente")
+                    {
+                        if (!(item.HorarioATrocarEnfermeiro.HorarioEnfermeiro.DataInicioTurno < DateTime.Now))
+                        {
+                            <a asp-action="Edit" asp-route-id="@item.PedidoTrocaTurnosEnfermeiroId" class="btn btn-success">
+                                <span class="fas fa-check" style="color:white;"></span> Validar
+                            </a>
+                        }
+
+                        <a asp-action="NaoValidar" asp-route-id="@item.PedidoTrocaTurnosEnfermeiroId" class="btn btn-danger">
+                            <span class="fas fa-times" style="color:white;"></span> Não Validar
+                        </a>
+
+                    }
+                    else if (item.EstadoPedidoTroca.Nome == "Validado")
+                    {
+                        if (!(item.HorarioATrocarEnfermeiro.HorarioEnfermeiro.DataInicioTurno < DateTime.Now))
+                        {
+                            <a asp-action="Aprovar" asp-route-id="@item.PedidoTrocaTurnosEnfermeiroId" class="btn btn-success">
+                                <span class="fas fa-check" style="color:white;"></span> Aprovar
+                            </a>
+                        }
+                        <a asp-action="NaoAprovar" asp-route-id="@item.PedidoTrocaTurnosEnfermeiroId" class="btn btn-danger">
+                            <span class="fas fa-times" style="color:white;"></span> Não Aprovar
+                        </a>
+
+                    }
+                    else
+                    {
+
+                    }
+                </td>
+                <td></td>
+                <td>
+                    @if (item.EstadoPedidoTroca.Nome.Equals("Pendente"))
+                    {
+                        <a asp-action="Delete" asp-route-id="@item.PedidoTrocaTurnosEnfermeiroId" class="btn btn-danger">
+                            <span class="glyphicon glyphicon-trash"></span> Eliminar
+                        </a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@if (TempData["NoItemsFound"] != null)
+{
+    <script>
+        //Show #myModal when there aren't records founded of search by date or name
+        $(document).ready(function () {
+            $("#myModal").modal();
+        });
+    </script>
+
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title" style="color:dodgerblue;"><strong>Ops!</strong></h4>
+                </div>
+                <div class="modal-body">
+                    <p> Não foram encontrados resultados para a sua pesquisa :(</p>
+                </div>
+                <div class="modal-footer">
+                    <a asp-action="Index"><input type="hidden" /><input type="button" class="btn btn-default" value="Ok" /></a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+}
+
+<div page-model="@Model.Pagination"
+     page-action="Index"
+     page-classes-enabled="true"
+     page-class="btn"
+     page-class-normal="btn-default"
+     page-class-selected="btn-primary"
+     class="btn-group pull-right">
+</div>
