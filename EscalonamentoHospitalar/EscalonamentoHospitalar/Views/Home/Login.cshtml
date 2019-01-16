@@ -13,22 +13,24 @@
     <div class="col-md-4" style="background-color:#049ACC; padding: 30px; border-radius: 25px;">
         <section>
             <form asp-controller="Home" asp-action="Login" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
                     <label asp-for="Codigo">Código</label>
-                    <input asp-for="Codigo" class="form-control" placeholder="Introduza o seu número mecanográfico"/>
+                    <input asp-for="Codigo" class="form-control" placeholder="Introduza o seu número mecanográfico" />
                     <span asp-validation-for="Codigo" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Password">Password</label>
-                    <input asp-for="Password" class="form-control" placeholder="Introduza a password"/>
+                    <input asp-for="Password" class="form-control" placeholder="Introduza a password" />
                     <span asp-validation-for="Password" class="text-danger"></span>
                 </div>
-               
+
                 <div class="form-group">
                     <button type="submit" class="btn btn-secondary">Entrar</button>
                 </div>
-   
+
             </form>
         </section>
     </div>
 </div>
+

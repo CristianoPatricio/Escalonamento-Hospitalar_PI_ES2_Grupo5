@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace EscalonamentoHospitalar.Controllers
 {
-    [Authorize(Policy = "AcessoRestritoDiretorServico")] // Política de acesso restrito ao Diretor de Serviço
+    [Authorize]     
     public class MedicosController : Controller
 
     {
@@ -66,7 +66,7 @@ namespace EscalonamentoHospitalar.Controllers
             );
 
         }
-
+        [Authorize(Roles = "DiretorServico")]
         // GET: Medicos/Details/5
         public async Task<IActionResult> Details(int? id)
         {

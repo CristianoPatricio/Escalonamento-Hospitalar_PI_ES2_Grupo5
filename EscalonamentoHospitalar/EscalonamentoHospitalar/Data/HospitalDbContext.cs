@@ -9,11 +9,17 @@ namespace EscalonamentoHospitalar.Models
 {
     public class HospitalDbContext : DbContext
     {
-        public HospitalDbContext (DbContextOptions<HospitalDbContext> options)
-            : base(options)
+
+        public HospitalDbContext(DbContextOptions<HospitalDbContext> options) : base(options)
+        {
+
+        }
+
+        public HospitalDbContext()
         {
         }
-       
+
+        public DbSet<UserAccount> userAccount { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

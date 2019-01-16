@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace EscalonamentoHospitalar.Migrations.HospitalDb
+namespace EscalonamentoHospitalar.Migrations
 {
     public partial class initial : Migration
     {
@@ -148,6 +148,24 @@ namespace EscalonamentoHospitalar.Migrations.HospitalDb
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Turnos", x => x.TurnoId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "userAccount",
+                columns: table => new
+                {
+                    UserId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    NumeroMecanografico = table.Column<string>(nullable: false),
+                    Nome = table.Column<string>(nullable: false),
+                    Email = table.Column<string>(nullable: false),
+                    Codigo = table.Column<string>(nullable: false),
+                    Password = table.Column<string>(nullable: false),
+                    ConfirmPassword = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_userAccount", x => x.UserId);
                 });
 
             migrationBuilder.CreateTable(
@@ -419,6 +437,9 @@ namespace EscalonamentoHospitalar.Migrations.HospitalDb
 
             migrationBuilder.DropTable(
                 name: "Tratamentos");
+
+            migrationBuilder.DropTable(
+                name: "userAccount");
 
             migrationBuilder.DropTable(
                 name: "Enfermeiros");

@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace EscalonamentoHospitalar.Controllers
 {
-    [Authorize(Policy = "AcessoRestritoDiretorServico")] // Política de acesso restrito ao Diretor de Servico
+    [Authorize] 
     public class EnfermeirosController : Controller
     {
         private const int PAGE_SIZE = 5;

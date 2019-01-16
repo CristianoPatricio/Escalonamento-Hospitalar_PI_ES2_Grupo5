@@ -1,0 +1,18 @@
+﻿
+@{
+    ViewData["Title"] = "AssignRoleToUser";
+}
+
+<h2>AssignRoleToUser</h2>
+
+@using (Html.BeginForm())
+{
+    <div class="form-group">
+        @Html.Label("Select Your User Type", "Select Your User Type", new { @class = "cold-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.DropDownList("UserName")
+        </div>
+    </div>
+    <input type="submit" value="Create Role" />
+}
+

@@ -7,10 +7,10 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace EscalonamentoHospitalar.Migrations.HospitalDb
+namespace EscalonamentoHospitalar.Migrations
 {
     [DbContext(typeof(HospitalDbContext))]
-    [Migration("20181218123153_initial")]
+    [Migration("20190115120824_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -356,6 +356,34 @@ namespace EscalonamentoHospitalar.Migrations.HospitalDb
                     b.HasKey("TurnoId");
 
                     b.ToTable("Turnos");
+                });
+
+            modelBuilder.Entity("EscalonamentoHospitalar.Models.UserAccount", b =>
+                {
+                    b.Property<int>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Codigo")
+                        .IsRequired();
+
+                    b.Property<string>("ConfirmPassword");
+
+                    b.Property<string>("Email")
+                        .IsRequired();
+
+                    b.Property<string>("Nome")
+                        .IsRequired();
+
+                    b.Property<string>("NumeroMecanografico")
+                        .IsRequired();
+
+                    b.Property<string>("Password")
+                        .IsRequired();
+
+                    b.HasKey("UserId");
+
+                    b.ToTable("userAccount");
                 });
 
             modelBuilder.Entity("EscalonamentoHospitalar.Models.Enfermeiro", b =>

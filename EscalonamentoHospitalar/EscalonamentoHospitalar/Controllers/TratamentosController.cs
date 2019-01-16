@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EscalonamentoHospitalar.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EscalonamentoHospitalar.Controllers
 {
@@ -28,6 +29,7 @@ namespace EscalonamentoHospitalar.Controllers
         }
 
         // GET: Tratamentos/Details/5
+        [Authorize (Roles = "M008")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)

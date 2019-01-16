@@ -48,67 +48,76 @@ namespace EscalonamentoHospitalar
                 .AddDefaultTokenProviders();
 
             
-            services.AddAuthorization(options => {
-                options.AddPolicy("AcessoRestritoAdministrador",
-                    policy => policy.RequireRole("Administrador"));
-            });
+            //services.AddAuthorization(options => {
+            //    options.AddPolicy("AcessoRestritoAdministrador",
+            //        policy => policy.RequireRole("Administrador"));
+            //});
 
-            // Política para acesso restrito ao diretor de serviço
-            services.AddAuthorization(options => {
-                options.AddPolicy("AcessoRestritoDiretorServico",
-                    policy => policy.RequireRole("DiretorServico"));
-            });
+            //// Política para acesso restrito ao diretor de serviço
+            //services.AddAuthorization(options => {
+            //    options.AddPolicy("AcessoRestritoDiretorServico",
+            //        policy => policy.RequireRole("DiretorServico"));
+            //});
 
-            // Política para acesso restrito ao médico
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy("AcessoRestritoMedico",
-                    policy => policy.RequireRole("Medico"));
-            });
+            //// Política para acesso restrito ao médico
+            //services.AddAuthorization(options =>
+            //{
+            //    options.AddPolicy("AcessoRestritoMedico",
+            //        policy => policy.RequireRole("Medico"));
+            //});
 
-            // Política para acesso restrito ao enfermeiro
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy("AcessoRestritoEnfermeiro",
-                    policy => policy.RequireRole("Enfermeiro"));
-            });
+            //// Política para acesso restrito ao enfermeiro
+            //services.AddAuthorization(options =>
+            //{
+            //    options.AddPolicy("AcessoRestritoEnfermeiro",
+            //        policy => policy.RequireRole("Enfermeiro"));
+            //});
             
 
-            services.Configure<IdentityOptions>(
-                options =>
-                {
-                    // Definições da password
-                    options.Password.RequireUppercase = true;
-                    options.Password.RequireDigit = true;
-                    options.Password.RequiredLength = 6;
-                    options.Password.RequireUppercase = true;
-                    options.Password.RequiredUniqueChars = 3;
+            //services.Configure<IdentityOptions>(
+            //    options =>
+            //    {
+            //        // Definições da password
+            //        options.Password.RequireUppercase = true;
+            //        options.Password.RequireDigit = true;
+            //        options.Password.RequiredLength = 6;
+            //        options.Password.RequireUppercase = true;
+            //        options.Password.RequiredUniqueChars = 3;
 
-                    // Definições de lockout
-                    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(2);
-                    options.Lockout.MaxFailedAccessAttempts = 3;
-                    options.Lockout.AllowedForNewUsers = true;
+            //        // Definições de lockout
+            //        options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(2);
+            //        options.Lockout.MaxFailedAccessAttempts = 3;
+            //        options.Lockout.AllowedForNewUsers = true;
 
-                }
+            //    }
                 
-            );
+            //);
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddSession();
+            var connection = @"Server=(localdb)\mssqllocaldb;Database=HospitalDataBase;Trusted_Connection=True";
 
-            services.AddDbContext<HospitalDbContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("HospitalDbContext")));
+            /*  services.AddDbContext<HospitalDbContext>(options =>
+                      options.UseSqlServer(Configuration.GetConnectionString("HospitalDbContext")));*/
+            services.AddDbContext<HospitalDbContext>(options => options.UseSqlServer(connection));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, HospitalDbContext db, UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
+        public void Configure(
+            IApplicationBuilder app, 
+            IHostingEnvironment env, 
+            HospitalDbContext db, 
+            UserManager<IdentityUser> userManager, 
+            RoleManager<IdentityRole> roleManager
+            )
         {
-           SeedData.CreateRolesAndUsersAsync(userManager, roleManager).Wait();
+        //   SeedData.CreateRolesAndUsersAsync(userManager, roleManager).Wait();
 
             if (env.IsDevelopment())
             {
                // SeedData.CreateRolesAndUsersAsync(userManager, roleManager).Wait();
-                SeedData.Populate(db);
+               // SeedData(db);
 
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
@@ -121,6 +130,9 @@ namespace EscalonamentoHospitalar
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
+            app.UseSession();
+
             app.UseCookiePolicy();
 
             app.UseAuthentication();
