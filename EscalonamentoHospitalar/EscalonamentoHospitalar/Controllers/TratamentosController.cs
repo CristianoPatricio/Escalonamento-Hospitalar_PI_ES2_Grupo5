@@ -56,7 +56,7 @@ namespace EscalonamentoHospitalar.Controllers
         }
 
         // GET: Tratamentos/Create
-        public async Task<IActionResult> CreateAsync(int? id1)
+        public IActionResult Create()
         {
 
             ViewData["GrauId"] = new SelectList(_context.Grau, "GrauId", "TipoGrau");
@@ -64,20 +64,10 @@ namespace EscalonamentoHospitalar.Controllers
             ViewData["PacienteId"] = new SelectList(_context.Pacientes, "PacienteId", "Nome");
             ViewData["PatologiaId"] = new SelectList(_context.Patologia, "PatologiaId", "Nome");
             ViewData["RegimeId"] = new SelectList(_context.Regime, "RegimeId", "TipoRegime");
-            ViewData["EstadoId"] = new SelectList(_context.Estado, "EstadoId", "Nome");
+            //ViewData["EstadoId"] = new SelectList(_context.Estado, "EstadoId", "Nome");
 
-
-            if (id1 == null)
-            {            
-                return View();
-            }
-            else //se for passado
-            {
-                //algoritmo
-                var paciente = await _context.Pacientes.FindAsync(id1); //atributos do paciente
-
-                return View(paciente);
-            }
+            return View();
+  
         }
 
         // POST: Tratamentos/Create
