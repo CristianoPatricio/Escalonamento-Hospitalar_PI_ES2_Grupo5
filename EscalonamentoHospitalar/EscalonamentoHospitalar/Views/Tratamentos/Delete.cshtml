@@ -183,10 +183,14 @@
 
     <form asp-action="Delete">
         <input type="hidden" asp-for="TratamentoId" />
-        <a href="#myModal" class="trigger-btn" data-toggle="modal">
-            <input type="submit" value="ELIMINAR" class="btn btn-danger" />
-        </a>  |
-        <a asp-action="Index" class="btn btn-default">Voltar à lista de tratamentos</a>
+        
+            <a href="#myDeleteModal" data-toggle="modal" class="btn btn-danger">
+                <span class="glyphicon glyphicon-trash"></span> Eliminar
+                
+            </a>  |
+            <a asp-action="Index" class="btn btn-default">
+                <span class="fas fa-undo" style="color:dodgerblue;"></span> Voltar à lista de tratamentos
+            </a>
     </form>
 
     <!-- Modal HTML CONFIRMAÇÃO DO ELIMINAR -->
@@ -207,6 +211,7 @@
                     <form asp-action="Delete">
                         <input type="hidden" asp-for="TratamentoId" />
                         <input type="submit" class="btn btn-danger" value="ELIMINAR" />
+
                         <button type="button" class="btn btn-info" data-dismiss="modal">CANCELAR</button>
 
                     </form>

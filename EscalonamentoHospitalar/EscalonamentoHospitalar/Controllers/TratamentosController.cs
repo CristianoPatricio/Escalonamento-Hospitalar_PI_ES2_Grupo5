@@ -75,27 +75,28 @@ namespace EscalonamentoHospitalar.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("TratamentoId,PatologiaId,PacienteId,GrauId,DataInicio,DataFim,DuracaoCiclo,RegimeId,MedicoId")] Tratamento tratamento, int id1)
+        public async Task<IActionResult> Create([Bind("TratamentoId,PatologiaId,PacienteId,GrauId,DataInicio,DataFim,DuracaoCiclo,RegimeId,MedicoId")] Tratamento tratamento)
         {
             /*********Validações***********/
 
             DateTime dateNow = DateTime.Now;
-            DateTime inicioTratamento = tratamento.DataInicio;
-            DateTime fimTratamento = tratamento.DataFim;
-            int tratamentoId = tratamento.TratamentoId;
-            int patologiaId = tratamento.PatologiaId;
-            int pacienteId = id1;
-            int grauId = tratamento.GrauId;
+            //DateTime inicioTratamento = tratamento.DataInicio;
+            //DateTime fimTratamento = tratamento.DataFim;
+            //int tratamentoId = tratamento.TratamentoId;
+            //int patologiaId = tratamento.PatologiaId;
+            //int pacienteId = id1;
+            //int grauId = tratamento.GrauId;
             DateTime DataInicio = tratamento.DataInicio;
-            DateTime DataFim = tratamento.DataFim;
-            string DuracaoCiclo = tratamento.DuracaoCiclo;
-            int RegimeId = tratamento.RegimeId;
-            int MedicoId = tratamento.MedicoId;
+            //DateTime DataFim = tratamento.DataFim;
+            //string DuracaoCiclo = tratamento.DuracaoCiclo;
+            //int RegimeId = tratamento.RegimeId;
+            //int MedicoId = tratamento.MedicoId;
 
             string estado = EstadoTratamento(dateNow, DataInicio);          
 
             Estado estadoTratamento = _context.Estado.SingleOrDefault(e => e.Nome == estado);
 
+            tratamento.EstadoId = estadoTratamento.EstadoId;
             
             /*bool dataTratamentoIsInvalid = false;
 
@@ -108,11 +109,7 @@ namespace EscalonamentoHospitalar.Controllers
 
             if (ModelState.IsValid)
             {
-                _context.Add(
-                    
-                    new Tratamento {TratamentoId = tratamentoId,PatologiaId = patologiaId, PacienteId = id1,GrauId = grauId,DataInicio = DataInicio, DataFim = DataFim ,RegimeId = RegimeId,EstadoId = estadoTratamento.EstadoId, MedicoId = MedicoId  }
-                    
-                    );
+                _context.Add(tratamento);
                 await _context.SaveChangesAsync();
                 TempData["notice"] = "Tratamento inserido com sucesso!";
                 return RedirectToAction(nameof(Index));
