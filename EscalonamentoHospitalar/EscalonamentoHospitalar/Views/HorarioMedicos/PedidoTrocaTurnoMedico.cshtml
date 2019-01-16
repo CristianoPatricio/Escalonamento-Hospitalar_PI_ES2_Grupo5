@@ -4,6 +4,10 @@
     ViewData["Title"] = "Pedido Troca Turnos Médico";
 }
 
+<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.5.0/css/all.css' integrity='sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU' crossorigin='anonymous'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
 <h2>Solicitar pedido de troca de turnos - Médicos</h2>
 
 <p></p>
@@ -22,16 +26,16 @@
     <thead>
         <tr>
             <th>
-                Data de início do Turno
+                <i class="far fa-clock"></i> Data de início do Turno
             </th>
             <th>
-                Data de fim do Turno
+                <i class="far fa-clock"></i> Data de fim do Turno
             </th>
             <th>
-                Turno
+                <i class="glyphicon glyphicon-calendar"></i> Turno
             </th>
             <th>
-                Médico
+                <i class="fas fa-user-md"></i> Médico
             </th>
             <th></th>
         </tr>
@@ -53,7 +57,9 @@
                     @Html.DisplayFor(modelItem => item.Medico.Nome)
                 </td>
                 <td>
-                    <a asp-action="SolicitarPedidoTrocaTurnoMedico" asp-route-idHorario1="@ViewBag.HorarioATrocar" asp-route-idHorario2="@item.HorarioMedicoId"><input type="hidden" /><input type="button" value="Trocar" class="btn btn-info" /></a>
+                    <a asp-action="SolicitarPedidoTrocaTurnoMedico" asp-route-idHorario1="@ViewBag.HorarioATrocar" asp-route-idHorario2="@item.HorarioMedicoId" class="btn btn-info" >
+                        <span class="glyphicon glyphicon-refresh" style="color:white;"></span> Trocar
+                    </a>
                 </td>
             </tr>
         }

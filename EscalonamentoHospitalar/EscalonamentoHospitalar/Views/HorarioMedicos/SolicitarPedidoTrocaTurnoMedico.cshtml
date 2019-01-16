@@ -42,6 +42,8 @@
         <input type="hidden" asp-for="horarioMedicoATrocar.HorarioMedicoId" name="idHor1" />
         <input type="hidden" asp-for="horarioMedicoParaTroca.HorarioMedicoId" name="idHor2" />
         <input type="submit" value="Solicitar Pedido" class="btn btn-success" />
-        <a asp-action="Index"><input type="button" value="Cancelar" class="btn btn-default" /></a>
+        <a asp-action="Index" class="btn btn-default">
+            <span class="fas fa-times" style="color:white;"></span> Cancelar
+        </a>
     </form>
 </div>
