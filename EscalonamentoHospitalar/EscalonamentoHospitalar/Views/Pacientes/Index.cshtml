@@ -7,6 +7,9 @@
 }
 <p></p>
 
+<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.5.0/css/all.css' integrity='sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU' crossorigin='anonymous'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 @if (TempData["notice"] != null)
 {
     <!--Mensagem de sucesso quandi insere paciente-->
@@ -46,6 +49,7 @@
     <p style="float: right">
         Pesquisar por nome: <input style="width: 200px;" placeholder="Insira o nome a pesquisar" />
         <input type="submit" value="Pesquisar" class="btn btn-info" />
+        <span class="glyphicon glyphicon-search"></span>
     </p>
 </form>
 
@@ -74,17 +78,14 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Numero_Utente)
                 </td>
-
+                             
                 <td>
-                    <a asp-controller="Tratamentos"  asp-action="Create" asp-route-id1="@item.PacienteId"><input type="button" value="Inserir" class="btn btn-info" /></a>
-                </td>
-
-
-
-                <td>
-                    <a asp-action="Edit" class="btn btn-warning" asp-route-id="@item.PacienteId">Editar</a>
-                    <a asp-action="Details" class="btn btn-info" asp-route-id="@item.PacienteId">Detalhes</a>
-                    <a asp-action="Delete" class="btn btn-danger" asp-route-id="@item.PacienteId">Eliminar</a>
+                    <a asp-action="Edit" class="btn btn-warning" asp-route-id="@item.PacienteId">
+                        <span class="glyphicon glyphicon-edit"></span>Editar</a>
+                    <a asp-action="Details" class="btn btn-info" asp-route-id="@item.PacienteId">
+                        <span class="fas fa-info" style="color:white;"></span>Detalhes</a>
+                    <a asp-action="Delete" class="btn btn-danger" asp-route-id="@item.PacienteId">
+                        <span class="glyphicon glyphicon-trash"></span>Eliminar</a>
                 </td>
             </tr>
         }
