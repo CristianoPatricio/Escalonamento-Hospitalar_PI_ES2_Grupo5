@@ -20,10 +20,47 @@ namespace EscalonamentoHospitalar.Controllers
         }
 
         // GET: Tratamentos
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(ListaTratamentosViewModel model = null, int page = 1)
         {
-                    
-            return View(await _context.Tratamentos.ToListAsync());
+            string nome = null;
+
+            if (model != null && model.CurrentNome != null)
+            {
+                nome = model.CurrentNome;
+                page = 1;
+            }
+
+            var pacientes = _context.Pacientes
+                .Where(e => nome == null || e.Nome.Contains(nome));
+
+            int numPacientes = await pacientes.CountAsync();
+
+            if (page > (numPacientes / PAGE_SIZE) + 1)
+            {
+                page = 1;
+            }
+
+            var listaPaciente = await pacientes
+                .OrderBy(e => e.Nome)
+                .Skip(PAGE_SIZE * (page - 1))
+                .Take(PAGE_SIZE)
+                .ToListAsync();
+
+            return View(
+                new ListaTratamentosViewModel
+                {
+                    Pacientes = listaPaciente,
+                    Pagination = new PagingViewModel
+                    {
+                        CurrentPage = page,
+                        PageSize = PAGE_SIZE,
+                        TotalItems = numPacientes
+                    },
+                    CurrentNome = nome
+                }
+            );
+
+           
 
         }
 

@@ -5,6 +5,9 @@
 }
 <p></p>
 
+
+
+
 <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.5.0/css/all.css' integrity='sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU' crossorigin='anonymous'>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
@@ -45,6 +48,13 @@
 
 <h2>Lista de tratamentos</h2>
 
+<form asp-action="Index">
+    <p style="float: right">
+        Pesquisar por nome: <input style="width: 200px;" placeholder="Insira o tratamento a pesquisar" />
+        <input type="submit" value="Pesquisar" class="btn btn-info" />
+        <span class="glyphicon glyphicon-search"></span>
+    </p>
+</form>
 
 <p>
     <a asp-action="Create" class="btn btn-primary"></a>
