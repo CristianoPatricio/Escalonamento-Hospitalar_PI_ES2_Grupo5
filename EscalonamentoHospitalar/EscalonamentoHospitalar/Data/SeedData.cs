@@ -191,19 +191,7 @@ namespace EscalonamentoHospitalar.Data
 
         private static void SeedGrau(HospitalDbContext db)
         {
-<<<<<<< HEAD
-            if (db.Grau.Any()) return;
-            db.Grau.AddRange(
-                       new Grau
-                       {
-                           TipoGrau = "1"
-                       },
-                          new Grau
-                          {
-                              TipoGrau = "2"
-                          }
-               );
-=======
+            
          if (db.Grau.Any()) return;
          db.Grau.AddRange(
                     new Grau
@@ -215,26 +203,13 @@ namespace EscalonamentoHospitalar.Data
                            TipoGrau = "muito_grave"
                        }
             );
->>>>>>> NelsonMonteiroV2
-
             db.SaveChanges();
         }
 
         private static void SeedPatologia(HospitalDbContext db)
         {
             if (db.Patologia.Any()) return;
-<<<<<<< HEAD
-            db.Patologia.AddRange(
-                       new Patologia
-                       {
-                           Nome = "Pulmonar"
-                       },
-                          new Patologia
-                          {
-                              Nome = "Intestinal"
-                          }
-               );
-=======
+
          db.Patologia.AddRange(
                     new Patologia
                        {
@@ -245,7 +220,6 @@ namespace EscalonamentoHospitalar.Data
                            Nome = "Rim"
                        }
             );
->>>>>>> NelsonMonteiroV2
         }
 
 
@@ -256,13 +230,9 @@ namespace EscalonamentoHospitalar.Data
         {
             if (db.Tratamentos.Any()) return;
 
-<<<<<<< HEAD
-            Patologia Pulmonar = db.Patologia.SingleOrDefault(e => e.Nome == "Pulmonar");
-            Patologia Intestinal = db.Patologia.SingleOrDefault(e => e.Nome == "Instetinal ");
-=======
+
                 Patologia Tubo_Digestivo = db.Patologia.SingleOrDefault(e => e.Nome == "Tubo_Digestivo");
                 Patologia Rim = db.Patologia.SingleOrDefault(e => e.Nome == "Rim ");
->>>>>>> NelsonMonteiroV2
 
             Paciente Barbara = db.Pacientes.SingleOrDefault(e => e.Nome == "Barbara ");
             Paciente Andre = db.Pacientes.SingleOrDefault(e => e.Nome == "Andre ");
@@ -287,11 +257,7 @@ namespace EscalonamentoHospitalar.Data
 
                     new Tratamento
                     {
-<<<<<<< HEAD
-                        PatologiaId = Pulmonar.PatologiaId,
-=======
                         PatologiaId= Tubo_Digestivo.PatologiaId,
->>>>>>> NelsonMonteiroV2
                         PacienteId = Barbara.PacienteId,
                         GrauId = grave.GrauId,
                         RegimeId = Semanal.RegimeId,
@@ -299,14 +265,8 @@ namespace EscalonamentoHospitalar.Data
                         DataFim = new DateTime(2018, 12, 31),
                         DuracaoCiclo = new TimeSpan(0,30,0),
                         MedicoId = Manuel.MedicoId,
-<<<<<<< HEAD
-                        EstadoId = Decorrer.EstadoId,
-
-=======
                         EstadoId = A_Decorrer.EstadoId, 
-                        
-                        
->>>>>>> NelsonMonteiroV2
+                                             
                     },
                     new Tratamento
                     {
