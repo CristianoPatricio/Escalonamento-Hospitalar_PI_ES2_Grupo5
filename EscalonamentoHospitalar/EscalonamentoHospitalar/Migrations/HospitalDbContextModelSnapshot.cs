@@ -352,7 +352,8 @@ namespace EscalonamentoHospitalar.Migrations
 
                     b.Property<DateTime>("DataInicio");
 
-                    b.Property<string>("DuracaoCiclo");
+                    b.Property<string>("DuracaoCiclo")
+                        .IsRequired();
 
                     b.Property<int>("EstadoId");
 

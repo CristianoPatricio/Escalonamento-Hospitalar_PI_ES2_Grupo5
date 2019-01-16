@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace EscalonamentoHospitalar.Migrations
 {
-    public partial class Inital15Jan2019 : Migration
+    public partial class Inital16Jan2019 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -268,7 +268,7 @@ namespace EscalonamentoHospitalar.Migrations
                     GrauId = table.Column<int>(nullable: false),
                     DataInicio = table.Column<DateTime>(nullable: false),
                     DataFim = table.Column<DateTime>(nullable: false),
-                    DuracaoCiclo = table.Column<string>(nullable: true),
+                    DuracaoCiclo = table.Column<string>(nullable: false),
                     RegimeId = table.Column<int>(nullable: false),
                     EstadoId = table.Column<int>(nullable: false),
                     MedicoId = table.Column<int>(nullable: false)
