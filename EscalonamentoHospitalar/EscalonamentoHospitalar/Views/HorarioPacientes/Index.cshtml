@@ -22,6 +22,9 @@
     <thead>
         <tr>
             <th>
+                <i class="glyphicon glyphicon-user"></i> Paciente
+            </th>
+            <th>
                 <i class="glyphicon glyphicon-calendar"></i> Data de Início do Tratamento
             </th>
             <th>
@@ -30,29 +33,26 @@
             <th>
                 <i class="glyphicon glyphicon-calendar"></i> Data de Fim do Tratamento
             </th>
-            <th>
-                <i class="glyphicon glyphicon-user"></i> Paciente
-            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model.HorariosPacientes)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DataInicio)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Duracao)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DataFim)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Paciente.Nome)
-                </td>
-            </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Paciente.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataInicio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Duracao)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataFim)
+            </td>
+        </tr>
         }
     </tbody>
 </table>

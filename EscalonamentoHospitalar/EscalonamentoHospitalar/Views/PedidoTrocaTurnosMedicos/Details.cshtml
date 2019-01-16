@@ -4,6 +4,11 @@
     ViewData["Title"] = "Detalhes Pedido Troca Turno Médico";
 }
 
+<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.5.0/css/all.css' integrity='sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU' crossorigin='anonymous'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+
 <h2>Detalhes</h2>
 
 <div>
@@ -35,6 +40,12 @@
             @Html.DisplayFor(model => model.HorarioParaTrocaMedico.HorarioMedico.DataInicioTurno)
         </dd>
         <dt>
+            Médico para trocar:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.HorarioParaTrocaMedico.HorarioMedico.Medico.Nome)
+        </dd>
+        <dt>
             Estado:
         </dt>
         <dd>
@@ -45,16 +56,29 @@
 <div>
     @if (Model.EstadoPedidoTroca.Nome == "Pendente")
     {
-        <a asp-action="Edit" asp-route-id="@Model.PedidoTrocaTurnosMedicoId"><input type="button" value="Validar" class="btn btn-success" /></a>
+        if (!(Model.HorarioATrocarMedico.HorarioMedico.DataInicioTurno < DateTime.Now))
+        {
+            <a asp-action="Edit" asp-route-id="@Model.PedidoTrocaTurnosMedicoId" class="btn btn-success">
+                <span class="fas fa-check" style="color:white;"></span> Validar
+            </a>
+        }
     }
     else if (Model.EstadoPedidoTroca.Nome == "Validado")
     {
-        <a asp-action="Edit" asp-route-id="@Model.PedidoTrocaTurnosMedicoId"><input type="button" value="Aprovar" class="btn btn-success" /></a>
+        if (!(Model.HorarioATrocarMedico.HorarioMedico.DataInicioTurno < DateTime.Now))
+        {
+            <a asp-action="Edit" asp-route-id="@Model.PedidoTrocaTurnosMedicoId" class="btn btn-success">
+                <span class="fas fa-check" style="color:white;"></span> Aprovar
+            </a>
+        }
     }
     else
     {
 
     }
-    <a asp-action="Index"><input type="button" value="Voltar à lista" class="btn btn-default" /></a>
+    <a asp-action="Index" class="btn btn-default">
+        <span class="fas fa-undo" style="color:dodgerblue;"></span> Voltar à lista
+    </a>
+
 </div>
 

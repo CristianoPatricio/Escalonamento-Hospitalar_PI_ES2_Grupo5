@@ -228,14 +228,15 @@ namespace EscalonamentoHospitalar.Controllers
         }
 
         /**
-         * 
-         * 
-         * 
-         * 
-         * 
-         * 
+         * @param db 
+         * @param dataInicio
+         * @param dataFim
+         * @param duracaoCiclo
+         * @param idPaciente
+         * @param regime
+         * @generate a schedule for a specific client
          */
-         private void GenerateHorarioPaciente(HospitalDbContext db, DateTime dataInicio, DateTime dataFim, TimeSpan duracaoCiclo,Paciente idPaciente, string regime)
+        private void GenerateHorarioPaciente(HospitalDbContext db, DateTime dataInicio, DateTime dataFim, TimeSpan duracaoCiclo,Paciente idPaciente, string regime)
          {
             List<DateTime> datasInicioTratamento = new List<DateTime>();
             List<DateTime> datasFimTratamento = new List<DateTime>();
@@ -254,13 +255,29 @@ namespace EscalonamentoHospitalar.Controllers
             else if (regime == "Mensal")
             {
                 iteracao = 30;
+            }else if (regime == "Trimestral")
+            {
+                iteracao = 90;
             }
 
             double dif = dataFim.Subtract(dataInicio).TotalDays;
 
             double tempo = dif / iteracao;
 
-            data = dataInicio.AddHours(9);
+            if (CheckIfThereIsMoreThanSevenClients(dataInicio.AddHours(9)) == true) { //Não há mais que sete
+                data = dataInicio.AddHours(11);
+            }
+            else if (CheckIfThereIsMoreThanSevenClients(dataInicio.AddHours(11)) == true) //Não há mais que sete
+            {
+                data = dataInicio.AddHours(13);
+            }else if (CheckIfThereIsMoreThanSevenClients(dataInicio.AddHours(13)) == true) //Não há mais que sete
+            {
+                data = dataInicio.AddHours(15);
+            }
+            else
+            {
+                data = dataInicio.AddHours(9);
+            }
 
             for (int i = 0; i <= tempo; i++)
             {
@@ -272,6 +289,22 @@ namespace EscalonamentoHospitalar.Controllers
 
                 data = data.AddDays(iteracao);             
             }
+        }
+
+        private bool CheckIfThereIsMoreThanSevenClients(DateTime data)
+        {
+            bool novaData = false;
+
+            var horario = from h in _context.HorariosPaciente
+                          where h.DataInicio.Day == data.Day && h.DataInicio.Month == data.Month && h.DataInicio.Year == data.Year && h.DataInicio.Hour == data.Hour
+                          select h;
+
+            if (horario.Count() >= 7)
+            {
+                novaData = true;
+            }
+
+            return novaData;
         }
 
     }

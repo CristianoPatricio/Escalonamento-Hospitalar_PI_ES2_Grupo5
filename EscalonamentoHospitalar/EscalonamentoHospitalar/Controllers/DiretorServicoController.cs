@@ -18,6 +18,11 @@ namespace EscalonamentoHospitalar.Controllers
             _context = context;
         }
 
+        public IActionResult Error()
+        {
+            return View();
+        }
+
         // GET: DiretorServico
         public async Task<IActionResult> Index()
         {
@@ -29,14 +34,14 @@ namespace EscalonamentoHospitalar.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error));
             }
 
             var diretorServico = await _context.DiretoresServico
                 .FirstOrDefaultAsync(m => m.DiretorServicoID == id);
             if (diretorServico == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error));
             }
 
             return View(diretorServico);
@@ -116,7 +121,7 @@ namespace EscalonamentoHospitalar.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error));
             }
 
             var diretorServico = await _context.DiretoresServico.FindAsync(id);
@@ -125,7 +130,7 @@ namespace EscalonamentoHospitalar.Controllers
 
             if (diretorServico == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error));
             }
             return View(diretorServico);
         }
@@ -182,7 +187,7 @@ namespace EscalonamentoHospitalar.Controllers
 
             if (id != diretorServico.DiretorServicoID)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error));
             }
 
             if (ModelState.IsValid)
@@ -202,7 +207,7 @@ namespace EscalonamentoHospitalar.Controllers
                 {
                     if (!DiretorServicoExists(diretorServico.DiretorServicoID))
                     {
-                        return NotFound();
+                        return RedirectToAction(nameof(Error));
                     }
                     else
                     {
@@ -219,14 +224,14 @@ namespace EscalonamentoHospitalar.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error));
             }
 
             var diretorServico = await _context.DiretoresServico
                 .FirstOrDefaultAsync(m => m.DiretorServicoID == id);
             if (diretorServico == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error));
             }
 
             return View(diretorServico);

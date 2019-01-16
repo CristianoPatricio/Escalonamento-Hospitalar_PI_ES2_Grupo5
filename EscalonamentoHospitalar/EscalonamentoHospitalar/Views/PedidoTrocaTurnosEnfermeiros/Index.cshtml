@@ -42,6 +42,14 @@
     </div>
 }
 
+@if (TempData["DateIsUpperThanDateNoe"] != null)
+{
+    <!--Mensagem de sucesso quando é validado um pedido do horário-->
+    <div id="suc_form" class="alert alert-warning">
+        <strong>Atenção!</strong> Já não pode aprovar este pedido. A data de turno é menor que a data atual.
+    </div>
+}
+
 <form asp-action="Index">
     <p>
         Pesquisar por Enfermeiro Requerente: <input style="width: 200px;" asp-for="CurrentNome" placeholder="Insira o nome a pesquisar" />
@@ -78,9 +86,12 @@
 
                     @if (item.EstadoPedidoTroca.Nome == "Pendente")
                     {
-                        <a asp-action="Edit" asp-route-id="@item.PedidoTrocaTurnosEnfermeiroId" class="btn btn-success">
-                            <span class="fas fa-check" style="color:white;"></span> Validar
-                        </a>
+                        if (!(item.HorarioATrocarEnfermeiro.HorarioEnfermeiro.DataInicioTurno < DateTime.Now))
+                        {
+                            <a asp-action="Edit" asp-route-id="@item.PedidoTrocaTurnosEnfermeiroId" class="btn btn-success">
+                                <span class="fas fa-check" style="color:white;"></span> Validar
+                            </a>
+                        }
 
                         <a asp-action="NaoValidar" asp-route-id="@item.PedidoTrocaTurnosEnfermeiroId" class="btn btn-danger">
                             <span class="fas fa-times" style="color:white;"></span> Não Validar
@@ -89,10 +100,12 @@
                     }
                     else if (item.EstadoPedidoTroca.Nome == "Validado")
                     {
-                        <a asp-action="Aprovar" asp-route-id="@item.PedidoTrocaTurnosEnfermeiroId" class="btn btn-success">
-                            <span class="fas fa-check" style="color:white;"></span> Aprovar
-                        </a>
-
+                        if (!(item.HorarioATrocarEnfermeiro.HorarioEnfermeiro.DataInicioTurno < DateTime.Now))
+                        {
+                            <a asp-action="Aprovar" asp-route-id="@item.PedidoTrocaTurnosEnfermeiroId" class="btn btn-success">
+                                <span class="fas fa-check" style="color:white;"></span> Aprovar
+                            </a>
+                        }
                         <a asp-action="NaoAprovar" asp-route-id="@item.PedidoTrocaTurnosEnfermeiroId" class="btn btn-danger">
                             <span class="fas fa-times" style="color:white;"></span> Não Aprovar
                         </a>
@@ -103,13 +116,13 @@
 
                     }
                 </td>
+                <td></td>
                 <td>
-                    
-                </td>
-                <td>
-                    @if (item.EstadoPedidoTroca.Equals("Pendente"))
+                    @if (item.EstadoPedidoTroca.Nome.Equals("Pendente"))
                     {
-                        <a asp-action="Delete" asp-route-id="@item.PedidoTrocaTurnosEnfermeiroId" class="btn btn-danger">Eliminar</a>
+                        <a asp-action="Delete" asp-route-id="@item.PedidoTrocaTurnosEnfermeiroId" class="btn btn-danger">
+                            <span class="glyphicon glyphicon-trash"></span> Eliminar
+                        </a>
                     }
                 </td>
             </tr>

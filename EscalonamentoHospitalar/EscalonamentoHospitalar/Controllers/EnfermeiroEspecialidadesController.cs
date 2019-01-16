@@ -19,6 +19,11 @@ namespace EscalonamentoHospitalar.Controllers
             _context = context;
         }
 
+        public IActionResult Error()
+        {
+            return View();
+        }
+
         // GET: EnfermeiroEspecialidades
         public async Task<IActionResult> Index(HistoricoEspecialidadesEnfermeiroViewModel model = null, int page = 1)
         {
@@ -74,7 +79,7 @@ namespace EscalonamentoHospitalar.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error));
             }
 
             var enfermeiroEspecialidade = await _context.EnfermeirosEspecialidades
@@ -83,7 +88,7 @@ namespace EscalonamentoHospitalar.Controllers
                 .FirstOrDefaultAsync(m => m.EnfermeiroId == id);
             if (enfermeiroEspecialidade == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error));
             }
 
             return View(enfermeiroEspecialidade);
@@ -120,13 +125,13 @@ namespace EscalonamentoHospitalar.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error));
             }
 
             var enfermeiroEspecialidade = await _context.EnfermeirosEspecialidades.FindAsync(id);
             if (enfermeiroEspecialidade == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error));
             }
             ViewData["EnfermeiroId"] = new SelectList(_context.Enfermeiros, "EnfermeiroId", "Nome", enfermeiroEspecialidade.EnfermeiroId);
             ViewData["EspecialidadeEnfermeiroId"] = new SelectList(_context.Set<EspecialidadeEnfermeiro>(), "EspecialidadeEnfermeiroId", "Especialidade", enfermeiroEspecialidade.EspecialidadeEnfermeiroId);
@@ -142,7 +147,7 @@ namespace EscalonamentoHospitalar.Controllers
         {
             if (id != enfermeiroEspecialidade.EnfermeiroId)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error));
             }
 
             if (ModelState.IsValid)
@@ -156,7 +161,7 @@ namespace EscalonamentoHospitalar.Controllers
                 {
                     if (!EnfermeiroEspecialidadeExists(enfermeiroEspecialidade.EnfermeiroId))
                     {
-                        return NotFound();
+                        return RedirectToAction(nameof(Error));
                     }
                     else
                     {
@@ -175,7 +180,7 @@ namespace EscalonamentoHospitalar.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error));
             }
 
             var enfermeiroEspecialidade = await _context.EnfermeirosEspecialidades
@@ -184,7 +189,7 @@ namespace EscalonamentoHospitalar.Controllers
                 .FirstOrDefaultAsync(m => m.EnfermeiroId == id);
             if (enfermeiroEspecialidade == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error));
             }
 
             return View(enfermeiroEspecialidade);

@@ -19,6 +19,11 @@ namespace EscalonamentoHospitalar.Controllers
             _context = context;
         }
 
+        public IActionResult Error()
+        {
+            return View();
+        }
+
         // GET: PedidoTrocaTurnosMedicos
         public async Task<IActionResult> Index(ListaPedidoTrocaTurnoMedicoViewModel model = null, int page = 1)
         {
@@ -50,7 +55,7 @@ namespace EscalonamentoHospitalar.Controllers
                 listaPedidosTrocaTurnoMedicos = await pedidoTrocaTurnosMedico
                     .Include(h => h.Medico)
                     .Include(h => h.EstadoPedidoTroca)
-                    .Include(h => h.HorarioATrocarMedico)
+                    .Include(h => h.HorarioATrocarMedico.HorarioMedico)
                     .Include(h => h.HorarioParaTrocaMedico)
                     .OrderByDescending(h => h.DataPedido)
                     .Skip(PAGE_SIZE * (page - 1))
@@ -67,7 +72,7 @@ namespace EscalonamentoHospitalar.Controllers
                 listaPedidosTrocaTurnoMedicos = await pedidoTrocaTurnosMedico
                     .Include(h => h.Medico)
                     .Include(h => h.EstadoPedidoTroca)
-                    .Include(h => h.HorarioATrocarMedico)
+                    .Include(h => h.HorarioATrocarMedico.HorarioMedico)
                     .Include(h => h.HorarioParaTrocaMedico)
                     .OrderByDescending(h => h.DataPedido)
                     .Skip(PAGE_SIZE * (page - 1))
@@ -88,7 +93,7 @@ namespace EscalonamentoHospitalar.Controllers
                 listaPedidosTrocaTurnoMedicos = await pedidoTrocaTurnosMedico
                   .Include(h => h.Medico)
                   .Include(h => h.EstadoPedidoTroca)
-                  .Include(h => h.HorarioATrocarMedico)
+                  .Include(h => h.HorarioATrocarMedico.HorarioMedico)
                   .Include(h => h.HorarioParaTrocaMedico)
                   .OrderByDescending(h => h.DataPedido)
                   .Skip(PAGE_SIZE * (page - 1))
@@ -104,7 +109,7 @@ namespace EscalonamentoHospitalar.Controllers
                 listaPedidosTrocaTurnoMedicos = await pedidoTrocaTurnosMedico
                   .Include(h => h.Medico)
                     .Include(h => h.EstadoPedidoTroca)
-                    .Include(h => h.HorarioATrocarMedico)
+                    .Include(h => h.HorarioATrocarMedico.HorarioMedico)
                     .Include(h => h.HorarioParaTrocaMedico)
                     .OrderByDescending(h => h.DataPedido)
                   .Skip(PAGE_SIZE * (page - 1))
@@ -145,18 +150,20 @@ namespace EscalonamentoHospitalar.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+
+                return RedirectToAction(nameof(Error));
             }
 
             var pedidoTrocaTurnosMedico = await _context.PedidoTrocaTurnosMedico
                 .Include(p => p.EstadoPedidoTroca)
-                .Include(p => p.HorarioATrocarMedico.HorarioMedico)
-                .Include(p => p.HorarioParaTrocaMedico.HorarioMedico)
+                .Include(p => p.HorarioATrocarMedico.HorarioMedico.Medico)
+                .Include(p => p.HorarioParaTrocaMedico.HorarioMedico.Medico)
                 .Include(p => p.Medico)
                 .FirstOrDefaultAsync(m => m.PedidoTrocaTurnosMedicoId == id);
             if (pedidoTrocaTurnosMedico == null)
             {
-                return NotFound();
+
+                return RedirectToAction(nameof(Error));
             }
 
             return View(pedidoTrocaTurnosMedico);
@@ -197,7 +204,7 @@ namespace EscalonamentoHospitalar.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error));
             }
 
             var pedidoTrocaTurnosMedico = await _context.PedidoTrocaTurnosMedico
@@ -209,7 +216,7 @@ namespace EscalonamentoHospitalar.Controllers
 
             if (pedidoTrocaTurnosMedico == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error));
             }
 
             return View(pedidoTrocaTurnosMedico);
@@ -226,7 +233,7 @@ namespace EscalonamentoHospitalar.Controllers
 
             if (id != pedidoTrocaTurnosMedico.PedidoTrocaTurnosMedicoId)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error));
             }
 
             if (ModelState.IsValid)
@@ -238,6 +245,7 @@ namespace EscalonamentoHospitalar.Controllers
                 {
                     _context.Update(pedidoTrocaTurnosMedico);
                     await _context.SaveChangesAsync();
+                    TempData["Validated"] = "O pedido foi validado com sucesso!";
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -261,7 +269,7 @@ namespace EscalonamentoHospitalar.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error));
             }
 
             var pedidoTrocaTurnosMedico = await _context.PedidoTrocaTurnosMedico
@@ -273,7 +281,7 @@ namespace EscalonamentoHospitalar.Controllers
 
             if (pedidoTrocaTurnosMedico == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error));
             }
 
             return View(pedidoTrocaTurnosMedico);
@@ -290,7 +298,7 @@ namespace EscalonamentoHospitalar.Controllers
 
             if (id != pedidoTrocaTurnosMedico.PedidoTrocaTurnosMedicoId)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error));
             }
 
             if (ModelState.IsValid)
@@ -328,7 +336,7 @@ namespace EscalonamentoHospitalar.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error));
             }
 
             var pedidoTrocaTurnosMedico = await _context.PedidoTrocaTurnosMedico
@@ -342,7 +350,7 @@ namespace EscalonamentoHospitalar.Controllers
 
             if (pedidoTrocaTurnosMedico == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error));
             }
 
             return View(pedidoTrocaTurnosMedico);
@@ -369,7 +377,7 @@ namespace EscalonamentoHospitalar.Controllers
 
             if (id != pedidoTrocaTurnosMedico.PedidoTrocaTurnosMedicoId)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error));
             }
 
             EstadoPedidoTroca idEstadoAprovado = _context.EstadoPedidoTrocas.SingleOrDefault(e => e.Nome == "Aprovado");
@@ -386,7 +394,7 @@ namespace EscalonamentoHospitalar.Controllers
             {
                 if (!PedidoTrocaTurnosMedicoExists(pedidoTrocaTurnosMedico.PedidoTrocaTurnosMedicoId))
                 {
-                    return NotFound();
+                    return RedirectToAction(nameof(Error));
                 }
                 else
                 {
@@ -432,7 +440,7 @@ namespace EscalonamentoHospitalar.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error));
             }
 
             return RedirectToAction(nameof(Index));
@@ -455,7 +463,7 @@ namespace EscalonamentoHospitalar.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error));
             }
 
             var pedidoTrocaTurnosEnfermeiro = await _context.PedidoTrocaTurnosMedico
@@ -469,7 +477,7 @@ namespace EscalonamentoHospitalar.Controllers
 
             if (pedidoTrocaTurnosEnfermeiro == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error));
             }
 
             return View(pedidoTrocaTurnosEnfermeiro);
@@ -486,7 +494,7 @@ namespace EscalonamentoHospitalar.Controllers
 
             if (id != pedidoTrocaTurnosMedico.PedidoTrocaTurnosMedicoId)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error));
             }
 
             if (ModelState.IsValid)
@@ -506,7 +514,7 @@ namespace EscalonamentoHospitalar.Controllers
                 {
                     if (!PedidoTrocaTurnosMedicoExists(pedidoTrocaTurnosMedico.PedidoTrocaTurnosMedicoId))
                     {
-                        return NotFound();
+                        return RedirectToAction(nameof(Error));
                     }
                     else
                     {
@@ -525,7 +533,7 @@ namespace EscalonamentoHospitalar.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error));
             }
 
             var pedidoTrocaTurnosMedico = await _context.PedidoTrocaTurnosMedico
@@ -536,7 +544,7 @@ namespace EscalonamentoHospitalar.Controllers
                 .FirstOrDefaultAsync(m => m.PedidoTrocaTurnosMedicoId == id);
             if (pedidoTrocaTurnosMedico == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error));
             }
 
             return View(pedidoTrocaTurnosMedico);

@@ -19,6 +19,11 @@ namespace EscalonamentoHospitalar.Controllers
             _context = context;
         }
 
+        public IActionResult Error()
+        {
+            return View();
+        }
+
         // GET: HorarioPacientes
         public async Task<IActionResult> Index(HorarioPacienteViewModel model = null, int page = 1)
         {
@@ -50,7 +55,7 @@ namespace EscalonamentoHospitalar.Controllers
 
                 listaHorario = await horario
                     .Include(h => h.Paciente)
-                    .OrderByDescending(h => h.DataInicio)
+                    .OrderBy(h => h.Paciente.Nome)
                     .Skip(PAGE_SIZE * (page - 1))
                     .Take(PAGE_SIZE)
                     .ToListAsync();
@@ -64,7 +69,7 @@ namespace EscalonamentoHospitalar.Controllers
 
                 listaHorario = await horario
                     .Include(h => h.Paciente)
-                    .OrderByDescending(h => h.DataInicio)
+                    .OrderBy(h => h.Paciente.Nome)
                     .Skip(PAGE_SIZE * (page - 1))
                     .Take(PAGE_SIZE)
                     .ToListAsync();
@@ -82,7 +87,7 @@ namespace EscalonamentoHospitalar.Controllers
 
                 listaHorario = await horario
                     .Include(h => h.Paciente)
-                    .OrderByDescending(h => h.DataInicio)
+                    .OrderBy(h => h.Paciente.Nome)
                     .Skip(PAGE_SIZE * (page - 1))
                     .Take(PAGE_SIZE)
                     .ToListAsync();
@@ -95,7 +100,7 @@ namespace EscalonamentoHospitalar.Controllers
 
                 listaHorario = await horario
                     .Include(h => h.Paciente)
-                    .OrderByDescending(h => h.DataInicio)
+                    .OrderBy(h => h.Paciente.Nome)
                     .Skip(PAGE_SIZE * (page - 1))
                     .Take(PAGE_SIZE)
                     .ToListAsync();
@@ -134,7 +139,7 @@ namespace EscalonamentoHospitalar.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error));
             }
 
             var horarioPaciente = await _context.HorariosPaciente
@@ -142,7 +147,7 @@ namespace EscalonamentoHospitalar.Controllers
                 .FirstOrDefaultAsync(m => m.HorarioPacienteId == id);
             if (horarioPaciente == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error));
             }
 
             return View(horarioPaciente);
@@ -177,13 +182,13 @@ namespace EscalonamentoHospitalar.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error));
             }
 
             var horarioPaciente = await _context.HorariosPaciente.FindAsync(id);
             if (horarioPaciente == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error));
             }
             ViewData["PacienteId"] = new SelectList(_context.Pacientes, "PacienteId", "CC", horarioPaciente.PacienteId);           
             return View(horarioPaciente);
@@ -198,7 +203,7 @@ namespace EscalonamentoHospitalar.Controllers
         {
             if (id != horarioPaciente.HorarioPacienteId)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error));
             }
 
             if (ModelState.IsValid)
@@ -212,7 +217,7 @@ namespace EscalonamentoHospitalar.Controllers
                 {
                     if (!HorarioPacienteExists(horarioPaciente.HorarioPacienteId))
                     {
-                        return NotFound();
+                        return RedirectToAction(nameof(Error));
                     }
                     else
                     {
@@ -230,7 +235,7 @@ namespace EscalonamentoHospitalar.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error));
             }
 
             var horarioPaciente = await _context.HorariosPaciente
@@ -238,7 +243,7 @@ namespace EscalonamentoHospitalar.Controllers
                 .FirstOrDefaultAsync(m => m.HorarioPacienteId == id);
             if (horarioPaciente == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error));
             }
 
             return View(horarioPaciente);
