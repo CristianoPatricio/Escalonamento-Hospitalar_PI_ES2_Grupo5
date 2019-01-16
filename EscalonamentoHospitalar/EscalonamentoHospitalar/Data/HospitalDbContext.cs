@@ -85,6 +85,7 @@ namespace EscalonamentoHospitalar.Models
 
         public DbSet<EscalonamentoHospitalar.Models.EstadoPedidoTroca> EstadoPedidoTrocas { get; set; }
         
+<<<<<<< HEAD
         public DbSet<EscalonamentoHospitalar.Models.HorarioATrocarEnfermeiro> HorarioATrocarEnfermeiros { get; set; }
 
         public DbSet<EscalonamentoHospitalar.Models.HorarioParaTrocaEnfermeiro> HorarioParaTrocaEnfermeiros { get; set; }
@@ -94,12 +95,21 @@ namespace EscalonamentoHospitalar.Models
         public DbSet<EscalonamentoHospitalar.Models.HorarioMedico> HorariosMedicos { get; set; }
 
         public DbSet<EscalonamentoHospitalar.Models.HorarioATrocarMedico> HorarioATrocarMedico { get; set; }
+=======
+        public DbSet<EscalonamentoHospitalar.Models.EscalaEnfermeiro> EscalaEnfermeiros { get; set; }
+        
+        //public DbSet<EscalonamentoHospitalar.Models.HistoricoTratamento> HistoricoTratamento { get; set; }
+>>>>>>> NelsonMonteiroV2
 
         public DbSet<EscalonamentoHospitalar.Models.HorarioParaTrocaMedico> HorarioParaTrocaMedico { get; set; }
 
         public DbSet<EscalonamentoHospitalar.Models.PedidoTrocaTurnosMedico> PedidoTrocaTurnosMedico { get; set; }
 
+<<<<<<< HEAD
         public DbSet<EscalonamentoHospitalar.Models.HorarioPaciente> HorariosPaciente { get; set; }
+=======
+        
+>>>>>>> NelsonMonteiroV2
 
     }
 }

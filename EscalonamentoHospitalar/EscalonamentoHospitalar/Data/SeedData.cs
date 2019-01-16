@@ -145,9 +145,13 @@ namespace EscalonamentoHospitalar.Data
         {
             if (db.Estado.Any()) return;
             db.Estado.AddRange(
+                 new Estado
+                 {
+                     Nome = "Em Espera"
+                 },
                        new Estado
                        {
-                           Nome = "Decorrer"
+                           Nome = "A Decorrer"
                        },
                           new Estado
                           {
@@ -187,6 +191,7 @@ namespace EscalonamentoHospitalar.Data
 
         private static void SeedGrau(HospitalDbContext db)
         {
+<<<<<<< HEAD
             if (db.Grau.Any()) return;
             db.Grau.AddRange(
                        new Grau
@@ -198,6 +203,19 @@ namespace EscalonamentoHospitalar.Data
                               TipoGrau = "2"
                           }
                );
+=======
+         if (db.Grau.Any()) return;
+         db.Grau.AddRange(
+                    new Grau
+                       {
+                          TipoGrau = "grave"
+                       },
+                       new Grau
+                       {
+                           TipoGrau = "muito_grave"
+                       }
+            );
+>>>>>>> NelsonMonteiroV2
 
             db.SaveChanges();
         }
@@ -205,6 +223,7 @@ namespace EscalonamentoHospitalar.Data
         private static void SeedPatologia(HospitalDbContext db)
         {
             if (db.Patologia.Any()) return;
+<<<<<<< HEAD
             db.Patologia.AddRange(
                        new Patologia
                        {
@@ -215,6 +234,18 @@ namespace EscalonamentoHospitalar.Data
                               Nome = "Intestinal"
                           }
                );
+=======
+         db.Patologia.AddRange(
+                    new Patologia
+                       {
+                          Nome = "Tubo_Digestivo"
+                       },
+                       new Patologia
+                       {
+                           Nome = "Rim"
+                       }
+            );
+>>>>>>> NelsonMonteiroV2
         }
 
 
@@ -225,14 +256,19 @@ namespace EscalonamentoHospitalar.Data
         {
             if (db.Tratamentos.Any()) return;
 
+<<<<<<< HEAD
             Patologia Pulmonar = db.Patologia.SingleOrDefault(e => e.Nome == "Pulmonar");
             Patologia Intestinal = db.Patologia.SingleOrDefault(e => e.Nome == "Instetinal ");
+=======
+                Patologia Tubo_Digestivo = db.Patologia.SingleOrDefault(e => e.Nome == "Tubo_Digestivo");
+                Patologia Rim = db.Patologia.SingleOrDefault(e => e.Nome == "Rim ");
+>>>>>>> NelsonMonteiroV2
 
             Paciente Barbara = db.Pacientes.SingleOrDefault(e => e.Nome == "Barbara ");
             Paciente Andre = db.Pacientes.SingleOrDefault(e => e.Nome == "Andre ");
 
-            Grau Grau1 = db.Grau.SingleOrDefault(e => e.TipoGrau == "1 ");
-            Grau Grau2 = db.Grau.SingleOrDefault(e => e.TipoGrau == "2 ");
+            Grau grave = db.Grau.SingleOrDefault(e => e.TipoGrau == "grave ");
+            Grau muito_grave = db.Grau.SingleOrDefault(e => e.TipoGrau == "muito_grave ");
 
             Regime Semanal = db.Regime.SingleOrDefault(e => e.TipoRegime == "Semanal ");
             Regime Mensal = db.Regime.SingleOrDefault(e => e.TipoRegime == "Mensal ");
@@ -240,7 +276,7 @@ namespace EscalonamentoHospitalar.Data
             Medico Manuel = db.Medicos.SingleOrDefault(e => e.Nome == "Manuel Santos");
             Medico Elisabete = db.Medicos.SingleOrDefault(e => e.Nome == "Elisabete Eiras");
 
-            Estado Decorrer = db.Estado.SingleOrDefault(e => e.Nome == "Decorrer");
+            Estado  A_Decorrer = db.Estado.SingleOrDefault(e => e.Nome == "A Decorrer");
             Estado Concluido = db.Estado.SingleOrDefault(e => e.Nome == "Concluido");
 
 
@@ -251,22 +287,32 @@ namespace EscalonamentoHospitalar.Data
 
                     new Tratamento
                     {
+<<<<<<< HEAD
                         PatologiaId = Pulmonar.PatologiaId,
+=======
+                        PatologiaId= Tubo_Digestivo.PatologiaId,
+>>>>>>> NelsonMonteiroV2
                         PacienteId = Barbara.PacienteId,
-                        GrauId = Grau1.GrauId,
+                        GrauId = grave.GrauId,
                         RegimeId = Semanal.RegimeId,
                         DataInicio = new DateTime(2018, 11, 09),
                         DataFim = new DateTime(2018, 12, 31),
                         DuracaoCiclo = new TimeSpan(0,30,0),
                         MedicoId = Manuel.MedicoId,
+<<<<<<< HEAD
                         EstadoId = Decorrer.EstadoId,
 
+=======
+                        EstadoId = A_Decorrer.EstadoId, 
+                        
+                        
+>>>>>>> NelsonMonteiroV2
                     },
                     new Tratamento
                     {
-                        PatologiaId = Pulmonar.PatologiaId,
+                        PatologiaId = Rim.PatologiaId,
                         PacienteId = Andre.PacienteId,
-                        GrauId = Grau2.GrauId,
+                        GrauId = muito_grave.GrauId,
                         RegimeId = Mensal.RegimeId,
                         DataInicio = new DateTime(2018, 11, 09),
                         DataFim = new DateTime(2018, 12, 31),

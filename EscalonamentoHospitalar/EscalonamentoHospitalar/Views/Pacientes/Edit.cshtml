@@ -6,6 +6,8 @@
 
 <h2>Editar o/a paciente <b>@Html.DisplayFor(model => model.Nome)</b></h2>
 
+<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.5.0/css/all.css' integrity='sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU' crossorigin='anonymous'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <hr />
 <div class="row">
@@ -55,13 +57,15 @@
             </div>
             <div class="form-group">
                 <input type="submit" value="Guardar" class="btn btn-success" />
+                <i class="fas fa-save" style="color:white;">
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index"><input type="button" value="Voltar à lista de pacientes" class="btn btn-default" /></a>
+    <a asp-action="Index"><input type="button" value="Voltar à lista de pacientes" class="btn btn-default" />
+                          <span class="fas fa-undo" style="color:dodgerblue;"></span></a>
 </div>
 
 @section Scripts {
