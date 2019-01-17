@@ -28,13 +28,13 @@
             @Html.DisplayFor(model => model.Medico.Nome)
         </dd>
         <dt>
-            Data do Horário a trocar:
+            Data Horário a trocar:
         </dt>
         <dd>
             @Html.DisplayFor(model => model.HorarioATrocarMedico.HorarioMedico.DataInicioTurno)
         </dd>
         <dt>
-            Data do Horário para troca:
+            Data Horário troca:
         </dt>
         <dd>
             @Html.DisplayFor(model => model.HorarioParaTrocaMedico.HorarioMedico.DataInicioTurno)
@@ -43,7 +43,14 @@
             Médico para trocar:
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.HorarioParaTrocaMedico.HorarioMedico.Medico.Nome)
+            @if (Model.EstadoPedidoTroca.Nome.Equals("Aprovado"))
+            {
+                @Html.DisplayFor(model => model.HorarioATrocarMedico.HorarioMedico.Medico.Nome)
+            }
+            else
+            {
+                @Html.DisplayFor(model => model.HorarioParaTrocaMedico.HorarioMedico.Medico.Nome)
+            }
         </dd>
         <dt>
             Estado:
@@ -67,7 +74,7 @@
     {
         if (!(Model.HorarioATrocarMedico.HorarioMedico.DataInicioTurno < DateTime.Now))
         {
-            <a asp-action="Edit" asp-route-id="@Model.PedidoTrocaTurnosMedicoId" class="btn btn-success">
+            <a asp-action="Aprovar" asp-route-id="@Model.PedidoTrocaTurnosMedicoId" class="btn btn-success">
                 <span class="fas fa-check" style="color:white;"></span> Aprovar
             </a>
         }
