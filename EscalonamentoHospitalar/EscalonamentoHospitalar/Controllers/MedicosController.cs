@@ -23,6 +23,11 @@ namespace EscalonamentoHospitalar.Controllers
             _context = context;
         }
 
+        public IActionResult Error()
+        {
+            return View();
+        }
+
         // GET: Medicos
         public async Task<IActionResult> Index(ListaMedicosViewModel model = null, int page = 1)
         {
@@ -72,7 +77,7 @@ namespace EscalonamentoHospitalar.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error));
             }
 
             var medico = await _context.Medicos
@@ -80,7 +85,7 @@ namespace EscalonamentoHospitalar.Controllers
                 .FirstOrDefaultAsync(m => m.MedicoId == id);
             if (medico == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error));
             }
 
             return View(medico);
@@ -185,13 +190,13 @@ namespace EscalonamentoHospitalar.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error));
             }
 
             var medico = await _context.Medicos.FindAsync(id);
             if (medico == null)
-            { 
-                return NotFound();
+            {
+                return RedirectToAction(nameof(Error));
             }
 
             ViewData["EspecialidadeMedicoId"] = new SelectList(_context.Set<EspecialidadeMedico>(), "EspecialidadeMedicoId", "NomeEspecialidade", medico.EspecialidadeMedicoId);
@@ -221,7 +226,7 @@ namespace EscalonamentoHospitalar.Controllers
 
             if (id != medico.MedicoId)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error));
             }
 
             //Validar Numero Mecanografico
@@ -295,7 +300,7 @@ namespace EscalonamentoHospitalar.Controllers
                 {
                     if (!MedicoExists(medico.MedicoId))
                     {
-                        return NotFound();
+                        return RedirectToAction(nameof(Error));
                     }
                     else
                     {
@@ -315,7 +320,7 @@ namespace EscalonamentoHospitalar.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error));
             }
 
             var medico = await _context.Medicos
@@ -323,7 +328,7 @@ namespace EscalonamentoHospitalar.Controllers
             .FirstOrDefaultAsync(m => m.MedicoId == id);
             if (medico == null)
             {
-                return NotFound();
+                return RedirectToAction(nameof(Error));
             }
 
             return View(medico);
