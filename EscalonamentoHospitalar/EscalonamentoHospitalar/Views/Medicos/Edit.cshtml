@@ -17,7 +17,10 @@
             <input type="hidden" asp-for="MedicoId" />
             <div class="form-group">
                 <label asp-for="NumeroMecanografico" class="control-label">Número Mecanográfico</label>
-                <input asp-for="NumeroMecanografico" class="form-control" placeholder="p. ex. E12345" />
+                <div class="input-group">
+                    <span class="input-group-addon">M</span>
+                    <input asp-for="NumeroMecanografico" class="form-control" placeholder="p. ex. 12345" />
+                </div>
                 <span asp-validation-for="NumeroMecanografico" class="text-danger"></span>
             </div>
             <div class="form-group">

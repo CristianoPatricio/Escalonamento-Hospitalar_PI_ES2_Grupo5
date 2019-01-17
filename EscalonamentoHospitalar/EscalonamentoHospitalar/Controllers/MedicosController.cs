@@ -194,6 +194,9 @@ namespace EscalonamentoHospitalar.Controllers
             }
 
             var medico = await _context.Medicos.FindAsync(id);
+
+            medico.NumeroMecanografico = medico.NumeroMecanografico.Replace("M", "");
+
             if (medico == null)
             {
                 return RedirectToAction(nameof(Error));
