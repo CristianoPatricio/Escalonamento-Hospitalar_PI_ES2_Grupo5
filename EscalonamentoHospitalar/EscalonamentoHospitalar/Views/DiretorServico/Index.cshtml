@@ -39,7 +39,7 @@
     });
 </script>
 
-@if (User.IsInRole("DiretorServico")) { // Acesso restrito ao Diretor de Serviço
+@*@if (User.IsInRole("DiretorServico")) { // Acesso restrito ao Diretor de Serviço*@
 
 <h2>Lista de Diretores de Serviço</h2>
 
@@ -77,11 +77,6 @@
                         <span class="glyphicon glyphicon-trash"></span> Eliminar
                     </a>
 
-
-                    <a asp-action="Edit" asp-route-id="@item.DiretorServicoID"><input type="button" value="Editar" class="btn btn-warning" /></a>
-                    <a asp-action="Details" asp-route-id="@item.DiretorServicoID"><input type="button" value="Detalhes" class="btn btn-info" /></a>
-                    <a asp-action="Delete" asp-route-id="@item.DiretorServicoID"><input type="button" value="Eliminar" class="btn btn-danger" /></a>
-
                 </td>
             </tr>
         }
@@ -96,8 +91,5 @@
         <span class="fas fa-file" style="color:white;"></span> Inserir Novo Diretor Serviço
     </a>
 </p>
-
-    <a asp-action="Create"><input type="button" value="Inserir novo Diretor Serviço" class="btn btn-primary" /></a>
-</p>
-}
+@*}*@
 

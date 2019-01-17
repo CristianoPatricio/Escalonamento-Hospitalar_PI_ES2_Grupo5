@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace EscalonamentoHospitalar.Controllers
 {
-    [Authorize] 
+    //[Authorize] 
     public class PacientesController : Controller
     {
         private const int PAGE_SIZE = 5;

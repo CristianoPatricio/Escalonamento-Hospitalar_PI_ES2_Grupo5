@@ -633,9 +633,8 @@ namespace EscalonamentoHospitalar.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+        
             modelBuilder.Entity("EscalonamentoHospitalar.Models.HorarioPaciente", b =>
-
-            modelBuilder.Entity("EscalonamentoHospitalar.Models.HorarioEnfermeiro", b =>
 
                 {
                     b.HasOne("EscalonamentoHospitalar.Models.Paciente", "Paciente")
