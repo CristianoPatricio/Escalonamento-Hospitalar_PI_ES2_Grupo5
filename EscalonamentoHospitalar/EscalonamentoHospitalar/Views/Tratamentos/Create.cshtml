@@ -1,0 +1,66 @@
+﻿@model EscalonamentoHospitalar.Models.Tratamento
+
+@{
+    ViewData["Title"] = "Inserir";
+}
+
+<h2>Inserir um novo tratamento</h2>
+
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="PacienteId" class="control-label">Paciente</label>
+                <select asp-for="PacienteId" class="form-control" asp-items="ViewBag.PacienteId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="PatologiaId" class="control-label">Patologia</label>
+                <select asp-for="PatologiaId" class="form-control" asp-items="ViewBag.PatologiaId"></select>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="GrauId" class="control-label">Grau</label>
+                <select asp-for="GrauId" class="form-control" asp-items="ViewBag.GrauId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="DuracaoCiclo" class="control-label">Duração do Ciclo</label>
+                <input asp-for="DuracaoCiclo" class="form-control" />
+                <span asp-validation-for="DuracaoCiclo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RegimeId" class="control-label">Regime</label>
+                <select asp-for="RegimeId" class="form-control" asp-items="ViewBag.RegimeId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="DataInicio" class="control-label">Data de inicio do tratamento</label>
+                <input asp-for="DataInicio" class="form-control" />
+                <span asp-validation-for="DataInicio" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DataFim" class="control-label">Data de fim do tratamento</label>
+                <input asp-for="DataFim" class="form-control" />
+                <span asp-validation-for="DataFim" class="text-danger"></span>
+            </div>
+
+                        
+            <div class="form-group">
+                <label asp-for="MedicoId" class="control-label">Medico</label>
+                <select asp-for="MedicoId" class="form-control" asp-items="ViewBag.MedicoId"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Inserir" class="btn btn-success" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index" class="btn btn-default">Voltar à lista de tratamentos</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,101 @@
+﻿@model IEnumerable<EscalonamentoHospitalar.Models.Tratamento>
+
+@{
+    ViewData["Title"] = "Tratamentos";
+}
+<p></p>
+
+@if (TempData["notice"] != null)
+{
+    <!--Mensagem de sucesso quando insere tratamento-->
+    <div id="suc_form" class="alert alert-success">
+        <strong>Sucesso!</strong> O registo do tratamento foi inserido com sucesso.
+    </div>
+}
+
+@if (TempData["deleteEnf"] != null)
+{
+    <!--Mensagem de sucesso quando elimina tratamento-->
+    <div id="suc_form" class="alert alert-success">
+        <strong>Sucesso!</strong> tratamento eliminado com sucesso.
+    </div>
+}
+
+@if (TempData["successEdit"] != null)
+{
+    <!--Mensagem de sucesso quando edita tratamento-->
+    <div id="suc_form" class="alert alert-success">
+        <strong>Sucesso!</strong> O registo de tratamento foi alterado com sucesso.
+    </div>
+}
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    //Passados 5 segundos a mensagem desaparece
+    $(document).ready(function () {
+        $("#suc_form").hide(10000);
+    });
+</script>
+
+<h2>Lista de tratamentos</h2>
+
+<p>
+<p>
+    <a asp-action="Create" class="btn btn-primary">Inserir um novo tratamento</a>
+</p>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Patologia
+            </th>
+            <th>
+                Paciente
+            </th>
+            <th>
+                Data de início do tratamento
+            </th>
+            <th>
+                Data de fim do tratamento
+            </th>
+
+            <th>
+                Médico
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Patologia.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Paciente.Nome)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.DataInicio)
+
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DataFim)
+                </td>
+
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Medico.Nome)
+                </td>
+                <td>
+                    <a asp-action="Edit" class="btn btn-warning" asp-route-id="@item.TratamentoId">Editar</a>
+                    <a asp-action="Details" class="btn btn-info" asp-route-id="@item.TratamentoId">Detalhes</a>
+                    <a asp-action="Delete" class="btn btn-danger" asp-route-id="@item.TratamentoId">Eliminar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
