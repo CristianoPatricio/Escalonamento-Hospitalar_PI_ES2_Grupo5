@@ -4,36 +4,40 @@
     ViewData["Title"] = "Home Page";
 }
 
-@*
-<div style="margin-top: 50px;">
-    <h2>Serviço de Quimioterapia - Gestão Hospitalar</h2>
-    <h3>@ViewBag.Message</h3>
-</div>
 
-<center>
-    <div class="col-md-6 col-md-offset-2" style="margin-left:0px;">
-        <section>
-            <img class="image" src="~/images/James& Katie.png" alt="" width="400" height="400" />
-        </section>
+<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.5.0/css/all.css' integrity='sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU' crossorigin='anonymous'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+@*
+    <div style="margin-top: 50px;">
+        <h2>Serviço de Quimioterapia - Gestão Hospitalar</h2>
+        <h3>@ViewBag.Message</h3>
     </div>
-</center>
-<div>
-    <div style="float:left; margin-top: 100px; margin-right:50px; margin-left:30px;">
-        <a asp-area="" asp-controller="Home" asp-action="Login">
-            <input type="button" class="btn btn-primary btn-lg btn-block" value="MÉDICO"/>
-        </a>
+
+    <center>
+        <div class="col-md-6 col-md-offset-2" style="margin-left:0px;">
+            <section>
+                <img class="image" src="~/images/James& Katie.png" alt="" width="400" height="400" />
+            </section>
+        </div>
+    </center>
+    <div>
+        <div style="float:left; margin-top: 100px; margin-right:50px; margin-left:30px;">
+            <a asp-area="" asp-controller="Home" asp-action="Login">
+                <input type="button" class="btn btn-primary btn-lg btn-block" value="MÉDICO"/>
+            </a>
+        </div>
+        <div style = "float:left; margin-top: 100px; margin-right:50px; margin-left:30px;">
+            <a asp-area="" asp-controller="Home" asp-action="Login">
+                <input type="button" class="btn btn-info btn-lg btn-block" value="ENFERMEIRO" />
+            </a>
+        </div>
+        <div style="float:left; margin-top: 100px; margin-right:50px; margin-left:30px;">
+            <a asp-area="" asp-controller="Home" asp-action="Login">
+                <input type="button" class="btn btn-secundary btn-lg btn-block" value=" DIRETOR DE SERVIÇO" />
+            </a>
+        </div>
     </div>
-    <div style = "float:left; margin-top: 100px; margin-right:50px; margin-left:30px;">
-        <a asp-area="" asp-controller="Home" asp-action="Login">
-            <input type="button" class="btn btn-info btn-lg btn-block" value="ENFERMEIRO" />
-        </a>
-    </div>
-    <div style="float:left; margin-top: 100px; margin-right:50px; margin-left:30px;">
-        <a asp-area="" asp-controller="Home" asp-action="Login">
-            <input type="button" class="btn btn-secundary btn-lg btn-block" value=" DIRETOR DE SERVIÇO" />
-        </a>
-    </div>
-</div>
 
 *@
 <p></p>
@@ -60,7 +64,7 @@
 </center>
 <p></p>
 <div class="row">
-    <div style = "float:left" class="col-md-3">
+    <div style="float:left" class="col-md-3">
         <h4>MÉDICO</h4>
         <ul>
             <li><a href='@Url.Action("Index", "HorarioMedicos")'>Consultar Horário</a></li>
@@ -70,8 +74,8 @@
             <li><a href='@Url.Action("Index", "PedidoTrocaTurnosMedicos")'>Validar pedidos de troca pendentes</a></li>
         </ul>
     </div>
-    <div style = "float:left" class="col-md-3">
-        <h4>ENFERMEIRO</h4>  
+    <div style="float:left" class="col-md-3">
+        <h4>ENFERMEIRO</h4>
         <ul>
             <li><a href='@Url.Action("Index", "HorarioEnfermeiros")'>Consultar Horário</a></li>
             <li><a href='@Url.Action("Index", "HorarioEnfermeiros")'>Pedir alteração de turno</a></li>
@@ -79,7 +83,7 @@
             <li><a href='@Url.Action("Index", "PedidoTrocaTurnosEnfermeiros")'>Validar pedidos de troca pendentes</a></li>
         </ul>
     </div>
-    <div style = "float:left" class="col-md-3">
+    <div style="float:left" class="col-md-3">
         <h4>DIRETOR DE SERVIÇO</h4>
         <ul>
             <li><a href='@Url.Action("Index", "DiretorServico")'>Área pessoal</a></li>
@@ -111,17 +115,17 @@
         {
             <table class="table">
                 <tr>
-                    <th>Nome</th>
-                    <th>Email</th>
-                    <th>Número Mecanográfico</th>
+                    <th><i class="glyphicon glyphicon-user"></i> Nome</th>
+                    <th><i class="fa fa-envelope" aria-hidden="true"></i> Email</th>
+                    <th><i class="fa fa-id-card"></i> Número Mecanográfico</th>
                 </tr>
-                @foreach(var item in Model)
+                @foreach (var item in Model)
                 {
-                <tr>
-                    <td>@item.Nome</td>
-                    <td>@item.Email</td>
-                    <td>@item.NumeroMecanografico</td>
-                </tr>
+                    <tr>
+                        <td>@item.Nome</td>
+                        <td>@item.Email</td>
+                        <td>@item.NumeroMecanografico</td>
+                    </tr>
                 }
             </table>
         }
