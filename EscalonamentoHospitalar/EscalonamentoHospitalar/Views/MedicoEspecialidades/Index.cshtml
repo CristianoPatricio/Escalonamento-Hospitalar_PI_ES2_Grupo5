@@ -4,6 +4,9 @@
     ViewData["Title"] = "Lista de especialidades por médico";
 }
 
+<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.5.0/css/all.css' integrity='sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU' crossorigin='anonymous'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 @*@if( User.IsInRole("DiretorServico")) { // Acesso restrito ao Diretor de Serviço*@
 
 <h2>Lista de especialidades por médico</h2>
@@ -11,59 +14,58 @@
 <form asp-action="Index">
     <p style="float:right">
         Pesquisar por nome: <input style="width: 200px;" asp-for="CurrentNome" placeholder="Insira o nome a pesquisar" />
-        <input type="submit" value="Pesquisar" class="btn btn-info" />
+        <button class="btn btn-info" type="submit" value="Pesquisar"><span class="glyphicon glyphicon-search"></span> Pesquisar</button>
     </p>
 </form>
 
-    <table class="table">
-        <thead>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <i class="fa fa-stethoscope"></i> Especialidade
+            </th>
+            <th>
+                <i class='fas'>&#xf0f0;</i> Enfermeiro
+            </th>
+            <th>
+                <i class='far'>&#xf073;</i> Data de Registo
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.MedicoEspecialidades)
+        {
             <tr>
-                <th>
-                    Especialidade
-                </th>
-                <th>
-                    Médico
-                </th>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EspecialidadeMedico.NomeEspecialidade)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Medico.Nome)
+                </td>
 
-                <th>
-                    Data de registo
-                </th>
-                <th></th>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Data_Registo)
+                </td>
+
             </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.MedicoEspecialidades)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.EspecialidadeMedico.NomeEspecialidade)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Medico.Nome)
-                    </td>
+        }
+    </tbody>
+</table>
 
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Data_Registo)
-                    </td>
+<div page-model="@Model.Pagination"
+     page-action="Index"
+     page-classes-enabled="true"
+     page-class="btn"
+     page-class-normal="btn-default"
+     page-class-selected="btn-primary"
+     class="btn-group pull-right">
+</div>
 
-                </tr>
-            }
-        </tbody>
-    </table>
-
-    <div page-model="@Model.Pagination"
-         page-action="Index"
-         page-classes-enabled="true"
-         page-class="btn"
-         page-class-normal="btn-default"
-         page-class-selected="btn-primary"
-         class="btn-group pull-right">
-    </div>
-
-    <hr />
-    <div>
-        <a href='@Url.Action("GestaoHospitalar", "DiretorServico")'>
-            <input type="button" class="btn btn-default" value="Voltar à página inicial" />
-        </a>
-    </div>
+<hr />
+<div>
+    <a href='@Url.Action("Index", "Home")' class="btn btn-default">
+        <span class="glyphicon glyphicon-home"></span> Voltar à página inicial
+    </a>
+</div>
 @*}*@

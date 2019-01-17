@@ -51,7 +51,7 @@
 
     <p style="float: right">
         Pesquisar por nome: <input style="width: 200px; " asp-for="CurrentNome" placeholder="Insira o nome a pesquisar" />
-        <input type="submit" value="Pesquisar" class="btn btn-info" />
+                            <button class="btn btn-info" type="submit" value="Pesquisar"><span class="glyphicon glyphicon-search"></span> Pesquisar</button>
     </p>
 </form>
 
@@ -120,7 +120,7 @@
 </p>
 <hr />
 <div>
-    <a href='@Url.Action("GestaoHospitalar", "DiretorServico")' class="btn btn-default">
+    <a href='@Url.Action("Index", "Home")' class="btn btn-default">
         <span class="glyphicon glyphicon-home"></span> Voltar à página inicial
     </a>
 </div>
