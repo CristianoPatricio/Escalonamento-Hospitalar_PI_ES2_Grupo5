@@ -106,7 +106,7 @@ namespace EscalonamentoHospitalar.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("MedicoId,NumeroMecanografico,Nome,Email,Contacto,CC,Data_Nascimento,EspecialidadeMedicoId,Data_Inicio_Servico")] Medico medico)
         {
-
+            medico.NumeroMecanografico = "M" + medico.NumeroMecanografico;
             /**************VALIDAÇÕES******************/
 
             DateTime dateNow = DateTime.Now;
