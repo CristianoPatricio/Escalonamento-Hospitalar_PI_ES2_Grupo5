@@ -1,4 +1,5 @@
 ﻿using EscalonamentoHospitalar.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace EscalonamentoHospitalar.Controllers
 {
+    [Authorize]     
     public class MedicosController : Controller
 
     {
@@ -64,7 +66,7 @@ namespace EscalonamentoHospitalar.Controllers
             );
 
         }
-
+        [Authorize(Roles = "Administrador")]
         // GET: Medicos/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -85,6 +87,7 @@ namespace EscalonamentoHospitalar.Controllers
         }
 
         // GET: Medicos/Create
+       // [Authorize(Roles = "Administrador")]
         public IActionResult Create()
         {
             ViewData["EspecialidadeMedicoId"] = new SelectList(_context.Set<EspecialidadeMedico>(), "EspecialidadeMedicoId", "NomeEspecialidade");

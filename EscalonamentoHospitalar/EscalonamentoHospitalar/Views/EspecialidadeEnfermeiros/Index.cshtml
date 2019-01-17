@@ -40,6 +40,9 @@
     });
 </script>
 
+@if(User.IsInRole("DiretorServico"))
+{ // Acesso restrito ao Diretor de Serviço
+
 <h2>Lista de especialidades dos enfermeiros</h2>
 
 <table class="table">
@@ -88,4 +91,6 @@
         <span class="glyphicon glyphicon-home"></span> Voltar à página inicial
     </a>
 </div>
+
+}
 

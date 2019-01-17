@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EscalonamentoHospitalar.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EscalonamentoHospitalar.Controllers
 {
@@ -28,6 +29,7 @@ namespace EscalonamentoHospitalar.Controllers
         }
 
         // GET: Tratamentos/Details/5
+      //  [Authorize(Roles = "Administrador")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -80,7 +82,14 @@ namespace EscalonamentoHospitalar.Controllers
             DateTime inicioTratamento = tratamento.DataInicio;
             DateTime fimTratamento = tratamento.DataFim;
 
+
             //bool inicioTratamentoIsInvalid = true;
+
+            
+
+
+
+
 
             //Validar Data de inicio do tratamento
             DateTime dataInicio = tratamento.DataInicio;

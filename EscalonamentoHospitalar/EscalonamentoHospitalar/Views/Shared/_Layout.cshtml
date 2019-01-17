@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -28,18 +30,27 @@
                 </button>
                 <a asp-area="" asp-controller="Home" asp-action="Index" style="color:#42d8e6;" class="navbar-brand">Escalonamento Hospitalar</a>
             </div>
-            @*<div class="navbar-collapse collapse">
+            <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                    @*<li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>*@
+                    @if (Context.Session.GetString("UserId") != null)
+                    {
+                        <li><a asp-area="" asp-controller="Home" asp-action="Logout">Sair</a></li>
+                    }
+                    else
+                    {
+                        <li><a asp-area="" asp-controller="Home" asp-action="Registar">Registar</a></li>
+                        <li><a asp-area="" asp-controller="Home" asp-action="Login">Entrar</a></li>
+                    }
                 </ul>
-                <partial name="_LoginPartial" />
-            </div>*@
+                @*<partial name="_LoginPartial" />*@
+            </div>
         </div>
     </nav>
 
-    <partial name="_CookieConsentPartial" />
+    @*<partial name="_CookieConsentPartial" />*@
 
     <div class="container body-content">
         @RenderBody()

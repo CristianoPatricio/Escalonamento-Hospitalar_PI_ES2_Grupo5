@@ -1,6 +1,9 @@
 ﻿@{
-    ViewData["Title"] = "Gestão Hosiptalar";
+    ViewData["Title"] = "Gestão Hospitalar";
 }
+
+@if (User.IsInRole("DiretorServico")) // Acesso restrito ao Diretor de Serviço
+{
 
 <div>
     <div>
@@ -70,6 +73,7 @@
         </a>
     </div>
 </div>
+}
 
 <div style="float:left; margin-top:50px; margin-left: 100px;">
     <h3>Gerar Horários</h3>

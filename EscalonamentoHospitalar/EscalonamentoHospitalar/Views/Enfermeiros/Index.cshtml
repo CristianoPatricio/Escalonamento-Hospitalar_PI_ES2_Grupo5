@@ -4,7 +4,7 @@
 @{
     ViewData["Title"] = "Lista de Enfermeiros";
 }
-<p></p>
+
 
 @if (TempData["notice"] != null)
 {
@@ -83,6 +83,9 @@
         form.value = '';
     }
 </script>
+
+@if (User.IsInRole("DiretorServico")) // Acesso restrito ao Diretor de Serviço
+{
 
 <h2>Lista de Enfermeiros</h2>
 
@@ -198,3 +201,4 @@
         <span class="glyphicon glyphicon-home"></span> Voltar à página inicial
     </a>
 </div>
+}

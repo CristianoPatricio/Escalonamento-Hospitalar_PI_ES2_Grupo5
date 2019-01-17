@@ -4,15 +4,19 @@
     ViewData["Title"] = "Lista de Especialidades por Enfermeiro";
 }
 
-<<<<<<< HEAD
+
+@if (User.IsInRole("DiretorServico")) // Acesso restrito ao Diretor de Serviço
+{
+
+
 <h2>Lista de especialidades por enfermeiro</h2>
-=======
+
 <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.5.0/css/all.css' integrity='sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU' crossorigin='anonymous'>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 
 <h2>Lista de Especialidades por Enfermeiro</h2>
->>>>>>> CristianoPatricio_GerarHorarios
+
 
 @*
     <p>
@@ -108,13 +112,13 @@
      page-class-selected="btn-primary"
      class="btn-group pull-right">
 </div>
-<<<<<<< HEAD
+
 <hr />
 <div>
     <a href='@Url.Action("GestaoHospitalar", "DiretorServico")'>
         <input type="button" class="btn btn-default" value="Voltar à página inicial" />
     </a>
 </div>
-=======
 
->>>>>>> CristianoPatricio_GerarHorarios
+}
+

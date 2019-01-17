@@ -1,5 +1,9 @@
-﻿
+
 using EscalonamentoHospitalar.Models;
+
+using EscalonamentoHospitalar.Models;
+using Microsoft.AspNetCore.Identity;
+
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -10,13 +14,8 @@ namespace EscalonamentoHospitalar.Data
 {
     public static class SeedData
     {
-        internal static void Populate(IServiceProvider applicationServices)
+        public static void Populate(UserManager<IdentityUser> userManager, HospitalDbContext db)
         {
-            using (var serviceScope = applicationServices.CreateScope())
-            {
-
-                var db = serviceScope.ServiceProvider.GetService<HospitalDbContext>();
-
                 SeedEspecialidadeEnfermeiros(db);
                 SeedEstadoPedidoTrocas(db);
                 SeedEnfermeiros(db);
@@ -34,7 +33,7 @@ namespace EscalonamentoHospitalar.Data
                 SeedRegras(db);
                 SeedMedicoEspecialidades(db);
                 SeedEspecialidadeMedicos(db);
-            }
+            
         }
 
         private static void SeedEstadoPedidoTrocas(HospitalDbContext db)

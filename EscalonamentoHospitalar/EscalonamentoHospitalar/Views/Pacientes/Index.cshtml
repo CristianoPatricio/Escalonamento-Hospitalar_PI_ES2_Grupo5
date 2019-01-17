@@ -43,6 +43,9 @@
     });
 </script>
 
+@if (User.IsInRole("DiretorServico"))
+{
+
 <h2>Lista de Pacientes</h2>
 
 <form asp-action="Index">
@@ -106,3 +109,4 @@
         <input type="button" class="btn btn-default" value="Voltar à página inicial" />
     </a>
 </div>
+}

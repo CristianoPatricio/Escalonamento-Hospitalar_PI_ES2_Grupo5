@@ -1,4 +1,6 @@
-﻿@{
+﻿@model IEnumerable<EscalonamentoHospitalar.Models.UserAccount>
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -17,21 +19,22 @@
 </center>
 <div>
     <div style="float:left; margin-top: 100px; margin-right:50px; margin-left:30px;">
-        <a asp-area="Identity" asp-page="/Account/Login">
+        <a asp-area="" asp-controller="Home" asp-action="Login">
             <input type="button" class="btn btn-primary btn-lg btn-block" value="MÉDICO"/>
         </a>
     </div>
     <div style = "float:left; margin-top: 100px; margin-right:50px; margin-left:30px;">
-        <a asp-area="Identity" asp-page="/Account/Login">
-            <input type="button" class="btn btn-info btn-lg btn-block" value="ENFERMEIRO"/>
+        <a asp-area="" asp-controller="Home" asp-action="Login">
+            <input type="button" class="btn btn-info btn-lg btn-block" value="ENFERMEIRO" />
         </a>
     </div>
     <div style="float:left; margin-top: 100px; margin-right:50px; margin-left:30px;">
-       <a asp-area="Identity" asp-page="/Account/Login">
-        <input type="button" class="btn btn-secundary btn-lg btn-block" value=" DIRETOR DE SERVIÇO"/>
+        <a asp-area="" asp-controller="Home" asp-action="Login">
+            <input type="button" class="btn btn-secundary btn-lg btn-block" value=" DIRETOR DE SERVIÇO" />
         </a>
     </div>
 </div>
+
 *@
 <p></p>
 <center>
@@ -90,3 +93,33 @@
         </ul>
     </div>
 </div>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <h2>Utilizadores Registados</h2>
+        @if (Model.Any())
+        {
+            <table class="table">
+                <tr>
+                    <th>Nome</th>
+                    <th>Email</th>
+                    <th>Número Mecanográfico</th>
+                </tr>
+                @foreach(var item in Model)
+                {
+                <tr>
+                    <td>@item.Nome</td>
+                    <td>@item.Email</td>
+                    <td>@item.NumeroMecanografico</td>
+                </tr>
+                }
+            </table>
+        }
+        else
+        {
+            <p> Não há mais utilizadores registados no sistema Gestão Hospitalar. Contacte a Administração.</p>
+        }
+    </div>
+</div>
+
