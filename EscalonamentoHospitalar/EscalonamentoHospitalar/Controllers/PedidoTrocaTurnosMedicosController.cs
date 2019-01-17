@@ -558,6 +558,7 @@ namespace EscalonamentoHospitalar.Controllers
             var pedidoTrocaTurnosMedico = await _context.PedidoTrocaTurnosMedico.FindAsync(id);
             _context.PedidoTrocaTurnosMedico.Remove(pedidoTrocaTurnosMedico);
             await _context.SaveChangesAsync();
+            TempData["DeleteRequest"] = "Pedido eliminado com sucesso";
             return RedirectToAction(nameof(Index));
         }
 

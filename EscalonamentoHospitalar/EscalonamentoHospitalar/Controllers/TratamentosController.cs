@@ -109,10 +109,9 @@ namespace EscalonamentoHospitalar.Controllers
             {
                 _context.Add(tratamento);              
                 await _context.SaveChangesAsync();
-
                 TempData["notice"] = "Tratamento inserido com sucesso!";
                 GenerateHorarioPaciente(_context, dataInicio, dataFim, duracaoCiclo,idPaciente, regime);
-
+                TempData["GeneratedSuccess"] = "Horário dos pacientes gerado com sucesso";
                 return RedirectToAction(nameof(Index));
             }
             ViewData["GrauId"] = new SelectList(_context.Grau, "GrauId", "TipoGrau", tratamento.GrauId);

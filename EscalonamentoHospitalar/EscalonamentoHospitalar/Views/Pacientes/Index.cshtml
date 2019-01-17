@@ -60,11 +60,11 @@
     <thead>
         <tr>
             <th>
-                Nome
+                <i class="glyphicon glyphicon-user"></i> Nome
             </th>
 
             <th>
-                Número de Utente
+                <i class="fa fa-id-card"></i> Número de Utente
             </th>
 
             <th></th>
@@ -84,11 +84,11 @@
                              
                 <td>
                     <a asp-action="Edit" class="btn btn-warning" asp-route-id="@item.PacienteId">
-                        <span class="glyphicon glyphicon-edit"></span>Editar</a>
+                        <span class="glyphicon glyphicon-edit"></span> Alterar</a>
                     <a asp-action="Details" class="btn btn-info" asp-route-id="@item.PacienteId">
-                        <span class="fas fa-info" style="color:white;"></span>Detalhes</a>
+                        <span class="fas fa-info" style="color:white;"></span> Detalhes</a>
                     <a asp-action="Delete" class="btn btn-danger" asp-route-id="@item.PacienteId">
-                        <span class="glyphicon glyphicon-trash"></span>Eliminar</a>
+                        <span class="glyphicon glyphicon-trash"></span> Eliminar</a>
                 </td>
             </tr>
         }
@@ -96,17 +96,17 @@
 </table>
 
 
-
-
 <br />
 <hr />
 <p>
-    <a asp-action="Create" class="btn btn-primary">Inserir um novo paciente</a>
+    <a asp-action="Create" class="btn btn-primary">
+        <span class="fas fa-file" style="color:white;"></span> Inserir Novo Paciente
+    </a>
 </p>
 <hr />
 <div>
-    <a href='@Url.Action("GestaoHospitalar", "DiretorServico")'>
-        <input type="button" class="btn btn-default" value="Voltar à página inicial" />
+    <a href='@Url.Action("GestaoHospitalar", "DiretorServico")' class="btn btn-default">
+         <span class="fas fa-undo" style="color:dodgerblue;"></span> Voltar à página inicial
     </a>
 </div>
 @*}*@

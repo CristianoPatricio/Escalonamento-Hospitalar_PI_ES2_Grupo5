@@ -4,6 +4,9 @@
     ViewData["Title"] = "Lista de médicos";
 }
 
+<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.5.0/css/all.css' integrity='sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU' crossorigin='anonymous'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 
 @if (TempData["notice"] != null)
 {
@@ -40,12 +43,12 @@
 
 
 @*@if (User.IsInRole("DiretorServico")) // Acesso restrito ao Diretor de Serviço
-{*@
+    {*@
 
 <h2>Lista de Médicos</h2>
 
 <form asp-action="Index">
-    
+
     <p style="float: right">
         Pesquisar por nome: <input style="width: 200px; " asp-for="CurrentNome" placeholder="Insira o nome a pesquisar" />
         <input type="submit" value="Pesquisar" class="btn btn-info" />
@@ -58,13 +61,13 @@
         <tr>
         <tr>
             <th>
-                Número Mecanográfico
+                <i class="fa fa-id-card"></i> Número Mecanográfico
             </th>
             <th>
-                Nome
+                <i class="fas fa-user-md"></i> Nome
             </th>
             <th>
-                Especialidade
+                <i class="fa fa-stethoscope"></i> Especialidade
             </th>
             <th></th>
         </tr>
@@ -72,22 +75,28 @@
     <tbody>
         @foreach (var item in Model.Medicos)
         {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.NumeroMecanografico)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nome)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EspecialidadeMedico.NomeEspecialidade)
-            </td>
-            <td>
-                <a asp-action="Edit" class="btn btn-warning" asp-route-id="@item.MedicoId">Editar</a>
-                <a asp-action="Details" class="btn btn-info" asp-route-id="@item.MedicoId">Detalhes</a>
-                <a asp-action="Delete" class="btn btn-danger" asp-route-id="@item.MedicoId">Eliminar</a>
-            </td>
-        </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NumeroMecanografico)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EspecialidadeMedico.NomeEspecialidade)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.MedicoId" class="btn btn-warning">
+                        <span class="glyphicon glyphicon-edit"></span> Alterar
+                    </a>
+                    <a asp-action="Details" asp-route-id="@item.MedicoId" class="btn btn-info">
+                        <span class="fas fa-info" style="color:white;"></span> Detalhes
+                    </a>
+                    <a asp-action="Delete" asp-route-id="@item.MedicoId" class="btn btn-danger">
+                        <span class="glyphicon glyphicon-trash"></span> Eliminar
+                    </a>
+                </td>
+            </tr>
         }
     </tbody>
 </table>
@@ -105,12 +114,14 @@
 <br />
 <hr />
 <p>
-    <a asp-action="Create" class="btn btn-primary">Inserir um novo médico</a>
+    <a asp-action="Create" class="btn btn-primary">
+        <span class="fas fa-file" style="color:white;"></span> Inserir Novo Médico
+    </a>
 </p>
 <hr />
 <div>
-    <a href='@Url.Action("GestaoHospitalar", "DiretorServico")'>
-        <input type="button" class="btn btn-default" value="Voltar à página inicial" />
+    <a href='@Url.Action("GestaoHospitalar", "DiretorServico")' class="btn btn-default">
+        <span class="glyphicon glyphicon-home"></span> Voltar à página inicial
     </a>
 </div>
 @*}*@

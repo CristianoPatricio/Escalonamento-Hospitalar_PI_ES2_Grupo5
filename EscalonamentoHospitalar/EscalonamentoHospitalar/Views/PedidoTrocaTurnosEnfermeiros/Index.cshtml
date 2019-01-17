@@ -50,6 +50,14 @@
     </div>
 }
 
+@if (TempData["DeleteRequest"] != null)
+{
+    <!--Mensagem de sucesso quando é eliminado um pedido do horário-->
+    <div id="suc_form" class="alert alert-success">
+        <strong>Sucesso!</strong> O pedido foi eliminado com sucesso!
+    </div>
+}
+
 <form asp-action="Index">
     <p>
         Pesquisar por Enfermeiro Requerente: <input style="width: 200px;" asp-for="CurrentNome" placeholder="Insira o nome a pesquisar" />

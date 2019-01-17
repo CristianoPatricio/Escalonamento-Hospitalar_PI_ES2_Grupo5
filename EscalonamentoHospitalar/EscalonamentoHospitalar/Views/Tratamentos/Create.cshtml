@@ -51,14 +51,18 @@
                 <select asp-for="MedicoId" class="form-control" asp-items="ViewBag.MedicoId"></select>
             </div>
             <div class="form-group">
-                <input type="submit" value="Inserir" class="btn btn-success" />
+                <button class="btn btn-success" type="submit">
+                    <i class="fas fa-save" style="color:white;"></i> Inserir
+                </button>
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index" class="btn btn-default">Voltar à lista de tratamentos</a>
+    <a asp-action="Index" class="btn btn-default">
+        <span class="fas fa-undo" style="color:dodgerblue;"></span> Voltar à lista de tratamentos
+    </a>
 </div>
 
 @section Scripts {

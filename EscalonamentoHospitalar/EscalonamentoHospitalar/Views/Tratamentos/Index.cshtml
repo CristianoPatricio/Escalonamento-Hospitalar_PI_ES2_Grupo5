@@ -3,6 +3,10 @@
 @{
     ViewData["Title"] = "Tratamentos";
 }
+
+<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.5.0/css/all.css' integrity='sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU' crossorigin='anonymous'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 <p></p>
 
 @if (TempData["notice"] != null)
@@ -29,6 +33,14 @@
     </div>
 }
 
+@if (TempData["GeneratedSuccess"] != null)
+{
+    <!--Mensagem de sucesso quando insere horário para paciente-->
+    <div id="suc_form" class="alert alert-success">
+        <strong>Sucesso!</strong> Horário gerado com sucesso.
+    </div>
+}
+
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
@@ -42,27 +54,29 @@
 
 <p>
 <p>
-    <a asp-action="Create" class="btn btn-primary">Inserir um novo tratamento</a>
+    <a asp-action="Create" class="btn btn-primary">
+        <span class="fas fa-file" style="color:white;"></span> Inserir um novo tratamento
+    </a>
 </p>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                Patologia
+                <i class="fa fa-heartbeat"></i> Patologia
             </th>
             <th>
-                Paciente
+                <i class="glyphicon glyphicon-user"></i> Paciente
             </th>
             <th>
-                Data de início do tratamento
+                <i class="far fa-clock"></i> Data de início do tratamento
             </th>
             <th>
-                Data de fim do tratamento
+                <i class="far fa-clock"></i> Data de fim do tratamento
             </th>
 
             <th>
-                Médico
+                <i class="fas fa-user-md"></i> Médico
             </th>
             <th></th>
         </tr>
@@ -91,9 +105,15 @@
                     @Html.DisplayFor(modelItem => item.Medico.Nome)
                 </td>
                 <td>
-                    <a asp-action="Edit" class="btn btn-warning" asp-route-id="@item.TratamentoId">Editar</a>
-                    <a asp-action="Details" class="btn btn-info" asp-route-id="@item.TratamentoId">Detalhes</a>
-                    <a asp-action="Delete" class="btn btn-danger" asp-route-id="@item.TratamentoId">Eliminar</a>
+                    <a asp-action="Edit" asp-route-id="@item.TratamentoId" class="btn btn-warning">
+                        <span class="glyphicon glyphicon-edit"></span> Alterar
+                    </a>
+                    <a asp-action="Details" asp-route-id="@item.TratamentoId" class="btn btn-info">
+                        <span class="fas fa-info" style="color:white;"></span> Detalhes
+                    </a>
+                    <a asp-action="Delete" asp-route-id="@item.TratamentoId" class="btn btn-danger">
+                        <span class="glyphicon glyphicon-trash"></span> Eliminar
+                    </a>                  
                 </td>
             </tr>
         }

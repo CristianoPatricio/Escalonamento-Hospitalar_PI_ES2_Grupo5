@@ -171,12 +171,11 @@
 
     <form asp-action="Delete">
         <input type="hidden" asp-for="PacienteId" />
-        <a href="#myModal" class="trigger-btn" data-toggle="modal">
-            <input type="submit" value="Eliminar" class="btn btn-danger" />
-            <span class="glyphicon glyphicon-trash"></span>
-        </a>  |
+        <a href="#myModal" class="btn btn-danger" data-toggle="modal">
+            <span class="glyphicon glyphicon-trash"></span> Eliminar
+        </a>  
         <a asp-action="Index" class="btn btn-default">
-            <span class="fas fa-undo" style="color:dodgerblue;"></span>Voltar à lista de pacientes</a>
+            <span class="fas fa-undo" style="color:dodgerblue;"></span> Voltar à lista de pacientes</a>
     </form>
 
     <!-- Modal HTML CONFIRMAÇÃO DO ELIMINAR -->

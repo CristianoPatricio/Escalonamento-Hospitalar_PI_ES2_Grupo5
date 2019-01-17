@@ -60,6 +60,11 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" class="btn btn-warning" asp-route-id="@Model.MedicoId">Editar</a> 
-    <a asp-action="Index" class="btn btn-default">Voltar à lista de médicos</a>
+    <a asp-action="Edit" asp-route-id="@Model.MedicoId" class="btn btn-warning">
+        <span class="glyphicon glyphicon-edit"></span> Alterar
+    </a>
+
+    <a asp-action="Index" class="btn btn-default">
+        <span class="fas fa-undo" style="color:dodgerblue;"></span> Voltar à lista
+    </a>
 </div>

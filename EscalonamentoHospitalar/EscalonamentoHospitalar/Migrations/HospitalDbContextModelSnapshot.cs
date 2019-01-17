@@ -99,7 +99,6 @@ namespace EscalonamentoHospitalar.Migrations
                 });
 
             modelBuilder.Entity("EscalonamentoHospitalar.Models.EspecialidadeEnfermeiro", b =>
-
                 {
                     b.Property<int>("EspecialidadeEnfermeiroId")
                         .ValueGeneratedOnAdd()
@@ -140,7 +139,6 @@ namespace EscalonamentoHospitalar.Migrations
                 });
 
             modelBuilder.Entity("EscalonamentoHospitalar.Models.EstadoPedidoTroca", b =>
-
                 {
                     b.Property<int>("EstadoPedidoTrocaId")
                         .ValueGeneratedOnAdd()
@@ -312,12 +310,8 @@ namespace EscalonamentoHospitalar.Migrations
 
                     b.Property<DateTime>("Data_Nascimento");
 
-
-                    b.Property<string>("Email");
-
                     b.Property<string>("Email")
                         .IsRequired();
-
 
                     b.Property<int>("EspecialidadeMedicoId");
 
@@ -590,7 +584,6 @@ namespace EscalonamentoHospitalar.Migrations
                         .HasForeignKey("EspecialidadeEnfermeiroId");
                 });
 
-
             modelBuilder.Entity("EscalonamentoHospitalar.Models.HorarioATrocarEnfermeiro", b =>
                 {
                     b.HasOne("EscalonamentoHospitalar.Models.HorarioEnfermeiro", "HorarioEnfermeiro")
@@ -633,9 +626,7 @@ namespace EscalonamentoHospitalar.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-        
             modelBuilder.Entity("EscalonamentoHospitalar.Models.HorarioPaciente", b =>
-
                 {
                     b.HasOne("EscalonamentoHospitalar.Models.Paciente", "Paciente")
                         .WithMany("HorarioPacientes")
@@ -661,10 +652,6 @@ namespace EscalonamentoHospitalar.Migrations
 
             modelBuilder.Entity("EscalonamentoHospitalar.Models.Medico", b =>
                 {
-
-
-
-
                     b.HasOne("EscalonamentoHospitalar.Models.EspecialidadeMedico", "EspecialidadeMedico")
                         .WithMany("Medico")
                         .HasForeignKey("EspecialidadeMedicoId")

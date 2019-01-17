@@ -4,6 +4,10 @@
     ViewData["Title"] = "Eliminar";
 }
 
+<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.5.0/css/all.css' integrity='sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU' crossorigin='anonymous'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
 <head>
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -170,10 +174,12 @@
 
     <form asp-action="Delete">
         <input type="hidden" asp-for="MedicoId" />
-        <a href="#myModal" class="trigger-btn" data-toggle="modal">
-            <input type="submit" value="Eliminar" class="btn btn-danger" />
-        </a>  
-        <a asp-action="Index" class="btn btn-default">Voltar à lista de médicos</a>
+        <a href="#myDeleteModal" data-toggle="modal" class="btn btn-danger">
+            <span class="glyphicon glyphicon-trash"></span> Eliminar
+        </a>
+        <a asp-action="Index" class="btn btn-default">
+            <span class="fas fa-undo" style="color:dodgerblue;"></span> Voltar à lista
+        </a>
     </form>
 
     <!-- Modal HTML CONFIRMAÇÃO DO ELIMINAR -->

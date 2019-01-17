@@ -4,6 +4,10 @@
     ViewData["Title"] = "Detalhes";
 }
 
+<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.5.0/css/all.css' integrity='sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU' crossorigin='anonymous'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
 <h2>Detalhes do tratamento</h2>
 
 <div>
@@ -70,6 +74,10 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" class="btn btn-warning" asp-route-id="@Model.TratamentoId">EDITAR</a> 
-    <a asp-action="Index" class="btn btn-default">Voltar à lista de tratamentos</a>
+    <a asp-action="Edit" class="btn btn-warning" asp-route-id="@Model.TratamentoId">
+        <span class="glyphicon glyphicon-edit"></span> Alterar
+    </a>
+    <a asp-action="Index" class="btn btn-default">
+        <span class="fas fa-undo" style="color:dodgerblue;"></span> Voltar à lista de tratamentos
+    </a>
 </div>
