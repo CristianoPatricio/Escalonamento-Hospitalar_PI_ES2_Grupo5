@@ -170,6 +170,7 @@ namespace EscalonamentoHospitalar.Controllers
             {
                 if (!numMecIsInvalid(numero) || !emailIsInvalid(email) || !medicoDateIsInvalid(medicoBDate) || ValidateNumeroDocumentoCC(nCC) || !medicoISDateIsInvalid)
                 {
+                    medico.NumeroMecanografico = "M" + medico.NumeroMecanografico;
                     _context.Add(medico);
 
                     //Inserir Registo na Tabela MédicoEspecialidades

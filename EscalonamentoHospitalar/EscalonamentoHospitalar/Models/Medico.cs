@@ -11,8 +11,8 @@ namespace EscalonamentoHospitalar.Models
     {
         public int MedicoId { get; set; }
 
-        [Required(ErrorMessage = "Por favor introduza o número mecanográfico respetivo")]
-        [RegularExpression(@"[M]\d+", ErrorMessage = "Número mecanográfico inválido")]
+        [Required(ErrorMessage = "Por favor, introduza o seu número mecanográfico")]
+        [RegularExpression(@"(\d+)", ErrorMessage = "Número errado")]
         //Numero da Ordem
         public string NumeroMecanografico { get; set; }
 
