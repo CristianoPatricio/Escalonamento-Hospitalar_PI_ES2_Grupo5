@@ -148,7 +148,7 @@ namespace EscalonamentoHospitalar
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
 
-           // SeedData.Populate(app.ApplicationServices);
+            SeedData.Populate(app.ApplicationServices);
         }
     }
 }

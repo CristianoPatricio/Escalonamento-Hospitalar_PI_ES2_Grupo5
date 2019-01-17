@@ -38,23 +38,26 @@
 *@
 <p></p>
 <center>
-        <div>
-            <h2 style="font-family:Gill Sans Nova; ">Serviço de Quimioterapia - Gestão Hospitalar</h2>
-            <h3 style="font-family:Gill Sans Nova; ">@ViewBag.Message</h3>
-        </div>
-</center>
-<div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
-    <ol class="carousel-indicators">
-        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-        <li data-target="#myCarousel" data-slide-to="1"></li>
-        <li data-target="#myCarousel" data-slide-to="2"></li>
-    </ol>
-    <div class="carousel-inner" role="listbox">
-        <div class="item active">
-            <img src="~/images/James& Katie.png" alt="ASP.NET" class="img-responsive" width="400" height="400"  />
-        </div>     
+    <div style="margin-top: 50px;">
+        <h2 style="font-family:Gill Sans Nova; ">Serviço de Quimioterapia - Gestão Hospitalar</h2>
+        <h3 style="font-family:Gill Sans Nova; ">@ViewBag.Message</h3>
     </div>
-</div>
+
+    <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
+        <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#myCarousel" data-slide-to="1"></li>
+            <li data-target="#myCarousel" data-slide-to="2"></li>
+        </ol>
+        <hr />
+        <div style="background-color:lightgrey" class="carousel-inner" role="listbox">
+            <div class="item active">
+                <img src="~/images/James& Katie.png" alt="ASP.NET" class="img-responsive" width="400" height="400" />
+            </div>
+        </div>
+        <hr />
+    </div>
+</center>
 <p></p>
 <div class="row">
     <div style = "float:left" class="col-md-3">
@@ -63,6 +66,7 @@
             <li><a href='@Url.Action("Index", "HorarioMedicos")'>Consultar Horário</a></li>
             <li><a href='@Url.Action("Index", "HorarioMedicos")'>Pedir alteração de turno</a></li>
             <li><a href='@Url.Action("Index", "Tratamentos")'>Introduzir tratamentos</a></li>
+            <li><a href='@Url.Action("Index", "HorarioPacientes")'>Consultar horário dos pacientes</a></li>
             <li><a href='@Url.Action("Index", "PedidoTrocaTurnosMedicos")'>Validar pedidos de troca pendentes</a></li>
         </ul>
     </div>
@@ -71,6 +75,7 @@
         <ul>
             <li><a href='@Url.Action("Index", "HorarioEnfermeiros")'>Consultar Horário</a></li>
             <li><a href='@Url.Action("Index", "HorarioEnfermeiros")'>Pedir alteração de turno</a></li>
+            <li><a href='@Url.Action("Index", "HorarioPacientes")'>Consultar horário dos pacientes</a></li>
             <li><a href='@Url.Action("Index", "PedidoTrocaTurnosEnfermeiros")'>Validar pedidos de troca pendentes</a></li>
         </ul>
     </div>
@@ -78,17 +83,21 @@
         <h4>DIRETOR DE SERVIÇO</h4>
         <ul>
             <li><a href='@Url.Action("Index", "DiretorServico")'>Área pessoal</a></li>
+            <p></p>
             <li><a href='@Url.Action("Index", "Enfermeiros")'>Gerir Enfermeiros</a></li>
             <li><a href='@Url.Action("GerarHorarioEnfermeiro", "HorarioEnfermeiros")'>Gerar horário Enfermeiro</a></li>
             <li><a href='@Url.Action("Index", "EspecialidadeEnfermeiros")'>Gerir Especialidades dos Enfermeiros</a></li>
-            <li><a href='@Url.Action("Index", "EnfermeiroEspecialidade")'>Ver histórico Especialidades dos Enfermeiros</a></li>
+            <li><a href='@Url.Action("Index", "EnfermeiroEspecialidades")'>Ver histórico Especialidades dos Enfermeiros</a></li>
             <li><a href='@Url.Action("Index", "PedidoTrocaTurnosEnfermeiros")'>Autorizar pedidos de troca validados dos enfermeiros</a></li>
+            <p></p>
             <li><a href='@Url.Action("Index", "Medicos")'>Gerir Médicos</a></li>
             <li><a href='@Url.Action("GerarHorarioMedico", "HorarioMedicos")'>Gerar horário Médico</a></li>
             <li><a href='@Url.Action("Index", "EspecialidadeMedicos")'>Gerir Especialidades dos Médicos</a></li>
-            <li><a href='@Url.Action("Index", "MedicoEspecialidade")'>Ver histórico Especialidades dos Médicos</a></li>
+            <li><a href='@Url.Action("Index", "MedicoEspecialidades")'>Ver histórico Especialidades dos Médicos</a></li>
             <li><a href='@Url.Action("Index", "PedidoTrocaTurnosMedicos")'>Autorizar pedidos de troca validados dos médicos</a></li>
+            <p></p>
             <li><a href='@Url.Action("Index", "Pacientes")'>Gerir Pacientes</a></li>
+            <li><a href='@Url.Action("Index", "HorarioPacientes")'>Consultar horário dos pacientes</a></li>
             <li><a href='@Url.Action("Index", "Regras")'>Introduzir regras de escalonamento de horários</a></li>
         </ul>
     </div>

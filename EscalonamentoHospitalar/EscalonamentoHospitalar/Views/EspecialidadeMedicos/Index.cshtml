@@ -4,6 +4,9 @@
     ViewData["Title"] = "Lista";
 }
 
+<link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.5.0/css/all.css' integrity='sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU' crossorigin='anonymous'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 @if (TempData["successInsertEspecialidade"] != null)
 {
     <!--Mensagem de sucesso quando insere especialidade-->
@@ -45,7 +48,7 @@
 </script>
 
 @*@if (User.IsInRole("DiretorServico")) // Acesso restrito ao Diretor de Serviço
-{*@
+    {*@
 
 <h2>Lista de especialidades dos médicos</h2>
 
@@ -67,11 +70,16 @@
                     @Html.DisplayFor(modelItem => item.NomeEspecialidade)
                 </td>
                 <td>
-                    <a asp-action="Edit" class="btn btn-warning" asp-route-id="@item.EspecialidadeMedicoId">Editar</a>
-                    @*<a asp-action="Details" class="btn btn-info"  asp-route-id="@item.EspecialidadeMedicoId">Detalhes</a> |*@
-                    <a asp-action="Delete" class="btn btn-danger" asp-route-id="@item.EspecialidadeMedicoId">Eliminar</a>
+                    <a asp-action="Edit" asp-route-id="@item.EspecialidadeMedicoId" class="btn btn-warning">
+                        <span class="glyphicon glyphicon-edit"></span> Alterar
+                    </a>
+                    <!--<a asp-action="Details" asp-route-id="@item.EspecialidadeMedicoId">Details</a> |-->
+                    <a asp-action="Delete" asp-route-id="@item.EspecialidadeMedicoId" class="btn btn-danger">
+                        <span class="glyphicon glyphicon-trash"></span> Eliminar
+                    </a>
                 </td>
             </tr>
+
         }
     </tbody>
 </table>
@@ -79,12 +87,18 @@
 <br />
 <hr />
 <p>
-    <a asp-action="Create" class="btn btn-primary">Inserir uma nova especialidade</a>
+    <a asp-action="Create" class="btn btn-primary">
+        <span class="fas fa-file" style="color:white;"></span> Inserir Nova Especialidade do Médico
+    </a>
 </p>
+
 <hr />
 <div>
-    <a href='@Url.Action("GestaoHospitalar", "DiretorServico")'>
-        <input type="button" class="btn btn-default" value="Voltar à página inicial" />
+    <a href='@Url.Action("Index", "Home")' class="btn btn-default">
+        <span class="glyphicon glyphicon-home"></span> Voltar à página inicial
     </a>
 </div>
+
+
+
 @*}*@

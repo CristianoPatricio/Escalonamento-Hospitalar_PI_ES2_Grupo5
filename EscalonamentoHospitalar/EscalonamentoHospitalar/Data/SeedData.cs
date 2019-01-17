@@ -14,8 +14,14 @@ namespace EscalonamentoHospitalar.Data
 {
     public static class SeedData
     {
-        public static void Populate(UserManager<IdentityUser> userManager, HospitalDbContext db)
+
+        internal static void Populate(IServiceProvider applicationServices)
         {
+            using (var serviceScope = applicationServices.CreateScope())
+            {
+
+                var db = serviceScope.ServiceProvider.GetService<HospitalDbContext>();
+
                 SeedEspecialidadeEnfermeiros(db);
                 SeedEstadoPedidoTrocas(db);
                 SeedEnfermeiros(db);
@@ -33,7 +39,7 @@ namespace EscalonamentoHospitalar.Data
                 SeedRegras(db);
                 SeedMedicoEspecialidades(db);
                 SeedEspecialidadeMedicos(db);
-            
+            }
         }
 
         private static void SeedEstadoPedidoTrocas(HospitalDbContext db)
@@ -195,11 +201,11 @@ namespace EscalonamentoHospitalar.Data
          db.Grau.AddRange(
                     new Grau
                        {
-                          TipoGrau = "grave"
+                          TipoGrau = "Grave"
                        },
                        new Grau
                        {
-                           TipoGrau = "muito_grave"
+                           TipoGrau = "Muito Grave"
                        }
             );
             db.SaveChanges();
@@ -212,7 +218,7 @@ namespace EscalonamentoHospitalar.Data
          db.Patologia.AddRange(
                     new Patologia
                        {
-                          Nome = "Tubo_Digestivo"
+                          Nome = "Tubo Digestivo"
                        },
                        new Patologia
                        {
@@ -230,17 +236,17 @@ namespace EscalonamentoHospitalar.Data
             if (db.Tratamentos.Any()) return;
 
 
-                Patologia Tubo_Digestivo = db.Patologia.SingleOrDefault(e => e.Nome == "Tubo_Digestivo");
+                Patologia Tubo_Digestivo = db.Patologia.SingleOrDefault(e => e.Nome == "Tubo Digestivo");
                 Patologia Rim = db.Patologia.SingleOrDefault(e => e.Nome == "Rim ");
 
-            Paciente Barbara = db.Pacientes.SingleOrDefault(e => e.Nome == "Barbara ");
-            Paciente Andre = db.Pacientes.SingleOrDefault(e => e.Nome == "Andre ");
+            Paciente Barbara = db.Pacientes.SingleOrDefault(e => e.Nome == "Bárbara");
+            Paciente Andre = db.Pacientes.SingleOrDefault(e => e.Nome == "André");
 
-            Grau grave = db.Grau.SingleOrDefault(e => e.TipoGrau == "grave ");
-            Grau muito_grave = db.Grau.SingleOrDefault(e => e.TipoGrau == "muito_grave ");
+            Grau grave = db.Grau.SingleOrDefault(e => e.TipoGrau == "Grave");
+            Grau muito_grave = db.Grau.SingleOrDefault(e => e.TipoGrau == "Muito Grave");
 
-            Regime Semanal = db.Regime.SingleOrDefault(e => e.TipoRegime == "Semanal ");
-            Regime Mensal = db.Regime.SingleOrDefault(e => e.TipoRegime == "Mensal ");
+            Regime Semanal = db.Regime.SingleOrDefault(e => e.TipoRegime == "Semanal");
+            Regime Mensal = db.Regime.SingleOrDefault(e => e.TipoRegime == "Mensal");
 
             Medico Manuel = db.Medicos.SingleOrDefault(e => e.Nome == "Manuel Santos");
             Medico Elisabete = db.Medicos.SingleOrDefault(e => e.Nome == "Elisabete Eiras");
@@ -313,8 +319,8 @@ namespace EscalonamentoHospitalar.Data
                  {
 
 
-                     Nome = "Barbara",
-                     Morada = "Rua Francisco Sa Carneiro",
+                     Nome = "Bárbara",
+                     Morada = "Rua Francisco Sá Carneiro",
                      Cod_Postal = "6300-225",
                      Email = "barbara_R@sapo.pt",
                      CC = "147187301",
@@ -326,7 +332,7 @@ namespace EscalonamentoHospitalar.Data
      new Paciente
      {
 
-         Nome = "Andre",
+         Nome = "André",
          Morada = "Rua 25 de Abril",
          Cod_Postal = "6000-710",
          Email = "andre@mail.pt",

@@ -83,13 +83,7 @@ namespace EscalonamentoHospitalar.Controllers
             DateTime fimTratamento = tratamento.DataFim;
 
 
-            //bool inicioTratamentoIsInvalid = true;
-
-            
-
-
-
-
+            bool dataTratamentoIsInvalid = true;
 
             //Validar Data de inicio do tratamento
             DateTime dataInicio = tratamento.DataInicio;
@@ -100,18 +94,28 @@ namespace EscalonamentoHospitalar.Controllers
             var tipoRegime = _context.Regime.SingleOrDefault(r => r.RegimeId == idRegime);
             string regime = tipoRegime.TipoRegime.ToString();
 
-            Estado estado = _context.Estado.SingleOrDefault(e => e.Nome == "Decorrer");
+            string estado = EstadoTratamento(dateNow, dataInicio);
 
-            tratamento.EstadoId = estado.EstadoId;
+            Estado estadoTratamento = _context.Estado.SingleOrDefault(e => e.Nome == estado);
+
+            tratamento.EstadoId = estadoTratamento.EstadoId;
+
+            if (DataTratamentoIsInvalid(dataInicio, dataFim) == true)
+            {
+                dataTratamentoIsInvalid = true;
+                ModelState.AddModelError("DataInicio", "Data Inválida, não pode ser inferior à data atual");
+            }
 
 
             if (ModelState.IsValid)
             {
-                _context.Add(tratamento);              
-                await _context.SaveChangesAsync();
-                TempData["notice"] = "Tratamento inserido com sucesso!";
-                GenerateHorarioPaciente(_context, dataInicio, dataFim, duracaoCiclo,idPaciente, regime);
-                TempData["GeneratedSuccess"] = "Horário dos pacientes gerado com sucesso";
+                if (!DataTratamentoIsInvalid(dataInicio, dataFim)) {
+                    _context.Add(tratamento);
+                    await _context.SaveChangesAsync();
+                    TempData["notice"] = "Tratamento inserido com sucesso!";
+                    GenerateHorarioPaciente(_context, dataInicio, dataFim, duracaoCiclo, idPaciente, regime);
+                    TempData["GeneratedSuccess"] = "Horário dos pacientes gerado com sucesso";
+                }
                 return RedirectToAction(nameof(Index));
             }
             ViewData["GrauId"] = new SelectList(_context.Grau, "GrauId", "TipoGrau", tratamento.GrauId);
@@ -332,6 +336,34 @@ namespace EscalonamentoHospitalar.Controllers
             }
 
             return novaData;
+        }
+
+        private string EstadoTratamento(DateTime dataAtual, DateTime dataInicio)
+        {
+            string estado = null;
+            int compare = DateTime.Compare(dataAtual, dataInicio);
+            if (compare >= 0) //significa que a minha data atual é igual ou superior a data de inicio
+            {
+                estado = "A Decorrer";
+            }
+            else
+            {
+                estado = "Em Espera"; //significa que a minha data atual é inferior a data de inicio
+            }
+            return estado;
+        }
+        private bool DataTratamentoIsInvalid(DateTime inicioTratamento, DateTime fimTratamento)
+        {
+            bool IsInvalid = false;
+            DateTime dateNow = DateTime.Now;
+            int x = DateTime.Compare(dateNow, inicioTratamento);
+            int y = DateTime.Compare(dateNow, fimTratamento);
+            int z = DateTime.Compare(inicioTratamento, fimTratamento);
+            if (x >= 0 || y >= 0 || z > 0)
+            {
+                IsInvalid = true;
+            }
+            return IsInvalid;
         }
 
     }
