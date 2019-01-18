@@ -57,6 +57,24 @@ namespace EscalonamentoHospitalar.Models
                 .HasForeignKey(ee => ee.EspecialidadeEnfermeiroId)
                 .OnDelete(DeleteBehavior.ClientSetNull);
 
+            //Chave 
+            modelBuilder.Entity<Tratamento>().HasKey(o => new { o.PacienteId, o.TratamentoId });
+
+            //Relaçao 1 -> N
+            modelBuilder.Entity<Tratamento>()
+                .HasOne(ee => ee.Paciente)
+                .WithMany(e => e.Tratamentos)
+                .HasForeignKey(ee => ee.PacienteId)
+                .OnDelete(DeleteBehavior.ClientSetNull);
+
+            modelBuilder.Entity<Paciente>()
+                        .HasOne("EscalonamentoHospitalar.Models.Paciente", "Paciente")
+                        .WithMany("Tratamentos")
+                        .HasForeignKey("PacienteId")
+                        .OnDelete(DeleteBehavior.ClientSetNull);
+
+
+
             base.OnModelCreating(modelBuilder);
         }
 
@@ -88,6 +106,7 @@ namespace EscalonamentoHospitalar.Models
 
 
         public DbSet<EscalonamentoHospitalar.Models.Tratamento> Tratamentos { get; set; }
+
 
 
         public DbSet<EscalonamentoHospitalar.Models.EstadoPedidoTroca> EstadoPedidoTrocas { get; set; }
