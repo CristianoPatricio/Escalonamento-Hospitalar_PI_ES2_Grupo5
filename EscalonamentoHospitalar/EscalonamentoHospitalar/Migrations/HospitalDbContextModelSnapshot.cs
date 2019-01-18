@@ -480,9 +480,9 @@ namespace EscalonamentoHospitalar.Migrations
 
             modelBuilder.Entity("EscalonamentoHospitalar.Models.Tratamento", b =>
                 {
-                    b.Property<int>("TratamentoId")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<int>("PacienteId");
+
+                    b.Property<int>("TratamentoId");
 
                     b.Property<DateTime>("DataFim");
 
@@ -496,21 +496,17 @@ namespace EscalonamentoHospitalar.Migrations
 
                     b.Property<int>("MedicoId");
 
-                    b.Property<int>("PacienteId");
-
                     b.Property<int>("PatologiaId");
 
                     b.Property<int>("RegimeId");
 
-                    b.HasKey("TratamentoId");
+                    b.HasKey("PacienteId", "TratamentoId");
 
                     b.HasIndex("EstadoId");
 
                     b.HasIndex("GrauId");
 
                     b.HasIndex("MedicoId");
-
-                    b.HasIndex("PacienteId");
 
                     b.HasIndex("PatologiaId");
 
@@ -735,8 +731,7 @@ namespace EscalonamentoHospitalar.Migrations
 
                     b.HasOne("EscalonamentoHospitalar.Models.Paciente", "Paciente")
                         .WithMany("Tratamentos")
-                        .HasForeignKey("PacienteId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("PacienteId");
 
                     b.HasOne("EscalonamentoHospitalar.Models.Patologia", "Patologia")
                         .WithMany("Tratamentos")
